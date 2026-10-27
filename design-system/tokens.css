@@ -1,0 +1,499 @@
+/* ==========================================================================
+   CANDY LOZ DESIGN SYSTEM — CSS VARIABLES & DESIGN TOKENS
+   Version: 1.0.0 (v6 "Crème" Confectionery Architecture)
+   Exact Reverse-Engineered System from https://candyloz.com/ar
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* ==========================================================================
+     1. Color Primitives (Candy Loz Palette)
+     ========================================================================== */
+  
+  /* Core Berry & Strawberry Brand Colors */
+  --cl-berry-primary: #a02857;     /* Primary Deep Berry / Dark Raspberry */
+  --cl-berry-dark: #7c1d43;        /* Dark Wine Berry (active / hover states) */
+  --cl-strawberry: #d72d58;        /* Vibrant Strawberry Pink (key CTA, active tab, cart) */
+  --cl-magenta: #bf0079;           /* Playful Confectionery Magenta */
+  --cl-rose: #b85c6e;              /* Elegant Rose (Headings, titles, icons) */
+  --cl-blush: #fed7e7;             /* Candy Blush (Top bars, badges, light accents) */
+  --cl-soft: #fff5f8;              /* Soft Marshmallow Tint (Input bg, footer bg) */
+  --cl-cream: #fffaf8;             /* Warm Cream Canvas (Body background) */
+
+  /* Pastel Card Rotation Palette */
+  --cl-pastel-1: #f9dcd9;          /* Strawberry Milk */
+  --cl-pastel-2: #dff0dc;          /* Pistachio Mint */
+  --cl-pastel-3: #fbd3dd;          /* Marshmallow Rose */
+  --cl-pastel-4: #fbecc8;          /* Vanilla Caramel Wafer */
+  --cl-pastel-5: #f6e0d2;          /* Peach Cream */
+  --cl-pastel-6: #e2eefb;          /* Cotton Candy Blue */
+
+  /* Secondary & Status Accents */
+  --cl-mint: #5bcfcb;              /* Sweet Teal Mint */
+  --cl-mint-soft: #e3f6f1;         /* Soft Mint background (Stock available) */
+  --cl-mint-text: #2f8a6d;         /* Forest Mint text */
+  --cl-amber: #e9a93a;             /* Warm Amber for Star Ratings */
+  --cl-gold: #f2b134;              /* Golden Yellow for verified badges */
+  --cl-whatsapp: #25d366;          /* WhatsApp Support Brand Green */
+
+  /* Neutrals & Text */
+  --cl-ink: #3b2a2f;               /* Dark Cocoa Charcoal (Primary Body Text) */
+  --cl-muted: #8d7a80;             /* Truffle Taupe (Secondary & Caption Text) */
+  --cl-line: #f4e1e6;              /* Delicate Pinkish Border Line */
+  --cl-line-dark: #f6dde5;         /* Deeper Border Line for floating nav */
+  --cl-white: #ffffff;             /* Clean Pure White Surface */
+
+  /* ==========================================================================
+     2. Typography Tokens
+     ========================================================================== */
+  --font-display: 'El Messiri', 'IBM Plex Sans Arabic', serif;
+  --font-sans: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 11px;
+  --text-sm: 12.5px;
+  --text-base: 15px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-2xl: 26px;
+  --text-3xl: 32px;
+  --text-4xl: 42px;
+
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  /* ==========================================================================
+     3. Radius & Elevation
+     ========================================================================== */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-card: 22px;             /* Signature Candy Loz Card Radius */
+  --radius-section: 32px;          /* Section Containers */
+  --radius-pill: 99px;             /* Buttons, Badges, Search Bars */
+  --radius-full: 50%;              /* Circular Icons, Avatars */
+
+  /* Shadows (Tinged with berry for warmer gourmet feel) */
+  --shadow-1: 0 4px 14px rgba(184, 92, 110, 0.08);
+  --shadow-2: 0 14px 34px rgba(184, 92, 110, 0.14);
+  --shadow-3: 0 26px 60px rgba(124, 29, 67, 0.18);
+  --shadow-cta: 0 12px 26px rgba(215, 45, 88, 0.30);
+  --shadow-dock: 0 14px 34px rgba(124, 29, 67, 0.18);
+
+  /* Easing & Timing */
+  --ease-candy: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* ==========================================================================
+     4. Semantic Aliases (Platform / Theme mapping)
+     ========================================================================== */
+  --color-primary: var(--cl-berry-primary);
+  --color-primary-dark: var(--cl-berry-dark);
+  --color-primary-light: var(--cl-blush);
+  --color-action: var(--cl-strawberry);
+  --bg-page: var(--cl-cream);
+  --bg-surface: var(--cl-white);
+  --bg-soft: var(--cl-soft);
+  --text-main: var(--cl-ink);
+  --text-sub: var(--cl-muted);
+  --border-card: var(--cl-line);
+}
+
+/* Base Body Styles */
+body {
+  background-color: var(--cl-cream);
+  color: var(--cl-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   5. Component Utility Classes
+   ========================================================================== */
+
+/* Headings with Candy Display Font */
+.candy-heading-display {
+  font-family: var(--font-display);
+  color: var(--cl-rose);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Decorative Divider with Central Diamond / Heart */
+.candy-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 10px auto 26px;
+}
+.candy-divider:before,
+.candy-divider:after {
+  content: '';
+  width: 52px;
+  height: 1.5px;
+  background: var(--cl-rose);
+  opacity: 0.5;
+}
+.candy-heart {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--cl-strawberry);
+  transform: rotate(45deg);
+  border-radius: 3px 0 3px 0;
+  position: relative;
+  margin: 0 4px;
+}
+.candy-heart:before,
+.candy-heart:after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cl-strawberry);
+}
+.candy-heart:before { left: -6px; top: 0; }
+.candy-heart:after { left: 0; top: -6px; }
+
+/* Buttons */
+.candy-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 8px 28px;
+  border-radius: var(--radius-pill);
+  background: var(--cl-strawberry);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--font-extrabold);
+  border: 0;
+  box-shadow: var(--shadow-cta);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--ease-candy);
+}
+.candy-btn-primary:hover {
+  background: var(--cl-berry-primary);
+  transform: translateY(-2px);
+}
+
+.candy-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--cl-blush);
+  background: #ffffff;
+  color: var(--cl-strawberry);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--ease-candy);
+}
+.candy-btn-outline:hover {
+  background: var(--cl-strawberry);
+  border-color: var(--cl-strawberry);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.candy-btn-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cl-line);
+  background: #ffffff;
+  color: var(--cl-rose);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-candy);
+}
+.candy-btn-circle:hover {
+  background: var(--cl-soft);
+  border-color: #f3c3ce;
+  color: var(--cl-strawberry);
+  transform: translateY(-2px);
+}
+
+/* Candy Search Bar */
+.candy-search {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+}
+.candy-search input {
+  width: 100%;
+  height: 50px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--cl-line);
+  background: var(--cl-soft);
+  padding: 0 22px 0 60px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--cl-ink);
+  outline: none;
+  box-sizing: border-box;
+  transition: all var(--duration-fast);
+}
+.candy-search input:focus {
+  border-color: #f3a5b8;
+  background: #ffffff;
+  box-shadow: 0 0 0 5px rgba(215, 45, 88, 0.08);
+}
+.candy-search button {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--cl-strawberry);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+.candy-search button:hover {
+  background: var(--cl-berry-primary);
+}
+
+/* Product Card (Ice-cream Parlour Style) */
+.candy-product-card {
+  --tint: var(--cl-pastel-1);
+  position: relative;
+  background: var(--tint);
+  border-radius: var(--radius-card);
+  padding: 14px 14px 16px;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--duration-normal) var(--ease-candy), box-shadow var(--duration-normal) var(--ease-candy);
+}
+.candy-product-card.tint-1 { --tint: var(--cl-pastel-1); }
+.candy-product-card.tint-2 { --tint: var(--cl-pastel-2); }
+.candy-product-card.tint-3 { --tint: var(--cl-pastel-3); }
+.candy-product-card.tint-4 { --tint: var(--cl-pastel-4); }
+.candy-product-card.tint-5 { --tint: var(--cl-pastel-5); }
+.candy-product-card.tint-6 { --tint: var(--cl-pastel-6); }
+
+.candy-product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-2);
+}
+.candy-product-card .card-image-box {
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 18px;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.candy-product-card .card-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s var(--ease-candy);
+}
+.candy-product-card:hover .card-image-box img {
+  transform: scale(1.08) translateY(-4px);
+}
+.candy-product-card .wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--cl-strawberry);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.2s;
+}
+.candy-product-card .wishlist-btn:hover {
+  transform: scale(1.1);
+}
+.candy-product-card .card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cl-ink);
+  line-height: 1.5;
+  margin: 10px 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3em;
+  text-decoration: none;
+}
+.candy-product-card .card-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.candy-product-card .current-price {
+  color: var(--cl-berry-primary);
+  font-size: 1.1rem;
+  font-weight: var(--font-extrabold);
+}
+.candy-product-card .before-price {
+  color: var(--cl-muted);
+  font-size: 0.85rem;
+  text-decoration: line-through;
+}
+.candy-product-card .btn-add-card {
+  margin-top: auto;
+  min-height: 40px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  border: 0;
+  background: #ffffff;
+  color: var(--cl-berry-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: var(--font-bold);
+  box-shadow: 0 4px 10px rgba(124, 29, 67, 0.08);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-candy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.candy-product-card .btn-add-card:hover {
+  background: var(--cl-strawberry);
+  color: #ffffff;
+}
+
+/* Segmented Control Product Tabs */
+.candy-tabs-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #f7dbe4;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 12px 30px rgba(184, 92, 110, 0.12), inset 0 0 0 4px #fff8fa;
+}
+.candy-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  border: 0;
+  background: transparent;
+  color: #9b6b79;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-candy);
+}
+.candy-tab:hover {
+  background: #fff0f4;
+  color: var(--cl-strawberry);
+}
+.candy-tab.active {
+  background: linear-gradient(135deg, #ef4f78 0%, var(--cl-strawberry) 45%, var(--cl-berry-primary) 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(215, 45, 88, 0.35);
+}
+
+/* Floating Mobile Dock */
+.candy-bottom-dock {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  height: auto;
+  padding: 8px 12px;
+  background: #ffffff;
+  border: 1px solid #f6dde5;
+  border-radius: 24px;
+  box-shadow: var(--shadow-dock);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 60;
+}
+.candy-dock-item {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9a3b0;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.candy-dock-item.active {
+  background: #fde9ee;
+  color: var(--cl-strawberry);
+}
+.candy-dock-cart {
+  background: var(--cl-strawberry);
+  color: #ffffff !important;
+  box-shadow: 0 8px 18px rgba(215, 45, 88, 0.35);
+  position: relative;
+}
+.candy-dock-badge {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  border: 2px solid #ffffff;
+  background: var(--cl-berry-primary);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: var(--font-extrabold);
+  line-height: 16px;
+  text-align: center;
+}
