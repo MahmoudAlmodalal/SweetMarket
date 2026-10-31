@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #fffaf8;
+  --foreground: #3b2a2f;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-ibm-plex-sans-arabic), -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+}
