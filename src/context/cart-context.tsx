@@ -254,10 +254,27 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
+const defaultCartContext: CartContextType = {
+  items: [],
+  summary: {
+    subtotal: 0,
+    deliveryFee: 0,
+    total: 0,
+    itemsCount: 0,
+  },
+  selectedZoneId: undefined,
+  isHydrated: false,
+  addItem: () => {},
+  removeItem: () => {},
+  updateQuantity: () => {},
+  clearCart: () => {},
+  setDeliveryZone: () => {},
+};
+
 export function useCart(): CartContextType {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
+    return defaultCartContext;
   }
   return context;
 }
