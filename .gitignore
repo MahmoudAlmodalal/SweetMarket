@@ -7,3 +7,4 @@ build/
 .briefs/
 *.log
 .DS_Store
+*.tsbuildinfo
