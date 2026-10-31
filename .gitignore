@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+build/
+.worktrees/
+.scratch/
+.briefs/
+*.log
+.DS_Store
