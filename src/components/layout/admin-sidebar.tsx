@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useAdminAuth } from '@/context/admin-auth-context';
 import { Badge } from '@/components/ui/badge';
+import { StoreLogo } from '@/components/ui/store-logo';
 import { cn } from '@/lib/utils';
 
 export interface AdminSidebarProps {
@@ -83,9 +84,12 @@ function SidebarContent({ isMobile = false, onClose }: SidebarContentProps) {
           onClick={() => isMobile && onClose?.()}
           className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry rounded-xl p-1"
         >
-          <div className="w-10 h-10 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shadow-candy-1 group-hover:scale-105 transition-transform duration-200">
-            <Sparkles className="w-5 h-5 text-candy-berry" aria-hidden="true" />
-          </div>
+          <StoreLogo
+            variant="icon"
+            width={38}
+            height={38}
+            className="w-10 h-10 group-hover:scale-105 transition-transform duration-200"
+          />
           <div className="flex flex-col text-right">
             <span className="font-display font-bold text-base text-candy-ink leading-tight group-hover:text-candy-berry transition-colors">
               كاندي لوز - لوحة الإدارة

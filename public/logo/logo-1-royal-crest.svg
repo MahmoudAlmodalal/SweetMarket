@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 220" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Gradients based on tokens.css -->
+    <linearGradient id="crest-primary-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#851645" />
+    </linearGradient>
+
+    <linearGradient id="crest-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7D070" />
+      <stop offset="45%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#BF7615" />
+    </linearGradient>
+
+    <linearGradient id="crest-blush-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5F8" />
+      <stop offset="100%" stop-color="#FED7E7" />
+    </linearGradient>
+
+    <filter id="crest-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#A31D56" flood-opacity="0.16" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;600;700&amp;display=swap');
+      .font-crest-ar {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), serif;
+        font-weight: 700;
+      }
+      .font-crest-sub {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- ================= EMBLEM / CREST (RTL Right side: Center x=560, y=110) ================= -->
+  <g transform="translate(555, 110)" filter="url(#crest-shadow)">
+    <!-- Outer Decorative Scallop / Rosette Background -->
+    <circle r="78" fill="url(#crest-blush-grad)" stroke="#E6DED8" stroke-width="1.5" />
+    
+    <!-- Outer Ring with Primary Berry Accent -->
+    <circle r="72" fill="none" stroke="url(#crest-primary-grad)" stroke-width="2.5" stroke-dasharray="7 3.5" />
+    
+    <!-- Inner Solid Luxury Disc -->
+    <circle r="63" fill="url(#crest-primary-grad)" />
+    <circle r="57" fill="none" stroke="url(#crest-gold-grad)" stroke-width="1.5" opacity="0.85" />
+
+    <!-- Royal Crown at Top of Crest -->
+    <path d="M-22,-24 L-26,-42 L-10,-33 L0,-46 L10,-33 L26,-42 L22,-24 Z" fill="url(#crest-gold-grad)" />
+    <circle cx="-26" cy="-44" r="2.5" fill="#FFF5F8" />
+    <circle cx="0" cy="-48" r="3" fill="#FFF5F8" />
+    <circle cx="26" cy="-44" r="2.5" fill="#FFF5F8" />
+
+    <!-- Central Stylized Almond & Sweet Heart Motif -->
+    <!-- Almond Outer Shell (Gold) -->
+    <path d="M0,-16 C22,-16 32,5 24,24 C16,40 0,48 0,48 C0,48 -16,40 -24,24 C-32,5 -22,-16 0,-16 Z" 
+          fill="url(#crest-gold-grad)" />
+    <!-- Almond Inner Nut Core (Blush Cream with Berry Shading) -->
+    <path d="M0,-8 C14,-8 20,8 15,22 C10,34 0,40 0,40 C0,40 -10,34 -15,22 C-20,8 -14,-8 0,-8 Z" 
+          fill="#FFF8F5" />
+    <!-- Almond Grain Highlights -->
+    <path d="M0,-2 C6,8 6,24 0,34" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="round" fill="none" />
+    <path d="M-5,5 C-1,14 -2,22 -6,28" stroke="#E8A33D" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7" />
+    <path d="M5,5 C1,14 2,22 6,28" stroke="#E8A33D" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.7" />
+
+    <!-- Bottom Laurel Flourish in Gold -->
+    <path d="M-38,20 C-46,36 -28,52 0,56 C28,52 46,36 38,20 C34,28 20,38 0,40 C-20,38 -34,28 -38,20 Z" 
+          fill="url(#crest-gold-grad)" opacity="0.9" />
+
+    <!-- Sparkle Stars -->
+    <path d="M-36,-10 Q-36,-18 -44,-18 Q-36,-18 -36,-26 Q-36,-18 -28,-18 Q-36,-18 -36,-10 Z" fill="url(#crest-gold-grad)" />
+    <path d="M38,-8 Q38,-15 32,-15 Q38,-15 38,-22 Q38,-15 44,-15 Q38,-15 38,-8 Z" fill="url(#crest-gold-grad)" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY & BRAND TEXT (RTL Left/Center) ================= -->
+  <!-- Top Luxury Tagline / Badge -->
+  <g transform="translate(460, 48)">
+    <rect x="-190" y="-16" width="190" height="24" rx="12" fill="#FFF5F8" stroke="#FED7E7" stroke-width="1" />
+    <circle cx="-178" cy="-4" r="3" fill="#E8A33D" />
+    <text x="-166" y="0" text-anchor="start" class="font-crest-sub" font-size="11" font-weight="600" fill="#A31D56" letter-spacing="0.5">
+      حلويات ملكية فاخرة • ROYAL CONFECTIONERY
+    </text>
+  </g>
+
+  <!-- Main Arabic Title: كاندي لوز -->
+  <g transform="translate(460, 118)">
+    <text x="0" y="0" text-anchor="end" class="font-crest-ar" font-size="54" fill="#A31D56" letter-spacing="-0.5">
+      كاندي لوز
+    </text>
+    
+    <!-- Arabic Calligraphic Diacritic & Almond Dot Accents (Gold) -->
+    <path d="M-10,-52 Q-6,-60 2,-56 Q-2,-48 -10,-52 Z" fill="url(#crest-gold-grad)" />
+    <circle cx="-135" cy="-56" r="4.5" fill="url(#crest-gold-grad)" />
+    <circle cx="-146" cy="-56" r="4.5" fill="url(#crest-gold-grad)" />
+    <path d="M-195,-48 Q-190,-58 -180,-54 Q-186,-44 -195,-48 Z" fill="url(#crest-gold-grad)" />
+  </g>
+
+  <!-- Decorative Divider with Gold Diamond -->
+  <g transform="translate(460, 142)">
+    <line x1="0" y1="0" x2="-410" y2="0" stroke="#E6DED8" stroke-width="1" />
+    <line x1="-80" y1="0" x2="-260" y2="0" stroke="url(#crest-gold-grad)" stroke-width="1.8" />
+    <polygon points="-170,-4 -166,0 -170,4 -174,0" fill="#A31D56" />
+    <circle cx="-155" cy="0" r="2" fill="#E8A33D" />
+    <circle cx="-185" cy="0" r="2" fill="#E8A33D" />
+  </g>
+
+  <!-- English Subtitle & Secondary Descriptor -->
+  <g transform="translate(460, 172)">
+    <text x="0" y="0" text-anchor="end" class="font-crest-sub" font-size="16" font-weight="700" fill="#2B1A10" letter-spacing="3.5">
+      CANDY LOZ
+    </text>
+    <text x="-185" y="0" text-anchor="end" class="font-crest-sub" font-size="13" font-weight="500" fill="#6B5D55" letter-spacing="1">
+      ORIENTAL &amp; WESTERN SWEETS
+    </text>
+    <!-- Little Sparkle -->
+    <path d="M-400,-4 Q-400,-10 -406,-10 Q-400,-10 -400,-16 Q-400,-10 -394,-10 Q-400,-10 -400,-4 Z" fill="#E8A33D" />
+  </g>
+</svg>

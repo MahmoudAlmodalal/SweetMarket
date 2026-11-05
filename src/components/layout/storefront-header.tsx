@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
+import { StoreLogo } from "@/components/ui/store-logo";
 import type { CartItem } from "@/types";
 
 export interface StorefrontHeaderProps {
@@ -96,13 +97,13 @@ export function StorefrontHeader({
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-candy-line/60 shadow-[0_4px_20px_rgba(184,92,110,0.06)]",
+        "sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-candy-line/60 shadow-card",
         className
       )}
     >
       {/* Top Announcement Ribbon */}
-      <div className="bg-candy-soft border-b border-candy-line/40 px-4 py-1.5 text-center flex items-center justify-center gap-2 text-xs font-semibold text-[#800a40]">
-        <Sparkles className="w-3.5 h-3.5 text-candy-strawberry shrink-0" />
+      <div className="bg-candy-soft border-b border-candy-line/40 px-4 py-1.5 text-center flex items-center justify-center gap-2 text-xs font-semibold text-primary">
+        <Sparkles className="w-3.5 h-3.5 text-secondary shrink-0" />
         <span>توصيل طازج وسريع لجميع المناطق 🍰</span>
       </div>
 
@@ -111,13 +112,17 @@ export function StorefrontHeader({
           {/* Brand Logo & Title */}
           <Link
             href="/"
-            className="flex items-center gap-3 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry rounded-lg p-1 -m-1"
+            className="flex items-center gap-2.5 sm:gap-3 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1 -m-1"
           >
-            <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-candy-blush text-[#800a40] flex items-center justify-center shadow-candy-1 group-hover:scale-105 transition-transform duration-200">
-              <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-[#800a40]" />
-            </div>
+            <StoreLogo
+              variant="icon"
+              width={46}
+              height={46}
+              priority
+              className="w-10 h-10 md:w-12 md:h-12 group-hover:scale-105 transition-transform duration-200"
+            />
             <div className="flex flex-col">
-              <span className="font-display font-bold text-xl md:text-2xl text-[#800a40] leading-tight tracking-tight">
+              <span className="font-display font-bold text-xl md:text-2xl text-primary leading-tight tracking-tight">
                 كاندي لوز
               </span>
               <span className="font-sans text-[11px] md:text-xs text-candy-muted tracking-wider">
@@ -138,13 +143,13 @@ export function StorefrontHeader({
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-candy-pill text-sm font-semibold transition-all duration-200 select-none",
+                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-button text-sm font-semibold transition-all duration-200 select-none",
                     link.isActive
-                      ? "bg-candy-soft text-[#800a40] shadow-sm font-bold"
-                      : "text-candy-ink/80 hover:text-[#800a40] hover:bg-candy-soft/60"
+                      ? "bg-candy-soft text-primary shadow-sm font-bold"
+                      : "text-candy-ink/80 hover:text-primary hover:bg-candy-soft/60"
                   )}
                 >
-                  <Icon className="w-4 h-4 text-candy-rose" />
+                  <Icon className="w-4 h-4 text-secondary" />
                   <span>{link.label}</span>
                 </Link>
               );
@@ -160,16 +165,16 @@ export function StorefrontHeader({
                 type="search"
                 placeholder="ابحث عن حلاك..."
                 aria-label="البحث عن منتج"
-                className="w-full h-10 pr-9 pl-4 bg-candy-soft/80 hover:bg-candy-soft focus:bg-white text-candy-ink placeholder:text-candy-muted text-xs rounded-candy-pill border border-candy-line/60 focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 transition-all duration-200"
+                className="w-full h-10 pr-9 pl-4 bg-candy-soft/80 hover:bg-candy-soft focus:bg-white text-candy-ink placeholder:text-candy-muted text-xs rounded-button border border-candy-line/60 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
               />
             </div>
 
             {/* Quick Track Pill (Desktop only) */}
             <Link
               href="/track"
-              className="hidden sm:inline-flex md:hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-candy-pill bg-candy-soft text-[#800a40] hover:bg-candy-blush text-xs font-bold transition-colors shadow-sm"
+              className="hidden sm:inline-flex md:hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-button bg-candy-soft text-primary hover:bg-candy-blush text-xs font-bold transition-colors shadow-sm"
             >
-              <Truck className="w-4 h-4 text-candy-rose" />
+              <Truck className="w-4 h-4 text-secondary" />
               <span>تتبع طلبي</span>
             </Link>
 
@@ -177,9 +182,9 @@ export function StorefrontHeader({
             <Link
               href="/cart"
               aria-label={`سلة المشتريات (${internalCount} عناصر)`}
-              className="relative w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-[#800a40] flex items-center justify-center transition-all duration-200 active:scale-95 shadow-sm border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry"
+              className="relative w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-primary flex items-center justify-center transition-all duration-200 active:scale-95 shadow-sm border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <ShoppingBag className="w-5 h-5 text-[#800a40]" />
+              <ShoppingBag className="w-5 h-5 text-primary" />
               {internalCount > 0 && (
                 <span
                   aria-label={`${internalCount} أصناف في السلة`}

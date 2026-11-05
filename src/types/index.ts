@@ -16,9 +16,11 @@ export type OrderStatus =
   | 'cancelled';      // ملغي
 
 /**
- * أدوار مستخدمي لوحة التحكم
+ * الأدوار الثلاثة المعتمدة في النظام وفق النموذج الأمني المحدث
  */
-export type AdminRole = 'staff' | 'manager';
+export type AppRole = 'admin' | 'client' | 'guest';
+
+export type AdminRole = 'admin' | 'staff' | 'manager';
 
 /**
  * وحدة قياس بيع المنتج
@@ -153,6 +155,8 @@ export interface Order {
   paymentMethod: 'cash_on_delivery';
   timeline: OrderTimelineEvent[];
   cancelReason?: string;
+  clientId?: string;                 // معرف العميل لتمكين حماية الملكية الصارمة (Ownership Guard)
+  trackingToken?: string;            // رمز تتبع عالي العشوائية للزائر لمنع تخمين أرقام الطلبات
 }
 
 /**

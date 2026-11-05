@@ -58,11 +58,11 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
   const currentTitle = title || resolvePageTitle(pathname);
 
   const handleRoleToggle = () => {
-    const nextRole = role === 'manager' ? 'staff' : 'manager';
+    const nextRole = (role === 'admin' || role === 'manager') ? 'staff' : 'admin';
     switchRole(nextRole);
     toast.info(
-      nextRole === 'manager' ? 'تم التبديل إلى دور مدير' : 'تم التبديل إلى دور موظف',
-      'تم تحديث صلاحيات الحساب للاختبار السريع'
+      nextRole === 'admin' ? 'تم التبديل إلى دور مدير (Admin)' : 'تم التبديل إلى دور موظف (Staff)',
+      'تم تحديث صلاحيات الحساب للاختبار'
     );
   };
 
@@ -114,15 +114,15 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
           aria-label="تبديل الدور بين موظف ومدير"
           className={cn(
             'inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-bold font-sans transition-all duration-200 border shadow-xs active:scale-95',
-            role === 'manager'
+            (role === 'admin' || role === 'manager')
               ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100'
               : 'bg-teal-50 text-teal-900 border-teal-300 hover:bg-teal-100'
           )}
         >
           <ArrowLeftRight className="w-3.5 h-3.5 shrink-0 text-current" aria-hidden="true" />
-          <span className="hidden sm:inline">تبديل موظف/مدير:</span>
+          <span className="hidden sm:inline">الدور:</span>
           <span className="inline-flex items-center gap-1">
-            {role === 'manager' ? (
+            {(role === 'admin' || role === 'manager') ? (
               <>
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
                 <span>مدير</span>

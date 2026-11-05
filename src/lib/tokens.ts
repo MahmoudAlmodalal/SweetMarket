@@ -14,12 +14,12 @@ export const PASTEL_TINTS = [
 ] as const;
 
 export const PASTEL_HEX_TINTS = [
-  "#F9DCD9",
-  "#DFF0DC",
-  "#FBD3DD",
-  "#FBECC8",
-  "#F6E0D2",
-  "#E2EEFB",
+  "#F8E5D8",
+  "#E8F0E4",
+  "#F9E2E5",
+  "#FAECCB",
+  "#F5DEC9",
+  "#E5EDF7",
 ] as const;
 
 export function getPastelTint(index: number): string {

@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 220" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="candy-berry-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#800A40" />
+    </linearGradient>
+
+    <linearGradient id="candy-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="60%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+
+    <linearGradient id="candy-wrap-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FED7E7" />
+      <stop offset="100%" stop-color="#FBD3DD" />
+    </linearGradient>
+
+    <filter id="candy-pop-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#A31D56" flood-opacity="0.18" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap');
+      .candy-joy-ar {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), sans-serif;
+        font-weight: 700;
+      }
+      .candy-joy-meta {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- ================= JOYFUL CANDY BONBON ICON (RTL Right side: x=555, y=110) ================= -->
+  <g transform="translate(555, 110)" filter="url(#candy-pop-shadow)">
+    <!-- Soft circular pastel background -->
+    <circle r="66" fill="#FFF5F8" stroke="#FED7E7" stroke-width="2" />
+    <circle r="59" fill="none" stroke="#FBECC8" stroke-width="2" stroke-dasharray="6 3" />
+
+    <!-- Rotated Bonbon Group (-28 degrees for dynamic tilt) -->
+    <g transform="rotate(-28)">
+      <!-- Left Wrapper Fan (Twisted end) -->
+      <path d="M-34,0 L-54,-20 C-58,-12 -58,12 -54,20 L-34,0 Z" 
+            fill="url(#candy-wrap-grad)" stroke="#A31D56" stroke-width="1.5" stroke-linejoin="round" />
+      <!-- Left Wrapper Ribbing lines -->
+      <line x1="-38" y1="-2" x2="-52" y2="-12" stroke="#A31D56" stroke-width="1" opacity="0.6" />
+      <line x1="-38" y1="2" x2="-52" y2="12" stroke="#A31D56" stroke-width="1" opacity="0.6" />
+      <!-- Left Tie Knot in Gold -->
+      <ellipse cx="-33" cy="0" rx="3.5" ry="8" fill="url(#candy-gold-grad)" stroke="#C78018" stroke-width="1" />
+
+      <!-- Right Wrapper Fan (Twisted end) -->
+      <path d="M34,0 L54,-20 C58,-12 58,12 54,20 L34,0 Z" 
+            fill="url(#candy-wrap-grad)" stroke="#A31D56" stroke-width="1.5" stroke-linejoin="round" />
+      <!-- Right Wrapper Ribbing lines -->
+      <line x1="38" y1="-2" x2="52" y2="-12" stroke="#A31D56" stroke-width="1" opacity="0.6" />
+      <line x1="38" y1="2" x2="52" y2="12" stroke="#A31D56" stroke-width="1" opacity="0.6" />
+      <!-- Right Tie Knot in Gold -->
+      <ellipse cx="33" cy="0" rx="3.5" ry="8" fill="url(#candy-gold-grad)" stroke="#C78018" stroke-width="1" />
+
+      <!-- Candy Center Sweet Body (Round bonbon with clipped stripes) -->
+      <g>
+        <clipPath id="candy-clip">
+          <ellipse cx="0" cy="0" rx="35" ry="24" />
+        </clipPath>
+
+        <!-- Base Bonbon Shell (Berry) -->
+        <ellipse cx="0" cy="0" rx="35" ry="24" fill="url(#candy-berry-grad)" stroke="#800A40" stroke-width="1.5" />
+
+        <!-- Diagonal Swirling Confectionery Stripes inside Bonbon -->
+        <g clip-path="url(#candy-clip)">
+          <!-- Cream White Swirl -->
+          <path d="M-40,-30 L-20,-30 L10,30 L-10,30 Z" fill="#FFFAF8" opacity="0.95" />
+          <!-- Golden Amber Swirl -->
+          <path d="M-12,-30 L8,-30 L38,30 L18,30 Z" fill="url(#candy-gold-grad)" />
+          <!-- Blush Pink Swirl -->
+          <path d="M16,-30 L32,-30 L52,30 L36,30 Z" fill="#FED7E7" />
+          <!-- Gloss / 3D Specular Highlight on Upper Bulb -->
+          <ellipse cx="-8" cy="-10" rx="20" ry="6" fill="#FFFFFF" opacity="0.45" transform="rotate(-10 -8 -10)" />
+        </g>
+      </g>
+    </g>
+
+    <!-- Floating Sparkles & Confection Stars around Bonbon -->
+    <path d="M-36,-38 Q-36,-46 -44,-46 Q-36,-46 -36,-54 Q-36,-46 -28,-46 Q-36,-46 -36,-38 Z" fill="url(#candy-gold-grad)" />
+    <path d="M38,-34 Q38,-40 32,-40 Q38,-40 38,-46 Q38,-40 44,-40 Q38,-40 38,-34 Z" fill="url(#candy-gold-grad)" />
+    <circle cx="44" cy="38" r="3" fill="#A31D56" />
+    <circle cx="-42" cy="36" r="2.5" fill="#E8A33D" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY & BRAND TEXT (RTL Left side - Clean & Simple) ================= -->
+  <!-- Main Arabic Title: كاندي لوز -->
+  <g transform="translate(450, 102)">
+    <text x="0" y="0" text-anchor="end" class="candy-joy-ar" font-size="58" fill="#A31D56">
+      كاندي <tspan fill="#E8A33D">لوز</tspan>
+    </text>
+    
+    <!-- Cheerful Candy Droplets over letters -->
+    <circle cx="-146" cy="-56" r="5" fill="#FED7E7" stroke="#A31D56" stroke-width="1.5" />
+    <circle cx="-160" cy="-56" r="5" fill="url(#candy-gold-grad)" />
+    <path d="M-12,-52 Q0,-62 12,-54" stroke="#E8A33D" stroke-width="3" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Clean Subtle Divider -->
+  <g transform="translate(450, 132)">
+    <line x1="0" y1="0" x2="-390" y2="0" stroke="#FED7E7" stroke-width="2" />
+    <circle cx="-30" cy="0" r="3.5" fill="#A31D56" />
+    <circle cx="-70" cy="0" r="3.5" fill="#E8A33D" />
+    <circle cx="-110" cy="0" r="3.5" fill="#FED7E7" />
+    <line x1="-130" y1="0" x2="-260" y2="0" stroke="#A31D56" stroke-width="2.5" stroke-linecap="round" />
+    <polygon points="-195,-4 -191,0 -195,4 -199,0" fill="#E8A33D" />
+  </g>
+
+  <!-- Subtitle Text -->
+  <g transform="translate(450, 168)">
+    <text x="0" y="0" text-anchor="end" class="candy-joy-meta" font-size="18" font-weight="700" fill="#2B1A10" letter-spacing="3.5">
+      CANDY LOZ
+    </text>
+    <text x="-175" y="0" text-anchor="end" class="candy-joy-meta" font-size="14" font-weight="600" fill="#6B5D55" letter-spacing="1">
+      شوكولاتة • كيك • حلويات فاخرة
+    </text>
+  </g>
+</svg>

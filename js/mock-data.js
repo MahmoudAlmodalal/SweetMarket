@@ -152,7 +152,7 @@ export const orders = [
 ];
 
 export const adminUsers = [
-  { id: "u1", name: "أبو محمد", email: "manager@sweets.test", role: "manager", active: true, password: "Manager#123" },
-  { id: "u2", name: "خالد",     email: "staff1@sweets.test",  role: "staff",   active: true, password: "Staff#123" },
-  { id: "u3", name: "نورة",     email: "staff2@sweets.test",  role: "staff",   active: true, password: "Staff#123" },
+  { id: "u1", name: "أبو محمد", email: "manager@sweets.test", role: "admin", active: true },
+  { id: "u2", name: "خالد",     email: "staff1@sweets.test",  role: "staff", active: true },
+  { id: "u3", name: "نورة",     email: "staff2@sweets.test",  role: "staff", active: true },
 ];

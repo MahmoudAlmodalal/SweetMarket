@@ -322,8 +322,8 @@
 - **Request:**
 ```json
 {
-  "username": "staff_nour",
-  "password": "SecurePassword123!"
+  "username": "admin_tariq",
+  "password": "<ADMIN_PASSWORD>"
 }
 ```
 - **Responses:**
@@ -332,7 +332,7 @@
   {
     "success": true,
     "data": {
-      "token": "eyJhbGciOiJIUzI1NiIsIn...",
+      "token": "<SECURE_SESSION_TOKEN>",
       "user": {
         "id": "usr_101",
         "username": "staff_nour",

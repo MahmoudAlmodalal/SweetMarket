@@ -40,9 +40,9 @@ const badgeVariants: Record<BadgeVariant, string> = {
   muted: "bg-candy-soft text-candy-muted border-candy-line",
 
   // Marketing & Tags
-  bestseller: "bg-amber-100 text-amber-900 border-candy-amber/40 shadow-sm",
-  discount: "bg-candy-strawberry text-white border-transparent shadow-candy-cta",
-  tag: "bg-candy-blush text-candy-berry border-candy-line-dark",
+  bestseller: "bg-amber-100 text-amber-900 border-accent/40 shadow-sm",
+  discount: "bg-secondary text-white border-transparent shadow-sm",
+  tag: "bg-blush text-primary border-candy-line-dark",
 };
 
 const badgeDots: Record<BadgeVariant, string> = {
@@ -59,7 +59,7 @@ const badgeDots: Record<BadgeVariant, string> = {
   muted: "bg-candy-muted",
   bestseller: "bg-amber-500",
   discount: "bg-white",
-  tag: "bg-candy-berry",
+  tag: "bg-primary",
 };
 
 const badgeSizes: Record<"sm" | "md" | "lg", string> = {

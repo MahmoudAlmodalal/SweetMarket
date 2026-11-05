@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شعار متجر كاندي لوز الرسمي | Candy Loz Official Logo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #A31D56;
+      --color-primary-hover: #851645;
+      --color-primary-subtle: #FDF2F4;
+      --color-accent: #E8A33D;
+      --color-bg: #FFFAF8;
+      --color-surface: #FFFFFF;
+      --color-soft: #FFF5F8;
+      --color-blush: #FED7E7;
+      --color-text: #2B1A10;
+      --color-text-muted: #6B5D55;
+      --color-border: #E6DED8;
+      --radius-card: 22px;
+      --radius-pill: 99px;
+      --shadow-1: 0 4px 14px rgba(163, 29, 86, 0.08);
+      --shadow-2: 0 14px 34px rgba(163, 29, 86, 0.14);
+      --shadow-3: 0 26px 60px rgba(124, 29, 67, 0.18);
+      --font-heading: 'El Messiri', serif;
+      --font-body: 'IBM Plex Sans Arabic', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    header.header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 32px 20px;
+      background: var(--color-surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-1);
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-soft);
+      border: 1px solid var(--color-blush);
+      color: var(--color-primary);
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: 30px;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: var(--color-text-muted);
+      font-size: 15px;
+      max-width: 600px;
+      margin: 0 auto 16px;
+    }
+
+    .logos-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .logo-card {
+      background: var(--color-surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-card.featured {
+      border: 2px solid var(--color-primary);
+    }
+
+    .logo-card-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--color-soft);
+    }
+
+    .logo-title-group h2 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bg-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bg-btn {
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: white;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+
+    .bg-btn:hover, .bg-btn.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .logo-preview-area {
+      padding: 40px 24px;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg);
+      transition: background 0.3s ease;
+    }
+
+    .logo-preview-area img {
+      max-width: 500px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .logo-card-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--color-border);
+      background: var(--color-surface);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo-desc {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      background: var(--color-primary);
+      color: white;
+      transition: all 0.2s;
+    }
+
+    .btn:hover { background: var(--color-primary-hover); }
+
+    .bg-checker {
+      background-color: #fff;
+      background-image: linear-gradient(45deg, #eee 25%, transparent 25%), 
+                        linear-gradient(-45deg, #eee 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #eee 75%), 
+                        linear-gradient(-45deg, transparent 75%, #eee 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+    .bg-dark { background-color: #2B1A10 !important; }
+    .bg-white { background-color: #FFFFFF !important; }
+    .bg-cream { background-color: #FFFAF8 !important; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="badge-pill">🍬 شعار كاندي لوز الرسمي</div>
+      <h1>الشعار المعتمد لمتجر كاندي لوز للحلويات</h1>
+      <p class="subtitle">
+        تم اعتماد حبة الحلوى (Bonbon Badge) مع كتابة بسيطة وواضحة بدون أي إضافات علوية، ومطابق تماماً لرموز tokens.css و globals.css.
+      </p>
+    </header>
+
+    <div class="logos-grid">
+      <!-- 1. FULL LOGO -->
+      <div class="logo-card featured">
+        <div class="logo-card-header">
+          <div class="logo-title-group">
+            <h2>01. الشعار الكامل مع النص البسيط (logo.svg)</h2>
+          </div>
+          <div class="bg-controls">
+            <button class="bg-btn active" onclick="setBg('p-1', 'bg-cream', this)">كريمي</button>
+            <button class="bg-btn" onclick="setBg('p-1', 'bg-white', this)">أبيض</button>
+            <button class="bg-btn" onclick="setBg('p-1', 'bg-dark', this)">كاكاو داكن</button>
+            <button class="bg-btn" onclick="setBg('p-1', 'bg-checker', this)">شفاف</button>
+          </div>
+        </div>
+        <div class="logo-preview-area bg-cream" id="p-1">
+          <img src="logo.svg" alt="شعار كاندي لوز مع النص البسيط">
+        </div>
+        <div class="logo-card-footer">
+          <div class="logo-desc">شارة الحلوى المعتمدة بجانب كتابة "كاندي لوز" و "CANDY LOZ" بتنسيق نقي وبسيط.</div>
+          <a href="logo.svg" download class="btn">تحميل SVG</a>
+        </div>
+      </div>
+
+      <!-- 2. ICON ONLY -->
+      <div class="logo-card">
+        <div class="logo-card-header">
+          <div class="logo-title-group">
+            <h2>02. أيقونة الشعار الصافية (logo-icon.svg)</h2>
+          </div>
+          <div class="bg-controls">
+            <button class="bg-btn active" onclick="setBg('p-2', 'bg-cream', this)">كريمي</button>
+            <button class="bg-btn" onclick="setBg('p-2', 'bg-white', this)">أبيض</button>
+            <button class="bg-btn" onclick="setBg('p-2', 'bg-dark', this)">كاكاو داكن</button>
+            <button class="bg-btn" onclick="setBg('p-2', 'bg-checker', this)">شفاف</button>
+          </div>
+        </div>
+        <div class="logo-preview-area bg-cream" id="p-2">
+          <img src="logo-icon.svg" style="max-width: 140px;" alt="أيقونة كاندي لوز">
+        </div>
+        <div class="logo-card-footer">
+          <div class="logo-desc">القرص الدائري الصافي، مفعل تلقائياً كأيقونة للموقع (Favicon) وأيقونة الترويسة والتطبيق.</div>
+          <a href="logo-icon.svg" download class="btn">تحميل SVG</a>
+        </div>
+      </div>
+
+      <!-- 3. BADGE WITH TEXT -->
+      <div class="logo-card">
+        <div class="logo-card-header">
+          <div class="logo-title-group">
+            <h2>03. الشارة المدمجة بالنص (logo-badge.svg)</h2>
+          </div>
+          <div class="bg-controls">
+            <button class="bg-btn active" onclick="setBg('p-3', 'bg-cream', this)">كريمي</button>
+            <button class="bg-btn" onclick="setBg('p-3', 'bg-white', this)">أبيض</button>
+            <button class="bg-btn" onclick="setBg('p-3', 'bg-dark', this)">كاكاو داكن</button>
+            <button class="bg-btn" onclick="setBg('p-3', 'bg-checker', this)">شفاف</button>
+          </div>
+        </div>
+        <div class="logo-preview-area bg-cream" id="p-3">
+          <img src="logo-badge.svg" style="max-width: 160px;" alt="شارة كاندي لوز">
+        </div>
+        <div class="logo-card-footer">
+          <div class="logo-desc">القرص الدائري مدمجاً معه اسم المتجر "كاندي لوز"، مناسب للملصقات وختم الأكياس الدائري.</div>
+          <a href="logo-badge.svg" download class="btn">تحميل SVG</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setBg(previewId, bgClass, btn) {
+      const el = document.getElementById(previewId);
+      el.className = 'logo-preview-area ' + bgClass;
+      const group = btn.parentElement.querySelectorAll('.bg-btn');
+      group.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

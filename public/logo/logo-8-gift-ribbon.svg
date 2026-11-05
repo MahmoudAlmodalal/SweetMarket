@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 220" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="ribbon-berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#700937" />
+    </linearGradient>
+
+    <linearGradient id="ribbon-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="50%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#BF7615" />
+    </linearGradient>
+
+    <filter id="ribbon-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#A31D56" flood-opacity="0.14" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap');
+      .ribbon-ar {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), sans-serif;
+        font-weight: 700;
+      }
+      .ribbon-meta {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- ================= SWEET GIFT RIBBON ICON (RTL Right side: x=555, y=110) ================= -->
+  <g transform="translate(555, 110)" filter="url(#ribbon-shadow)">
+    <!-- Soft circular backdrop -->
+    <circle r="65" fill="#FFF5F8" stroke="#FED7E7" stroke-width="1.5" />
+
+    <!-- Ribbon Loop Form: stylized almond & gift bow -->
+    <!-- Left Ribbon Loop (Berry) -->
+    <path d="M0,0 C-32,-42 -44,-8 -22,18 C-10,32 0,22 0,0 Z" 
+          fill="url(#ribbon-berry)" />
+    <!-- Right Ribbon Loop (Gold) -->
+    <path d="M0,0 C32,-42 44,-8 22,18 C10,32 0,22 0,0 Z" 
+          fill="url(#ribbon-gold)" />
+
+    <!-- Center Almond Kernel Gem -->
+    <ellipse cx="0" cy="-6" rx="9" ry="16" fill="#FFFBF8" stroke="url(#ribbon-gold)" stroke-width="2" />
+    <ellipse cx="0" cy="-6" rx="5" ry="10" fill="url(#ribbon-berry)" />
+
+    <!-- Flowing Ribbon Tails below -->
+    <path d="M-6,14 C-14,28 -28,38 -36,44 C-28,40 -16,34 -4,22 Z" fill="url(#ribbon-berry)" />
+    <path d="M6,14 C14,28 28,38 36,44 C28,40 16,34 4,22 Z" fill="url(#ribbon-gold)" />
+
+    <!-- Sparkle Stars -->
+    <path d="M-30,-28 Q-30,-34 -36,-34 Q-30,-34 -30,-40 Q-30,-34 -24,-34 Q-30,-34 -30,-28 Z" fill="url(#ribbon-gold)" />
+    <circle cx="34" cy="-26" r="2.5" fill="#A31D56" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY & BRAND TEXT (RTL Left side - Simple & Clean) ================= -->
+  <!-- Main Arabic Title: كاندي لوز -->
+  <g transform="translate(450, 102)">
+    <text x="0" y="0" text-anchor="end" class="ribbon-ar" font-size="58" fill="#A31D56">
+      كاندي <tspan fill="#E8A33D">لوز</tspan>
+    </text>
+
+    <!-- Ribbon Flourish -->
+    <path d="M-12,-52 Q-2,-62 10,-56" stroke="url(#ribbon-gold)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Clean Minimalist Divider -->
+  <g transform="translate(450, 132)">
+    <line x1="0" y1="0" x2="-390" y2="0" stroke="#E6DED8" stroke-width="1.5" />
+    <line x1="-90" y1="0" x2="-260" y2="0" stroke="url(#ribbon-berry)" stroke-width="2.5" stroke-linecap="round" />
+    <circle cx="-175" cy="0" r="3" fill="#E8A33D" />
+  </g>
+
+  <!-- Subtitle Text -->
+  <g transform="translate(450, 168)">
+    <text x="0" y="0" text-anchor="end" class="ribbon-meta" font-size="18" font-weight="700" fill="#2B1A10" letter-spacing="3.5">
+      CANDY LOZ
+    </text>
+    <text x="-175" y="0" text-anchor="end" class="ribbon-meta" font-size="14" font-weight="500" fill="#6B5D55" letter-spacing="1.5">
+      SWEET GIFTS • بوكسات وهدايا الحلويات
+    </text>
+  </g>
+</svg>

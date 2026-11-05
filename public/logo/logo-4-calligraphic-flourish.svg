@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 220" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="cal-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBE59E" />
+      <stop offset="40%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#B2680E" />
+    </linearGradient>
+
+    <linearGradient id="cal-berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A31D56" />
+      <stop offset="70%" stop-color="#851645" />
+      <stop offset="100%" stop-color="#5E0B2D" />
+    </linearGradient>
+
+    <filter id="cal-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#A31D56" flood-opacity="0.14" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap');
+      .cal-ar-title {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), serif;
+        font-weight: 700;
+      }
+      .cal-meta {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- ================= CALLIGRAPHIC ALMOND SEAL (RTL Right: x=555, y=110) ================= -->
+  <g transform="translate(555, 110)" filter="url(#cal-glow)">
+    <!-- 8-Point Arabesque Star Geometry in background -->
+    <g opacity="0.45">
+      <rect x="-56" y="-56" width="112" height="112" rx="14" fill="#FED7E7" />
+      <rect x="-56" y="-56" width="112" height="112" rx="14" fill="#FED7E7" transform="rotate(45)" />
+      <circle r="52" fill="#FFF5F8" stroke="#E6DED8" stroke-width="1" />
+    </g>
+
+    <!-- Outer Circular Gold Calligraphy Border -->
+    <circle r="46" fill="none" stroke="url(#cal-gold)" stroke-width="2" stroke-linecap="round" stroke-dasharray="12 4 4 4" />
+
+    <!-- Center Calligraphic Almond Icon with Leaf & Syrup Drop -->
+    <!-- Almond Shell Left Petal (Berry Gradient) -->
+    <path d="M0,-34 C-24,-16 -30,12 -12,32 C-2,42 0,42 0,42 C0,42 -6,22 -2,4 C2,-12 -4,-26 0,-34 Z" 
+          fill="url(#cal-berry)" />
+
+    <!-- Almond Shell Right Petal (Gold Gradient) -->
+    <path d="M0,-34 C24,-16 30,12 12,32 C2,42 0,42 0,42 C0,42 6,22 2,4 C-2,-12 4,-26 0,-34 Z" 
+          fill="url(#cal-gold)" />
+
+    <!-- Pure Almond Kernel in Center -->
+    <path d="M0,-20 C10,-8 12,12 0,26 C-12,12 -10,-8 0,-20 Z" fill="#FFF9F5" />
+    <path d="M0,-14 C5,-4 6,8 0,18" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="round" fill="none" />
+
+    <!-- Delicate Calligraphic Nuqat (Diamond dots) -->
+    <polygon points="0,-42 4,-38 0,-34 -4,-38" fill="url(#cal-gold)" />
+    <polygon points="-28,26 -24,30 -28,34 -32,30" fill="url(#cal-berry)" />
+    <polygon points="28,26 32,30 28,34 24,30" fill="url(#cal-gold)" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY & BRAND TEXT (RTL Left side) ================= -->
+  <!-- Top Heritage Ribbon -->
+  <g transform="translate(450, 48)">
+    <text x="0" y="0" text-anchor="end" class="cal-meta" font-size="12" font-weight="600" fill="#E8A33D" letter-spacing="1">
+      ⚜ أصالة المذاق وفخامة الإهداء • ORIENTAL LUXURY
+    </text>
+  </g>
+
+  <!-- Main Arabic Title: كاندي لوز -->
+  <g transform="translate(450, 118)">
+    <text x="0" y="0" text-anchor="end" class="cal-ar-title" font-size="56" fill="url(#cal-berry)" letter-spacing="0">
+      كاندي لوز
+    </text>
+    
+    <!-- Calligraphic Tashkeel Accents in Gold -->
+    <!-- Shaddah on 'ك' -->
+    <path d="M-30,-54 Q-26,-62 -22,-54 Q-18,-62 -14,-54" stroke="url(#cal-gold)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <!-- Damma on 'ل' -->
+    <path d="M-130,-56 C-134,-62 -124,-66 -122,-58 C-120,-52 -126,-48 -132,-50" stroke="url(#cal-gold)" stroke-width="2" stroke-linecap="round" fill="none" />
+    <!-- Two Dots for 'ي' -->
+    <circle cx="-62" cy="12" r="3.5" fill="url(#cal-gold)" />
+    <circle cx="-73" cy="12" r="3.5" fill="url(#cal-gold)" />
+    <!-- Dot for 'ز' -->
+    <polygon points="-204,-52 -198,-46 -204,-40 -210,-46" fill="url(#cal-gold)" />
+  </g>
+
+  <!-- Decorative Islamic Flourish Divider -->
+  <g transform="translate(450, 142)">
+    <path d="M0,0 L-140,0 Q-150,0 -160,-6 Q-170,0 -180,0 L-400,0" stroke="#E6DED8" stroke-width="1.2" fill="none" />
+    <circle cx="-160" cy="-6" r="3" fill="#A31D56" />
+    <polygon points="-160,-12 -157,-9 -160,-6 -163,-9" fill="url(#cal-gold)" />
+    <line x1="-70" y1="0" x2="-140" y2="0" stroke="url(#cal-gold)" stroke-width="2" />
+  </g>
+
+  <!-- Latin Typography & Arabic Sub-Descriptor -->
+  <g transform="translate(450, 172)">
+    <text x="0" y="0" text-anchor="end" class="cal-meta" font-size="16" font-weight="700" fill="#2B1A10" letter-spacing="3.5">
+      CANDY LOZ
+    </text>
+    <text x="-165" y="0" text-anchor="end" class="cal-meta" font-size="13" font-weight="500" fill="#6B5D55" letter-spacing="1">
+      حلويات شرقية فاخرة • بقلاوة وكنافة
+    </text>
+  </g>
+</svg>

@@ -108,7 +108,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
   }, [loadData]);
 
   const activeManagersCount = useMemo(() => {
-    return users.filter((u) => u.role === 'manager' && u.isActive).length;
+    return users.filter((u) => (u.role === 'admin' || u.role === 'manager') && u.isActive).length;
   }, [users]);
 
   const totalActiveCount = useMemo(() => {
@@ -118,7 +118,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
   const isLastActiveManager = useCallback(
     (userId: string): boolean => {
       const targetUser = users.find((u) => u.id === userId);
-      if (!targetUser || targetUser.role !== 'manager' || !targetUser.isActive) {
+      if (!targetUser || (targetUser.role !== 'admin' && targetUser.role !== 'manager') || !targetUser.isActive) {
         return false;
       }
       return activeManagersCount <= 1;
@@ -189,7 +189,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
 
       // إذا كان التعديل يحول دور مدير نشط إلى موظف، وهو آخر مدير نشط
       if (
-        current.role === 'manager' &&
+        (current.role === 'admin' || current.role === 'manager') &&
         current.isActive &&
         data.role === 'staff' &&
         activeManagersCount <= 1
@@ -264,7 +264,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
       const target = users[index];
 
       // فحص حظر إيقاف آخر مدير نشط وفق ميثاق UX_BLUEPRINT (SCR-19 / BR-004)
-      if (target.role === 'manager' && target.isActive && activeManagersCount <= 1) {
+      if ((target.role === 'admin' || target.role === 'manager') && target.isActive && activeManagersCount <= 1) {
         throw new Error(
           'لا يُسمح بإيقاف آخر مدير نشط في النظام؛ يجب توفر مدير نشط واحد على الأقل لضمان استمرارية الإدارة.'
         );

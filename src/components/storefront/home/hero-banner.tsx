@@ -15,18 +15,18 @@ export function HeroBanner({ className }: HeroBannerProps) {
       aria-label="البانر الترويجي الرئيسي"
       className={cn(
         "relative w-full rounded-candy-section overflow-hidden p-6 sm:p-8 lg:p-10",
-        "bg-gradient-to-br from-candy-soft via-candy-blush/40 to-candy-pastel-3/50",
-        "border border-candy-blush/80 shadow-candy-2",
+        "bg-gradient-to-br from-candy-soft via-candy-blush/30 to-background",
+        "border border-candy-blush/80 shadow-card",
         className
       )}
     >
       {/* Decorative Confectionery Glow Elements */}
       <div
-        className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-candy-berry/15 blur-3xl pointer-events-none"
+        className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-primary/10 blur-3xl pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute -bottom-16 -right-16 w-60 h-60 rounded-full bg-candy-strawberry/20 blur-3xl pointer-events-none"
+        className="absolute -bottom-16 -right-16 w-60 h-60 rounded-full bg-accent/15 blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 
@@ -34,15 +34,15 @@ export function HeroBanner({ className }: HeroBannerProps) {
         {/* Text & CTAs Column */}
         <div className="lg:col-span-7 flex flex-col gap-4 text-right">
           {/* Top Announcement Pill */}
-          <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-candy-pill bg-white/90 backdrop-blur-md shadow-sm border border-candy-blush">
-            <Sparkles className="w-4 h-4 text-candy-strawberry fill-candy-strawberry/20" />
-            <span className="font-sans font-bold text-xs sm:text-sm text-candy-berry">
+          <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-button bg-white/90 backdrop-blur-md shadow-sm border border-candy-blush">
+            <Sparkles className="w-4 h-4 text-accent fill-accent/20" />
+            <span className="font-sans font-bold text-xs sm:text-sm text-primary">
               تشكيلة كاندي لوز للمناسبات الفاخرة
             </span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-candy-berry leading-[1.25] tracking-tight">
+          <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-primary leading-[1.25] tracking-tight">
             أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة
           </h1>
 
@@ -53,15 +53,15 @@ export function HeroBanner({ className }: HeroBannerProps) {
 
           {/* Value Highlights */}
           <div className="flex flex-wrap items-center gap-3 pt-1">
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-candy-berry-dark bg-white/70 px-3 py-1 rounded-candy-pill border border-candy-line">
-              <span className="w-2 h-2 rounded-full bg-candy-strawberry" />
+            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/70 px-3 py-1 rounded-button border border-candy-line">
+              <span className="w-2 h-2 rounded-full bg-accent" />
               صنع يدوي طازج يومياً
             </span>
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-candy-berry-dark bg-white/70 px-3 py-1 rounded-candy-pill border border-candy-line">
-              <span className="w-2 h-2 rounded-full bg-candy-berry" />
+            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/70 px-3 py-1 rounded-button border border-candy-line">
+              <span className="w-2 h-2 rounded-full bg-primary" />
               تغليف هدايا ملكي
             </span>
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-candy-berry-dark bg-white/70 px-3 py-1 rounded-candy-pill border border-candy-line">
+            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/70 px-3 py-1 rounded-button border border-candy-line">
               <span className="w-2 h-2 rounded-full bg-candy-mint-text" />
               شحن مبرد سريع
             </span>
@@ -72,9 +72,9 @@ export function HeroBanner({ className }: HeroBannerProps) {
             <Link
               href="#categories"
               className={cn(
-                "inline-flex items-center justify-center gap-2.5 min-h-[50px] px-6 sm:px-8 rounded-candy-pill",
-                "bg-candy-strawberry text-white font-sans font-bold text-sm sm:text-base",
-                "shadow-candy-cta hover:bg-candy-berry-dark hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                "inline-flex items-center justify-center gap-2.5 min-h-[50px] px-6 sm:px-8 rounded-button",
+                "bg-primary text-white font-sans font-bold text-sm sm:text-base",
+                "shadow-candy-cta hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               )}
             >
               <ShoppingBag className="w-5 h-5" />
@@ -85,12 +85,12 @@ export function HeroBanner({ className }: HeroBannerProps) {
             <Link
               href="#featured-products"
               className={cn(
-                "inline-flex items-center justify-center gap-2 min-h-[50px] px-6 sm:px-7 rounded-candy-pill",
-                "bg-white border-2 border-candy-blush text-candy-berry font-sans font-bold text-sm sm:text-base",
-                "hover:bg-candy-soft hover:border-candy-rose active:translate-y-0 transition-all duration-200 shadow-sm"
+                "inline-flex items-center justify-center gap-2 min-h-[50px] px-6 sm:px-7 rounded-button",
+                "bg-white border-2 border-candy-blush text-primary font-sans font-bold text-sm sm:text-base",
+                "hover:bg-candy-soft hover:border-secondary active:translate-y-0 transition-all duration-200 shadow-sm"
               )}
             >
-              <Zap className="w-4 h-4 text-candy-amber fill-candy-amber" />
+              <Zap className="w-4 h-4 text-accent fill-accent" />
               <span>طلب سريع</span>
             </Link>
           </div>

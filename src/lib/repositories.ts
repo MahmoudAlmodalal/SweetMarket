@@ -20,6 +20,12 @@ import { MOCK_DELIVERY_ZONES } from '@/data/mock/zones';
 import { MOCK_PRODUCTS } from '@/data/mock/products';
 import { MOCK_ORDERS } from '@/data/mock/orders';
 import { MOCK_ADMIN_CREDENTIALS } from '@/data/mock/users';
+import {
+  authenticateAdminUser,
+  getActiveSession,
+  terminateSession,
+  generateSecureSessionToken,
+} from '@/lib/auth/authentication';
 
 /**
  * دالة مساعدة لمحاكاة تأخير الشبكة غير المتزامن (150-250ms)
@@ -253,6 +259,7 @@ export async function createOrder(data: CreateOrderData): Promise<Order> {
     deliveryFee: data.deliveryFee,
     total,
     paymentMethod: 'cash_on_delivery',
+    trackingToken: generateSecureSessionToken(),
     timeline: [
       {
         status: 'new',
@@ -361,11 +368,11 @@ export async function cancelOrder(
   const currentOrder = orders[index];
   const allowed = ALLOWED_STATUS_TRANSITIONS[currentOrder.status];
 
-  // إذا كان المستخدم مديراً أو الحالة الحالية تسمح بالإلغاء
-  const isManager = user?.role === 'manager';
+  // إذا كان المستخدم مديراً (admin / manager) أو الحالة الحالية تسمح بالإلغاء
+  const isManager = user?.role === 'admin' || user?.role === 'manager';
   if (!allowed.includes('cancelled') && !isManager) {
     throw new Error(
-      `لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}" إلا بصلاحية مدير`
+      `لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}" إلا بصلاحية مدير (Admin)`
     );
   }
 
@@ -417,39 +424,26 @@ export interface AuthResult {
  */
 export async function authenticateAdmin(
   email: string,
-  password: string
+  secret: string
 ): Promise<AuthResult> {
   await simulateLatency();
 
-  const normalizedEmail = email.trim().toLowerCase();
-  const account = MOCK_ADMIN_CREDENTIALS[normalizedEmail];
-
-  if (!account || account.password !== password) {
+  const result = await authenticateAdminUser(email, secret);
+  if (!result.success || !result.user) {
     return {
       success: false,
-      error: 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
+      error: result.error || 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
     };
   }
 
-  if (!account.user.isActive) {
-    return {
-      success: false,
-      error: 'هذا الحساب معطل حالياً، يرجى مراجعة إدارة المتجر',
-    };
+  const session = getActiveSession();
+  if (session) {
+    memorySession = session;
   }
-
-  const token = `mock-token-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-  const session: AdminSession = {
-    token,
-    user: account.user,
-  };
-
-  memorySession = session;
-  setStorageItem(STORAGE_KEYS.ADMIN_SESSION, session);
 
   return {
     success: true,
-    session,
+    session: session || undefined,
   };
 }
 
@@ -459,9 +453,9 @@ export async function authenticateAdmin(
 export async function getAdminSession(): Promise<AdminSession | null> {
   await simulateLatency(50, 100);
 
-  const stored = getStorageItem(STORAGE_KEYS.ADMIN_SESSION, null);
-  if (stored) {
-    return stored;
+  const active = getActiveSession();
+  if (active) {
+    return active;
   }
 
   return memorySession;
@@ -474,5 +468,5 @@ export async function logoutAdmin(): Promise<void> {
   await simulateLatency(50, 100);
 
   memorySession = null;
-  removeStorageItem(STORAGE_KEYS.ADMIN_SESSION);
+  terminateSession();
 }

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Candy Berry Gradient (tokens.css: --color-primary #A31D56) -->
+    <linearGradient id="candy-berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#800A40" />
+    </linearGradient>
+
+    <!-- Candy Gold Gradient (tokens.css: --color-accent #E8A33D) -->
+    <linearGradient id="candy-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="60%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+
+    <!-- Candy Wrapper Gradient (tokens.css: --color-blush #FED7E7) -->
+    <linearGradient id="candy-wrap" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0F5" />
+      <stop offset="100%" stop-color="#FED7E7" />
+    </linearGradient>
+
+    <!-- Subtle Sweet Drop Shadow -->
+    <filter id="badge-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#A31D56" flood-opacity="0.14" />
+    </filter>
+  </defs>
+
+  <!-- Circular Badge Container -->
+  <g filter="url(#badge-shadow)">
+    <!-- Base Pastel Circle -->
+    <circle cx="80" cy="80" r="70" fill="#FFF5F8" stroke="#FED7E7" stroke-width="2.5" />
+    
+    <!-- Inner Dashed Ring -->
+    <circle cx="80" cy="80" r="62" fill="none" stroke="#FBECC8" stroke-width="2" stroke-dasharray="5 3.5" />
+
+    <!-- Top Left Gold Sparkle -->
+    <path d="M42,36 Q42,28 35,28 Q42,28 42,20 Q42,28 49,28 Q42,28 42,36 Z" fill="url(#candy-gold)" />
+
+    <!-- Top Right Gold Sparkle -->
+    <path d="M120,40 Q120,34 114,34 Q120,34 120,28 Q120,34 126,34 Q120,34 120,40 Z" fill="url(#candy-gold)" />
+
+    <!-- Bottom Left Small Gold Dot -->
+    <circle cx="36" cy="116" r="3.5" fill="#E8A33D" />
+
+    <!-- Bottom Right Small Berry Dot -->
+    <circle cx="127" cy="116" r="4" fill="#A31D56" />
+
+    <!-- Centered Bonbon Candy Group (Tilted at -28deg) -->
+    <g transform="translate(80, 80) rotate(-28)">
+      <!-- Left Wrapper Wing -->
+      <path d="M-36,0 L-56,-20 C-61,-12 -61,12 -56,20 L-36,0 Z" 
+            fill="url(#candy-wrap)" stroke="#A31D56" stroke-width="1.8" stroke-linejoin="round" />
+      <line x1="-40" y1="-3" x2="-54" y2="-12" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <line x1="-40" y1="3" x2="-54" y2="12" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <!-- Left Tie Ring (Gold) -->
+      <ellipse cx="-35" cy="0" rx="3.5" ry="8.5" fill="url(#candy-gold)" stroke="#C78018" stroke-width="1" />
+
+      <!-- Right Wrapper Wing -->
+      <path d="M36,0 L56,-20 C61,-12 61,12 56,20 L36,0 Z" 
+            fill="url(#candy-wrap)" stroke="#A31D56" stroke-width="1.8" stroke-linejoin="round" />
+      <line x1="40" y1="-3" x2="54" y2="-12" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <line x1="40" y1="3" x2="54" y2="12" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <!-- Right Tie Ring (Gold) -->
+      <ellipse cx="35" cy="0" rx="3.5" ry="8.5" fill="url(#candy-gold)" stroke="#C78018" stroke-width="1" />
+
+      <!-- Candy Center Sweet Body (Round bonbon with diagonal stripes) -->
+      <g>
+        <clipPath id="candy-body-clip">
+          <ellipse cx="0" cy="0" rx="37" ry="25" />
+        </clipPath>
+
+        <!-- Base Shell (Berry) -->
+        <ellipse cx="0" cy="0" rx="37" ry="25" fill="url(#candy-berry)" stroke="#800A40" stroke-width="1.5" />
+
+        <!-- Diagonal Swirling Stripes -->
+        <g clip-path="url(#candy-body-clip)">
+          <!-- Cream White Swirl -->
+          <path d="M-42,-32 L-22,-32 L12,32 L-8,32 Z" fill="#FFFAF8" />
+          <!-- Golden Amber Swirl -->
+          <path d="M-13,-32 L9,-32 L41,32 L19,32 Z" fill="url(#candy-gold)" />
+          <!-- Specular 3D Gloss Highlight on Upper Side -->
+          <ellipse cx="-7" cy="-11" rx="22" ry="7" fill="#FFFFFF" opacity="0.5" transform="rotate(-10 -7 -11)" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

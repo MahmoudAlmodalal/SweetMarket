@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 220" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="geom-berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#800A40" />
+    </linearGradient>
+
+    <linearGradient id="geom-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="60%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+
+    <filter id="geom-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#A31D56" flood-opacity="0.14" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap');
+      .geom-ar {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), sans-serif;
+        font-weight: 700;
+      }
+      .geom-meta {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- ================= GEOMETRIC FLAT SWEET CANDY (RTL Right: x=555, y=110) ================= -->
+  <g transform="translate(555, 110)" filter="url(#geom-shadow)">
+    <!-- Hexagonal Pill Tile Background -->
+    <rect x="-62" y="-62" width="124" height="124" rx="30" fill="#FFF5F8" stroke="#FED7E7" stroke-width="2" />
+
+    <!-- Pure Iconic Clean Flat Candy Twist -->
+    <g transform="rotate(-30)">
+      <!-- Left Wrapper Wing -->
+      <path d="M-28,0 L-46,-16 L-46,16 Z" fill="#FED7E7" stroke="#A31D56" stroke-width="2" stroke-linejoin="round" />
+      <line x1="-36" y1="-8" x2="-36" y2="8" stroke="#A31D56" stroke-width="1.5" />
+      <!-- Left Tie -->
+      <circle cx="-27" cy="0" r="3" fill="url(#geom-gold)" />
+
+      <!-- Right Wrapper Wing -->
+      <path d="M28,0 L46,-16 L46,16 Z" fill="#FED7E7" stroke="#A31D56" stroke-width="2" stroke-linejoin="round" />
+      <line x1="36" y1="-8" x2="36" y2="8" stroke="#A31D56" stroke-width="1.5" />
+      <!-- Right Tie -->
+      <circle cx="27" cy="0" r="3" fill="url(#geom-gold)" />
+
+      <!-- Candy Center Sweet Body (Round Oval) -->
+      <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#geom-berry)" />
+
+      <!-- Crisp Gold Diagonal Center Stripe -->
+      <path d="M-6,-19.5 L8,-19.5 L-2,19.5 L-16,19.5 Z" fill="url(#geom-gold)" />
+
+      <!-- Gloss highlight -->
+      <ellipse cx="-6" cy="-8" rx="14" ry="4" fill="#FFFFFF" opacity="0.45" />
+    </g>
+
+    <!-- Crisp Accent Stars -->
+    <path d="M34,-34 Q34,-40 28,-40 Q34,-40 34,-46 Q34,-40 40,-40 Q34,-40 34,-34 Z" fill="url(#geom-gold)" />
+    <circle cx="-34" cy="34" r="2.5" fill="#A31D56" />
+  </g>
+
+  <!-- ================= TYPOGRAPHY & BRAND TEXT (RTL Left side - Simple & Clean) ================= -->
+  <!-- Main Arabic Title: كاندي لوز -->
+  <g transform="translate(450, 102)">
+    <text x="0" y="0" text-anchor="end" class="geom-ar" font-size="58" fill="#A31D56">
+      كاندي <tspan fill="#E8A33D">لوز</tspan>
+    </text>
+
+    <!-- Accent Dots -->
+    <circle cx="-146" cy="-56" r="4.5" fill="url(#geom-gold)" />
+    <circle cx="-158" cy="-56" r="4.5" fill="url(#geom-gold)" />
+  </g>
+
+  <!-- Clean Minimalist Divider -->
+  <g transform="translate(450, 132)">
+    <line x1="0" y1="0" x2="-390" y2="0" stroke="#E6DED8" stroke-width="1.5" />
+    <line x1="-120" y1="0" x2="-260" y2="0" stroke="url(#geom-gold)" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Subtitle Text -->
+  <g transform="translate(450, 168)">
+    <text x="0" y="0" text-anchor="end" class="geom-meta" font-size="18" font-weight="700" fill="#2B1A10" letter-spacing="3.5">
+      CANDY LOZ
+    </text>
+    <text x="-175" y="0" text-anchor="end" class="geom-meta" font-size="14" font-weight="500" fill="#6B5D55" letter-spacing="1.5">
+      CONFECTIONERY • متجر الحلويات
+    </text>
+  </g>
+</svg>

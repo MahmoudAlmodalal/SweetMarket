@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="badge-candy-berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#800A40" />
+    </linearGradient>
+
+    <linearGradient id="badge-candy-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="60%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+
+    <linearGradient id="badge-candy-wrap" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0F5" />
+      <stop offset="100%" stop-color="#FED7E7" />
+    </linearGradient>
+
+    <filter id="badge-full-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#A31D56" flood-opacity="0.14" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@600;700&amp;display=swap');
+      .badge-text-ar {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), sans-serif;
+        font-weight: 700;
+      }
+      .badge-text-en {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+
+  <g filter="url(#badge-full-shadow)">
+    <!-- Base Pastel Circle -->
+    <circle cx="90" cy="90" r="80" fill="#FFF5F8" stroke="#FED7E7" stroke-width="2.5" />
+    
+    <!-- Inner Dashed Ring -->
+    <circle cx="90" cy="90" r="72" fill="none" stroke="#FBECC8" stroke-width="2" stroke-dasharray="5 3.5" />
+
+    <!-- Sparkles -->
+    <path d="M46,42 Q46,34 39,34 Q46,34 46,26 Q46,34 53,34 Q46,34 46,42 Z" fill="url(#badge-candy-gold)" />
+    <path d="M136,44 Q136,38 130,38 Q136,38 136,32 Q136,38 142,38 Q136,38 136,44 Z" fill="url(#badge-candy-gold)" />
+
+    <!-- Centered Bonbon Candy Group (Slightly raised for text at bottom) -->
+    <g transform="translate(90, 72) rotate(-28)">
+      <!-- Left Wrapper Wing -->
+      <path d="M-34,0 L-52,-18 C-57,-11 -57,11 -52,18 L-34,0 Z" 
+            fill="url(#badge-candy-wrap)" stroke="#A31D56" stroke-width="1.6" stroke-linejoin="round" />
+      <line x1="-37" y1="-3" x2="-50" y2="-11" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <line x1="-37" y1="3" x2="-50" y2="11" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <ellipse cx="-33" cy="0" rx="3.5" ry="8" fill="url(#badge-candy-gold)" stroke="#C78018" stroke-width="1" />
+
+      <!-- Right Wrapper Wing -->
+      <path d="M34,0 L52,-18 C57,-11 57,11 52,18 L34,0 Z" 
+            fill="url(#badge-candy-wrap)" stroke="#A31D56" stroke-width="1.6" stroke-linejoin="round" />
+      <line x1="37" y1="-3" x2="50" y2="-11" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <line x1="37" y1="3" x2="50" y2="11" stroke="#A31D56" stroke-width="1.2" opacity="0.65" />
+      <ellipse cx="33" cy="0" rx="3.5" ry="8" fill="url(#badge-candy-gold)" stroke="#C78018" stroke-width="1" />
+
+      <!-- Candy Center Sweet Body -->
+      <g>
+        <clipPath id="badge-body-clip">
+          <ellipse cx="0" cy="0" rx="35" ry="23" />
+        </clipPath>
+
+        <ellipse cx="0" cy="0" rx="35" ry="23" fill="url(#badge-candy-berry)" stroke="#800A40" stroke-width="1.4" />
+
+        <g clip-path="url(#badge-body-clip)">
+          <path d="M-40,-30 L-20,-30 L10,30 L-10,30 Z" fill="#FFFAF8" />
+          <path d="M-12,-30 L8,-30 L38,30 L18,30 Z" fill="url(#badge-candy-gold)" />
+          <ellipse cx="-7" cy="-10" rx="20" ry="6" fill="#FFFFFF" opacity="0.5" transform="rotate(-10 -7 -10)" />
+        </g>
+      </g>
+    </g>
+
+    <!-- Simple Text ON the Badge Container -->
+    <!-- Soft background banner for text -->
+    <rect x="30" y="124" width="120" height="28" rx="14" fill="#FFFFFF" stroke="#FED7E7" stroke-width="1.5" />
+    <text x="90" y="143" text-anchor="middle" class="badge-text-ar" font-size="16" fill="#A31D56">
+      كاندي <tspan fill="#E8A33D">لوز</tspan>
+    </text>
+  </g>
+</svg>

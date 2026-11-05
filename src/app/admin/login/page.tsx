@@ -23,13 +23,13 @@ function LoginFormContent() {
   const searchParams = useSearchParams();
   const redirectTarget = searchParams.get('redirect') || '/admin/orders';
 
-  const { login, user, isAuthenticated, isLoading } = useAdminAuth();
+  const { login, quickLogin, user, isAuthenticated, isLoading } = useAdminAuth();
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [quickLoginRole, setQuickLoginRole] = useState<'manager' | 'staff' | null>(null);
+  const [quickLoginRole, setQuickLoginRole] = useState<'admin' | 'manager' | 'staff' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -62,25 +62,20 @@ function LoginFormContent() {
   };
 
   /**
-   * تسجيل دخول فوري بنقرة واحدة للحسابات التجريبية
+   * تسجيل دخول فوري بنقرة واحدة للحسابات التجريبية (دون تعريض أو تداول كلمات مرور)
    */
-  const handleQuickLogin = async (role: 'manager' | 'staff') => {
+  const handleQuickLogin = async (targetRole: 'admin' | 'manager' | 'staff') => {
     setErrorMessage(null);
-    setQuickLoginRole(role);
-    const account = PRE_SEEDED_USERS[role];
-
-    // تحديث الحقول للإشارة للمستخدم
-    setIdentifier(account.email);
-    setPassword(account.password);
+    setQuickLoginRole(targetRole);
 
     try {
-      const result = await login(account.email, account.password);
+      const result = await quickLogin(targetRole);
       if (result.success) {
         router.push(redirectTarget);
       } else {
         setErrorMessage(result.error || 'فشل تسجيل الدخول بالحساب التجريبي');
       }
-    } catch (err) {
+    } catch {
       setErrorMessage('حدث خطأ غير متوقع أثناء تسجيل الدخول');
     } finally {
       setQuickLoginRole(null);
@@ -260,16 +255,12 @@ function LoginFormContent() {
             </Button>
           </div>
 
-          {/* ملخص بيانات الدخول التجريبية */}
+          {/* تنويه الأمان وسياسة الدخول */}
           <div className="mt-4 p-3 rounded-xl bg-candy-soft/70 border border-candy-line/60 text-[11px] text-candy-muted font-sans space-y-1">
-            <div className="flex justify-between items-center">
-              <span className="font-medium text-candy-ink">المدير:</span>
-              <code className="text-candy-berry font-mono" dir="ltr">manager@candyloz.com / manager123</code>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="font-medium text-candy-ink">الموظف:</span>
-              <code className="text-candy-berry font-mono" dir="ltr">staff@candyloz.com / staff123</code>
-            </div>
+            <p className="text-candy-ink font-semibold">بوابة الإدارة المحمية</p>
+            <p className="text-candy-muted leading-relaxed">
+              يرجى استخدام بيانات الاعتماد المخصصة للمسؤول أو النقر على أحد أزرار الدخول التجريبي السريع المعزول.
+            </p>
           </div>
 
           {/* رابط العودة للواجهة العامة */}

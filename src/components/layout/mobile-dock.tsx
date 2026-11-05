@@ -110,15 +110,15 @@ export function MobileDock({
               className={cn(
                 "relative flex flex-col items-center justify-center min-w-[62px] min-h-[48px] px-2.5 py-1 rounded-candy-pill transition-all duration-200 select-none",
                 isItemActive
-                  ? "bg-candy-strawberry text-white shadow-candy-cta scale-105"
-                  : "text-candy-muted hover:text-[#800a40] active:scale-95"
+                  ? "bg-primary text-white shadow-candy-cta scale-105"
+                  : "text-candy-muted hover:text-primary active:scale-95"
               )}
             >
               <div className="relative">
                 <Icon
                   className={cn(
                     "w-5 h-5 transition-transform duration-200",
-                    isItemActive ? "text-white scale-110" : "text-candy-rose"
+                    isItemActive ? "text-white scale-110" : "text-secondary"
                   )}
                 />
                 {hasBadge && (
@@ -127,8 +127,8 @@ export function MobileDock({
                     className={cn(
                       "absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm",
                       isItemActive
-                        ? "bg-white text-candy-strawberry border border-candy-strawberry/30"
-                        : "bg-candy-strawberry text-white shadow-candy-cta"
+                        ? "bg-white text-primary border border-primary/30"
+                        : "bg-secondary text-white shadow-candy-cta"
                     )}
                   >
                     {(item.badgeCount ?? 0) > 99 ? "+99" : item.badgeCount}

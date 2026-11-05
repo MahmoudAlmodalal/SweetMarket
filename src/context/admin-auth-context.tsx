@@ -16,48 +16,37 @@ import {
   removeStorageItem,
   isBrowser,
 } from '@/lib/storage';
-import { MOCK_ADMIN_USERS, MOCK_ADMIN_CREDENTIALS } from '@/data/mock/users';
+import { MOCK_ADMIN_USERS } from '@/data/mock/users';
+import {
+  authenticateAdminUser,
+  demoLoginAsAdmin,
+  generateSecureSessionToken,
+} from '@/lib/auth/authentication';
 
 export interface PreSeededAccount {
   email: string;
-  password: string;
   role: AdminRole;
   user: AdminUser;
 }
 
 /**
- * المستخدمون الإداريون المهيئون مسبقاً للاختبار والتسجيل السريع
- * staff@candyloz.com / staff123 (staff)
- * manager@candyloz.com / manager123 (manager)
+ * حسابات الإدارة المعتمدة للاختبار التجريبي (بدون كلمات مرور مكشوفة في الكود)
  */
 export const PRE_SEEDED_USERS: Record<AdminRole, PreSeededAccount> = {
-  staff: {
-    email: 'staff@candyloz.com',
-    password: 'staff123',
-    role: 'staff',
-    user: MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || {
-      id: 'user-staff-01',
-      username: 'staff_nour',
-      fullName: 'نور أحمد (موظف تشغيل)',
-      email: 'staff@candyloz.com',
-      role: 'staff',
-      isActive: true,
-      createdAt: '2026-09-01T08:00:00Z',
-    },
+  admin: {
+    email: 'admin@candyloz.com',
+    role: 'admin',
+    user: MOCK_ADMIN_USERS.find((u) => u.role === 'admin') || MOCK_ADMIN_USERS[0],
   },
   manager: {
     email: 'manager@candyloz.com',
-    password: 'manager123',
     role: 'manager',
-    user: MOCK_ADMIN_USERS.find((u) => u.role === 'manager') || {
-      id: 'user-manager-01',
-      username: 'manager_tariq',
-      fullName: 'طارق رضوان (مدير المتجر)',
-      email: 'manager@candyloz.com',
-      role: 'manager',
-      isActive: true,
-      createdAt: '2026-08-01T08:00:00Z',
-    },
+    user: MOCK_ADMIN_USERS.find((u) => u.role === 'manager') || MOCK_ADMIN_USERS[0],
+  },
+  staff: {
+    email: 'staff@candyloz.com',
+    role: 'staff',
+    user: MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[1],
   },
 };
 
@@ -66,9 +55,11 @@ export interface AdminAuthContextValue {
   role: AdminRole | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  isAdmin: boolean;
   isManager: boolean;
   isStaff: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  quickLogin: (role?: AdminRole) => Promise<{ success: boolean; error?: string }>;
   switchRole: (role: AdminRole) => void;
   logout: () => void;
   hasRole: (role: AdminRole) => boolean;
@@ -120,58 +111,48 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   }, []);
 
   /**
-   * تسجيل الدخول بالبريد الإلكتروني/اسم المستخدم وكلمة المرور
+   * تسجيل الدخول بالبريد الإلكتروني/اسم المستخدم وكلمة المرور عبر وحدة المصادقة الآمنة
    */
   const login = useCallback(
-    async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
-      const normalizedIdentifier = email.trim().toLowerCase();
-
-      // البحث في سجل الاعتمادات الوهمية بالبريد أو اسم المستخدم
-      const credentialEntry = Object.entries(MOCK_ADMIN_CREDENTIALS).find(([keyEmail, item]) => {
-        return (
-          keyEmail.toLowerCase() === normalizedIdentifier ||
-          item.user.email.toLowerCase() === normalizedIdentifier ||
-          item.user.username.toLowerCase() === normalizedIdentifier
-        );
-      });
-
-      if (!credentialEntry || credentialEntry[1].password !== password) {
-        return {
-          success: false,
-          error: 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
-        };
+    async (identifier: string, secret: string): Promise<{ success: boolean; error?: string }> => {
+      const result = await authenticateAdminUser(identifier, secret);
+      if (result.success && result.user) {
+        setUser(result.user);
+        return { success: true };
       }
-
-      const { user: authedUser } = credentialEntry[1];
-      if (!authedUser.isActive) {
-        return {
-          success: false,
-          error: 'هذا الحساب معطل حالياً، يرجى مراجعة إدارة المتجر',
-        };
-      }
-
-      const session: AdminSession = {
-        token: `candy-admin-token-${authedUser.role}-${Date.now()}`,
-        user: authedUser,
+      return {
+        success: false,
+        error: result.error || 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
       };
-
-      setStorageItem(STORAGE_KEYS.ADMIN_SESSION, session);
-      setUser(authedUser);
-
-      return { success: true };
     },
     []
   );
 
   /**
-   * تبديل الدور فوراً بين موظف (Staff) ومدير (Manager)
+   * تسجيل دخول تجريبي آمن دون تداول كلمات مرور في واجهة المتصفح
+   */
+  const quickLogin = useCallback(async (targetRole: AdminRole = 'admin'): Promise<{ success: boolean; error?: string }> => {
+    const target = PRE_SEEDED_USERS[targetRole] || PRE_SEEDED_USERS.admin;
+    const sessionToken = generateSecureSessionToken();
+    const session: AdminSession = {
+      token: sessionToken,
+      user: target.user,
+    };
+    setStorageItem(STORAGE_KEYS.ADMIN_SESSION, session);
+    setUser(target.user);
+    return { success: true };
+  }, []);
+
+  /**
+   * تبديل الدور تحت إطار التحكم الآمن
    */
   const switchRole = useCallback((newRole: AdminRole) => {
     const targetAccount = PRE_SEEDED_USERS[newRole];
-    const targetUser = targetAccount.user;
+    if (!targetAccount) return;
 
+    const targetUser = targetAccount.user;
     const session: AdminSession = {
-      token: `candy-admin-token-${newRole}-${Date.now()}`,
+      token: generateSecureSessionToken(),
       user: targetUser,
     };
 
@@ -193,6 +174,9 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   const hasRole = useCallback(
     (targetRole: AdminRole): boolean => {
       if (!user) return false;
+      if (targetRole === 'admin' || targetRole === 'manager') {
+        return user.role === 'admin' || user.role === 'manager';
+      }
       return user.role === targetRole;
     },
     [user]
@@ -200,19 +184,22 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
 
   const value = useMemo<AdminAuthContextValue>(() => {
     const role = user?.role ?? null;
+    const isAdmin = user?.role === 'admin' || user?.role === 'manager';
     return {
       user,
       role,
       isAuthenticated: Boolean(user),
       isLoading,
-      isManager: user?.role === 'manager',
+      isAdmin,
+      isManager: isAdmin,
       isStaff: user?.role === 'staff',
       login,
+      quickLogin,
       switchRole,
       logout,
       hasRole,
     };
-  }, [user, isLoading, login, switchRole, logout, hasRole]);
+  }, [user, isLoading, login, quickLogin, switchRole, logout, hasRole]);
 
   return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
 }

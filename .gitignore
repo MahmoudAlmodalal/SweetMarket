@@ -8,3 +8,16 @@ build/
 *.log
 .DS_Store
 *.tsbuildinfo
+
+# Secrets, Keys & Environment
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.staging
+*.pem
+*.key
+*.cert
+*.crt

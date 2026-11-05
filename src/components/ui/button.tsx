@@ -14,18 +14,18 @@ export interface ButtonProps
 const buttonVariants = {
   variant: {
     primary:
-      "bg-candy-berry text-white hover:bg-candy-berry-dark shadow-candy-1 hover:shadow-candy-cta active:translate-y-[1px]",
+      "bg-primary text-white hover:bg-primary-hover shadow-1 hover:shadow-candy-cta active:translate-y-[1px]",
     secondary:
-      "bg-white border-2 border-candy-blush text-candy-berry hover:bg-candy-soft hover:border-candy-rose active:translate-y-[1px] shadow-sm",
+      "bg-surface border-2 border-blush text-primary hover:bg-soft hover:border-secondary active:translate-y-[1px] shadow-sm",
     ghost:
-      "bg-transparent text-candy-ink hover:bg-candy-soft hover:text-candy-berry active:bg-candy-blush/40",
+      "bg-transparent text-candy-ink hover:bg-soft hover:text-primary active:bg-blush/40",
     danger:
-      "bg-rose-600 text-white hover:bg-rose-700 focus-visible:ring-rose-500 shadow-sm active:translate-y-[1px]",
+      "bg-red-700 text-white hover:bg-red-800 focus-visible:ring-red-600 shadow-sm active:translate-y-[1px]",
   },
   size: {
-    sm: "h-8 px-3 text-xs rounded-candy-pill gap-1.5",
-    md: "h-11 px-5 text-sm rounded-candy-pill gap-2",
-    lg: "h-13 min-h-[50px] px-7 text-base rounded-candy-pill gap-2.5",
+    sm: "h-8 px-3 text-xs rounded-button gap-1.5",
+    md: "h-11 px-5 text-sm rounded-button gap-2",
+    lg: "h-13 min-h-[50px] px-7 text-base rounded-button gap-2.5",
   },
 };
 
@@ -56,7 +56,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-disabled={isDisabled}
         className={cn(
           "inline-flex items-center justify-center font-sans font-semibold transition-all duration-200 select-none",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry focus-visible:ring-offset-2",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
           "disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:shadow-none",
           buttonVariants.variant[variant],
           buttonVariants.size[size],

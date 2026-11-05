@@ -16,7 +16,7 @@ import {
   Lock,
   ChevronLeft,
 } from 'lucide-react';
-import { useAdminAuth, PRE_SEEDED_USERS } from '@/context/admin-auth-context';
+import { useAdminAuth } from '@/context/admin-auth-context';
 import { MOCK_ADMIN_CREDENTIALS } from '@/data/mock/users';
 import { toast } from '@/components/ui/toast';
 import { Button } from '@/components/ui/button';
@@ -54,13 +54,9 @@ export default function ChangePasswordPage() {
     if (!currentPassword) {
       newErrors.currentPassword = 'يرجى إدخال كلمة المرور الحالية';
     } else {
-      // مطابقة كلمة المرور مع السجل الوهمي للمستخدم الحالي
-      const expectedPassword =
-        (user?.email && MOCK_ADMIN_CREDENTIALS[user.email]?.password) ||
-        (role && PRE_SEEDED_USERS[role]?.password) ||
-        '';
-
-      if (expectedPassword && currentPassword !== expectedPassword) {
+      // مطابقة كلمة المرور مع السجل للمستخدم الحالي إذا كانت محفوظة
+      const storedCred = user?.email ? MOCK_ADMIN_CREDENTIALS[user.email.toLowerCase()] : null;
+      if (storedCred?.password && currentPassword !== storedCred.password) {
         newErrors.currentPassword = 'كلمة المرور الحالية غير صحيحة';
       }
     }
@@ -99,12 +95,12 @@ export default function ChangePasswordPage() {
       // محاكاة تأخير معالجة الخادم الآمنة (350ms)
       await new Promise((resolve) => setTimeout(resolve, 350));
 
-      // تحديث كلمة المرور في السجل الوهمي للمستخدم
-      if (user?.email && MOCK_ADMIN_CREDENTIALS[user.email]) {
-        MOCK_ADMIN_CREDENTIALS[user.email].password = newPassword;
-      }
-      if (role && PRE_SEEDED_USERS[role]) {
-        PRE_SEEDED_USERS[role].password = newPassword;
+      // تحديث كلمة المرور في السجل للمستخدم
+      if (user?.email) {
+        const key = user.email.toLowerCase();
+        if (MOCK_ADMIN_CREDENTIALS[key]) {
+          MOCK_ADMIN_CREDENTIALS[key].password = newPassword;
+        }
       }
 
       setIsSuccess(true);

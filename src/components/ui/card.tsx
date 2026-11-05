@@ -20,11 +20,11 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-candy-card border border-candy-line bg-white text-candy-ink transition-all duration-300",
-          elevation === "sm" && "shadow-candy-1",
-          elevation === "md" && "shadow-candy-2",
+          "rounded-card border border-candy-line bg-surface text-candy-ink transition-all duration-300",
+          elevation === "sm" && "shadow-1",
+          elevation === "md" && "shadow-card",
           interactive &&
-            "hover:shadow-candy-2 hover:-translate-y-1 hover:border-candy-line-dark cursor-pointer",
+            "hover:shadow-card hover:-translate-y-1 hover:border-candy-line-dark cursor-pointer",
           className
         )}
         {...props}

@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Candy Berry Gradient -->
+    <linearGradient id="main-candy-berry" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#800A40" />
+    </linearGradient>
+
+    <!-- Candy Gold Gradient -->
+    <linearGradient id="main-candy-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="60%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+
+    <!-- Candy Wrapper Gradient -->
+    <linearGradient id="main-candy-wrap" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0F5" />
+      <stop offset="100%" stop-color="#FED7E7" />
+    </linearGradient>
+
+    <!-- Shadow -->
+    <filter id="main-logo-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#A31D56" flood-opacity="0.12" />
+    </filter>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap');
+      .brand-ar {
+        font-family: 'El Messiri', var(--font-heading, 'El Messiri'), sans-serif;
+        font-weight: 700;
+      }
+      .brand-en {
+        font-family: 'IBM Plex Sans Arabic', var(--font-body, 'IBM Plex Sans Arabic'), sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- ================= EXACT CIRCULAR CANDY BADGE (RTL Right side: x=405, y=70) ================= -->
+  <g transform="translate(405, 70)" filter="url(#main-logo-shadow)">
+    <!-- Base Pastel Circle -->
+    <circle r="56" fill="#FFF5F8" stroke="#FED7E7" stroke-width="2" />
+    
+    <!-- Inner Dashed Ring -->
+    <circle r="50" fill="none" stroke="#FBECC8" stroke-width="1.8" stroke-dasharray="4.5 3" />
+
+    <!-- Top Left Gold Sparkle -->
+    <path d="M-30,-35 Q-30,-41 -35,-41 Q-30,-41 -30,-47 Q-30,-41 -25,-41 Q-30,-41 -30,-35 Z" fill="url(#main-candy-gold)" />
+
+    <!-- Top Right Gold Sparkle -->
+    <path d="M32,-32 Q32,-37 27,-37 Q32,-37 32,-42 Q32,-37 37,-37 Q32,-37 32,-32 Z" fill="url(#main-candy-gold)" />
+
+    <!-- Bottom Left Small Gold Dot -->
+    <circle cx="-35" cy="28" r="3" fill="#E8A33D" />
+
+    <!-- Bottom Right Small Berry Dot -->
+    <circle cx="38" cy="28" r="3.2" fill="#A31D56" />
+
+    <!-- Centered Bonbon Candy Group (Tilted at -28deg) -->
+    <g transform="rotate(-28)">
+      <!-- Left Wrapper Wing -->
+      <path d="M-29,0 L-45,-16 C-49,-10 -49,10 -45,16 L-29,0 Z" 
+            fill="url(#main-candy-wrap)" stroke="#A31D56" stroke-width="1.5" stroke-linejoin="round" />
+      <line x1="-32" y1="-2" x2="-43" y2="-10" stroke="#A31D56" stroke-width="1" opacity="0.65" />
+      <line x1="-32" y1="2" x2="-43" y2="10" stroke="#A31D56" stroke-width="1" opacity="0.65" />
+      <!-- Left Tie Ring (Gold) -->
+      <ellipse cx="-28" cy="0" rx="3" ry="7" fill="url(#main-candy-gold)" stroke="#C78018" stroke-width="0.8" />
+
+      <!-- Right Wrapper Wing -->
+      <path d="M29,0 L45,-16 C49,-10 49,10 45,16 L29,0 Z" 
+            fill="url(#main-candy-wrap)" stroke="#A31D56" stroke-width="1.5" stroke-linejoin="round" />
+      <line x1="32" y1="-2" x2="43" y2="-10" stroke="#A31D56" stroke-width="1" opacity="0.65" />
+      <line x1="32" y1="2" x2="43" y2="10" stroke="#A31D56" stroke-width="1" opacity="0.65" />
+      <!-- Right Tie Ring (Gold) -->
+      <ellipse cx="28" cy="0" rx="3" ry="7" fill="url(#main-candy-gold)" stroke="#C78018" stroke-width="0.8" />
+
+      <!-- Candy Center Sweet Body -->
+      <g>
+        <clipPath id="main-candy-clip">
+          <ellipse cx="0" cy="0" rx="30" ry="20" />
+        </clipPath>
+
+        <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#main-candy-berry)" stroke="#800A40" stroke-width="1.2" />
+
+        <g clip-path="url(#main-candy-clip)">
+          <!-- Cream White Swirl -->
+          <path d="M-34,-26 L-18,-26 L10,26 L-6,26 Z" fill="#FFFAF8" />
+          <!-- Golden Amber Swirl -->
+          <path d="M-10,-26 L8,-26 L34,26 L16,26 Z" fill="url(#main-candy-gold)" />
+          <!-- Gloss highlight -->
+          <ellipse cx="-6" cy="-9" rx="18" ry="5.5" fill="#FFFFFF" opacity="0.5" transform="rotate(-10 -6 -9)" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= SIMPLE CLEAN TYPOGRAPHY (RTL Left side) ================= -->
+  <!-- Arabic Brand Title: كاندي لوز -->
+  <g transform="translate(325, 68)">
+    <text x="0" y="0" text-anchor="end" class="brand-ar" font-size="52" fill="#A31D56">
+      كاندي <tspan fill="#E8A33D">لوز</tspan>
+    </text>
+    
+    <!-- Simple Playful Accent Dots -->
+    <circle cx="-130" cy="-48" r="4" fill="#FED7E7" stroke="#A31D56" stroke-width="1.2" />
+    <circle cx="-142" cy="-48" r="4" fill="url(#main-candy-gold)" />
+  </g>
+
+  <!-- Clean Subtitle: Candy Loz & Category -->
+  <g transform="translate(325, 102)">
+    <text x="0" y="0" text-anchor="end" class="brand-en" font-size="16" font-weight="700" fill="#2B1A10" letter-spacing="3.5">
+      CANDY LOZ
+    </text>
+    <text x="-160" y="0" text-anchor="end" class="brand-en" font-size="13" font-weight="500" fill="#6B5D55" letter-spacing="1">
+      حلويات فاخرة • SWEETS
+    </text>
+  </g>
+</svg>

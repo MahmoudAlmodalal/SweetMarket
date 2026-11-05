@@ -13,3 +13,4 @@ export * from "./spinner";
 export * from "./state-box";
 export * from "./error-summary";
 export * from "./skip-link";
+export * from "./store-logo";

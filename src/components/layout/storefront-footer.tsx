@@ -9,6 +9,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { StoreLogo } from "@/components/ui/store-logo";
 
 export interface StorefrontFooterProps {
   className?: string;
@@ -53,11 +54,14 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
             {/* Column 1: Store Brand & Description & WhatsApp CTA */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-candy-blush text-[#800a40] flex items-center justify-center shadow-candy-1">
-                  <Sparkles className="w-5 h-5 text-[#800a40]" />
-                </div>
+                <StoreLogo
+                  variant="icon"
+                  width={44}
+                  height={44}
+                  className="w-11 h-11"
+                />
                 <div className="flex flex-col">
-                  <span className="font-display font-bold text-2xl text-[#800a40] leading-tight">
+                  <span className="font-display font-bold text-2xl text-primary leading-tight">
                     كاندي لوز
                   </span>
                   <span className="font-sans text-xs text-candy-muted tracking-wider">
@@ -78,7 +82,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                   href="https://wa.me/970599000000"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-candy-pill bg-[#25D366] text-white text-xs md:text-sm font-bold shadow-md hover:brightness-105 active:scale-95 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-button bg-[#25D366] text-white text-xs md:text-sm font-bold shadow-md hover:brightness-105 active:scale-95 transition-all duration-200"
                 >
                   <MessageCircle className="w-4 h-4 fill-white text-[#25D366]" />
                   <span>تواصل معنا عبر واتساب</span>
@@ -88,14 +92,14 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
 
             {/* Column 2: Quick Links */}
             <div className="space-y-3">
-              <h3 className="font-display font-bold text-base text-[#800a40]">
+              <h3 className="font-display font-bold text-base text-primary">
                 روابط سريعة
               </h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
                     href="/"
-                    className="text-candy-ink/80 hover:text-candy-strawberry transition-colors flex items-center gap-1.5"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
                   >
                     <span>الرئيسية</span>
                   </Link>
@@ -103,7 +107,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                 <li>
                   <Link
                     href="/#categories"
-                    className="text-candy-ink/80 hover:text-candy-strawberry transition-colors flex items-center gap-1.5"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
                   >
                     <span>أصناف الحلويات والبوكسات</span>
                   </Link>
@@ -111,7 +115,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                 <li>
                   <Link
                     href="/cart"
-                    className="text-candy-ink/80 hover:text-candy-strawberry transition-colors flex items-center gap-1.5"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
                   >
                     <span>سلة المشتريات</span>
                   </Link>
@@ -119,7 +123,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                 <li>
                   <Link
                     href="/track"
-                    className="text-candy-ink/80 hover:text-candy-strawberry transition-colors flex items-center gap-1.5"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
                   >
                     <span>تتبع حالة الطلب</span>
                   </Link>
@@ -127,7 +131,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                 <li>
                   <Link
                     href="/contact"
-                    className="text-candy-ink/80 hover:text-candy-strawberry transition-colors flex items-center gap-1.5"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
                   >
                     <span>من نحن والتواصل</span>
                   </Link>
@@ -137,12 +141,12 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
 
             {/* Column 3: Working Hours & Location Summary */}
             <div className="space-y-3">
-              <h3 className="font-display font-bold text-base text-[#800a40]">
+              <h3 className="font-display font-bold text-base text-primary">
                 ساعات العمل والتوصيل
               </h3>
               <ul className="space-y-3 text-sm text-candy-ink/85">
                 <li className="flex items-start gap-2.5">
-                  <Clock className="w-4 h-4 text-candy-rose shrink-0 mt-0.5" />
+                  <Clock className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold block text-xs text-candy-muted">
                       أوقات الاستقبال والتحضير:
@@ -151,7 +155,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-candy-rose shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold block text-xs text-candy-muted">
                       مناطق التوصيل:
@@ -160,7 +164,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <Phone className="w-4 h-4 text-candy-rose shrink-0 mt-0.5" />
+                  <Phone className="w-4 h-4 text-secondary shrink-0 mt-0.5" />
                   <div>
                     <span className="font-semibold block text-xs text-candy-muted">
                       هاتف خدمة العملاء:
@@ -174,9 +178,9 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
             </div>
 
             {/* Column 4: Quality & Trust Guarantee */}
-            <div className="space-y-3 bg-candy-soft p-5 rounded-candy-card border border-candy-line/60">
-              <div className="flex items-center gap-2 text-[#800a40]">
-                <Sparkles className="w-4 h-4 text-candy-strawberry" />
+            <div className="space-y-3 bg-candy-soft p-5 rounded-card border border-candy-line/60">
+              <div className="flex items-center gap-2 text-primary">
+                <Sparkles className="w-4 h-4 text-secondary" />
                 <h3 className="font-display font-bold text-sm">
                   ضمان الطزاجة والجودة
                 </h3>
@@ -185,8 +189,8 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                 نصنع كل قطعة بحب وإتقان باستخدام أجود المكونات الطبيعية والمكسرات
                 الفاخرة لتصلكم طازجة ولذيذة كأنها خرجت للتو من الفرن.
               </p>
-              <div className="pt-2 text-xs font-bold text-candy-strawberry flex items-center gap-1">
-                <Heart className="w-3.5 h-3.5 fill-candy-strawberry" />
+              <div className="pt-2 text-xs font-bold text-secondary flex items-center gap-1">
+                <Heart className="w-3.5 h-3.5 fill-secondary" />
                 <span>رضاكم وسعادتكم هدفنا الدائم</span>
               </div>
             </div>
