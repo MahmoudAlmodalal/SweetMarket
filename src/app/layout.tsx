@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { El_Messiri, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { SkipLink } from "@/components/ui/skip-link";
 import "./globals.css";
 
 const elMessiri = El_Messiri({
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${elMessiri.variable} ${ibmPlexSansArabic.variable} font-sans bg-candy-cream text-candy-ink antialiased min-h-screen`}
       >
+        <SkipLink />
         {children}
       </body>
     </html>

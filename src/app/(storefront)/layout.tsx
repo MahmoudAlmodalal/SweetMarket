@@ -12,7 +12,7 @@ export default function StorefrontLayout({
   return (
     <div className="min-h-screen flex flex-col bg-candy-cream text-candy-ink selection:bg-candy-blush selection:text-candy-berry">
       <StorefrontHeader />
-      <PageContainer as="main" className="flex-1">
+      <PageContainer as="main" id="main-content" className="flex-1">
         {children}
       </PageContainer>
       <StorefrontFooter />

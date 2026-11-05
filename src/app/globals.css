@@ -1,15 +1,210 @@
+@import "./tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #fffaf8;
-  --foreground: #3b2a2f;
+@layer base {
+  :root {
+    --background: var(--color-bg);
+    --foreground: var(--color-text);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    color: var(--color-text);
+    background: var(--color-bg);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-body);
+    min-height: 100vh;
+    text-align: start;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-heading);
+    color: var(--color-text);
+  }
+
+  h1 { font-size: var(--fs-h1); }
+  h2 { font-size: var(--fs-h2); }
+  h3 { font-size: var(--fs-h3); }
+  h4 { font-size: var(--fs-body); }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-ibm-plex-sans-arabic), -apple-system, BlinkMacSystemFont, sans-serif;
-  min-height: 100vh;
+/* ---- Core Utilities & Helpers ---- */
+.price {
+  font-size: var(--fs-price);
+  font-weight: var(--fw-bold);
+  color: var(--color-primary);
+}
+
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--space-4);
+  inset-block-start: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-input);
+  transform: translateY(-200%);
+  z-index: var(--z-dev);
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+  transition: transform var(--duration-fast) var(--ease);
+}
+
+.skip-link:focus {
+  transform: none;
+  outline: 2px solid var(--color-surface);
+  outline-offset: 2px;
+}
+
+/* ---- Spinner Primitive ---- */
+.spinner {
+  display: inline-block;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  border: 2.5px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex: none;
+}
+
+.spinner--lg {
+  inline-size: 40px;
+  block-size: 40px;
+  border-width: 4px;
+  color: var(--color-primary);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Skeleton Shimmer Primitive ---- */
+.skeleton {
+  display: block;
+  min-block-size: 1em;
+  border-radius: var(--radius-input);
+  background: linear-gradient(90deg, var(--color-soft) 25%, var(--color-blush) 50%, var(--color-soft) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.skeleton--text {
+  block-size: 1em;
+  margin-block: var(--space-2);
+}
+
+.skeleton--title {
+  block-size: 1.5em;
+  inline-size: 60%;
+  margin-block-end: var(--space-3);
+}
+
+.skeleton--block {
+  block-size: 120px;
+}
+
+.skeleton--card {
+  block-size: 280px;
+  border-radius: var(--radius-card);
+}
+
+.skeleton--row {
+  block-size: 56px;
+  margin-block-end: var(--space-2);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---- Toast & Modal Keyframes ---- */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Reduced Motion Preference ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton {
+    animation: none;
+  }
 }

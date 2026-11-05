@@ -7,25 +7,38 @@ export type BadgeVariant =
   | "in_preparation"
   | "out_for_delivery"
   | "delivered"
+  | "undelivered"
   | "cancelled"
+  | "success"
+  | "warning"
+  | "danger"
+  | "muted"
   | "bestseller"
   | "discount"
   | "tag";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
   showDot?: boolean;
 }
 
 const badgeVariants: Record<BadgeVariant, string> = {
-  // Order statuses
-  new: "bg-blue-50 text-blue-700 border-blue-200/70",
-  accepted: "bg-teal-50 text-teal-700 border-teal-200/70",
-  in_preparation: "bg-amber-50 text-amber-800 border-amber-200/70",
-  out_for_delivery: "bg-purple-50 text-purple-700 border-purple-200/70",
-  delivered: "bg-candy-mint-soft text-candy-mint-text border-candy-mint/30",
-  cancelled: "bg-rose-50 text-rose-700 border-rose-200/70",
+  // Order statuses (strictly bound to design tokens)
+  new: "bg-status-new text-white border-transparent",
+  accepted: "bg-status-accepted text-white border-transparent",
+  in_preparation: "bg-status-preparing text-status-preparing-text border-transparent",
+  out_for_delivery: "bg-status-out text-white border-transparent",
+  delivered: "bg-status-delivered text-white border-transparent",
+  undelivered: "bg-status-failed text-white border-transparent",
+  cancelled: "bg-status-cancelled text-white border-transparent",
+
+  // Feedback states
+  success: "bg-emerald-700 text-white border-transparent",
+  warning: "bg-amber-700 text-white border-transparent",
+  danger: "bg-rose-700 text-white border-transparent",
+  muted: "bg-candy-soft text-candy-muted border-candy-line",
+
   // Marketing & Tags
   bestseller: "bg-amber-100 text-amber-900 border-candy-amber/40 shadow-sm",
   discount: "bg-candy-strawberry text-white border-transparent shadow-candy-cta",
@@ -33,22 +46,32 @@ const badgeVariants: Record<BadgeVariant, string> = {
 };
 
 const badgeDots: Record<BadgeVariant, string> = {
-  new: "bg-blue-500",
-  accepted: "bg-teal-500",
-  in_preparation: "bg-amber-500",
-  out_for_delivery: "bg-purple-500",
-  delivered: "bg-emerald-500",
-  cancelled: "bg-rose-500",
+  new: "bg-white animate-pulse",
+  accepted: "bg-white",
+  in_preparation: "bg-status-preparing-text",
+  out_for_delivery: "bg-white",
+  delivered: "bg-white",
+  undelivered: "bg-white",
+  cancelled: "bg-white",
+  success: "bg-white",
+  warning: "bg-white",
+  danger: "bg-white",
+  muted: "bg-candy-muted",
   bestseller: "bg-amber-500",
   discount: "bg-white",
   tag: "bg-candy-berry",
 };
 
-const badgeSizes = {
+const badgeSizes: Record<"sm" | "md" | "lg", string> = {
   sm: "px-2.5 py-0.5 text-xs gap-1.5",
   md: "px-3.5 py-1 text-sm gap-2",
+  lg: "px-4 py-1.5 text-base gap-2",
 };
 
+/**
+ * مكون الشارة (Badge)
+ * متوافق كلياً مع محددات الرموز وحالات الطلب السبعة
+ */
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   (
     {
@@ -65,7 +88,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center font-sans font-bold rounded-candy-pill border transition-colors select-none",
+          "inline-flex items-center justify-center font-sans font-bold rounded-candy-pill border transition-colors select-none whitespace-nowrap",
           badgeVariants[variant],
           badgeSizes[size],
           className
@@ -78,7 +101,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
             aria-hidden="true"
           />
         )}
-        {children}
+        <span>{children}</span>
       </span>
     );
   }

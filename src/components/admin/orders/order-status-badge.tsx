@@ -11,52 +11,10 @@ export interface OrderStatusBadgeProps extends React.HTMLAttributes<HTMLSpanElem
   showDot?: boolean;
 }
 
-export interface StatusVisualConfig {
-  label: string;
-  badgeClass: string;
-  dotClass: string;
-}
+import { ORDER_STATUS_CONFIG, type StatusTokenConfig } from '@/lib/tokens';
 
-/**
- * خريطة الألوان والأنماط البصرية لحالات الطلب المعتمدة
- */
-export const ORDER_STATUS_CONFIG: Record<OrderStatus, StatusVisualConfig> = {
-  new: {
-    label: ORDER_STATUS_LABELS.new || 'جديد',
-    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200/80',
-    dotClass: 'bg-blue-500 animate-pulse',
-  },
-  accepted: {
-    label: ORDER_STATUS_LABELS.accepted || 'مقبول',
-    badgeClass: 'bg-teal-50 text-teal-700 border-teal-200/80',
-    dotClass: 'bg-teal-500',
-  },
-  in_preparation: {
-    label: ORDER_STATUS_LABELS.in_preparation || 'قيد التجهيز',
-    badgeClass: 'bg-amber-50 text-amber-800 border-amber-200/80',
-    dotClass: 'bg-amber-500',
-  },
-  out_for_delivery: {
-    label: ORDER_STATUS_LABELS.out_for_delivery || 'خرج للتوصيل',
-    badgeClass: 'bg-purple-50 text-purple-700 border-purple-200/80',
-    dotClass: 'bg-purple-500',
-  },
-  delivered: {
-    label: ORDER_STATUS_LABELS.delivered || 'تم التسليم',
-    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-    dotClass: 'bg-emerald-500',
-  },
-  undelivered: {
-    label: ORDER_STATUS_LABELS.undelivered || 'تعذّر التسليم',
-    badgeClass: 'bg-orange-50 text-orange-800 border-orange-200/80',
-    dotClass: 'bg-orange-500',
-  },
-  cancelled: {
-    label: ORDER_STATUS_LABELS.cancelled || 'ملغي',
-    badgeClass: 'bg-rose-50 text-rose-700 border-rose-200/80',
-    dotClass: 'bg-rose-500',
-  },
-};
+export type StatusVisualConfig = StatusTokenConfig;
+export { ORDER_STATUS_CONFIG };
 
 const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
   sm: 'px-2 py-0.5 text-xs gap-1.5',
