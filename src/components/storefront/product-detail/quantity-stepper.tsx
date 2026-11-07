@@ -41,13 +41,13 @@ export function QuantityStepper({
   // Sizes for the stepper
   const sizeClasses = {
     sm: {
-      btn: "w-7 h-7 text-sm",
+      btn: "min-w-10 min-h-10 text-sm",
       icon: "w-3 h-3",
       val: "w-8 text-sm",
       container: "p-0.5",
     },
     md: {
-      btn: "w-9 h-9 text-base",
+      btn: "min-w-11 min-h-11 text-base",
       icon: "w-4 h-4",
       val: "w-10 text-base",
       container: "p-1",

@@ -141,7 +141,7 @@ function CartPageInner() {
           <button
             type="button"
             onClick={() => setIsClearDialogOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-candy-muted hover:text-rose-600 hover:bg-rose-50 px-2.5 py-1.5 rounded-candy-pill transition-colors"
+            className="inline-flex items-center gap-1.5 min-h-11 text-xs font-medium text-candy-muted hover:text-rose-600 hover:bg-rose-50 px-3 rounded-candy-pill transition-colors touch-manipulation"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>تفريغ السلة</span>
@@ -232,7 +232,7 @@ function CartPageInner() {
                           type="button"
                           onClick={() => handleAddUpsell(product)}
                           disabled={isAdded}
-                          className={`px-3 py-1 rounded-candy-pill text-xs font-bold shadow-xs transition-all flex items-center gap-1 ${
+                          className={`min-h-11 px-3 rounded-candy-pill text-xs font-bold shadow-xs transition-all flex items-center gap-1 touch-manipulation ${
                             isAdded
                               ? "bg-emerald-600 text-white"
                               : "bg-candy-strawberry text-white hover:bg-candy-berry-dark active:scale-95"

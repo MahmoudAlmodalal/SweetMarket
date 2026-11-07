@@ -133,7 +133,7 @@ export function AddToCartBar({
         <div
           role="region"
           aria-label="الشريط السريع للإضافة إلى السلة"
-          className="fixed bottom-20 inset-x-3 sm:inset-x-6 z-40 md:hidden pb-safe"
+          className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] inset-x-3 sm:inset-x-6 z-40 md:hidden"
         >
           <div className="mx-auto max-w-md p-2.5 sm:p-3 bg-white/95 backdrop-blur-xl rounded-candy-card border border-candy-line/90 shadow-candy-3 flex items-center gap-3">
             {/* Price Preview Column */}

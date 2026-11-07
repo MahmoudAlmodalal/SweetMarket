@@ -383,7 +383,7 @@ export function OrderSuccessCard({
       {/* 5. Customer Concierge WhatsApp Assistance (from Stitch Screen #7) */}
       <div className="text-center pt-1">
         <a
-          href="https://wa.me/?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D9%86%D8%AF%D9%8A%20%D9%84%D9%88%D8%B2%D8%8C%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%B7%D9%84%D8%A8%D9%8A%20%D8%B1%D9%82%D9%85%20"
+          href={`https://wa.me/970591234567?text=${encodeURIComponent(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 text-xs font-sans font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-4 py-2.5 rounded-candy-pill transition-colors"

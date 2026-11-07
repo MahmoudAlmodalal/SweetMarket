@@ -123,7 +123,7 @@ export function CartItemRow({
                   type="button"
                   onClick={() => setIsConfirmOpen(true)}
                   aria-label={`حذف ${item.productName} من السلة`}
-                  className="w-8 h-8 rounded-full text-candy-muted hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors shrink-0 -mt-1 -ml-1 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  className="min-w-11 min-h-11 rounded-full text-candy-muted hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors shrink-0 -mt-1 -ml-1 focus:outline-none focus:ring-2 focus:ring-rose-300 touch-manipulation"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -164,7 +164,7 @@ export function CartItemRow({
                   disabled={item.quantity <= 1}
                   aria-label="تقليل الكمية"
                   className={cn(
-                    "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-candy-ink flex items-center justify-center shadow-xs transition-all",
+                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full bg-white text-candy-ink flex items-center justify-center shadow-xs transition-all touch-manipulation",
                     item.quantity <= 1
                       ? "opacity-35 cursor-not-allowed text-candy-muted"
                       : "hover:bg-candy-blush/40 hover:text-candy-berry active:scale-95"
@@ -185,7 +185,7 @@ export function CartItemRow({
                   type="button"
                   onClick={handleIncrement}
                   aria-label="زيادة الكمية"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-candy-berry text-white flex items-center justify-center shadow-xs hover:bg-candy-berry-dark active:scale-95 transition-all"
+                  className="min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full bg-candy-berry text-white flex items-center justify-center shadow-xs hover:bg-candy-berry-dark active:scale-95 transition-all touch-manipulation"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>

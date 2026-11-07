@@ -146,7 +146,7 @@ export function StatusTimeline({
   }, [order.items]);
 
   // WhatsApp concierge support link with prefilled order number
-  const whatsappSupportUrl = `https://wa.me/?text=${encodeURIComponent(
+  const whatsappSupportUrl = `https://wa.me/970591234567?text=${encodeURIComponent(
     `مرحباً كاندي لوز، أود الاستفسار عن طلبي رقم (${order.orderNumber}).`
   )}`;
 

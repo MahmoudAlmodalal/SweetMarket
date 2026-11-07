@@ -384,7 +384,7 @@ export default function CategoryListingPage() {
               type="button"
               onClick={() => setSearchQuery("")}
               aria-label="مسح البحث"
-              className="absolute left-2.5 w-6 h-6 rounded-full bg-candy-soft text-candy-rose flex items-center justify-center hover:bg-candy-blush transition-colors"
+              className="absolute left-2.5 min-w-10 min-h-10 rounded-full bg-candy-soft text-candy-rose flex items-center justify-center hover:bg-candy-blush transition-colors touch-manipulation"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -410,7 +410,7 @@ export default function CategoryListingPage() {
                 setSearchQuery("");
               }}
               title="إلغاء التصفية"
-              className="shrink-0 text-xs font-sans font-bold text-candy-strawberry hover:text-candy-berry flex items-center gap-1 px-2.5 py-1.5 rounded-candy-pill hover:bg-candy-soft transition-colors"
+              className="shrink-0 min-h-11 text-xs font-sans font-bold text-candy-strawberry hover:text-candy-berry flex items-center gap-1 px-2.5 rounded-candy-pill hover:bg-candy-soft transition-colors touch-manipulation"
             >
               <RotateCcw className="w-3 h-3" />
               <span className="hidden sm:inline">إعادة ضبط</span>
@@ -474,7 +474,7 @@ export default function CategoryListingPage() {
         </div>
 
         <a
-          href="https://wa.me/"
+          href="https://wa.me/970591234567?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D9%86%D8%AF%D9%8A%20%D9%84%D9%88%D8%B2%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%B7%D9%84%D8%A8%20%D8%AE%D8%A7%D8%B5%20%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-whatsapp text-white font-sans font-bold text-sm shadow-md hover:brightness-105 active:scale-95 transition-all shrink-0"
