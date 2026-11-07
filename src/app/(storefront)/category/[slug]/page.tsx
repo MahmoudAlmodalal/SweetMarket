@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {
   Home,
   ChevronLeft,
@@ -82,7 +82,9 @@ function resolveProductsFallback(
 
 export default function CategoryListingPage() {
   const routeParams = useParams();
+  const searchParams = useSearchParams();
   const slug = (routeParams?.slug as string) || "";
+  const querySearch = searchParams?.get("q") || "";
 
   // 1. البيانات الأولية السريعة
   const fallbackCat = React.useMemo(
@@ -99,7 +101,10 @@ export default function CategoryListingPage() {
   const [products, setProducts] = React.useState<Product[]>(fallbackProds);
   const [isLoading, setIsLoading] = React.useState<boolean>(!fallbackCat);
   const [activeFilter, setActiveFilter] = React.useState<FilterSortOption>("all");
-  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [searchQuery, setSearchQuery] = React.useState<string>(querySearch);
+  React.useEffect(() => {
+    setSearchQuery(querySearch);
+  }, [querySearch]);
 
   // 3. جلب تفاصيل التصنيف والمنتجات عبر المستودع
   React.useEffect(() => {

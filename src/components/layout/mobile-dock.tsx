@@ -89,13 +89,13 @@ export function MobileDock({
   return (
     <div
       className={cn(
-        "fixed bottom-3 inset-x-3 sm:inset-x-6 z-50 md:hidden pb-safe pointer-events-none",
+        "fixed bottom-3 inset-x-3 sm:inset-x-6 z-50 md:hidden pointer-events-none",
         className
       )}
     >
       <nav
         aria-label="شريط التنقل السفلي للهاتف"
-        className="pointer-events-auto mx-auto max-w-md h-16 px-2 bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
+        className="pointer-events-auto mx-auto max-w-md min-h-16 px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
       >
         {dockItems.map((item) => {
           const Icon = item.icon;

@@ -23,7 +23,7 @@ const buttonVariants = {
       "bg-red-700 text-white hover:bg-red-800 focus-visible:ring-red-600 shadow-sm active:translate-y-[1px]",
   },
   size: {
-    sm: "h-8 px-3 text-xs rounded-button gap-1.5",
+    sm: "min-h-11 px-3 text-xs rounded-button gap-1.5",
     md: "h-11 px-5 text-sm rounded-button gap-2",
     lg: "h-13 min-h-[50px] px-7 text-base rounded-button gap-2.5",
   },
@@ -55,7 +55,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={isLoading}
         aria-disabled={isDisabled}
         className={cn(
-          "inline-flex items-center justify-center font-sans font-semibold transition-all duration-200 select-none",
+          "inline-flex items-center justify-center font-sans font-semibold transition-all duration-200 select-none touch-manipulation",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
           "disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:shadow-none",
           buttonVariants.variant[variant],
