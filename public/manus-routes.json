@@ -4,6 +4,8 @@
     { "path": "/category/:slug", "title": "التصنيف" },
     { "path": "/product/:slug", "title": "تفاصيل المنتج" },
     { "path": "/cart", "title": "سلة المشتريات" },
+    { "path": "/favorites", "title": "مفضلتي" },
+    { "path": "/account", "title": "حسابي" },
     { "path": "/checkout", "title": "إتمام الطلب" },
     { "path": "/checkout/success/:orderNumber", "title": "تم استلام الطلب" },
     { "path": "/track", "title": "تتبع الطلب" },

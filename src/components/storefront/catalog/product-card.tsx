@@ -8,6 +8,7 @@ import type { Product, CartItem } from "@/types";
 import { CartContext } from "@/context/cart-context";
 import { getStorageItem, setStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import { toast } from "@/components/ui/toast";
+import { getFavoriteProductIds, toggleFavoriteProduct } from "./wishlist-utils";
 
 export interface ProductCardProps {
   product: Product;
@@ -38,6 +39,17 @@ export function ProductCard({
   const isAvailable = product.isAvailable !== false;
   const currentPrice = product.salePrice ?? product.price;
   const hasDiscount = Boolean(product.salePrice && product.salePrice < product.price);
+
+  React.useEffect(() => {
+    const syncWishlist = () => setIsWishlisted(getFavoriteProductIds().includes(product.id));
+    syncWishlist();
+    window.addEventListener("candy_favorites_updated", syncWishlist);
+    window.addEventListener("storage", syncWishlist);
+    return () => {
+      window.removeEventListener("candy_favorites_updated", syncWishlist);
+      window.removeEventListener("storage", syncWishlist);
+    };
+  }, [product.id]);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -93,7 +105,9 @@ export function ProductCard({
   const toggleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsWishlisted((prev) => !prev);
+    const nextValue = toggleFavoriteProduct(product.id);
+    setIsWishlisted(nextValue);
+    toast.success(nextValue ? "تمت الإضافة إلى المفضلة" : "تمت الإزالة من المفضلة");
   };
 
   return (
@@ -134,7 +148,7 @@ export function ProductCard({
             type="button"
             onClick={toggleWishlist}
             aria-label={isWishlisted ? "إزالة من المفضلة" : "إضافة للمفضلة"}
-            className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-candy-rose shadow-sm transition-transform active:scale-90 hover:bg-white hover:text-candy-strawberry"
+            className="absolute top-2 right-2 min-w-10 min-h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-candy-rose shadow-sm transition-transform active:scale-90 hover:bg-white hover:text-candy-strawberry touch-manipulation"
           >
             <Heart
               className={cn(

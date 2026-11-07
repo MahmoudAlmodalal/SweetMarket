@@ -11,6 +11,8 @@ import {
   Phone,
   Truck,
   Search,
+  Heart,
+  UserRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
@@ -166,6 +168,20 @@ export function StorefrontHeader({
 
           {/* Header Action Elements */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              href="/favorites"
+              aria-label="المفضلة"
+              className="hidden sm:flex w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-candy-rose items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Heart className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/account"
+              aria-label="حسابي"
+              className="hidden sm:flex w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-primary items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <UserRound className="w-5 h-5" />
+            </Link>
             {/* Desktop Search Bar */}
             <form onSubmit={submitSearch} className="hidden lg:flex items-center relative w-56 xl:w-64">
               <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />

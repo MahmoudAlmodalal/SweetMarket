@@ -37,6 +37,7 @@ import {
   AddToCartBar,
 } from "@/components/storefront/product-detail";
 import { cn } from "@/lib/utils";
+import { getFavoriteProductIds, toggleFavoriteProduct } from "@/components/storefront/catalog/wishlist-utils";
 
 interface PageProps {
   params: { slug: string };
@@ -93,6 +94,17 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
   const [addedRelatedIds, setAddedRelatedIds] = React.useState<Record<string, boolean>>({});
 
   const { addItem } = useCart();
+
+  React.useEffect(() => {
+    const syncWishlist = () => setIsWishlisted(getFavoriteProductIds().includes(product?.id || ""));
+    syncWishlist();
+    window.addEventListener("candy_favorites_updated", syncWishlist);
+    window.addEventListener("storage", syncWishlist);
+    return () => {
+      window.removeEventListener("candy_favorites_updated", syncWishlist);
+      window.removeEventListener("storage", syncWishlist);
+    };
+  }, [product?.id]);
 
   // Fetch updated product from repository (handles localStorage changes from admin)
   React.useEffect(() => {
@@ -333,9 +345,10 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                 <button
                   type="button"
                   onClick={() => {
-                    setIsWishlisted((prev) => !prev);
+                    const nextValue = toggleFavoriteProduct(product.id);
+                    setIsWishlisted(nextValue);
                     toast.success(
-                      !isWishlisted ? "تمت الإضافة لقائمة رغباتك" : "تمت الإزالة من رغباتك"
+                      nextValue ? "تمت الإضافة لقائمة رغباتك" : "تمت الإزالة من رغباتك"
                     );
                   }}
                   aria-label={isWishlisted ? "إزالة من المفضلة" : "إضافة إلى المفضلة"}

@@ -122,6 +122,22 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                 </li>
                 <li>
                   <Link
+                    href="/favorites"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
+                  >
+                    <span>مفضلتي</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/account"
+                    className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
+                  >
+                    <span>حسابي وبياناتي</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/track"
                     className="text-candy-ink/80 hover:text-secondary transition-colors flex items-center gap-1.5"
                   >
