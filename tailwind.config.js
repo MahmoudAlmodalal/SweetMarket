@@ -8,6 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        background: 'var(--color-bg)',
+        foreground: 'var(--color-text)',
         primary: {
           DEFAULT: 'var(--color-primary)',
           hover: 'var(--color-primary-hover)',
@@ -16,6 +18,10 @@ module.exports = {
         },
         accent: {
           DEFAULT: 'var(--color-accent)',
+        },
+        secondary: {
+          DEFAULT: '#d72d58',
+          foreground: '#FFFFFF',
         },
         surface: 'var(--color-surface)',
         soft: 'var(--color-soft)',
@@ -66,6 +72,7 @@ module.exports = {
           muted: 'var(--color-text-muted)',
           line: 'var(--color-border)',
           'line-dark': 'var(--color-border-input)',
+          canvas: 'var(--color-bg)',
         },
       },
       fontFamily: {
@@ -73,6 +80,7 @@ module.exports = {
         sans: ['var(--font-body)', 'var(--font-ibm-plex-sans-arabic)', '"IBM Plex Sans Arabic"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       borderRadius: {
+        button: 'var(--radius-input)',
         'candy-card': 'var(--radius-card)',
         'candy-section': 'var(--radius-section)',
         'candy-pill': 'var(--radius-pill)',
@@ -87,6 +95,7 @@ module.exports = {
         'candy-3': 'var(--shadow-3)',
         'candy-cta': '0 12px 26px rgba(215, 45, 88, 0.30)',
         'candy-dock': '0 14px 34px rgba(124, 29, 67, 0.18)',
+        card: 'var(--shadow-1)',
         1: 'var(--shadow-1)',
         2: 'var(--shadow-2)',
         3: 'var(--shadow-3)',

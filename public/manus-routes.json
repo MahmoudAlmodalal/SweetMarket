@@ -1,0 +1,23 @@
+{
+  "routes": [
+    { "path": "/", "title": "الرئيسية" },
+    { "path": "/category/:slug", "title": "التصنيف" },
+    { "path": "/product/:slug", "title": "تفاصيل المنتج" },
+    { "path": "/cart", "title": "سلة المشتريات" },
+    { "path": "/checkout", "title": "إتمام الطلب" },
+    { "path": "/checkout/success/:orderNumber", "title": "تم استلام الطلب" },
+    { "path": "/track", "title": "تتبع الطلب" },
+    { "path": "/contact", "title": "من نحن والتواصل" },
+    { "path": "/admin/login", "title": "تسجيل دخول الإدارة" },
+    { "path": "/admin/forbidden", "title": "غير مصرح" },
+    { "path": "/admin/account/password", "title": "تغيير كلمة المرور" },
+    { "path": "/admin/orders", "title": "طلبات المتجر" },
+    { "path": "/admin/orders/:id", "title": "تفاصيل الطلب" },
+    { "path": "/admin/products", "title": "منتجات المتجر" },
+    { "path": "/admin/products/new", "title": "إضافة منتج" },
+    { "path": "/admin/products/:id/edit", "title": "تعديل المنتج" },
+    { "path": "/admin/categories", "title": "التصنيفات" },
+    { "path": "/admin/zones", "title": "مناطق التوصيل" },
+    { "path": "/admin/users", "title": "مستخدمو الإدارة" }
+  ]
+}
