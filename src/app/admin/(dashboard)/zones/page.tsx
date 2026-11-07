@@ -417,7 +417,7 @@ export default function AdminZonesPage() {
               </h3>
               <p className="font-sans text-xs text-candy-muted">
                 هل أنت متأكد من حذف منطقة{' '}
-                <span className="font-bold text-candy-ink">"{deleteTarget.name}"</span>؟
+                <span className="font-bold text-candy-ink">&quot;{deleteTarget.name}&quot;</span>؟
                 لن يتمكن الزبائن من طلب التوصيل إليها بعد الحذف.
               </p>
             </div>

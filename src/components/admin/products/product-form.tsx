@@ -683,7 +683,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                 تمييز المنتج في الصفحة الرئيسية (Featured)
               </p>
               <p className="text-xs text-candy-muted font-sans mt-0.5">
-                إظهار هذا المنتج في شريط "الأكثر طلباً ومميز" بالصفحة الرئيسية للمتجر.
+                إظهار هذا المنتج في شريط &quot;الأكثر طلباً ومميز&quot; بالصفحة الرئيسية للمتجر.
               </p>
             </div>
             <button

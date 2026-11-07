@@ -431,7 +431,7 @@ export default function AdminCategoriesPage() {
               </h3>
               <p className="font-sans text-xs text-candy-muted">
                 هل أنت متأكد من حذف تصنيف{' '}
-                <span className="font-bold text-candy-ink">"{deleteTarget.name}"</span>؟
+                <span className="font-bold text-candy-ink">&quot;{deleteTarget.name}&quot;</span>؟
                 لا يمكن التراجع عن هذا الإجراء بعد تنفيذه.
               </p>
             </div>
