@@ -135,7 +135,7 @@ function CartPageInner() {
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-medium">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <Clock className="w-3.5 h-3.5 text-emerald-600" />
-            <span>طلبك محجوز لمدة 15 دقيقة</span>
+            <span>اختياراتك محفوظة لمدة 24 ساعة</span>
           </div>
 
           <button
