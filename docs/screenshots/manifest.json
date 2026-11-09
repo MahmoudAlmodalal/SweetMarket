@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-11-09T22:55:59Z",
+  "viewport": {
+    "desktop": "1440x1050",
+    "mobile": "390x844"
+  },
+  "demoOrder": "CL-2026-2921",
+  "screenshots": [
+    {
+      "file": "00-home.png",
+      "route": "/",
+      "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+      "status": "captured"
+    },
+    {
+      "file": "01-category-baklava.png",
+      "route": "/category/baklava-eastern",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "02-product-detail.png",
+      "route": "/product/mixed-baklava-extra-pistachio",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "03-product-added.png",
+      "route": "/product/mixed-baklava-extra-pistachio",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "04-cart.png",
+      "route": "/cart",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "05-checkout.png",
+      "route": "/checkout",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "05b-checkout-filled.png",
+      "route": "/checkout",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "06-order-success.png",
+      "route": "/checkout/success/CL-2026-2921",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "07-track-form.png",
+      "route": "/track",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "08-track-result.png",
+      "route": "/track (نتيجة الطلب التجريبي)",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "09-account.png",
+      "route": "/account",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "10-favorites-empty.png",
+      "route": "/favorites",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "11-contact.png",
+      "route": "/contact",
+      "title": "تواصل معنا وساعات العمل | كاندي لوز",
+      "status": "captured"
+    },
+    {
+      "file": "24-not-found.png",
+      "route": "/sweetmarket-route-that-does-not-exist",
+      "title": "الصفحة غير موجودة | كاندي لوز",
+      "status": "captured"
+    },
+    {
+      "file": "12-admin-login.png",
+      "route": "/admin/login",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "13-admin-orders.png",
+      "route": "/admin/orders",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "14-admin-order-detail.png",
+      "route": "/admin/orders/ord-1004",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "15-admin-undelivered-dialog.png",
+      "route": "/admin/orders/ord-1004 (تأكيد تعذّر التسليم)",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "16-admin-products.png",
+      "route": "/admin/products",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "17-admin-product-create.png",
+      "route": "/admin/products/new",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "18-admin-product-edit.png",
+      "route": "/admin/products/prod-baklava-mixed/edit",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "19-admin-categories.png",
+      "route": "/admin/categories",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "20-admin-zones.png",
+      "route": "/admin/zones",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "21-admin-users.png",
+      "route": "/admin/users",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "22-admin-password.png",
+      "route": "/admin/account/password",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "23-admin-forbidden.png",
+      "route": "/admin/forbidden",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "25-mobile-home.png",
+      "route": "/",
+      "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+      "status": "captured"
+    },
+    {
+      "file": "26-mobile-product.png",
+      "route": "/product/mixed-baklava-extra-pistachio",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "27-mobile-cart.png",
+      "route": "/cart",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    },
+    {
+      "file": "28-mobile-checkout.png",
+      "route": "/checkout",
+      "title": "كاندي لوز | Candy Loz",
+      "status": "captured"
+    }
+  ]
+}
