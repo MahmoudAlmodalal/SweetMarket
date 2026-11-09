@@ -3,14 +3,22 @@
 import * as React from "react";
 import Link from "next/link";
 import { ArrowRight, Heart, MapPin, Package, Phone, ShoppingBag, UserRound } from "lucide-react";
-import { MOCK_ORDERS } from "@/data/mock/orders";
 import { STORAGE_KEYS, getStorageItem } from "@/lib/storage";
+import { getOrders } from "@/lib/repositories";
 import type { CheckoutCustomerData } from "@/types";
 
 export default function AccountPage() {
   const [draft, setDraft] = React.useState<Partial<CheckoutCustomerData>>({});
+  const [orderCount, setOrderCount] = React.useState<number | null>(null);
   React.useEffect(() => {
     setDraft(getStorageItem(STORAGE_KEYS.CHECKOUT_DRAFT, {} as Partial<CheckoutCustomerData>));
+    let active = true;
+    void getOrders().then((orders) => {
+      if (active) setOrderCount(orders.length);
+    }).catch(() => {
+      if (active) setOrderCount(0);
+    });
+    return () => { active = false; };
   }, []);
 
   const displayName = draft.fullName || "زائر كاندي لوز";
@@ -53,7 +61,7 @@ export default function AccountPage() {
 
         <section className="lg:col-span-5 rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-5"><Package className="w-5 h-5 text-candy-strawberry" /><h2 className="font-display font-bold text-lg text-candy-ink">طلباتك</h2></div>
-          <div className="flex items-center justify-between rounded-2xl bg-candy-soft p-4 mb-4"><span className="text-sm text-candy-muted">طلبات تجريبية متاحة للتتبع</span><strong className="text-2xl text-candy-berry">{MOCK_ORDERS.length}</strong></div>
+          <div className="flex items-center justify-between rounded-2xl bg-candy-soft p-4 mb-4"><span className="text-sm text-candy-muted">طلبات محفوظة في بيانات العرض</span><strong className="text-2xl text-candy-berry">{orderCount ?? "—"}</strong></div>
           <Link href="/track" className="w-full min-h-11 inline-flex items-center justify-center gap-2 rounded-candy-pill border-2 border-candy-blush text-candy-berry font-bold text-sm hover:bg-candy-soft transition-colors"><Package className="w-4 h-4" />تتبع طلب</Link>
         </section>
       </div>
