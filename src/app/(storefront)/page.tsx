@@ -20,7 +20,7 @@ import { MOCK_PRODUCTS } from "@/data/mock/products";
 export const metadata: Metadata = {
   title: "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
   description:
-    "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة. بقلاوة، كيك، كنافة، شوكولاتة بلجيكية وتوصيل سريع ومبرد.",
+    "تشكيلة من الحلويات الشرقية والغربية والكيك والكنافة والشوكولاتة. التوصيل والرسوم بحسب المنطقة المختارة.",
 };
 
 export default function StorefrontHomePage() {
@@ -35,21 +35,21 @@ export default function StorefrontHomePage() {
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
             <Sparkles className="w-4 h-4 text-candy-strawberry" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
-              صنع يدوي طازج يومياً
+              تشكيلة متنوعة من الحلويات
             </span>
           </div>
 
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
             <Gift className="w-4 h-4 text-candy-strawberry" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
-              تغليف هدايا ملكي مجاناً
+              تغليف أنيق مشمول بالسعر
             </span>
           </div>
 
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
             <Truck className="w-4 h-4 text-candy-strawberry" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
-              شحن مبرد يحافظ على الطراوة
+              التوصيل حسب منطقتك
             </span>
           </div>
 
@@ -74,28 +74,28 @@ export default function StorefrontHomePage() {
         categories={MOCK_CATEGORIES}
       />
 
-      {/* 5. Gifting & Custom Orders Spotlight */}
+      {/* 5. Ready-to-order Gift Boxes */}
       <section
-        aria-label="خدمة الإهداء والبوكسات الخاصة"
+        aria-label="بوكسات الهدايا الجاهزة"
         className="w-full rounded-candy-section bg-gradient-to-r from-candy-soft via-candy-blush/30 to-candy-pastel-1/40 border border-candy-blush p-6 sm:p-8 lg:p-10 shadow-candy-1 flex flex-col md:flex-row items-center justify-between gap-6"
       >
         <div className="flex flex-col gap-2.5 text-right max-w-xl">
           <div className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-candy-pill bg-white text-candy-berry font-sans font-bold text-xs border border-candy-line shadow-sm">
             <Gift className="w-3.5 h-3.5 text-candy-strawberry" />
-            <span>خدمة الإهداء المخصص 🎀</span>
+            <span>بوكسات هدايا جاهزة</span>
           </div>
           <h3 className="font-display font-bold text-2xl sm:text-3xl text-candy-ink">
-            صمم بوكس حلاك الخاص لمناسبتك المميزة
+            هدايا جاهزة لمناسباتك الجميلة
           </h3>
           <p className="font-sans text-sm sm:text-base text-candy-muted leading-relaxed">
-            اختر تشكيلتك المفضلة من قطع البقلاوة والماكرون والترافل البلجيكي، مع إضافة كرت إهداء شخصي باسم من تحب وتغليف فاخر يليق بذوقكم.
+            استكشف صناديق الحلويات الجاهزة ضمن التشكيلة، واختر ما يناسب مناسبتك من المنتجات المتوفرة.
           </p>
           <div className="pt-2">
             <Link
-              href="/contact"
+              href="/category/chocolate-gifts"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-berry text-white font-sans font-bold text-sm shadow-sm hover:bg-candy-berry-dark hover:shadow-candy-cta transition-all"
             >
-              <span>طلب بوكس مخصص</span>
+              <span>تصفح بوكسات الهدايا</span>
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </div>
@@ -109,7 +109,7 @@ export default function StorefrontHomePage() {
         </div>
       </section>
 
-      {/* 6. Delivery Perks Info Banner */}
+      {/* 6. Delivery and order information */}
       <section
         aria-label="معلومات التوصيل والضمان"
         className="w-full rounded-candy-card bg-white border border-candy-line p-6 sm:p-8 shadow-candy-1"
@@ -121,10 +121,10 @@ export default function StorefrontHomePage() {
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-candy-ink">
-                توصيل طازج وسريع
+                التوصيل حسب المنطقة
               </h4>
               <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
-                سيارات مجهزة لنقل وتوصيل الحلويات مبردة وبحالتها الأصلية.
+                تظهر المناطق والرسوم والوقت المتوقع عند إتمام الطلب.
               </p>
             </div>
           </div>
@@ -135,10 +135,10 @@ export default function StorefrontHomePage() {
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-candy-ink">
-                ضمان الجودة والطراوة
+                معلومات واضحة قبل الطلب
               </h4>
               <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
-                مكونات طبيعية فاخرة 100% وزبدة وسمن بلدي عالي الجودة.
+                للاستفسار عن مكونات صنف محدد، تواصل معنا قبل الطلب.
               </p>
             </div>
           </div>
@@ -148,11 +148,9 @@ export default function StorefrontHomePage() {
               <Banknote className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="font-display font-bold text-base text-candy-ink">
-                الدفع عند الاستلام
-              </h4>
+                <h4 className="font-display font-bold text-base text-candy-ink">الدفع عند الاستلام</h4>
               <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
-                ادفع نقداً (COD) بأمان وراحة تامة بعد معاينة واستلام طلبك.
+                ادفع نقداً عند استلام طلبك؛ لا حاجة لبيانات بطاقة.
               </p>
             </div>
           </div>
