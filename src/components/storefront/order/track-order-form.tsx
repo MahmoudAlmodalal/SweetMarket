@@ -71,7 +71,7 @@ export function TrackOrderForm({
     } else if (queryOrder && !orderNumber) {
       setOrderNumber(queryOrder);
     }
-  }, [initialOrderNumber, queryOrder]);
+  }, [initialOrderNumber, queryOrder, orderNumber]);
 
   // If orderNumber is pre-filled from query param, focus phone field
   React.useEffect(() => {
