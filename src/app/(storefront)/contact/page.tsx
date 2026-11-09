@@ -61,7 +61,7 @@ export default function ContactPage() {
         <div className="max-w-3xl relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-candy-pill bg-candy-blush/80 text-candy-berry text-xs font-bold mb-3 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-candy-berry" />
-            <span>خدمة الضيافة والكونسيرج المباشر</span>
+            <span>استفسارات ومساعدة</span>
           </div>
 
           <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-candy-berry leading-tight tracking-tight">
@@ -69,9 +69,8 @@ export default function ContactPage() {
           </h1>
 
           <p className="font-sans text-sm sm:text-base lg:text-lg text-candy-muted leading-relaxed mt-3">
-            يسعدنا دائماً استقبالكم في صالة العرض الخاصة بنا في قلب غزة، أو
-            التواصل الفوري معكم عبر واتساب والهاتف لترتيب بوكسات الإهداء وتلبية
-            طلباتكم الخاصة بأعلى معايير الحرفية والذوق.
+            يسعدنا استقبال استفساراتكم عبر الهاتف أو واتساب. تظهر خيارات التوصيل
+            والرسوم المتاحة بعد اختيار منطقة التسليم عند إتمام الطلب.
           </p>
         </div>
       </section>
@@ -220,10 +219,10 @@ export default function ContactPage() {
                   id="delivery-coverage-title"
                   className="font-display font-bold text-lg text-candy-berry leading-tight"
                 >
-                  تغطية التوصيل والشحن المبرد
+                  مناطق التوصيل
                 </h2>
                 <p className="font-sans text-xs text-candy-muted">
-                  سيارات مجهزة وتغليف فاخر لحماية النكهات
+                  التوفر والرسوم بحسب المنطقة المختارة
                 </p>
               </div>
             </div>
@@ -233,10 +232,9 @@ export default function ContactPage() {
                 <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <p className="leading-relaxed">
                   <strong className="text-candy-berry font-bold block mb-0.5">
-                    نطاق التغطية الشامل:
+                    المناطق المتاحة:
                   </strong>
-                  نغطي كافة أحياء مدينة غزة (الرمال الشمالي والجنوبي، النصر، تل
-                  الهوا، الشيخ رضوان، ميناء غزة) وكافة المناطق الحيوية المعتمدة.
+                  اختر منطقة التوصيل المتاحة عند إتمام الطلب؛ التوفر والرسوم قد يختلفان حسب المنطقة.
                 </p>
               </div>
 
@@ -244,10 +242,9 @@ export default function ContactPage() {
                 <Clock className="w-4 h-4 text-candy-rose shrink-0 mt-0.5" />
                 <p className="leading-relaxed">
                   <strong className="text-candy-berry font-bold block mb-0.5">
-                    سرعة التجهيز والتسليم:
+                    الوقت المتوقع:
                   </strong>
-                  يتم تجهيز الحلويات طازجة فور طلبها وتسليمها لمندوب التوصيل
-                  خلال 45 إلى 90 دقيقة من تأكيد الطلب.
+                  يظهر الوقت المتوقع بعد اختيار المنطقة، ويعتمد على تفاصيل الطلب والتوفر.
                 </p>
               </div>
 
@@ -255,10 +252,9 @@ export default function ContactPage() {
                 <Gift className="w-4 h-4 text-candy-strawberry shrink-0 mt-0.5" />
                 <p className="leading-relaxed">
                   <strong className="text-candy-berry font-bold block mb-0.5">
-                    تغليف الإهداء المبرد:
+                    التغليف:
                   </strong>
-                  تُغلف بوكسات الشوكولاتة والكيك الفاخر في عبوات حرارية خاصة مع
-                  بطاقات تهنئة أنيقة حسب رغبتكم لضمان أبهى صورة.
+                  التغليف القياسي الأنيق مشمول بالسعر؛ لا تتوفر حالياً خيارات تغليف أو بطاقات مخصصة.
                 </p>
               </div>
             </div>
@@ -268,12 +264,12 @@ export default function ContactPage() {
                 هل تحتاج توصيل لمناسبة أو كميات كبيرة؟
               </span>
               <a
-                href="https://wa.me/970591234567?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D9%84%D8%AF%D9%8A%20%D8%B7%D9%84%D8%A8%20%D8%AE%D8%A7%D8%B5%20%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9%20%D9%88%D8%A3%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%86%D8%B3%D9%8A%D9%82%20%D8%A7%D9%84%D8%AA%D9%88%D8%B5%D9%8A%D9%84"
+                href={`https://wa.me/970591234567?text=${encodeURIComponent("مرحباً، لدي استفسار عن توفر منتج أو منطقة توصيل.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-bold text-candy-strawberry hover:underline shrink-0"
               >
-                تنسيق مع الكونسيرج
+                تواصل عبر واتساب
               </a>
             </div>
           </section>
@@ -289,11 +285,10 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-display font-bold text-base text-candy-berry">
-                مذاق طازج يومياً
+                استكشف التشكيلة
               </h3>
               <p className="font-sans text-xs text-candy-muted mt-1 leading-relaxed">
-                حلويات وكيك تُحضر بكل شغف من أجود المكونات الطبيعية والزبدة
-                البلجيكية الفاخرة.
+                راجع وصف كل منتج للتعرّف على تفاصيله قبل إضافته إلى السلة.
               </p>
             </div>
           </div>
@@ -304,11 +299,10 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-display font-bold text-base text-candy-berry">
-                تغليف إهداء راقٍ
+                تغليف أنيق
               </h3>
               <p className="font-sans text-xs text-candy-muted mt-1 leading-relaxed">
-                تصاميم بوكسات فاخرة مع أشرطة حريرية وبطاقات إهداء مخصصة لكل
-                المناسبات والأعياد.
+                يتوفر التغليف القياسي مع المنتجات، وتظهر تفاصيل المنتج قبل الإضافة للسلة.
               </p>
             </div>
           </div>
@@ -319,11 +313,10 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="font-display font-bold text-base text-candy-berry">
-                كونسيرج طلبات المناسبات
+                مساعدة قبل الطلب
               </h3>
               <p className="font-sans text-xs text-candy-muted mt-1 leading-relaxed">
-                مستشار متخصص لمساعدتكم في اختيار كميات الضيافة وتنسيق حفلات
-                التخرج والزفاف.
+                تواصل معنا للاستفسار عن التوفر أو خيارات التوصيل قبل إتمام طلبك.
               </p>
             </div>
           </div>

@@ -22,7 +22,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
     <>
       {/* Floating WhatsApp Concierge Button (Stitch Screen #1) */}
       <a
-        href="https://wa.me/970599000000"
+        href="https://wa.me/970591234567"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="تواصل فوري عبر واتساب"
@@ -71,7 +71,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
               {/* WhatsApp Button */}
               <div className="pt-1">
                 <a
-                  href="https://wa.me/970599000000"
+                  href="https://wa.me/970591234567"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-button bg-[#25D366] text-white text-xs md:text-sm font-bold shadow-md hover:brightness-105 active:scale-95 transition-all duration-200"
@@ -168,7 +168,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                     <span className="font-semibold block text-xs text-candy-muted">
                       مناطق التوصيل:
                     </span>
-                    <span>توصيل سريع ومبرد لكافة المناطق المعتمدة</span>
+                    <span>اختر المنطقة عند إتمام الطلب لمعرفة التوفر والرسوم</span>
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
@@ -178,7 +178,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                       هاتف خدمة العملاء:
                     </span>
                     <span dir="ltr" className="inline-block font-mono">
-                      +970 59 900 0000
+                      +970 59 123 4567
                     </span>
                   </div>
                 </li>
@@ -190,12 +190,11 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
               <div className="flex items-center gap-2 text-primary">
                 <Sparkles className="w-4 h-4 text-secondary" />
                 <h3 className="font-display font-bold text-sm">
-                  ضمان الطزاجة والجودة
+                  معلومات المنتج
                 </h3>
               </div>
               <p className="text-xs text-candy-muted leading-relaxed">
-                نصنع كل قطعة بحب وإتقان باستخدام أجود المكونات الطبيعية والمكسرات
-                الفاخرة لتصلكم طازجة ولذيذة كأنها خرجت للتو من الفرن.
+                راجع وصف كل منتج، وللاستفسار عن المكونات أو مسببات الحساسية تواصل مع المتجر قبل الطلب.
               </p>
               <div className="pt-2 text-xs font-bold text-secondary flex items-center gap-1">
                 <Heart className="w-3.5 h-3.5 fill-secondary" />

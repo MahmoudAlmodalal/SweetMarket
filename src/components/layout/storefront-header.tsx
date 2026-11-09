@@ -114,7 +114,7 @@ export function StorefrontHeader({
       {/* Top Announcement Ribbon */}
       <div className="bg-candy-soft border-b border-candy-line/40 px-4 py-1.5 text-center flex items-center justify-center gap-2 text-xs font-semibold text-primary">
         <Sparkles className="w-3.5 h-3.5 text-secondary shrink-0" />
-        <span>توصيل طازج وسريع لجميع المناطق 🍰</span>
+        <span>خيارات التوصيل والرسوم حسب المنطقة 🍰</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

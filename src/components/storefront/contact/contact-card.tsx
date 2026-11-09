@@ -29,7 +29,7 @@ export function ContactCard({
   location = "العنوان: غزة - الرمال / شارع عمر المختار",
   phone = "059-1234567",
   whatsappNumber = "970591234567",
-  whatsappGreeting = "مرحباً كاندي لوز، أود الاستفسار عن تشكيلة الحلويات الفاخرة والطلبات الخاصة 🍬",
+  whatsappGreeting = "مرحباً، لدي استفسار عن توفر منتج أو منطقة توصيل.",
 }: ContactCardProps) {
   const [copiedField, setCopiedField] = React.useState<string | null>(null);
 
@@ -175,12 +175,12 @@ export function ContactCard({
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#25D366]" />
             </span>
             <span className="font-sans text-xs font-bold text-emerald-800 tracking-wide uppercase">
-              خدمة كونسيرج كاندي لوز الفورية
+              تواصل مع متجر كاندي لوز
             </span>
           </div>
 
           <p className="font-sans text-xs sm:text-sm text-emerald-900 leading-relaxed mb-4">
-            تواصل معنا فورياً عبر واتساب لتجهيز بوكسات الضيافة، كيك المناسبات المخصص، وتنسيق التوصيل لكافة المناسبات.
+            راسلنا عبر واتساب للاستفسار عن توفر المنتجات ومناطق التوصيل وساعات العمل.
           </p>
 
           <WhatsAppDirectButton
