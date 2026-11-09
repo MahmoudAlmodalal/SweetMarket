@@ -3,12 +3,8 @@
 import * as React from "react";
 import {
   Banknote,
-  ShieldCheck,
   CheckCircle2,
-  Lock,
-  Sparkles,
   HelpCircle,
-  ThumbsUp,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -37,13 +33,12 @@ export function PaymentMethodCard({
                 3. طريقة الدفع
               </CardTitle>
               <p className="text-xs text-candy-muted font-sans mt-0.5">
-                خيارات مرنة ومريحة بدون الحاجة لبطاقات بنكية
+                طريقة الدفع المتاحة في هذه النسخة
               </p>
             </div>
           </div>
           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-candy-pill bg-white border border-candy-line text-[11px] font-bold text-candy-berry shadow-xs">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-            دفع آمن 100%
+            نقداً عند الاستلام
           </span>
         </div>
       </CardHeader>
@@ -82,7 +77,7 @@ export function PaymentMethodCard({
                   </span>
                 </div>
                 <p className="text-xs text-candy-muted font-sans mt-1 leading-relaxed">
-                  ادفع للمندوب نقداً (كاش) عند وصول الطلب إلى باب بيتك واستلام علب الحلويات طازجة.
+                  في المتجر الفعلي يُدفع المبلغ نقداً عند استلام الطلب.
                 </p>
               </div>
             </div>
@@ -99,25 +94,22 @@ export function PaymentMethodCard({
               <span>لا يتطلب بطاقة ائتمانية</span>
             </div>
             <div className="flex items-center gap-2 text-candy-ink bg-white/80 p-2 rounded-xl border border-candy-line/40">
-              <ThumbsUp className="w-4 h-4 text-candy-strawberry shrink-0" />
-              <span>معاينة الطلب عند الاستلام</span>
+              <Banknote className="w-4 h-4 text-candy-strawberry shrink-0" />
+              <span>الدفع عند الاستلام</span>
             </div>
             <div className="flex items-center gap-2 text-candy-ink bg-white/80 p-2 rounded-xl border border-candy-line/40">
-              <Lock className="w-4 h-4 text-candy-berry shrink-0" />
-              <span>طلب محمي وموثوق 100%</span>
+              <HelpCircle className="w-4 h-4 text-candy-berry shrink-0" />
+              <span>لا تتوفر بوابات إلكترونية</span>
             </div>
           </div>
         </div>
 
-        {/* Note on upcoming electronic wallets */}
+        {/* Current payment limitation */}
         <div className="p-3 rounded-xl bg-candy-soft/60 border border-candy-line/40 flex items-center justify-between text-xs font-sans text-candy-muted">
           <div className="flex items-center gap-2">
             <HelpCircle className="w-4 h-4 text-candy-rose shrink-0" />
-            <span>قريباً: إمكانية الدفع عبر المحافظ الإلكترونية المتنقلة (Jawwal Pay & PalPay)</span>
+            <span>لا يتم تحصيل أي مبلغ إلكترونياً في نسخة العرض التجريبية.</span>
           </div>
-          <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-candy-line text-candy-muted font-bold shrink-0">
-            قريباً
-          </span>
         </div>
       </CardContent>
     </Card>

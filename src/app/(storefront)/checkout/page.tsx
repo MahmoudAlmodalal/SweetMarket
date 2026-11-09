@@ -236,8 +236,8 @@ export default function CheckoutPage() {
 
       // 7. Show success feedback
       toast.success(
-        "تم إرسال الطلب بنجاح! 🎉",
-        `رقم الطلب الخاص بك: ${newOrder.orderNumber}`
+        "تم حفظ الطلب التجريبي 🎉",
+        `رقم العرض: ${newOrder.orderNumber} — لم يُرسل إلى متجر فعلي.`
       );
 
       // 8. Route to order success confirmation page
@@ -247,7 +247,7 @@ export default function CheckoutPage() {
       const errorMessage =
         err instanceof Error ? err.message : "حدث خطأ غير متوقع أثناء إرسال الطلب";
       setSubmissionError(errorMessage);
-      toast.error("فشل إرسال الطلب", errorMessage);
+      toast.error("تعذر حفظ الطلب التجريبي", errorMessage);
       setIsSubmitting(false);
     }
   };
@@ -335,7 +335,7 @@ export default function CheckoutPage() {
               إتمام الطلب والتوصيل
             </h1>
             <p className="text-xs sm:text-sm text-candy-muted font-sans mt-0.5">
-              خطوة واحدة لتأكيد طلبك وتجهيز علب الحلويات طازجة في مطبخ كاندي لوز 🍬
+              أدخل بيانات التواصل والعنوان لمراجعة طلبك قبل إرساله.
             </p>
           </div>
 
@@ -349,13 +349,18 @@ export default function CheckoutPage() {
         </div>
       </div>
 
+      <div role="note" className="flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
+        <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-amber-700" />
+        <p><strong>نسخة عرض تجريبية:</strong> الطلبات تُحفظ محلياً في هذا المتصفح ولا تصل إلى متجر أو خدمة توصيل حقيقية.</p>
+      </div>
+
       {/* 2. Stepper & Security Seal Context (Matching Stitch Screen #6) */}
       <section className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2 text-candy-berry">
             <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm">
-              طلب آمن ومحمي 100% • دفع نقداً عند الاستلام 🔒
+              الدفع نقداً عند الاستلام • لا حاجة لإدخال بيانات بطاقة
             </span>
           </div>
           <span className="bg-candy-blush px-2.5 py-0.5 rounded-full text-candy-berry font-sans font-bold text-xs">

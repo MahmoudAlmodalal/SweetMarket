@@ -103,9 +103,6 @@ export function CartItemRow({
                 <CakeSlice className="w-8 h-8 opacity-60" />
               </div>
             )}
-            <span className="absolute bottom-1 right-1 font-sans text-[10px] px-1.5 py-0.5 rounded bg-white/95 text-candy-ink font-semibold shadow-xs backdrop-blur-xs">
-              طازج
-            </span>
           </Link>
 
           {/* Product Details & Actions */}

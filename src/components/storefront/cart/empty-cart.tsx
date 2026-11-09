@@ -41,7 +41,7 @@ export function EmptyCart({ className }: EmptyCartProps) {
 
       {/* Warm Friendly Description */}
       <p className="font-sans text-candy-muted text-sm sm:text-base leading-relaxed mb-8 max-w-sm">
-        يبدو أنك لم تضف أي صنف من حلوياتنا الفاخرة بعد. استكشف تشكيلتنا الطازجة وأضف لمسة من البهجة لمناسباتك!
+        لم تضف أي صنف إلى السلة بعد. تصفح المنتجات واختر ما يناسبك.
       </p>
 
       {/* Primary Action Button */}

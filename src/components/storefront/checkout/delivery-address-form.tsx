@@ -74,13 +74,13 @@ export function DeliveryAddressForm({
                 2. تفاصيل ومنطقة التوصيل
               </CardTitle>
               <p className="text-xs text-candy-muted font-sans mt-0.5">
-                توصيل سريع ومبرد بسيارات مخصصة لحفظ الحلويات طازجة ❄️
+                رسوم ووقت التوصيل يختلفان بحسب المنطقة المختارة
               </p>
             </div>
           </div>
           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-candy-pill bg-candy-mint-soft text-candy-mint-text text-[11px] font-bold border border-candy-mint-soft">
             <Sparkles className="w-3 h-3" />
-            توصيل مبرد
+            حسب المنطقة
           </span>
         </div>
       </CardHeader>

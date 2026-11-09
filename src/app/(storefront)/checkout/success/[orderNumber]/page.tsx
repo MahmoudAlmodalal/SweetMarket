@@ -10,7 +10,6 @@ import {
   Compass,
   ArrowRight,
 } from "lucide-react";
-import { useCart } from "@/context/cart-context";
 import { getOrders, getOrderById, getDeliveryZones } from "@/lib/repositories";
 import type { Order, DeliveryZone } from "@/types";
 import { OrderSuccessCard } from "@/components/storefront/order/order-success-card";
@@ -35,24 +34,13 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
     }
   }, [rawParam]);
 
-  const { clearCart } = useCart();
-  const hasClearedRef = React.useRef(false);
-
   // State
   const [order, setOrder] = React.useState<Order | null>(null);
   const [deliveryZone, setDeliveryZone] = React.useState<DeliveryZone | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  // 1. Clears cart automatically upon initial render
-  React.useEffect(() => {
-    if (!hasClearedRef.current) {
-      clearCart();
-      hasClearedRef.current = true;
-    }
-  }, [clearCart]);
-
-  // 2. Fetches order details by orderNumber from repository
+  // Fetches order details by orderNumber from repository. Cart clearing happens only after checkout succeeds.
   React.useEffect(() => {
     let isMounted = true;
 

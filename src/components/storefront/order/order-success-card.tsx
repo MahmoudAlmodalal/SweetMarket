@@ -16,7 +16,7 @@ import {
   Phone,
   MessageCircle,
   FileCheck2,
-  ShieldCheck,
+  AlertCircle,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
@@ -95,12 +95,11 @@ export function OrderSuccessCard({
 
         {/* Warm Arabic Thank You Heading */}
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry tracking-tight mb-2">
-          شكراً لطلبك من كاندي لوز! 🎉
+          تم تسجيل الطلب التجريبي 🎉
         </h1>
 
         <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6">
-          تم استلام وتأكيد طلبك بنجاح. فريق حلويات كاندي لوز يعمل الآن على تجهيز طلبك
-          الفاخر بكل حب وعناية ليصلك طازجاً وشهياً 💖
+          حُفظ هذا الطلب في بيانات العرض المحلية فقط؛ لم يُرسل إلى متجر فعلي أو خدمة توصيل.
         </p>
 
         {/* Order Reference Badge with One-Click Copy */}
@@ -148,7 +147,7 @@ export function OrderSuccessCard({
               </div>
               <div className="flex flex-col">
                 <span className="font-sans text-[11px] text-candy-muted">
-                  الوقت التقديري للتوصيل المبرد
+                  الوقت المتوقع حسب المنطقة
                 </span>
                 <span className="font-sans text-sm font-bold text-candy-ink">
                   خلال {deliveryZone.estimatedTimeMin} - {deliveryZone.estimatedTimeMax} دقيقة
@@ -157,7 +156,7 @@ export function OrderSuccessCard({
             </div>
             <div className="flex items-center gap-1.5 text-xs font-sans text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill font-bold shrink-0">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              مباشر
+              تقديري
             </div>
           </div>
         )}
@@ -298,7 +297,7 @@ export function OrderSuccessCard({
               </div>
             </div>
             <span className="text-xs font-sans font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill shrink-0">
-              جاهز للتسليم 💵
+                  بيانات تجريبية
             </span>
           </div>
         </div>
@@ -312,7 +311,7 @@ export function OrderSuccessCard({
             </span>
           </div>
           <div className="flex justify-between items-center text-sm font-sans text-candy-muted">
-            <span>رسوم التوصيل المبرد:</span>
+            <span>رسوم التوصيل:</span>
             <span className="font-mono font-semibold text-candy-ink">
               {order.deliveryFee === 0 ? (
                 <span className="text-emerald-600 font-bold">مجاني 🎉</span>
@@ -328,7 +327,7 @@ export function OrderSuccessCard({
                 إجمالي الفاتورة المطلوب:
               </span>
               <span className="text-xs font-sans text-candy-muted">
-                شامل كافة الرسوم وضيافة كاندي لوز
+                شامل رسوم التوصيل المسجلة
               </span>
             </div>
             <div className="text-left">
@@ -343,18 +342,17 @@ export function OrderSuccessCard({
         </div>
       </div>
 
-      {/* 3. Reassuring Cold-Chain Guarantee Banner */}
-      <div className="bg-candy-soft border border-candy-line rounded-2xl p-4 flex items-start gap-3 shadow-xs">
-        <div className="w-9 h-9 rounded-full bg-white text-candy-berry flex items-center justify-center shrink-0 border border-candy-blush shadow-xs mt-0.5">
-          <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
+      {/* 3. Demo-mode disclosure */}
+      <div role="note" className="bg-amber-50 border border-amber-300 rounded-2xl p-4 flex items-start gap-3 text-amber-950">
+        <div className="w-9 h-9 rounded-full bg-white text-amber-800 flex items-center justify-center shrink-0 border border-amber-200 shadow-xs mt-0.5">
+          <AlertCircle className="w-5 h-5" />
         </div>
         <div className="flex-1">
           <h4 className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
-            تغليف ملكي ونقل مبرد معتمد ❄️
+            نسخة عرض تجريبية
           </h4>
           <p className="font-sans text-xs text-candy-muted mt-0.5 leading-relaxed">
-            يتم نقل طلبيتك في صناديق مبردة خاصة لحماية نضارة الكريمة وقرمشة البقلاوة
-            الذهبية، وستصلك تماماً كما صُنعت في معملنا الفاخر.
+            رقم الطلب والمعلومات المعروضة للتجربة فقط، ولا ينشئان طلباً حقيقياً.
           </p>
         </div>
       </div>
@@ -380,7 +378,7 @@ export function OrderSuccessCard({
         </Link>
       </div>
 
-      {/* 5. Customer Concierge WhatsApp Assistance (from Stitch Screen #7) */}
+      {/* 5. Customer support WhatsApp link */}
       <div className="text-center pt-1">
         <a
           href={`https://wa.me/970591234567?text=${encodeURIComponent(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}`}
@@ -389,7 +387,7 @@ export function OrderSuccessCard({
           className="inline-flex items-center justify-center gap-2 text-xs font-sans font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-4 py-2.5 rounded-candy-pill transition-colors"
         >
           <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
-          <span>واجهتك أي رغبة إضافية؟ تواصل مع الشيف وخدمة العملاء 💬</span>
+          <span>لديك سؤال عن الطلب؟ تواصل مع المتجر 💬</span>
         </a>
       </div>
     </div>

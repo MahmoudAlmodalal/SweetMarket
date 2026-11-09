@@ -6,7 +6,6 @@ import {
   ShoppingBag,
   Truck,
   CheckCircle2,
-  Lock,
   Loader2,
   ArrowLeft,
   AlertCircle,
@@ -161,7 +160,7 @@ export function OrderReviewSummary({
           {/* Delivery Fee */}
           <div className="flex items-start justify-between text-candy-ink">
             <div className="flex flex-col">
-              <span className="text-candy-muted">رسوم التوصيل المبرد</span>
+              <span className="text-candy-muted">رسوم التوصيل</span>
               {selectedZone ? (
                 <span className="text-[11px] text-candy-muted font-normal">
                   المنطقة: {selectedZone.name}
@@ -208,7 +207,7 @@ export function OrderReviewSummary({
                 الإجمالي النهائي للدفع
               </span>
               <span className="text-[11px] text-candy-muted">
-                شامل كافة مصاريف التوصيل المبرد
+                شامل رسوم التوصيل المعروضة
               </span>
             </div>
             <div className="flex items-baseline gap-1">
@@ -238,12 +237,12 @@ export function OrderReviewSummary({
             {isSubmitting ? (
               <span className="flex items-center gap-2">
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>جاري إرسال الطلب وحفظه...</span>
+                <span>جاري حفظ الطلب التجريبي...</span>
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                <Lock className="w-4 h-4" />
-                <span>تأكيد وإرسال الطلب • {total.toFixed(2)} ₪</span>
+                <ShoppingBag className="w-4 h-4" />
+                <span>حفظ الطلب التجريبي • {total.toFixed(2)} ₪</span>
                 <ArrowLeft className="w-4 h-4 mr-1" />
               </span>
             )}
@@ -252,8 +251,7 @@ export function OrderReviewSummary({
           {/* Disabled explanation helper */}
           {!isSubmitDisabled ? (
             <p className="text-center text-[11px] text-candy-muted font-sans leading-relaxed">
-              بضغطك على تأكيد وإرسال الطلب، سيتم توجيه طلبك فوراً لمطبخ كاندي لوز لبدء التجهيز الفوري
-              والتنسيق معك هاتفياً.
+              سيُحفظ هذا الطلب التجريبي في المتصفح فقط، ولن يُرسل إلى متجر أو خدمة توصيل.
             </p>
           ) : (
             <div className="text-center text-xs font-sans space-y-1">
