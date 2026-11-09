@@ -21,6 +21,7 @@ export interface OrderStatusStepperProps {
   currentStatus: OrderStatus;
   allowedTransitions: OrderStatus[];
   onTransition: (nextStatus: OrderStatus) => Promise<void>;
+  onRequestUndelivered: () => void;
   onRequestCancel: () => void;
   userRole: AdminRole;
   isMutating?: boolean;
@@ -81,6 +82,7 @@ export function OrderStatusStepper({
   currentStatus,
   allowedTransitions,
   onTransition,
+  onRequestUndelivered,
   onRequestCancel,
   userRole,
   isMutating = false,
@@ -90,7 +92,7 @@ export function OrderStatusStepper({
   const isTerminal = currentStatus === 'delivered' || currentStatus === 'cancelled';
   const isCancelled = currentStatus === 'cancelled';
   const isUndelivered = currentStatus === 'undelivered';
-  const isManager = userRole === 'manager';
+  const isManager = userRole === 'manager' || userRole === 'admin';
 
   // تحديد الإجراء الرئيسي التالي المسموح به للتسلسل الطبيعي
   const nextSequentialStatus = React.useMemo<OrderStatus | null>(() => {
@@ -102,7 +104,7 @@ export function OrderStatusStepper({
   }, [allowedTransitions]);
 
   // التحقق من إمكانية تعليم الطلب كـ "تعذر التسليم"
-  const canMarkUndelivered = allowedTransitions.includes('undelivered');
+  const canMarkUndelivered = isManager && allowedTransitions.includes('undelivered');
 
   // نص الزر الرئيسي التالي
   const getNextActionLabel = (nextStatus: OrderStatus): string => {
@@ -256,7 +258,7 @@ export function OrderStatusStepper({
               size="sm"
               disabled={isMutating}
               isLoading={isMutating}
-              onClick={() => onTransition('undelivered')}
+              onClick={onRequestUndelivered}
               className="border-amber-300 text-amber-800 hover:bg-amber-50 hover:border-amber-400"
               leftIcon={<AlertTriangle className="w-4 h-4 text-amber-600" />}
             >

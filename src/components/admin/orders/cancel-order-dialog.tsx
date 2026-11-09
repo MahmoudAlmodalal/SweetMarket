@@ -44,7 +44,7 @@ export function CancelOrderDialog({
   const [error, setError] = React.useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = React.useState(false);
 
-  const isManager = userRole === 'manager';
+  const isManager = userRole === 'manager' || userRole === 'admin';
 
   // إعادة ضبط الحالة عند فتح وإغلاق النافذة
   React.useEffect(() => {

@@ -31,6 +31,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { OrderStatusBadge } from '@/components/admin/orders/order-status-badge';
 import { OrderStatusStepper } from '@/components/admin/orders/order-status-stepper';
 import { CancelOrderDialog } from '@/components/admin/orders/cancel-order-dialog';
+import { UndeliveredOrderDialog } from '@/components/admin/orders/undelivered-order-dialog';
 import { CustomerDetailsCard } from '@/components/admin/orders/customer-details-card';
 import { OrderItemsList } from '@/components/admin/orders/order-items-list';
 
@@ -67,6 +68,7 @@ export default function OrderDetailPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
+  const [isUndeliveredDialogOpen, setIsUndeliveredDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // تحميل بيانات الطلب ومناطق التوصيل
@@ -186,6 +188,26 @@ export default function OrderDetailPage() {
         description: message,
         variant: 'error',
       });
+    } finally {
+      setIsMutating(false);
+    }
+  };
+
+  const handleConfirmUndelivered = async (reason: string) => {
+    if (!order) return;
+    try {
+      setIsMutating(true);
+      const updatedOrder = await updateOrderStatus(order.id, 'undelivered', reason, user || undefined);
+      setOrder(updatedOrder);
+      setIsUndeliveredDialogOpen(false);
+      toast({
+        title: 'تم تسجيل تعذر التسليم',
+        description: `حُفظ السبب في سجل الطلب ${order.orderNumber}`,
+        variant: 'success',
+      });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'تعذر تسجيل حالة الطلب';
+      toast({ title: 'فشل تغيير الحالة', description: message, variant: 'error' });
     } finally {
       setIsMutating(false);
     }
@@ -332,6 +354,7 @@ export default function OrderDetailPage() {
           currentStatus={order.status}
           allowedTransitions={allowedTransitions}
           onTransition={handleStatusTransition}
+          onRequestUndelivered={() => setIsUndeliveredDialogOpen(true)}
           onRequestCancel={() => setIsCancelDialogOpen(true)}
           userRole={userRole}
           isMutating={isMutating}
@@ -435,6 +458,14 @@ export default function OrderDetailPage() {
         isOpen={isCancelDialogOpen}
         onClose={() => setIsCancelDialogOpen(false)}
         onConfirmCancel={handleConfirmCancel}
+        orderNumber={order.orderNumber}
+        userRole={userRole}
+        isSubmitting={isMutating}
+      />
+      <UndeliveredOrderDialog
+        isOpen={isUndeliveredDialogOpen}
+        onClose={() => setIsUndeliveredDialogOpen(false)}
+        onConfirmUndelivered={handleConfirmUndelivered}
         orderNumber={order.orderNumber}
         userRole={userRole}
         isSubmitting={isMutating}

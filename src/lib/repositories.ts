@@ -287,6 +287,17 @@ export async function updateOrderStatus(
 ): Promise<Order> {
   await simulateLatency();
 
+  const isManager = user?.role === 'admin' || user?.role === 'manager';
+  if (nextStatus === 'cancelled') {
+    throw new Error('استخدم إجراء إلغاء الطلب لتوثيق السبب والصلاحية');
+  }
+  if (nextStatus === 'undelivered') {
+    if (!isManager) throw new Error('تعذر التسليم متاح لصلاحية المدير فقط');
+    if (!note || note.trim().length < 5) {
+      throw new Error('يجب تدوين سبب تعذر التسليم لا يقل عن 5 أحرف');
+    }
+  }
+
   let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
   if (!orders || orders.length === 0) {
     orders = [...memoryOrders];
@@ -353,6 +364,9 @@ export async function cancelOrder(
     throw new Error('يجب تدوين سبب واضح لإلغاء الطلب لا يقل عن 5 أحرف');
   }
 
+  const isManager = user?.role === 'admin' || user?.role === 'manager';
+  if (!isManager) throw new Error('إلغاء الطلب متاح لصلاحية المدير فقط');
+
   let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
   if (!orders || orders.length === 0) {
     orders = [...memoryOrders];
@@ -368,12 +382,8 @@ export async function cancelOrder(
   const currentOrder = orders[index];
   const allowed = ALLOWED_STATUS_TRANSITIONS[currentOrder.status];
 
-  // إذا كان المستخدم مديراً (admin / manager) أو الحالة الحالية تسمح بالإلغاء
-  const isManager = user?.role === 'admin' || user?.role === 'manager';
-  if (!allowed.includes('cancelled') && !isManager) {
-    throw new Error(
-      `لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}" إلا بصلاحية مدير (Admin)`
-    );
+  if (!allowed.includes('cancelled')) {
+    throw new Error(`لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}"`);
   }
 
   const now = new Date().toISOString();
