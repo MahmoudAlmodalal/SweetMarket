@@ -404,11 +404,11 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                   {unitPrice}
                 </span>
                 <span className="font-sans font-bold text-sm text-candy-strawberry">
-                  ر.س
+                  ₪
                 </span>
                 {discountAmount !== undefined && (
                   <span className="font-sans text-sm text-candy-muted line-through mr-1">
-                    {product.price + packagingFee} ر.س
+                    {product.price + packagingFee} ₪
                   </span>
                 )}
               </div>
@@ -426,7 +426,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                 </div>
                 <p className="font-sans text-xs text-candy-ink leading-tight">
                   قسمها على <span className="font-bold text-candy-berry">4 دفعات</span> بقيمة{" "}
-                  <span className="font-bold text-candy-berry">{tabbyInstallment} ر.س</span> بدون
+                  <span className="font-bold text-candy-berry">{tabbyInstallment} ₪</span> بدون
                   فوائد أو رسوم خفية.
                 </p>
               </div>
@@ -515,7 +515,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                   </span>
                 </div>
                 <span className="font-sans text-xs text-candy-strawberry font-black">
-                  +25 ر.س
+                  +25 ₪
                 </span>
               </button>
             </div>
@@ -767,7 +767,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                         {itemPrice}
                       </span>
                       <span className="font-sans text-[10px] text-candy-muted font-bold">
-                        ر.س
+                        ₪
                       </span>
                     </div>
 

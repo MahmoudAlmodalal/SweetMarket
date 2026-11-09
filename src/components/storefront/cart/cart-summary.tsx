@@ -60,7 +60,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
               <p className="font-sans font-bold text-xs sm:text-sm text-candy-berry leading-tight">
                 أضف بـ{" "}
                 <span className="text-candy-strawberry font-extrabold">
-                  {remainingForFreeShipping.toFixed(2)} ر.س
+                  {remainingForFreeShipping.toFixed(2)} ₪
                 </span>{" "}
                 إضافية واحصل على توصيل مبرد مجاني! 🚚❄️
               </p>
@@ -80,9 +80,9 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
         </div>
 
         <div className="flex items-center justify-between text-candy-muted font-sans text-[11px] mt-1.5 pt-0.5">
-          <span>الحالي: {subtotal.toFixed(2)} ر.س</span>
+          <span>الحالي: {subtotal.toFixed(2)} ₪</span>
           <span className="text-candy-berry font-bold">
-            هدف التوصيل المجاني: {FREE_SHIPPING_THRESHOLD} ر.س
+            هدف التوصيل المجاني: {FREE_SHIPPING_THRESHOLD} ₪
           </span>
         </div>
       </div>
@@ -103,7 +103,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
           </span>
           <span className="font-bold text-candy-ink font-sans">
             {subtotal.toFixed(2)}{" "}
-            <span className="text-xs text-candy-muted font-normal">ر.س</span>
+            <span className="text-xs text-candy-muted font-normal">₪</span>
           </span>
         </div>
 
@@ -121,7 +121,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
             {deliveryFee > 0 ? (
               <>
                 {deliveryFee.toFixed(2)}{" "}
-                <span className="text-xs text-candy-muted font-normal">ر.س</span>
+                <span className="text-xs text-candy-muted font-normal">₪</span>
               </>
             ) : selectedZoneId ? (
               <span className="text-emerald-600 font-bold">مجاني</span>
@@ -140,7 +140,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
             <Info className="w-3.5 h-3.5 text-candy-muted/70" />
           </span>
           <span className="font-medium text-candy-ink font-sans">
-            {vatAmount} ر.س
+            {vatAmount} ₪
           </span>
         </div>
 
@@ -164,7 +164,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
               {total.toFixed(2)}
             </span>
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-berry">
-              ر.س
+              ₪
             </span>
           </div>
         </div>
@@ -178,7 +178,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
             <p className="text-xs text-candy-ink leading-snug">
               أو قسّمها على 4 دفعات ميسرة بقيمة{" "}
               <strong className="text-candy-berry font-bold">
-                {installmentAmount} ر.س
+                {installmentAmount} ₪
               </strong>{" "}
               بدون أي فوائد
             </p>
@@ -205,7 +205,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
             <span>المتابعة لإتمام الطلب</span>
           </div>
           <div className="flex items-center gap-1.5 font-sans font-bold text-base">
-            <span>{total.toFixed(2)} ر.س</span>
+            <span>{total.toFixed(2)} ₪</span>
             <ArrowLeft className="w-4 h-4" />
           </div>
         </Link>

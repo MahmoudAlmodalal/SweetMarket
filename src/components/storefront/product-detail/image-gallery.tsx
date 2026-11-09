@@ -79,7 +79,7 @@ export function ImageGallery({
         {/* Discount Badge if available */}
         {discountAmount !== undefined && discountAmount > 0 && (
           <div className="inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-candy-strawberry text-white font-sans font-bold text-xs shadow-candy-cta">
-            <span>وفر {discountAmount} ر.س</span>
+            <span>وفر {discountAmount} ₪</span>
           </div>
         )}
 

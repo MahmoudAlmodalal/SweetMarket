@@ -225,7 +225,7 @@ function CartPageInner() {
                             {displayPrice.toFixed(2)}
                           </span>
                           <span className="font-sans text-[10px] text-candy-muted">
-                            ر.س
+                            ₪
                           </span>
                         </div>
                         <button

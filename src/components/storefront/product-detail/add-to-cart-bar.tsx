@@ -53,7 +53,7 @@ export function AddToCartBar({
         <ShoppingBag className="w-5 h-5" />
         <span className="font-bold">إضافة إلى السلة</span>
         <span className="mx-1 text-white/60">·</span>
-        <span className="font-sans font-extrabold tracking-tight">{totalPrice} ر.س</span>
+        <span className="font-sans font-extrabold tracking-tight">{totalPrice} ₪</span>
       </span>
     );
   };
@@ -75,7 +75,7 @@ export function AddToCartBar({
             type="button"
             onClick={onAddToCart}
             disabled={isButtonDisabled}
-            aria-label={isAvailable ? `إضافة إلى السلة بقيمة ${totalPrice} ر.س` : "المنتج غير متوفر"}
+            aria-label={isAvailable ? `إضافة إلى السلة بقيمة ${totalPrice} ₪` : "المنتج غير متوفر"}
             className={cn(
               "relative w-full min-h-[52px] px-6 rounded-candy-pill font-sans text-base font-bold flex items-center justify-center transition-all duration-300 select-none overflow-hidden group shadow-candy-cta",
               isAvailable
@@ -146,7 +146,7 @@ export function AddToCartBar({
                   {totalPrice}
                 </span>
                 <span className="font-sans text-xs text-candy-strawberry font-bold">
-                  ر.س
+                  ₪
                 </span>
               </div>
             </div>
@@ -156,7 +156,7 @@ export function AddToCartBar({
               type="button"
               onClick={onAddToCart}
               disabled={isButtonDisabled}
-              aria-label={isAvailable ? `إضافة إلى السلة بقيمة ${totalPrice} ر.س` : "المنتج غير متوفر"}
+              aria-label={isAvailable ? `إضافة إلى السلة بقيمة ${totalPrice} ₪` : "المنتج غير متوفر"}
               className={cn(
                 "flex-1 min-h-[48px] px-4 rounded-candy-pill font-sans text-sm font-bold flex items-center justify-center transition-all duration-200 select-none shadow-candy-cta active:scale-95",
                 isAvailable

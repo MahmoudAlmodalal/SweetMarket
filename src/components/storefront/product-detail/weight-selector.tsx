@@ -157,7 +157,7 @@ export function WeightSelector({
                   {option.price}
                 </span>
                 <span className="font-sans text-xs text-candy-muted font-bold">
-                  ر.س
+                  ₪
                 </span>
               </div>
             </button>
