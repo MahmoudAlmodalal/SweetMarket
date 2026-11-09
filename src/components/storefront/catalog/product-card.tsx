@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Heart, Plus, Check, Star, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product, CartItem } from "@/types";
@@ -133,10 +134,11 @@ export function ProductCard({
                 <span className="text-xs font-sans">كاندي لوز</span>
               </div>
             ) : (
-              <img
+              <Image
                 src={product.imageUrl}
                 alt={product.name}
-                loading="lazy"
+                fill
+                sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 23vw"
                 onError={() => setImageError(true)}
                 className="w-full h-full object-cover transition-transform duration-500 ease-candy-ease group-hover:scale-105"
               />
