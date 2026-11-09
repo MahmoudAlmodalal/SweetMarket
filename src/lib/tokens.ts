@@ -109,3 +109,6 @@ export function formatPrice(amount: number, fractionDigits?: number): string {
   }
   return Number.isInteger(amount) ? `${amount} ₪` : `${amount.toFixed(2)} ₪`;
 }
+
+/** الحد الأقصى لعدد الوحدات من الصنف الواحد داخل السلة. */
+export const MAX_CART_QTY = 20;

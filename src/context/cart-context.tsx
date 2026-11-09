@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import type { CartItem, CartSummary, Product } from "@/types";
 import { STORAGE_KEYS } from "@/lib/storage";
+import { MAX_CART_QTY } from "@/lib/tokens";
 
 export const CART_STORAGE_KEY = STORAGE_KEYS.CART_ITEMS;
 
@@ -68,11 +69,31 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+        window.dispatchEvent(new Event("candy_cart_updated"));
       }
     } catch (error) {
       console.error("[CartContext] Failed to persist cart to localStorage:", error);
     }
   }, [items, isHydrated]);
+
+  // Keep the cart badge and other tabs synchronized after cart mutations.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const syncFromStorage = () => {
+      try {
+        const stored = window.localStorage.getItem(CART_STORAGE_KEY);
+        const parsed = stored ? JSON.parse(stored) : [];
+        if (Array.isArray(parsed)) setItems(parsed);
+      } catch (error) {
+        console.error("[CartContext] Failed to sync cart from localStorage:", error);
+      }
+    };
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === CART_STORAGE_KEY) syncFromStorage();
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   const addItem = useCallback(
     (
@@ -138,7 +159,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
 
         if (existingIndex > -1) {
           const existingItem = prevItems[existingIndex];
-          const newQty = existingItem.quantity + qty;
+          const newQty = Math.min(existingItem.quantity + qty, MAX_CART_QTY);
           const updatedItem: CartItem = {
             ...existingItem,
             quantity: newQty,
@@ -159,8 +180,8 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
           unit: product.unit,
           selectedWeightMultiplier: finalMultiplier,
           selectedWeightLabel: finalLabel,
-          quantity: qty,
-          lineTotal: Math.round(unitPrice * qty * 100) / 100,
+          quantity: Math.min(qty, MAX_CART_QTY),
+          lineTotal: Math.round(unitPrice * Math.min(qty, MAX_CART_QTY) * 100) / 100,
         };
 
         return [...prevItems, newItem];
@@ -179,7 +200,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
       return;
     }
 
-    const validQty = Math.floor(quantity);
+    const validQty = Math.min(Math.floor(quantity), MAX_CART_QTY);
     setItems((prevItems) =>
       prevItems.map((item) => {
         if (item.id === itemId) {
