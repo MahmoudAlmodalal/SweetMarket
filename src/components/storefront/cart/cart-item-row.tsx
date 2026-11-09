@@ -14,6 +14,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { MAX_CART_QTY } from "@/lib/tokens";
 
 export interface CartItemRowProps {
   item: CartItem;
@@ -146,12 +147,12 @@ export function CartItemRow({
                     {item.lineTotal.toFixed(2)}
                   </span>
                   <span className="font-sans text-xs text-candy-muted font-medium">
-                    ر.س
+                    ₪
                   </span>
                 </div>
                 {item.quantity > 1 && (
                   <span className="font-sans text-[11px] text-candy-muted">
-                    ({item.unitPrice.toFixed(2)} ر.س للوحدة)
+                    ({item.unitPrice.toFixed(2)} ₪ للوحدة)
                   </span>
                 )}
               </div>
@@ -184,8 +185,19 @@ export function CartItemRow({
                 <button
                   type="button"
                   onClick={handleIncrement}
-                  aria-label="زيادة الكمية"
-                  className="min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full bg-candy-berry text-white flex items-center justify-center shadow-xs hover:bg-candy-berry-dark active:scale-95 transition-all touch-manipulation"
+                  disabled={item.quantity >= MAX_CART_QTY}
+                  aria-label={
+                    item.quantity >= MAX_CART_QTY
+                      ? `الحد الأقصى ${MAX_CART_QTY} وحدة`
+                      : "زيادة الكمية"
+                  }
+                  title={item.quantity >= MAX_CART_QTY ? `الحد الأقصى ${MAX_CART_QTY} وحدة` : undefined}
+                  className={cn(
+                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shadow-xs transition-all touch-manipulation",
+                    item.quantity >= MAX_CART_QTY
+                      ? "bg-candy-line text-candy-muted cursor-not-allowed"
+                      : "bg-candy-berry text-white hover:bg-candy-berry-dark active:scale-95"
+                  )}
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
