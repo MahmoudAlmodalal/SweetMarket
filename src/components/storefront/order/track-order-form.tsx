@@ -32,7 +32,7 @@ export interface TrackOrderFormProps {
 }
 
 const MAX_ATTEMPTS = 5;
-const LOCKOUT_DURATION_MS = 60 * 1000; // 1 minute lockout (NFR-015 / AC-010)
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15-minute lockout, aligned with the API contract
 const ER_005_MESSAGE = "تعذر العثور على الطلب بالبيانات المدخلة، يرجى التأكد من رقم الطلب ورقم الهاتف";
 
 export function TrackOrderForm({
