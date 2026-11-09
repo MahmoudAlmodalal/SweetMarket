@@ -125,20 +125,12 @@ export function StorefrontHeader({
             className="flex items-center gap-2.5 sm:gap-3 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1 -m-1"
           >
             <StoreLogo
-              variant="icon"
-              width={46}
-              height={46}
+              variant="main"
+              width={154}
+              height={45}
               priority
-              className="w-10 h-10 md:w-12 md:h-12 group-hover:scale-105 transition-transform duration-200"
+              className="w-[124px] sm:w-[142px] md:w-[154px] group-hover:scale-[1.02] transition-transform duration-200"
             />
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-xl md:text-2xl text-primary leading-tight tracking-tight">
-                كاندي لوز
-              </span>
-              <span className="font-sans text-[11px] md:text-xs text-candy-muted tracking-wider">
-                Candy Loz
-              </span>
-            </div>
           </Link>
 
           {/* Desktop Navigation Links */}

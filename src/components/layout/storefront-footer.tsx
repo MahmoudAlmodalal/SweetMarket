@@ -55,19 +55,11 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <StoreLogo
-                  variant="icon"
-                  width={44}
-                  height={44}
-                  className="w-11 h-11"
+                  variant="main"
+                  width={190}
+                  height={55}
+                  className="w-[170px] sm:w-[190px]"
                 />
-                <div className="flex flex-col">
-                  <span className="font-display font-bold text-2xl text-primary leading-tight">
-                    كاندي لوز
-                  </span>
-                  <span className="font-sans text-xs text-candy-muted tracking-wider">
-                    Candy Loz Pâtisserie
-                  </span>
-                </div>
               </div>
 
               <p className="font-sans text-sm text-candy-muted leading-relaxed">

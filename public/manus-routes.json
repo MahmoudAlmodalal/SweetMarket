@@ -10,6 +10,7 @@
     { "path": "/checkout/success/:orderNumber", "title": "تم استلام الطلب" },
     { "path": "/track", "title": "تتبع الطلب" },
     { "path": "/contact", "title": "من نحن والتواصل" },
+    { "path": "/admin", "title": "بوابة الإدارة" },
     { "path": "/admin/login", "title": "تسجيل دخول الإدارة" },
     { "path": "/admin/forbidden", "title": "غير مصرح" },
     { "path": "/admin/account/password", "title": "تغيير كلمة المرور" },
