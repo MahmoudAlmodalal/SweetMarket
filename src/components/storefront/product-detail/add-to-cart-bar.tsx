@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ShoppingBag, Check, Loader2, Sparkles, ShieldCheck, Snowflake, Lock } from "lucide-react";
+import { ShoppingBag, Check, Loader2, Truck, Gift, Banknote } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface AddToCartBarProps {
@@ -95,34 +95,22 @@ export function AddToCartBar({
             )}
           </button>
 
-          {/* Direct Express Apple Pay Option (Mock representation from Stitch Screen) */}
-          {isAvailable && (
-            <button
-              type="button"
-              onClick={onAddToCart}
-              className="w-full min-h-[46px] rounded-candy-pill bg-black hover:bg-stone-900 text-white font-sans text-sm font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
-            >
-              <span>الشراء السريع عبر</span>
-              <span className="font-bold tracking-tight text-base">Pay</span>
-            </button>
-          )}
-
-          {/* Mini Trust Badges Grid */}
+          {/* Supported order information */}
           <div className="grid grid-cols-3 gap-2 pt-2 border-t border-candy-line/40 text-center">
             <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
-              <Snowflake className="w-4 h-4 text-candy-strawberry" />
-              <span className="font-sans text-[11px] font-bold text-candy-ink">توصيل مبرد</span>
-              <span className="font-sans text-[9px] text-candy-muted">سيارات مجهزة</span>
+              <Truck className="w-4 h-4 text-candy-strawberry" />
+              <span className="font-sans text-[11px] font-bold text-candy-ink">التوصيل</span>
+              <span className="font-sans text-[9px] text-candy-muted">حسب المنطقة</span>
             </div>
             <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
-              <ShieldCheck className="w-4 h-4 text-candy-strawberry" />
-              <span className="font-sans text-[11px] font-bold text-candy-ink">ضمان الطزاجة</span>
-              <span className="font-sans text-[9px] text-candy-muted">قرمشة 21 يوماً</span>
+              <Gift className="w-4 h-4 text-candy-strawberry" />
+              <span className="font-sans text-[11px] font-bold text-candy-ink">التغليف</span>
+              <span className="font-sans text-[9px] text-candy-muted">قياسي ومشمول</span>
             </div>
             <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
-              <Lock className="w-4 h-4 text-candy-strawberry" />
-              <span className="font-sans text-[11px] font-bold text-candy-ink">دفع آمن 100%</span>
-              <span className="font-sans text-[9px] text-candy-muted">مشفر بالكامل</span>
+              <Banknote className="w-4 h-4 text-candy-strawberry" />
+              <span className="font-sans text-[11px] font-bold text-candy-ink">الدفع</span>
+              <span className="font-sans text-[9px] text-candy-muted">نقداً عند الاستلام</span>
             </div>
           </div>
         </div>

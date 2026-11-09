@@ -52,7 +52,7 @@ export function ProductGrid({
   products = [],
   isLoading = false,
   emptyMessage = "لا توجد أصناف في هذا التصنيف حالياً",
-  emptyDescription = "نعمل على تجهيز أصناف طازجة ومميزة قريباً. يمكنك تجربة تغيير الفلاتر أو استكشاف باقي التصنيفات الفاخرة.",
+  emptyDescription = "جرّب تغيير الفلاتر أو استكشف الأقسام الأخرى.",
   onResetFilter,
   className,
   skeletonCount = 8,

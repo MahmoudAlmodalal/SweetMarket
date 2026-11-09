@@ -7,8 +7,6 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronDown,
-  Star,
-  Flame,
   Gift,
   Heart,
   Plus,
@@ -16,11 +14,6 @@ import {
   ShoppingBag,
   BookOpen,
   Truck,
-  ShieldCheck,
-  Snowflake,
-  Lock,
-  Layers,
-  Calendar,
   Share2,
 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
@@ -84,9 +77,6 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
     );
   });
 
-  const [packagingType, setPackagingType] = React.useState<"standard" | "luxury">("luxury");
-  const [isGiftCardEnabled, setIsGiftCardEnabled] = React.useState<boolean>(false);
-  const [giftMessage, setGiftMessage] = React.useState<string>("");
   const [quantity, setQuantity] = React.useState<number>(1);
   const [isWishlisted, setIsWishlisted] = React.useState<boolean>(false);
   const [isAdding, setIsAdding] = React.useState<boolean>(false);
@@ -124,7 +114,12 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
               foundProduct.availableWeights.find((w) => w.multiplier === 1) ||
                 foundProduct.availableWeights[0]
             );
+          } else {
+            setSelectedWeight(null);
           }
+          setQuantity(1);
+          setIsAdding(false);
+          setIsSuccess(false);
 
           // Fetch category details
           const categories = await getCategories();
@@ -210,10 +205,8 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
   // Pricing calculations
   const basePrice = product.salePrice ?? product.price;
   const isAvailable = product.isAvailable !== false;
-  const packagingFee = packagingType === "luxury" ? 25 : 0;
-  const unitPrice = (selectedWeight ? selectedWeight.price : basePrice) + packagingFee;
+  const unitPrice = selectedWeight ? selectedWeight.price : basePrice;
   const totalPrice = unitPrice * quantity;
-  const tabbyInstallment = (totalPrice / 4).toFixed(2);
   const discountAmount =
     product.salePrice && product.salePrice < product.price
       ? product.price - product.salePrice
@@ -378,25 +371,14 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
               {product.description}
             </p>
 
-            {/* Rating & Social Proof */}
-            <div className="flex items-center gap-2 mt-1">
-              <div className="flex items-center text-candy-amber">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current text-candy-amber" />
-                ))}
-              </div>
-              <span className="font-sans text-sm font-extrabold text-candy-ink">5.0</span>
-              <span className="text-candy-line-dark font-sans">·</span>
-              <a
-                href="#reviews"
-                className="font-sans text-xs sm:text-sm text-candy-strawberry font-bold underline underline-offset-4 hover:text-candy-berry transition-colors"
-              >
-                شاهد الآراء (142 تقييم موثق)
-              </a>
+            <div className="inline-flex items-center gap-2 mt-1 text-xs font-bold text-candy-muted">
+              <span className={cn("w-2 h-2 rounded-full", isAvailable ? "bg-emerald-500" : "bg-rose-500")} />
+              <span>{isAvailable ? "متاح للطلب" : "نفد مؤقتاً"}</span>
+              {product.isFeatured && <span className="rounded-full bg-candy-soft px-2 py-1 text-candy-berry">اختيار مميز</span>}
             </div>
           </div>
 
-          {/* Price & Tabby Installment Card */}
+          {/* Price Card */}
           <div className="rounded-2xl bg-white p-4 shadow-candy-1 border border-candy-line/70 flex flex-col gap-3">
             <div className="flex items-baseline justify-between">
               <div className="flex items-baseline gap-2">
@@ -406,32 +388,15 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                 <span className="font-sans font-bold text-sm text-candy-strawberry">
                   ₪
                 </span>
-                {discountAmount !== undefined && (
+                {discountAmount !== undefined && !selectedWeight && (
                   <span className="font-sans text-sm text-candy-muted line-through mr-1">
-                    {product.price + packagingFee} ₪
+                    {product.price} ₪
                   </span>
                 )}
               </div>
 
               <span className="font-sans text-[11px] font-semibold text-candy-muted bg-candy-soft px-2.5 py-1 rounded-candy-pill border border-candy-line/50">
-                شامل ضريبة القيمة المضافة
-              </span>
-            </div>
-
-            {/* Tabby 4 Installments Banner */}
-            <div className="p-3 rounded-xl bg-[#3EEDBF]/10 border border-[#3EEDBF]/30 flex items-center justify-between gap-2.5">
-              <div className="flex items-center gap-2.5">
-                <div className="w-11 h-6 bg-[#3EEDBF] rounded text-stone-900 font-black text-[11px] flex items-center justify-center tracking-tighter uppercase shrink-0 shadow-sm">
-                  tabby
-                </div>
-                <p className="font-sans text-xs text-candy-ink leading-tight">
-                  قسمها على <span className="font-bold text-candy-berry">4 دفعات</span> بقيمة{" "}
-                  <span className="font-bold text-candy-berry">{tabbyInstallment} ₪</span> بدون
-                  فوائد أو رسوم خفية.
-                </p>
-              </div>
-              <span className="font-sans text-[10px] text-candy-muted underline cursor-pointer shrink-0 hover:text-candy-berry">
-                معرفة المزيد
+                رسوم التوصيل تُحدَّد حسب المنطقة عند إتمام الطلب
               </span>
             </div>
           </div>
@@ -445,115 +410,9 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
             onSelectWeight={(w) => setSelectedWeight(w)}
           />
 
-          {/* Packaging Options */}
-          <div className="flex flex-col gap-2">
-            <span className="font-sans font-bold text-candy-berry text-sm flex items-center gap-1.5">
-              <Gift className="w-4 h-4 text-candy-strawberry" />
-              <span>طريقة التغليف والتقديم:</span>
-            </span>
-
-            <div className="grid grid-cols-1 gap-2">
-              {/* Option 1: Standard Packaging */}
-              <button
-                type="button"
-                onClick={() => setPackagingType("standard")}
-                className={cn(
-                  "w-full text-right p-3 rounded-2xl flex items-center justify-between transition-all select-none border-2",
-                  packagingType === "standard"
-                    ? "bg-candy-soft border-candy-strawberry shadow-[0_4px_12px_rgba(215,45,88,0.12)]"
-                    : "bg-white border-transparent hover:border-candy-blush shadow-sm"
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <span
-                    className={cn(
-                      "w-4 h-4 rounded-full flex items-center justify-center transition-colors",
-                      packagingType === "standard"
-                        ? "bg-candy-strawberry text-white"
-                        : "bg-candy-line-dark text-transparent"
-                    )}
-                  >
-                    {packagingType === "standard" && (
-                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
-                    )}
-                  </span>
-                  <span className="font-sans text-sm font-bold text-candy-ink">
-                    تغليف كاندي لوز العادي الأنيق
-                  </span>
-                </div>
-                <span className="font-sans text-xs text-candy-muted font-bold">
-                  مشمول مجاناً
-                </span>
-              </button>
-
-              {/* Option 2: Luxury Gift Box */}
-              <button
-                type="button"
-                onClick={() => setPackagingType("luxury")}
-                className={cn(
-                  "w-full text-right p-3 rounded-2xl flex items-center justify-between transition-all select-none border-2",
-                  packagingType === "luxury"
-                    ? "bg-candy-soft border-candy-strawberry shadow-[0_4px_12px_rgba(215,45,88,0.12)]"
-                    : "bg-white border-transparent hover:border-candy-blush shadow-sm"
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <span
-                    className={cn(
-                      "w-4 h-4 rounded-full flex items-center justify-center transition-colors",
-                      packagingType === "luxury"
-                        ? "bg-candy-strawberry text-white"
-                        : "bg-candy-line-dark text-transparent"
-                    )}
-                  >
-                    {packagingType === "luxury" && (
-                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
-                    )}
-                  </span>
-                  <span className="font-sans text-sm font-bold text-candy-berry">
-                    صندوق إهداء ملكي بشريط مخملي وبطاقة ذهبية
-                  </span>
-                </div>
-                <span className="font-sans text-xs text-candy-strawberry font-black">
-                  +25 ₪
-                </span>
-              </button>
-            </div>
-          </div>
-
-          {/* Custom Greeting Card Section */}
-          <div className="rounded-2xl bg-white p-4 shadow-sm border border-candy-line/70 flex flex-col gap-2.5">
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={isGiftCardEnabled}
-                onChange={(e) => setIsGiftCardEnabled(e.target.checked)}
-                className="w-4 h-4 rounded text-candy-strawberry focus:ring-candy-strawberry cursor-pointer accent-candy-strawberry"
-              />
-              <span className="font-sans text-sm font-bold text-candy-berry flex items-center gap-1.5">
-                <span>أضف بطاقة إهداء مخصصة ومجانية</span>
-                <span>💌</span>
-              </span>
-            </label>
-
-            {isGiftCardEnabled && (
-              <div className="flex flex-col gap-1.5 pt-1 animate-in fade-in duration-200">
-                <textarea
-                  value={giftMessage}
-                  onChange={(e) => {
-                    if (e.target.value.length <= 120) {
-                      setGiftMessage(e.target.value);
-                    }
-                  }}
-                  placeholder="اكتب رسالتك الخاصة لمتلقي الهدية (مثال: مبارك التخرج يا غالي، بالصحة والعافية)..."
-                  rows={3}
-                  className="w-full p-3 rounded-xl bg-candy-soft text-candy-ink font-sans text-sm placeholder:text-candy-muted focus:outline-none focus:bg-white focus:ring-2 focus:ring-candy-strawberry border border-candy-line transition-all resize-none"
-                />
-                <span className="font-sans text-[11px] text-candy-muted text-left">
-                  أقصى حد: 120 حرف (المتبقي: {120 - giftMessage.length})
-                </span>
-              </div>
-            )}
+          <div className="rounded-2xl bg-candy-soft/70 border border-candy-line p-3 flex items-start gap-2.5 text-sm text-candy-ink">
+            <Gift className="w-4 h-4 text-candy-strawberry shrink-0 mt-0.5" />
+            <span>التغليف القياسي الأنيق مشمول بالسعر. خيارات التغليف الإضافية غير متاحة في هذه النسخة.</span>
           </div>
 
           {/* Quantity Stepper Row */}
@@ -564,7 +423,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
               </span>
               <span className="font-sans text-xs font-bold text-candy-berry flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>جاهز للشحن الفوري</span>
+                <span>{isAvailable ? "متاح للطلب" : "غير متاح حالياً"}</span>
               </span>
             </div>
 
@@ -601,120 +460,38 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           <span>تفاصيل ومميزات الصنف</span>
         </h2>
 
-        {/* Accordion 1: Ingredients & Nutrition */}
-        <details
-          className="group rounded-2xl bg-white p-4 shadow-sm border border-candy-line/70 transition-all"
-          open
-        >
+        <details className="group rounded-2xl bg-white p-4 shadow-sm border border-candy-line/70 transition-all" open>
           <summary className="flex items-center justify-between cursor-pointer list-none select-none font-sans font-bold text-candy-berry text-sm sm:text-base">
-            <span className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-candy-strawberry" />
-              <span>المكونات والحقائق الغذائية</span>
-            </span>
+            <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-candy-strawberry" /><span>مكونات ومسببات الحساسية</span></span>
             <ChevronDown className="w-4 h-4 text-candy-muted transition-transform duration-300 group-open:rotate-180" />
           </summary>
           <div className="mt-3 pt-3 text-candy-ink/80 font-sans text-sm leading-relaxed border-t border-candy-line/60">
-            <p className="mb-2.5">
-              رقائق عجين فاخرة فائقة الرقة، فستق حلبي عنتابي طازج 100%، سمن بقري بلدي نقي مصفى،
-              وقطر خفيف معطر بقطرات ماء الزهر الطبيعي. خالية تماماً من النكهات الاصطناعية.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="px-3 py-1 rounded-candy-pill bg-candy-soft font-sans text-xs font-semibold text-candy-berry border border-candy-line">
-                خالٍ من الزيوت المهدرجة
-              </span>
-              <span className="px-3 py-1 rounded-candy-pill bg-candy-soft font-sans text-xs font-semibold text-candy-berry border border-candy-line">
-                بدون مواد حافظة
-              </span>
-              <span className="px-3 py-1 rounded-candy-pill bg-candy-soft font-sans text-xs font-semibold text-candy-berry border border-candy-line">
-                380 سعرة حرارية / 100 غرام
-              </span>
-            </div>
+            <p>{product.description}</p>
+            <p className="mt-2">للحصول على معلومات مؤكدة عن المكونات أو مسببات الحساسية، يرجى التواصل معنا قبل الطلب.</p>
           </div>
         </details>
 
-        {/* Accordion 2: Storage & Shelf Life */}
         <details className="group rounded-2xl bg-white p-4 shadow-sm border border-candy-line/70 transition-all">
           <summary className="flex items-center justify-between cursor-pointer list-none select-none font-sans font-bold text-candy-berry text-sm sm:text-base">
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-candy-strawberry" />
-              <span>شروط التخزين ومدة الصلاحية</span>
-            </span>
+            <span className="flex items-center gap-2"><Truck className="w-4 h-4 text-candy-strawberry" /><span>التوصيل والدفع</span></span>
             <ChevronDown className="w-4 h-4 text-candy-muted transition-transform duration-300 group-open:rotate-180" />
           </summary>
           <div className="mt-3 pt-3 text-candy-ink/80 font-sans text-sm leading-relaxed border-t border-candy-line/60">
-            تُحفظ العبوة محكمة الإغلاق في مكان بارد وجاف بدرجة حرارة الغرفة المعتدلة (18 - 22 درجة
-            مئوية). نوصي بعدم وضعها في الثلاجة للحفاظ على القرمشة الفائقة وهشاشة الرقائق. تظل طازجة
-            ولذيذة لمدة 21 يوماً من تاريخ التجهيز المختوم.
-          </div>
-        </details>
-
-        {/* Accordion 3: Refrigerated Delivery */}
-        <details className="group rounded-2xl bg-white p-4 shadow-sm border border-candy-line/70 transition-all">
-          <summary className="flex items-center justify-between cursor-pointer list-none select-none font-sans font-bold text-candy-berry text-sm sm:text-base">
-            <span className="flex items-center gap-2">
-              <Truck className="w-4 h-4 text-candy-strawberry" />
-              <span>تفاصيل الشحن والتوصيل المبرد</span>
-            </span>
-            <ChevronDown className="w-4 h-4 text-candy-muted transition-transform duration-300 group-open:rotate-180" />
-          </summary>
-          <div className="mt-3 pt-3 text-candy-ink/80 font-sans text-sm leading-relaxed border-t border-candy-line/60">
-            يتم التوصيل عبر أسطول سيارات كاندي لوز المبردة والمخصصة لنقل الحلويات الفاخرة بنفس اليوم
-            داخل الرياض وجدة، وخلال 24 إلى 48 ساعة لبقية مناطق المملكة بصناديق حرارية محكمة تحافظ
-            على برودة ومظهر الصنف الرائع.
+            <p>تظهر رسوم التوصيل والوقت المتوقع بعد اختيار منطقة التوصيل المتاحة عند إتمام الطلب.</p>
+            <p className="mt-2">الدفع نقداً عند الاستلام. لا تتوفر بوابات دفع إلكترونية في هذه النسخة.</p>
           </div>
         </details>
       </section>
 
-      {/* 4. Customer Reviews Preview Card */}
-      <section
-        id="reviews"
-        className="rounded-candy-section bg-candy-soft p-4 sm:p-6 border border-candy-line/60 flex flex-col gap-3.5"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-candy-berry">
-              آراء الذواقة
-            </h2>
-            <span className="px-2.5 py-0.5 rounded-candy-pill bg-candy-strawberry text-white font-sans text-xs font-bold">
-              142
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => toast.success("شكراً لاهتمامك! تقييمات المتجر متاحة للطلبات المكتملة.")}
-            className="font-sans text-xs sm:text-sm text-candy-strawberry font-bold hover:underline"
-          >
-            أضف تقييمك
-          </button>
+      {/* 4. Product support */}
+      <section className="rounded-candy-section bg-candy-soft p-4 sm:p-6 border border-candy-line/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="font-display text-lg sm:text-xl font-bold text-candy-berry">لديك سؤال عن هذا الصنف؟</h2>
+          <p className="font-sans text-sm text-candy-muted mt-1">تواصل معنا للاستفسار عن التوفر أو المكونات قبل الطلب.</p>
         </div>
-
-        {/* Highlight Review */}
-        <div className="rounded-2xl bg-white p-3.5 sm:p-4 shadow-sm border border-candy-line/70 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-candy-soft text-candy-berry font-bold text-xs flex items-center justify-center border border-candy-line">
-                س.ع
-              </div>
-              <div>
-                <span className="font-sans text-sm font-bold text-candy-ink block leading-tight">
-                  سارة العتيبي
-                </span>
-                <span className="font-sans text-[11px] text-candy-muted">مشترٍ موثق ✓</span>
-              </div>
-            </div>
-
-            <div className="flex text-candy-amber text-xs">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
-              ))}
-            </div>
-          </div>
-          <p className="font-sans text-xs sm:text-sm text-candy-ink/80 leading-relaxed mt-1">
-            &ldquo;صراحة فوق التقييم! الفستق وفير جداً ولونه أخضر يفتح النفس، والسمن خفيف على المعدة
-            مو ثقيل. وصلت باردة ومغلفة تغليف ملكي شرفني قدام ضيوفي.&rdquo;
-          </p>
-        </div>
+        <Link href="/contact" className="inline-flex min-h-11 items-center justify-center px-5 rounded-candy-pill bg-white border border-candy-line text-candy-berry font-bold text-sm hover:border-candy-rose transition-colors">
+          تواصل مع المتجر
+        </Link>
       </section>
 
       {/* 5. Complementary Upsell Carousel ("يكتمل بها كرم الضيافة") */}
@@ -796,19 +573,6 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
         </section>
       )}
 
-      {/* 6. Brand Guarantee Card */}
-      <div className="p-4 sm:p-6 rounded-candy-section bg-candy-soft border border-candy-line/70 text-center flex flex-col items-center gap-2 shadow-sm">
-        <div className="w-10 h-10 rounded-full bg-white text-candy-strawberry flex items-center justify-center shadow-sm border border-candy-line">
-          <Heart className="w-5 h-5 fill-current" />
-        </div>
-        <span className="font-display text-lg font-bold text-candy-berry">
-          وعد كاندي لوز لضيوفكم
-        </span>
-        <p className="font-sans text-xs sm:text-sm text-candy-ink/75 max-w-md leading-relaxed">
-          نخبز يومياً بحب وشغف لنضمن وصول كل حبة بقلاوة وحلوى بقوامها الهش، ورائحة سمنها البلدي
-          الفواحة، وطعم الفستق الغني الطازج الذي يبهج ضيوفكم ويليق بكرمكم.
-        </p>
-      </div>
     </div>
   );
 }

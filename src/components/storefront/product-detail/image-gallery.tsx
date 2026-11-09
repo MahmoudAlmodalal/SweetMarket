@@ -70,10 +70,10 @@ export function ImageGallery({
     >
       {/* Decorative Badges Overlay (Top Right in RTL) */}
       <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 items-start pointer-events-none">
-        {/* Freshly Handmade Badge */}
+        {/* Product assortment badge */}
         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-white/95 backdrop-blur-md text-candy-berry font-sans font-bold text-xs shadow-candy-1 border border-candy-line">
           <Sparkles className="w-3.5 h-3.5 text-candy-strawberry animate-pulse" />
-          <span>صنع يدوي طازج ✨</span>
+          <span>من تشكيلة المتجر ✨</span>
         </div>
 
         {/* Discount Badge if available */}

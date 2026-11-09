@@ -48,22 +48,22 @@ export function HeroBanner({ className }: HeroBannerProps) {
 
           {/* Subtitle Description */}
           <p className="font-sans text-sm sm:text-base lg:text-lg text-candy-ink/80 leading-relaxed max-w-xl">
-            نصنع لكم ألذ اللحظات بشغف وإتقان؛ بقلاوة مورقة بالسمن البلدي الصافي، تارت الفراولة المخملي، وتشكيلات الترافل البلجيكي الفاخرة المحضرة طازجة يومياً.
+            استكشفوا تشكيلة المتجر من البقلاوة والكيك والكنافة والشوكولاتة، واختروا ما يناسب مناسباتكم.
           </p>
 
           {/* Value Highlights */}
           <div className="flex flex-wrap items-center gap-3 pt-1">
             <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/70 px-3 py-1 rounded-button border border-candy-line">
               <span className="w-2 h-2 rounded-full bg-accent" />
-              صنع يدوي طازج يومياً
+              تشكيلة من الحلويات الشرقية والغربية
             </span>
             <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/70 px-3 py-1 rounded-button border border-candy-line">
               <span className="w-2 h-2 rounded-full bg-primary" />
-              تغليف هدايا ملكي
+              تغليف قياسي مشمول بالسعر
             </span>
             <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/70 px-3 py-1 rounded-button border border-candy-line">
               <span className="w-2 h-2 rounded-full bg-candy-mint-text" />
-              شحن مبرد سريع
+              التوصيل حسب المنطقة
             </span>
           </div>
 
@@ -110,20 +110,19 @@ export function HeroBanner({ className }: HeroBannerProps) {
             <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-white/95 backdrop-blur-md shadow-sm border border-candy-line">
               <Sparkles className="w-3.5 h-3.5 text-candy-strawberry fill-candy-strawberry" />
               <span className="text-xs font-sans font-bold text-candy-berry">
-                الأكثر مبيعاً
+              تشكيلة كاندي لوز
               </span>
             </div>
 
             {/* Bottom Caption Overlay */}
             <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white">
               <div className="flex items-center gap-1.5 bg-candy-ink/60 backdrop-blur-md px-3 py-1 rounded-candy-pill">
-                <Star className="w-4 h-4 fill-candy-amber text-candy-amber" />
                 <span className="text-xs font-sans font-bold">
-                  الأعلى تقييماً في المناسبات
+                  حلويات لكل مناسبة
                 </span>
               </div>
               <span className="text-xs font-sans font-bold bg-candy-strawberry/90 backdrop-blur-md px-3 py-1 rounded-candy-pill">
-                طازج اليوم
+                تشكيلة المتجر
               </span>
             </div>
           </div>

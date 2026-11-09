@@ -266,7 +266,7 @@ export default function CategoryListingPage() {
   const categoryName = category?.name || "قائمة الأصناف";
   const categoryDesc =
     category?.description ||
-    "تشكيلة مميزة من أشهى الحلويات الطازجة المصنوعة بأجود المكونات الطبيعية.";
+    "استكشف أصناف هذا التصنيف واختر ما يناسبك.";
 
   return (
     <div className="flex flex-col gap-6 sm:gap-8 py-3 sm:py-5">
@@ -319,13 +319,13 @@ export default function CategoryListingPage() {
               <span>
                 {isLoading
                   ? "جاري التحميل..."
-                  : `${availableCount} صنف طازج متاح`}
+                  : `${availableCount} صنف متاح`}
               </span>
             </span>
 
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-candy-pill bg-white/70 backdrop-blur-sm text-candy-strawberry font-sans font-bold text-xs border border-candy-line">
               <Flame className="w-3.5 h-3.5 text-candy-strawberry" />
-              <span>خبز اليوم طازج</span>
+              <span>تصفح أصناف التصنيف</span>
             </span>
           </div>
 
@@ -343,21 +343,21 @@ export default function CategoryListingPage() {
             <div className="flex items-center gap-1.5 text-candy-berry">
               <ShieldCheck className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans font-bold text-xs text-candy-ink">
-                سمن بلدي 100%
+                تفاصيل كل صنف في وصفه
               </span>
             </div>
 
             <div className="flex items-center gap-1.5 text-candy-berry">
               <Sparkles className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans font-bold text-xs text-candy-ink">
-                فستق ومكسرات فاخرة
+                تشكيلة متنوعة
               </span>
             </div>
 
             <div className="flex items-center gap-1.5 text-candy-berry">
               <Truck className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans font-bold text-xs text-candy-ink">
-                تغليف مبرد ومحكم
+                رسوم التوصيل حسب المنطقة
               </span>
             </div>
           </div>
@@ -445,8 +445,8 @@ export default function CategoryListingPage() {
           searchQuery
             ? `لم يتم العثور على أي صنف يطابق "${searchQuery}". جرب البحث بكلمات أخرى أو إلغاء التصفية.`
             : activeFilter === "available-only"
-            ? "جميع أصناف هذا التصنيف نفدت مؤقتاً في المخزون. نعمل على تجهيز دفعة طازجة قريباً."
-            : "نعمل على تجهيز أصناف طازجة وشهية قريباً، يمكنك استكشاف باقي التصنيفات الفاخرة."
+            ? "لا توجد أصناف متاحة حالياً ضمن هذا التصنيف."
+            : "لا توجد أصناف حالياً ضمن هذا التصنيف. يمكنك استكشاف باقي الأقسام."
         }
         onResetFilter={() => {
           setActiveFilter("all");
@@ -455,32 +455,30 @@ export default function CategoryListingPage() {
         skeletonCount={8}
       />
 
-      {/* 6. قسم الطلب المخصص وكونسيرج واتساب (Flourish Footer CTA - من شاشة Stitch #3) */}
+      {/* 6. Help with product selection */}
       <section
-        aria-label="طلب كيكة خاصة أو صينية مخصصة"
+        aria-label="مساعدة في اختيار المنتجات"
         className="w-full rounded-candy-section bg-gradient-to-r from-candy-soft via-candy-blush/35 to-candy-pastel-4/40 border border-candy-blush p-6 sm:p-8 mt-6 flex flex-col md:flex-row items-center justify-between gap-5 shadow-candy-1"
       >
         <div className="flex flex-col gap-2 text-right">
           <div className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-candy-pill bg-white text-candy-berry font-sans font-bold text-xs border border-candy-line shadow-sm">
             <Cake className="w-3.5 h-3.5 text-candy-strawberry" />
-            <span>نخبز طلباتكم الخاصة بكل حب 🍰</span>
+            <span>تحتاج إلى مساعدة؟</span>
           </div>
           <h3 className="font-display font-bold text-lg sm:text-2xl text-candy-ink">
-            هل ترغب بصينية مشكلة أو كيكة مخصصة لمناسبتك؟
+            هل لديك سؤال حول أحد المنتجات؟
           </h3>
           <p className="font-sans text-xs sm:text-sm text-candy-muted max-w-xl leading-relaxed">
-            تحدث مباشرة مع شيف حلويات كاندي لوز لتنسيق الحجم، النكهات المحببة، ورسالة الإهداء المناسبة عبر واتساب فورياً.
+            تواصل مع المتجر للاستفسار عن التوفر أو تفاصيل المنتج قبل إضافته إلى السلة.
           </p>
         </div>
 
         <a
-          href="https://wa.me/970591234567?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D9%86%D8%AF%D9%8A%20%D9%84%D9%88%D8%B2%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%B7%D9%84%D8%A8%20%D8%AE%D8%A7%D8%B5%20%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-whatsapp text-white font-sans font-bold text-sm shadow-md hover:brightness-105 active:scale-95 transition-all shrink-0"
+          href="/contact"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-berry text-white font-sans font-bold text-sm shadow-md hover:bg-candy-berry-dark active:scale-95 transition-all shrink-0"
         >
-          <MessageCircle className="w-4 h-4 fill-white" />
-          <span>تواصل مع الشيف عبر واتساب</span>
+          <MessageCircle className="w-4 h-4" />
+          <span>تواصل مع المتجر</span>
         </a>
       </section>
     </div>

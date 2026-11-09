@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Plus, Check, Star, ShoppingBag } from "lucide-react";
+import { Heart, Plus, Check, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product, CartItem } from "@/types";
 import { CartContext } from "@/context/cart-context";
@@ -159,14 +159,6 @@ export function ProductCard({
               )}
             />
           </button>
-
-          {/* Rating Badge */}
-          <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-candy-pill bg-white/95 backdrop-blur-sm flex items-center gap-1 shadow-sm border border-candy-line/60">
-            <Star className="w-3 h-3 fill-candy-amber text-candy-amber" />
-            <span className="text-[11px] font-sans font-bold text-candy-ink">
-              4.9
-            </span>
-          </div>
 
           {/* Availability / Discount Badges */}
           {!isAvailable ? (

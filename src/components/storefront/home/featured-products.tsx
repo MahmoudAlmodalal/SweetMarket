@@ -51,10 +51,10 @@ export function FeaturedProducts({
           </div>
           <div>
             <h2 className="font-display font-bold text-xl sm:text-2xl text-candy-ink">
-              الأكثر طلباً ومختارات الموسم
+              مختارات من تشكيلة كاندي لوز
             </h2>
             <p className="text-xs sm:text-sm font-sans text-candy-muted">
-              حلويات فاخرة تحظى بأعلى تقييم وإقبال من زبائننا
+              تصفح أصناف المتجر واختر ما يناسبك
             </p>
           </div>
         </div>
@@ -125,7 +125,7 @@ export function FeaturedProducts({
             لا توجد أصناف حالياً في هذا القسم
           </h3>
           <p className="font-sans text-xs sm:text-sm text-candy-muted max-w-sm">
-            نعمل على تجهيز أصناف طازجة جديدة قريباً، يمكنك استكشاف باقي التصنيفات.
+            لا توجد منتجات مطابقة لهذا القسم حالياً؛ يمكنك استكشاف باقي التصنيفات.
           </p>
           <button
             type="button"
