@@ -17,9 +17,9 @@ import { ContactCard } from "@/components/storefront/contact/contact-card";
 import { WorkingHoursTable } from "@/components/storefront/contact/working-hours-table";
 
 export const metadata: Metadata = {
-  title: "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+  title: "تواصل معنا وساعات العمل | كاندي لوز",
   description:
-    "تواصل مع متجر حلويات كاندي لوز في غزة، شارع عمر المختار، وتعرف على ساعات العمل اليومية وتغطية التوصيل وخدمة كونسيرج واتساب الفورية.",
+    "تواصل مع متجر كاندي لوز في غزة عبر الهاتف أو واتساب، وتعرف على ساعات العمل ومعلومات التوصيل حسب المنطقة.",
 };
 
 export default function ContactPage() {
@@ -42,7 +42,7 @@ export default function ContactPage() {
         </Link>
         <ChevronLeft className="w-3.5 h-3.5 text-candy-line-dark" />
         <span className="text-candy-ink font-bold" aria-current="page">
-          تواصل معنا والكونسيرج
+          تواصل معنا
         </span>
       </nav>
 

@@ -63,7 +63,7 @@ export function ContactCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry text-xs font-bold mb-1.5">
-            <span>الفرع الرئيسي وخدمة الكونسيرج</span>
+            <span>الفرع الرئيسي واستفسارات المتجر</span>
           </div>
           <h2 className="font-display font-bold text-xl sm:text-2xl text-candy-berry leading-tight">
             {storeName}

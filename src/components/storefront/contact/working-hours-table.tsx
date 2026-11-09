@@ -69,7 +69,7 @@ export function WorkingHoursTable({
       days: "السبت - الخميس",
       hours: "9:00 صباحاً - 11:00 مساءً",
       isToday: isSatToThuToday,
-      notes: "استقبال وتوصيل مستمر طوال اليوم",
+      notes: "استقبال الاستفسارات خلال ساعات العمل",
     },
     {
       days: "الجمعة",
@@ -177,9 +177,9 @@ export function WorkingHoursTable({
         </div>
         <p className="font-sans text-xs text-candy-muted leading-relaxed">
           <strong className="text-candy-ink font-bold block mb-0.5">
-            الطلب الإلكتروني متاح 24/7:
+            للتواصل خارج ساعات العمل:
           </strong>
-          يمكنكم تقديم طلباتكم وحجز كيك المناسبات في أي وقت عبر الموقع، وستتم معالجة الطلبات فور بدء ساعات العمل الرسمية.
+          اترك استفسارك عبر واتساب وسنرد خلال ساعات استقبال المتجر.
         </p>
       </div>
     </div>
