@@ -32,7 +32,7 @@ export interface TrackOrderFormProps {
 }
 
 const MAX_ATTEMPTS = 5;
-const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15-minute lockout, aligned with the API contract
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // حماية واجهة فقط؛ يجب تكرار المحدد على الخادم عند تفعيل API
 const ER_005_MESSAGE = "تعذر العثور على الطلب بالبيانات المدخلة، يرجى التأكد من رقم الطلب ورقم الهاتف";
 
 export function TrackOrderForm({
@@ -217,13 +217,13 @@ export function TrackOrderForm({
                 استعلام وتتبع مسار الطلب
               </CardTitle>
               <CardDescription className="text-xs sm:text-sm text-candy-muted font-sans mt-0.5">
-                أدخل رقم الطلب ورقم الهاتف للتحقق من الحالة الحالية والخط الزمني المباشر
+                أدخل رقم الطلب ورقم الهاتف لعرض أحدث حالة مسجلة للطلب
               </CardDescription>
             </div>
           </div>
           <span className="hidden sm:inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-white border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-candy-strawberry" />
-            تحديث فوري
+            أحدث حالة مسجلة
           </span>
         </div>
       </CardHeader>

@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   Store,
   Sparkles,
+  Info,
 } from "lucide-react";
 import type { Order } from "@/types";
 import { TrackOrderForm } from "@/components/storefront/order/track-order-form";
@@ -75,17 +76,21 @@ function TrackOrderContent() {
         <div className="text-center space-y-3 relative">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-candy-pill bg-candy-blush/60 border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Compass className="w-3.5 h-3.5 text-candy-strawberry animate-spin-slow" />
-            <span>نظام التتبع المباشر (SCR-07)</span>
+            <span>متابعة حالة الطلب (SCR-07)</span>
           </div>
 
           <h1 className="font-display text-2xl sm:text-4xl font-black text-candy-berry tracking-tight">
-            تتبع مسار طلبك الملكي 🍰
+            تعرّف على حالة طلبك 🍰
           </h1>
 
           <p className="font-sans text-sm sm:text-base text-candy-muted max-w-xl mx-auto leading-relaxed">
-            تابع مراحل إعداد وتزيين وتوصيل حلويات كاندي لوز خطوة بخطوة حتى وصولها إلى
-            باب منزلك طازجة وشهية
+            أدخل رقم الطلب ورقم الهاتف المسجل لعرض أحدث حالة محفوظة للطلب.
           </p>
+        </div>
+
+        <div role="note" className="flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs sm:text-sm text-amber-900">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
+          <p>نسخة عرض تجريبية: بيانات التتبع محفوظة محلياً في هذا المتصفح ولا تعرض تحديثات من متجر فعلي.</p>
         </div>
 
         {/* Main Content Area: Form or Timeline */}
@@ -104,10 +109,10 @@ function TrackOrderContent() {
                   <Package className="w-5 h-5 text-candy-strawberry" />
                 </div>
                 <h2 className="font-sans font-bold text-sm text-candy-ink">
-                  تحديثات لحظية دقيقة
+                  أحدث حالة مسجلة
                 </h2>
                 <p className="font-sans text-xs text-candy-muted leading-relaxed">
-                  متابعة دقيقة لكل مرحلة من مراحل التحضير في المعمل وحتى استلامها باليد.
+                  تظهر المرحلة التي سجلها المتجر بعد تحديث الطلب.
                 </p>
               </div>
 
@@ -116,10 +121,10 @@ function TrackOrderContent() {
                   <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
                 </div>
                 <h2 className="font-sans font-bold text-sm text-candy-ink">
-                  نقل مبرد وتغليف ملكي
+                  الدفع عند الاستلام
                 </h2>
                 <p className="font-sans text-xs text-candy-muted leading-relaxed">
-                  نضمن المحافظة على قوام الكريمة الطازجة ونكهة الحلويات في صناديق مبردة.
+                  قيمة الطلب تُدفع نقداً عند استلامه.
                 </p>
               </div>
 
@@ -128,10 +133,10 @@ function TrackOrderContent() {
                   <MessageCircle className="w-5 h-5 text-emerald-600" />
                 </div>
                 <h2 className="font-sans font-bold text-sm text-candy-ink">
-                  دعم فوري ومباشر
+                  مساعدة بخصوص الطلب
                 </h2>
                 <p className="font-sans text-xs text-candy-muted leading-relaxed">
-                  فريق خدمة العملاء متواجد لمساعدتك عبر واتساب لأي تعديل أو استفسار.
+                  تواصل مع المتجر إذا احتجت إلى مساعدة إضافية.
                 </p>
               </div>
             </div>
