@@ -26,6 +26,7 @@ import { ProductGrid } from "@/components/storefront/catalog/product-grid";
 import { getCategories, getCategoryBySlug, getProducts } from "@/lib/repositories";
 import { MOCK_CATEGORIES } from "@/data/mock/categories";
 import { MOCK_PRODUCTS } from "@/data/mock/products";
+import { computeLinePrice, getDefaultWeightOption, DEFAULT_PACKAGING_OPTION_ID } from "@/lib/pricing";
 
 // المساعدة في إيجاد التصنيف فورياً أثناء الإقلاع لضمان استقرار العرض التمهيدي
 function resolveCategoryFallback(slug: string): Category | null {
@@ -212,15 +213,35 @@ export default function CategoryListingPage() {
         break;
       case "price-asc":
         list.sort((a, b) => {
-          const priceA = a.salePrice ?? a.price;
-          const priceB = b.salePrice ?? b.price;
+          const priceA = computeLinePrice({
+            product: a,
+            weightOption: getDefaultWeightOption(a),
+            packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+            quantity: 1,
+          }).unitPrice;
+          const priceB = computeLinePrice({
+            product: b,
+            weightOption: getDefaultWeightOption(b),
+            packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+            quantity: 1,
+          }).unitPrice;
           return priceA - priceB;
         });
         break;
       case "price-desc":
         list.sort((a, b) => {
-          const priceA = a.salePrice ?? a.price;
-          const priceB = b.salePrice ?? b.price;
+          const priceA = computeLinePrice({
+            product: a,
+            weightOption: getDefaultWeightOption(a),
+            packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+            quantity: 1,
+          }).unitPrice;
+          const priceB = computeLinePrice({
+            product: b,
+            weightOption: getDefaultWeightOption(b),
+            packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+            quantity: 1,
+          }).unitPrice;
           return priceB - priceA;
         });
         break;

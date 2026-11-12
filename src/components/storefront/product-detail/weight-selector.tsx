@@ -3,11 +3,13 @@
 import * as React from "react";
 import { Scale } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { ProductWeightOption, ProductUnit } from "@/types";
+import type { ProductWeightOption, ProductUnit, Product } from "@/types";
+import { computeLinePrice } from "@/lib/pricing";
 
 export interface WeightSelectorProps {
+  product?: Product;
   availableWeights?: ProductWeightOption[];
-  basePrice: number;
+  basePrice?: number;
   unit?: ProductUnit;
   selectedWeight: ProductWeightOption | null;
   onSelectWeight: (option: ProductWeightOption) => void;
@@ -15,9 +17,10 @@ export interface WeightSelectorProps {
 }
 
 export function WeightSelector({
+  product,
   availableWeights,
-  basePrice,
-  unit = "kg",
+  basePrice = product?.price ?? 0,
+  unit = product?.unit ?? "kg",
   selectedWeight,
   onSelectWeight,
   className,
@@ -147,19 +150,48 @@ export function WeightSelector({
               </div>
 
               {/* Left Side: Real-time price display for this weight option */}
-              <div className="flex items-baseline gap-1 shrink-0">
-                <span
-                  className={cn(
-                    "font-sans font-extrabold text-sm sm:text-base",
-                    isSelected ? "text-candy-berry" : "text-candy-ink/75"
-                  )}
-                >
-                  {option.price}
-                </span>
-                <span className="font-sans text-xs text-candy-muted font-bold">
-                  ₪
-                </span>
-              </div>
+              {(() => {
+                const dummyProduct: Product = product ?? ({
+                  id: "fallback-product",
+                  slug: "fallback",
+                  name: "fallback",
+                  description: "",
+                  categoryId: "",
+                  price: basePrice,
+                  unit,
+                  imageUrl: "",
+                  galleryImages: [],
+                  isAvailable: true,
+                  createdAt: "",
+                  updatedAt: "",
+                } as Product);
+                const optionPricing = computeLinePrice({
+                  product: dummyProduct,
+                  weightOption: option,
+                  quantity: 1,
+                });
+
+                return (
+                  <div className="flex items-baseline gap-1.5 shrink-0">
+                    <span
+                      className={cn(
+                        "font-sans font-extrabold text-sm sm:text-base",
+                        isSelected ? "text-candy-berry" : "text-candy-ink/75"
+                      )}
+                    >
+                      {optionPricing.unitPrice}
+                    </span>
+                    <span className="font-sans text-xs text-candy-muted font-bold">
+                      ₪
+                    </span>
+                    {optionPricing.discount > 0 && (
+                      <span className="font-sans text-xs text-candy-muted line-through mr-1">
+                        {optionPricing.listUnitPrice} ₪
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
             </button>
           );
         })}

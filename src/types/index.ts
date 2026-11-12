@@ -1,3 +1,6 @@
+import type { PackagingOptionId } from '@/lib/pricing';
+export type { PackagingOptionId } from '@/lib/pricing';
+
 /**
  * Core Domain Models and Type Contracts
  * Based on docs/FRONTEND_DATA_CONTRACTS.md & PRD_v0.2
@@ -37,6 +40,7 @@ export interface ProductWeightOption {
   label: string;
   multiplier: number;
   price: number;
+  salePrice?: number;
 }
 
 /**
@@ -97,9 +101,13 @@ export interface CartItem {
   productSlug: string;
   imageUrl: string;
   unitPrice: number;
+  listUnitPrice?: number;
   unit: ProductUnit;
   selectedWeightMultiplier?: number;
   selectedWeightLabel?: string;
+  packagingOptionId?: PackagingOptionId;
+  packagingLabel?: string;
+  packagingFee?: number;
   quantity: number;
   lineTotal: number;
 }

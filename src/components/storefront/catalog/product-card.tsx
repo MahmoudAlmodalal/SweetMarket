@@ -9,6 +9,12 @@ import type { Product, CartItem } from "@/types";
 import { CartContext } from "@/context/cart-context";
 import { getStorageItem, setStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import { toast } from "@/components/ui/toast";
+import {
+  computeLinePrice,
+  getDefaultWeightOption,
+  DEFAULT_PACKAGING_OPTION_ID,
+  PACKAGING_OPTIONS,
+} from "@/lib/pricing";
 import { getFavoriteProductIds, toggleFavoriteProduct } from "./wishlist-utils";
 
 export interface ProductCardProps {
@@ -38,8 +44,20 @@ export function ProductCard({
 
   const tintClass = PASTEL_TINTS[pastelIndex % PASTEL_TINTS.length];
   const isAvailable = product.isAvailable !== false;
-  const currentPrice = product.salePrice ?? product.price;
-  const hasDiscount = Boolean(product.salePrice && product.salePrice < product.price);
+  const defaultWeight = getDefaultWeightOption(product);
+  const pricing = computeLinePrice({
+    product,
+    weightOption: defaultWeight,
+    packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+    quantity: 1,
+  });
+  const currentPrice = pricing.unitPrice;
+  const listPrice = pricing.listUnitPrice;
+  const hasDiscount = pricing.discount > 0;
+  const discountPercent =
+    pricing.listUnitPrice > 0
+      ? Math.round((pricing.discount / pricing.listUnitPrice) * 100)
+      : 0;
 
   React.useEffect(() => {
     const syncWishlist = () => setIsWishlisted(getFavoriteProductIds().includes(product.id));
@@ -60,12 +78,23 @@ export function ProductCard({
 
     try {
       if (cartContext?.addItem) {
-        cartContext.addItem(product, 1);
+        cartContext.addItem(
+          product,
+          1,
+          defaultWeight?.multiplier,
+          defaultWeight?.label,
+          DEFAULT_PACKAGING_OPTION_ID
+        );
       } else {
         // Fallback directly via localStorage storage utilities
+        const packaging = PACKAGING_OPTIONS[0];
         const storedItems = getStorageItem(STORAGE_KEYS.CART_ITEMS, [] as CartItem[]);
         const existingIndex = storedItems.findIndex(
-          (item) => item.productId === product.id
+          (item) =>
+            item.productId === product.id &&
+            (item.selectedWeightMultiplier ?? null) === (defaultWeight?.multiplier ?? null) &&
+            (item.selectedWeightLabel ?? null) === (defaultWeight?.label ?? null) &&
+            (item.packagingOptionId ?? DEFAULT_PACKAGING_OPTION_ID) === DEFAULT_PACKAGING_OPTION_ID
         );
 
         if (existingIndex > -1) {
@@ -74,15 +103,28 @@ export function ProductCard({
             storedItems[existingIndex].quantity * storedItems[existingIndex].unitPrice;
         } else {
           storedItems.push({
-            id: `${product.id}-${Date.now()}`,
+            id: [
+              product.id,
+              defaultWeight?.multiplier !== undefined ? `${defaultWeight.multiplier}` : undefined,
+              defaultWeight?.label ? defaultWeight.label : undefined,
+              DEFAULT_PACKAGING_OPTION_ID,
+            ]
+              .filter(Boolean)
+              .join("-"),
             productId: product.id,
             productName: product.name,
             productSlug: product.slug,
             imageUrl: product.imageUrl,
-            unitPrice: currentPrice,
+            unitPrice: pricing.unitPrice,
+            listUnitPrice: pricing.listUnitPrice,
+            packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+            packagingLabel: packaging.label,
+            packagingFee: packaging.fee,
             unit: product.unit,
+            selectedWeightMultiplier: defaultWeight?.multiplier,
+            selectedWeightLabel: defaultWeight?.label,
             quantity: 1,
-            lineTotal: currentPrice,
+            lineTotal: pricing.lineTotal,
           });
         }
         setStorageItem(STORAGE_KEYS.CART_ITEMS, storedItems);
@@ -175,7 +217,7 @@ export function ProductCard({
             </div>
           ) : hasDiscount ? (
             <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-candy-pill bg-candy-strawberry text-white text-[11px] font-sans font-bold shadow-candy-cta">
-              توفير {Math.round(((product.price - product.salePrice!) / product.price) * 100)}%
+              توفير {discountPercent}%
             </div>
           ) : null}
         </div>
@@ -212,7 +254,7 @@ export function ProductCard({
           </div>
           {hasDiscount && (
             <span className="text-xs font-sans text-candy-muted line-through">
-              {product.price} ₪
+              {listPrice} ₪
             </span>
           )}
         </div>
