@@ -296,9 +296,9 @@ export default function OrderDetailPage() {
             onClick={() => window.print()}
             leftIcon={<Printer className="w-4 h-4" />}
             title="طباعة تفاصيل الطلب والفاتورة"
-            className="hidden sm:inline-flex"
+            className="inline-flex text-xs sm:text-sm"
           >
-            طباعة
+            طباعة الفاتورة
           </Button>
 
           <Button
