@@ -45,3 +45,18 @@ export const AdminLoginFormSchema = z.object({
 });
 
 export type AdminLoginFormData = z.infer<typeof AdminLoginFormSchema>;
+
+/**
+ * التحقق من نموذج كونسيرج المناسبات والطلبات الخاصة (SCR-08 / T-32)
+ */
+export const ConciergeBriefSchema = z.object({
+  occasion: z.string().trim().min(2, 'يرجى تحديد نوع المناسبة (مثال: حفل زفاف، تخرج، ضيافة)'),
+  quantityOrBudget: z.string().trim().min(2, 'يرجى تحديد الكمية المطلوبة أو الميزانية التقديرية'),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^(059|056)\d{7}$/, 'رقم الهاتف غير صالح، يجب أن يبدأ بـ 059 أو 056 ويتكون من 10 أرقام'),
+});
+
+export type ConciergeBriefData = z.infer<typeof ConciergeBriefSchema>;
+

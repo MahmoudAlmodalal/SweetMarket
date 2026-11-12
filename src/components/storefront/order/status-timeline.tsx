@@ -25,6 +25,7 @@ import type { Order, OrderStatus, OrderTimelineEvent } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { buildWhatsAppLink } from "@/lib/store-identity";
 
 export interface StatusTimelineProps {
   order: Order;
@@ -146,9 +147,9 @@ export function StatusTimeline({
   }, [order.items]);
 
   // WhatsApp concierge support link with prefilled order number
-  const whatsappSupportUrl = `https://wa.me/970591234567?text=${encodeURIComponent(
+  const whatsappSupportUrl = buildWhatsAppLink(
     `مرحباً كاندي لوز، أود الاستفسار عن طلبي رقم (${order.orderNumber}).`
-  )}`;
+  );
 
   return (
     <div

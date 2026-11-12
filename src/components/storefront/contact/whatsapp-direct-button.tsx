@@ -3,6 +3,7 @@
 import * as React from "react";
 import { MessageCircle, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { STORE_WHATSAPP_NUMBER, buildWhatsAppLink } from "@/lib/store-identity";
 
 export interface WhatsAppDirectButtonProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -22,7 +23,7 @@ const sizeClasses = {
 };
 
 export function WhatsAppDirectButton({
-  phoneNumber = "970591234567",
+  phoneNumber = STORE_WHATSAPP_NUMBER,
   message = "مرحباً كاندي لوز، أود الاستفسار عن تشكيلة الحلويات الفاخرة والطلبات الخاصة 🍬",
   variant = "primary",
   size = "md",
@@ -34,8 +35,10 @@ export function WhatsAppDirectButton({
 }: WhatsAppDirectButtonProps) {
   // Clean phone number (remove any non-digit chars)
   const cleanPhone = phoneNumber.replace(/\D/g, "");
-  const encodedText = encodeURIComponent(message);
-  const waUrl = `https://wa.me/${cleanPhone}${encodedText ? `?text=${encodedText}` : ""}`;
+  const waUrl =
+    cleanPhone === STORE_WHATSAPP_NUMBER
+      ? buildWhatsAppLink(message)
+      : `https://wa.me/${cleanPhone}${message ? `?text=${encodeURIComponent(message)}` : ""}`;
 
   return (
     <a

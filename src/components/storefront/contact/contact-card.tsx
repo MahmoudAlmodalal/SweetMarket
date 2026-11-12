@@ -12,6 +12,7 @@ import {
   Navigation,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { STORE_PHONE_DISPLAY, STORE_WHATSAPP_NUMBER } from "@/lib/store-identity";
 import { WhatsAppDirectButton } from "./whatsapp-direct-button";
 
 export interface ContactCardProps {
@@ -27,8 +28,8 @@ export function ContactCard({
   className,
   storeName = "كاندي لوز - متجر الحلويات الفاخرة",
   location = "العنوان: غزة - الرمال / شارع عمر المختار",
-  phone = "059-1234567",
-  whatsappNumber = "970591234567",
+  phone = STORE_PHONE_DISPLAY,
+  whatsappNumber = STORE_WHATSAPP_NUMBER,
   whatsappGreeting = "مرحباً كاندي لوز، أود الاستفسار عن تشكيلة الحلويات الفاخرة والطلبات الخاصة 🍬",
 }: ContactCardProps) {
   const [copiedField, setCopiedField] = React.useState<string | null>(null);
@@ -125,7 +126,7 @@ export function ContactCard({
               </div>
               <div>
                 <span className="font-sans text-xs font-semibold text-candy-muted block">
-                  رقم الهاتف والتواصي
+                  رقم الهاتف والتواصل
                 </span>
                 <a
                   href={`tel:${cleanPhoneForTel}`}

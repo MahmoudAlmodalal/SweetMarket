@@ -1,8 +1,23 @@
 "use client";
 
 import * as React from "react";
-import { Clock, Calendar, CheckCircle2, Moon } from "lucide-react";
+import { Clock, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  STORE_WORKING_HOURS,
+  type WorkingHoursRule,
+  getGazaNow,
+  getGazaWeekday,
+  isStoreOpen,
+} from "@/lib/store-hours";
+
+export {
+  STORE_WORKING_HOURS,
+  type WorkingHoursRule,
+  getGazaNow,
+  getGazaWeekday,
+  isStoreOpen,
+};
 
 export interface WorkingHoursTableProps {
   className?: string;
@@ -10,6 +25,10 @@ export interface WorkingHoursTableProps {
    * Optional manual override for testing open/closed states
    */
   forcedState?: "open" | "closed";
+  /**
+   * Optional custom date for testing and fixtures (Asia/Gaza wall-clock time)
+   */
+  now?: Date;
 }
 
 interface ScheduleRow {
@@ -19,65 +38,45 @@ interface ScheduleRow {
   notes?: string;
 }
 
-/**
- * Checks if the store is open based on the local time:
- * - Saturday through Thursday (السبت - الخميس): 9:00 AM - 11:00 PM (9:00 - 23:00)
- * - Friday (الجمعة): 1:00 PM - 11:00 PM (13:00 - 23:00)
- */
-export function isStoreOpen(date: Date = new Date()): boolean {
-  const day = date.getDay(); // 0: Sunday, 1: Monday, ..., 5: Friday, 6: Saturday
-  const hour = date.getHours();
-
-  if (day === 5) {
-    // Friday: 13:00 to 23:00
-    return hour >= 13 && hour < 23;
-  }
-
-  // Saturday through Thursday: 09:00 to 23:00
-  return hour >= 9 && hour < 23;
-}
-
 export function WorkingHoursTable({
   className,
   forcedState,
+  now,
 }: WorkingHoursTableProps) {
   const [mounted, setMounted] = React.useState(false);
-  const [currentDate, setCurrentDate] = React.useState<Date>(() => new Date());
+  const [currentDate, setCurrentDate] = React.useState<Date>(() => now ?? new Date());
 
   React.useEffect(() => {
     setMounted(true);
-    setCurrentDate(new Date());
-
-    // Update every 30 seconds so state transitions smoothly
-    const timer = setInterval(() => {
+    if (!now) {
       setCurrentDate(new Date());
-    }, 30000);
 
-    return () => clearInterval(timer);
-  }, []);
+      // Update every 30 seconds so state transitions smoothly
+      const timer = setInterval(() => {
+        setCurrentDate(new Date());
+      }, 30000);
+
+      return () => clearInterval(timer);
+    }
+  }, [now]);
+
+  // Use the injected `now` date if supplied, otherwise the reactive currentDate
+  const effectiveDate = now ?? (mounted ? currentDate : new Date());
 
   const openNow = forcedState
     ? forcedState === "open"
-    : isStoreOpen(currentDate);
+    : isStoreOpen(effectiveDate);
 
-  const currentDay = currentDate.getDay(); // 5 = Friday
-  const isFridayToday = currentDay === 5;
-  const isSatToThuToday = !isFridayToday;
+  const gazaWeekday = getGazaWeekday(effectiveDate);
 
-  const schedule: ScheduleRow[] = [
-    {
-      days: "السبت - الخميس",
-      hours: "9:00 صباحاً - 11:00 مساءً",
-      isToday: isSatToThuToday,
-      notes: "استقبال وتوصيل مستمر طوال اليوم",
-    },
-    {
-      days: "الجمعة",
-      hours: "1:00 ظهراً - 11:00 مساءً",
-      isToday: isFridayToday,
-      notes: "يبدأ الاستقبال بعد صلاة الجمعة",
-    },
-  ];
+  const schedule: ScheduleRow[] = STORE_WORKING_HOURS.map((rule) => ({
+    days: rule.days,
+    hours: rule.hours,
+    notes: rule.notes,
+    isToday: rule.weekdays.includes(gazaWeekday),
+  }));
+
+  const showHighlight = mounted || Boolean(now);
 
   return (
     <div
@@ -97,7 +96,7 @@ export function WorkingHoursTable({
               جدول ساعات العمل
             </h2>
             <p className="font-sans text-xs text-candy-muted mt-0.5">
-              مواعيد استقبال الزبائن وتحضير الطلبيات وتوصيلها
+              مواعيد استقبال الزبائن وتحضير الطلبيات وتوصيلها (بتوقيت غزة)
             </p>
           </div>
         </div>
@@ -141,7 +140,7 @@ export function WorkingHoursTable({
                 key={idx}
                 className={cn(
                   "transition-colors",
-                  row.isToday && mounted
+                  row.isToday && showHighlight
                     ? "bg-candy-blush/25 font-semibold text-candy-berry"
                     : "hover:bg-candy-soft/60 text-candy-ink"
                 )}
@@ -149,7 +148,7 @@ export function WorkingHoursTable({
                 <td className="p-3.5 sm:p-4 align-middle">
                   <div className="flex items-center gap-2">
                     <span className="font-sans font-bold">{row.days}</span>
-                    {row.isToday && mounted && (
+                    {row.isToday && showHighlight && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-candy-pill bg-candy-berry text-white text-[10px] font-bold">
                         اليوم
                       </span>

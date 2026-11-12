@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import type { Order, DeliveryZone } from "@/types";
 import { cn } from "@/lib/utils";
+import { buildWhatsAppLink } from "@/lib/store-identity";
 
 export interface OrderSuccessCardProps {
   order: Order;
@@ -383,7 +384,7 @@ export function OrderSuccessCard({
       {/* 5. Customer Concierge WhatsApp Assistance (from Stitch Screen #7) */}
       <div className="text-center pt-1">
         <a
-          href={`https://wa.me/970591234567?text=${encodeURIComponent(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}`}
+          href={buildWhatsAppLink(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 text-xs font-sans font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-4 py-2.5 rounded-candy-pill transition-colors"
