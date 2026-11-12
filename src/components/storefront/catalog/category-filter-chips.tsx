@@ -65,56 +65,64 @@ export function CategoryFilterChips({
   className,
 }: CategoryFilterChipsProps) {
   return (
-    <div
-      role="tablist"
-      aria-label="خيارات فلترة وترتيب الأصناف"
-      className={cn(
-        "flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-4 px-4 sm:mx-0 sm:px-0 text-nowrap select-none",
-        className
-      )}
-    >
-      {CATEGORY_FILTER_OPTIONS.map((chip) => {
-        const isActive = activeFilter === chip.id;
-        const Icon = chip.icon;
-        const badgeValue = chip.getBadge?.({ totalCount, availableCount });
+    <div className="relative w-full min-w-0">
+      <div
+        role="tablist"
+        aria-label="خيارات فلترة وترتيب الأصناف"
+        className={cn(
+          "flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-nowrap select-none scroll-smooth pl-8 sm:pl-0",
+          className
+        )}
+      >
+        {CATEGORY_FILTER_OPTIONS.map((chip) => {
+          const isActive = activeFilter === chip.id;
+          const Icon = chip.icon;
+          const badgeValue = chip.getBadge?.({ totalCount, availableCount });
 
-        return (
-          <button
-            key={chip.id}
-            role="tab"
-            type="button"
-            aria-selected={isActive}
-            onClick={() => onFilterChange(chip.id)}
-            className={cn(
-              "group relative flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-candy-pill font-sans text-xs sm:text-sm font-bold transition-all duration-200 shrink-0 shadow-sm active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry/50",
-              isActive
-                ? "bg-candy-strawberry text-white shadow-candy-cta scale-[1.02]"
-                : "bg-white text-candy-ink border border-candy-line hover:border-candy-blush hover:bg-candy-soft text-candy-ink/90"
-            )}
-          >
-            <Icon
+          return (
+            <button
+              key={chip.id}
+              role="tab"
+              type="button"
+              aria-selected={isActive}
+              onClick={() => onFilterChange(chip.id)}
               className={cn(
-                "w-4 h-4 transition-transform group-hover:scale-110",
-                isActive ? "text-white" : "text-candy-strawberry"
+                "group relative flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-candy-pill font-sans text-xs sm:text-sm font-bold transition-all duration-200 shrink-0 shadow-sm active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry/50",
+                isActive
+                  ? "bg-candy-strawberry text-white shadow-candy-cta scale-[1.02]"
+                  : "bg-white text-candy-ink border border-candy-line hover:border-candy-blush hover:bg-candy-soft text-candy-ink/90"
               )}
-            />
-            <span>{chip.label}</span>
-
-            {badgeValue && (
-              <span
+            >
+              <Icon
                 className={cn(
-                  "px-1.5 py-0.2 rounded-full text-[11px] font-sans font-bold leading-none transition-colors",
-                  isActive
-                    ? "bg-white/20 text-white"
-                    : "bg-candy-soft text-candy-rose border border-candy-blush/60"
+                  "w-4 h-4 transition-transform group-hover:scale-110",
+                  isActive ? "text-white" : "text-candy-strawberry"
                 )}
-              >
-                {badgeValue}
-              </span>
-            )}
-          </button>
-        );
-      })}
+              />
+              <span>{chip.label}</span>
+
+              {badgeValue && (
+                <span
+                  className={cn(
+                    "px-1.5 py-0.2 rounded-full text-[11px] font-sans font-bold leading-none transition-colors",
+                    isActive
+                      ? "bg-white/20 text-white"
+                      : "bg-candy-soft text-candy-rose border border-candy-blush/60"
+                  )}
+                >
+                  {badgeValue}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* حافة التلاشي على الجانب اللاحق (اليسار في RTL) لمنع اقتطاع الرقائق على الشاشات الصغيرة */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-10 bg-gradient-to-r from-candy-cream via-candy-cream/80 to-transparent sm:hidden"
+      />
     </div>
   );
 }
