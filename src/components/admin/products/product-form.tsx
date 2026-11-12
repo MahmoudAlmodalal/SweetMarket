@@ -17,6 +17,7 @@ import {
   AlertCircle,
   Lock,
   ChevronLeft,
+  RefreshCw,
 } from 'lucide-react';
 import type { Product, Category, ProductUnit, ProductWeightOption } from '@/types';
 import { useAdminAuth } from '@/context/admin-auth-context';
@@ -95,7 +96,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
   );
   const [unit, setUnit] = useState<ProductUnit>(initialProduct?.unit || 'kg');
   const [imageUrl, setImageUrl] = useState(
-    initialProduct?.imageUrl || PRESET_IMAGES[0].url
+    initialProduct?.imageUrl || ''
   );
   const [description, setDescription] = useState(initialProduct?.description || '');
   const [isAvailable, setIsAvailable] = useState<boolean>(
@@ -211,9 +212,15 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
     return Object.keys(newErrors).length === 0;
   };
 
+  // السعر الفعّال (يراعي سعر العرض إن وُجد)
+  const effectivePrice = useMemo(() => {
+    const sp = parseFloat(salePrice);
+    const bp = parseFloat(price) || 0;
+    return salePrice && !isNaN(sp) && sp > 0 ? sp : bp;
+  }, [price, salePrice]);
+
   // إدارة خيارات الوزن
   const handleAddWeight = () => {
-    const currentBasePrice = parseFloat(price) || 50;
     const nextMultiplier = weights.length === 0 ? 0.5 : weights.length === 1 ? 1 : 2;
     const defaultLabel =
       nextMultiplier === 0.5
@@ -225,7 +232,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
     const newWeight: ProductWeightOption = {
       label: defaultLabel,
       multiplier: nextMultiplier,
-      price: Math.round(currentBasePrice * nextMultiplier),
+      price: Math.round(effectivePrice * nextMultiplier),
     };
 
     setWeights([...weights, newWeight]);
@@ -234,9 +241,25 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
   const handleUpdateWeight = (index: number, field: keyof ProductWeightOption, value: any) => {
     setWeights((prev) => {
       const copy = [...prev];
-      copy[index] = { ...copy[index], [field]: value };
+      if (field === 'multiplier') {
+        const newMultiplier = typeof value === 'number' ? value : parseFloat(value) || 1;
+        copy[index] = {
+          ...copy[index],
+          multiplier: newMultiplier,
+          price: Math.round(effectivePrice * newMultiplier),
+        };
+      } else {
+        copy[index] = { ...copy[index], [field]: value };
+      }
       return copy;
     });
+  };
+
+  // إعادة حساب أسعار الأوزان وفق السعر الفعّال الحالي
+  const handleRecalcWeightPrices = () => {
+    setWeights((prev) =>
+      prev.map((w) => ({ ...w, price: Math.round(effectivePrice * w.multiplier) }))
+    );
   };
 
   const handleRemoveWeight = (index: number) => {
@@ -463,16 +486,31 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
               <Scale className="w-5 h-5" />
               <span>خيارات الأوزان المتعددة (اختياري)</span>
             </div>
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              onClick={handleAddWeight}
-              leftIcon={<Plus className="w-3.5 h-3.5" />}
-              className="text-xs"
-            >
-              إضافة خيار وزن
-            </Button>
+            <div className="flex items-center gap-2">
+              {weights.length > 0 && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleRecalcWeightPrices}
+                  leftIcon={<RefreshCw className="w-3.5 h-3.5" />}
+                  className="text-xs text-candy-muted hover:text-candy-berry"
+                  title={`إعادة حساب وفق السعر الفعّال (${effectivePrice} ₪)`}
+                >
+                  إعادة حساب الأسعار
+                </Button>
+              )}
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={handleAddWeight}
+                leftIcon={<Plus className="w-3.5 h-3.5" />}
+                className="text-xs"
+              >
+                إضافة خيار وزن
+              </Button>
+            </div>
           </div>
           <CardDescription>
             يتيح للزبون في صفحة المنتج اختيار الوزن المطلوب (مثل: نصف كيلو، 1 كغم، صينية عائلية)
@@ -524,14 +562,14 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                   </div>
 
                   <div className="sm:col-span-3">
-                    <label className="block text-[11px] font-bold text-candy-muted mb-1">السعر (شيكل ₪):</label>
+                    <label className="block text-[11px] font-bold text-candy-muted mb-1 whitespace-nowrap">السعر (شيكل ₪):</label>
                     <input
                       type="number"
                       step="0.5"
                       min="0.1"
                       value={w.price}
                       onChange={(e) => handleUpdateWeight(index, 'price', parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-1.5 text-xs font-sans rounded-candy-pill border border-candy-line bg-white"
+                      className="w-full px-3 py-1.5 text-xs font-mono rounded-candy-pill border border-candy-line bg-white whitespace-nowrap"
                     />
                   </div>
 
