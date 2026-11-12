@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { ContactCard } from "@/components/storefront/contact/contact-card";
 import { WorkingHoursTable } from "@/components/storefront/contact/working-hours-table";
+import { ConciergeBriefForm } from "@/components/storefront/contact/concierge-brief-form";
+import { buildWhatsAppLink } from "@/lib/store-identity";
 
 export const metadata: Metadata = {
   title: "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
@@ -268,7 +270,7 @@ export default function ContactPage() {
                 هل تحتاج توصيل لمناسبة أو كميات كبيرة؟
               </span>
               <a
-                href="https://wa.me/970591234567?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D9%84%D8%AF%D9%8A%20%D8%B7%D9%84%D8%A8%20%D8%AE%D8%A7%D8%B5%20%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9%20%D9%88%D8%A3%D8%AD%D8%AA%D8%A7%D8%AC%20%D8%AA%D9%86%D8%B3%D9%8A%D9%82%20%D8%A7%D9%84%D8%AA%D9%88%D8%B5%D9%8A%D9%84"
+                href={buildWhatsAppLink("مرحباً، لدي طلب خاص لمناسبة وأحتاج تنسيق التوصيل")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-bold text-candy-strawberry hover:underline shrink-0"
@@ -277,6 +279,9 @@ export default function ContactPage() {
               </a>
             </div>
           </section>
+
+          {/* Event Concierge Brief Form Card */}
+          <ConciergeBriefForm />
         </div>
       </div>
 

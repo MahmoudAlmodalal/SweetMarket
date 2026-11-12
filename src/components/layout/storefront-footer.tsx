@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StoreLogo } from "@/components/ui/store-logo";
+import { STORE_PHONE_INTL, buildWhatsAppLink } from "@/lib/store-identity";
 
 export interface StorefrontFooterProps {
   className?: string;
@@ -22,7 +23,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
     <>
       {/* Floating WhatsApp Concierge Button (Stitch Screen #1) */}
       <a
-        href="https://wa.me/970599000000"
+        href={buildWhatsAppLink()}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="تواصل فوري عبر واتساب"
@@ -71,7 +72,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
               {/* WhatsApp Button */}
               <div className="pt-1">
                 <a
-                  href="https://wa.me/970599000000"
+                  href={buildWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-button bg-[#25D366] text-white text-xs md:text-sm font-bold shadow-md hover:brightness-105 active:scale-95 transition-all duration-200"
@@ -178,7 +179,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                       هاتف خدمة العملاء:
                     </span>
                     <span dir="ltr" className="inline-block font-mono">
-                      +970 59 900 0000
+                      {STORE_PHONE_INTL}
                     </span>
                   </div>
                 </li>

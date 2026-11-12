@@ -26,6 +26,7 @@ import { ProductGrid } from "@/components/storefront/catalog/product-grid";
 import { getCategories, getCategoryBySlug, getProducts } from "@/lib/repositories";
 import { MOCK_CATEGORIES } from "@/data/mock/categories";
 import { MOCK_PRODUCTS } from "@/data/mock/products";
+import { buildWhatsAppLink } from "@/lib/store-identity";
 
 // المساعدة في إيجاد التصنيف فورياً أثناء الإقلاع لضمان استقرار العرض التمهيدي
 function resolveCategoryFallback(slug: string): Category | null {
@@ -474,7 +475,7 @@ export default function CategoryListingPage() {
         </div>
 
         <a
-          href="https://wa.me/970591234567?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D9%86%D8%AF%D9%8A%20%D9%84%D9%88%D8%B2%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D8%A8%D8%B7%D9%84%D8%A8%20%D8%AE%D8%A7%D8%B5%20%D9%84%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9"
+          href={buildWhatsAppLink("مرحباً كاندي لوز، أرغب بطلب خاص لمناسبة")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-whatsapp text-white font-sans font-bold text-sm shadow-md hover:brightness-105 active:scale-95 transition-all shrink-0"
