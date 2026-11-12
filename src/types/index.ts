@@ -16,11 +16,14 @@ export type OrderStatus =
   | 'cancelled';      // ملغي
 
 /**
- * الأدوار الثلاثة المعتمدة في النظام وفق النموذج الأمني المحدث
+ * أدوار تطبيق العميل العام
  */
-export type AppRole = 'admin' | 'client' | 'guest';
+export type AppRole = 'client' | 'guest';
 
-export type AdminRole = 'admin' | 'staff' | 'manager';
+/**
+ * أدوار لوحة الإدارة المعتمدة وفق نموذج RBAC الصارم
+ */
+export type AdminRole = 'manager' | 'staff';
 
 /**
  * وحدة قياس بيع المنتج

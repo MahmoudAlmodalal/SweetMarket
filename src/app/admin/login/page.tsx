@@ -30,7 +30,7 @@ function LoginFormContent() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [quickLoginRole, setQuickLoginRole] = useState<'admin' | 'manager' | 'staff' | null>(null);
+  const [quickLoginRole, setQuickLoginRole] = useState<'manager' | 'staff' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,7 +65,7 @@ function LoginFormContent() {
   /**
    * تسجيل دخول فوري بنقرة واحدة للحسابات التجريبية (دون تعريض أو تداول كلمات مرور)
    */
-  const handleQuickLogin = async (targetRole: 'admin' | 'manager' | 'staff') => {
+  const handleQuickLogin = async (targetRole: 'manager' | 'staff') => {
     setErrorMessage(null);
     setQuickLoginRole(targetRole);
 
