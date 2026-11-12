@@ -30,6 +30,11 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { MOCK_PRODUCTS } from "@/data/mock/products";
 import type { Product } from "@/types";
+import {
+  computeLinePrice,
+  getDefaultWeightOption,
+  DEFAULT_PACKAGING_OPTION_ID,
+} from "@/lib/pricing";
 
 function CartPageInner() {
   const {
@@ -55,7 +60,14 @@ function CartPageInner() {
   }, [items]);
 
   const handleAddUpsell = (product: Product) => {
-    addItem(product, 1);
+    const defaultWeight = getDefaultWeightOption(product);
+    addItem(
+      product,
+      1,
+      defaultWeight?.multiplier,
+      defaultWeight?.label,
+      DEFAULT_PACKAGING_OPTION_ID
+    );
     setAddedUpsellIds((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => {
       setAddedUpsellIds((prev) => ({ ...prev, [product.id]: false }));
@@ -195,7 +207,12 @@ function CartPageInner() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                 {upsellProducts.map((product) => {
                   const isAdded = addedUpsellIds[product.id];
-                  const displayPrice = product.salePrice ?? product.price;
+                  const itemPricing = computeLinePrice({
+                    product,
+                    weightOption: getDefaultWeightOption(product),
+                    packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+                    quantity: 1,
+                  });
 
                   return (
                     <div
@@ -220,13 +237,18 @@ function CartPageInner() {
                       </div>
 
                       <div className="flex items-center justify-between mt-3 pt-2 border-t border-candy-line/40">
-                        <div className="flex items-baseline gap-0.5">
+                        <div className="flex items-baseline gap-1">
                           <span className="font-sans font-extrabold text-sm text-candy-berry">
-                            {displayPrice.toFixed(2)}
+                            {itemPricing.unitPrice.toFixed(2)}
                           </span>
                           <span className="font-sans text-[10px] text-candy-muted">
                             ₪
                           </span>
+                          {itemPricing.discount > 0 && (
+                            <span className="font-sans text-[10px] text-candy-muted line-through mr-1">
+                              {itemPricing.listUnitPrice.toFixed(2)} ₪
+                            </span>
+                          )}
                         </div>
                         <button
                           type="button"

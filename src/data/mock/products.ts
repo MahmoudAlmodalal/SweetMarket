@@ -26,7 +26,7 @@ export const MOCK_PRODUCTS: Product[] = [
     isFeatured: true,
     availableWeights: [
       { label: 'نصف كيلو (500 جم)', multiplier: 0.5, price: 35 },
-      { label: 'كيلو كامل (1000 جم)', multiplier: 1, price: 65 },
+      { label: 'كيلو كامل (1000 جم)', multiplier: 1, price: 65, salePrice: 59 },
       { label: 'صينية عائلية (2 كجم)', multiplier: 2, price: 125 },
     ],
     createdAt: '2026-10-01T10:00:00Z',

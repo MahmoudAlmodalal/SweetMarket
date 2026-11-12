@@ -135,6 +135,12 @@ export function CartItemRow({
                 <span className="inline-flex items-center font-sans text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-soft text-candy-berry font-medium border border-candy-line/50">
                   الوزن: {weightText}
                 </span>
+                {item.packagingLabel && (
+                  <span className="inline-flex items-center font-sans text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-soft text-candy-berry font-medium border border-candy-line/50">
+                    التغليف: {item.packagingLabel}
+                    {item.packagingFee && item.packagingFee > 0 ? ` (+${item.packagingFee} ₪)` : ""}
+                  </span>
+                )}
               </div>
             </div>
 

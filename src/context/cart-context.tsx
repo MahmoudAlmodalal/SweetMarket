@@ -8,9 +8,16 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import type { CartItem, CartSummary, Product } from "@/types";
+import type { CartItem, CartSummary, Product, ProductWeightOption } from "@/types";
 import { STORAGE_KEYS } from "@/lib/storage";
 import { MAX_CART_QTY } from "@/lib/tokens";
+import {
+  computeLinePrice,
+  getDefaultWeightOption,
+  DEFAULT_PACKAGING_OPTION_ID,
+  PACKAGING_OPTIONS,
+  type PackagingOptionId,
+} from "@/lib/pricing";
 
 export const CART_STORAGE_KEY = STORAGE_KEYS.CART_ITEMS;
 
@@ -23,7 +30,8 @@ export interface CartContextType {
     product: Product,
     quantity?: number,
     selectedWeightMultiplier?: number,
-    selectedWeightLabel?: string
+    selectedWeightLabel?: string,
+    packagingOptionId?: PackagingOptionId
   ) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
@@ -100,52 +108,56 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
       product: Product,
       quantity = 1,
       selectedWeightMultiplier?: number,
-      selectedWeightLabel?: string
+      selectedWeightLabel?: string,
+      packagingOptionId?: PackagingOptionId
     ) => {
       const qty = typeof quantity === "number" && quantity > 0 ? Math.floor(quantity) : 1;
 
       // Find matching weight option from product if available
-      const matchedWeight = product.availableWeights?.find((w) => {
-        if (selectedWeightMultiplier !== undefined && w.multiplier === selectedWeightMultiplier) {
-          if (selectedWeightLabel !== undefined) {
-            return w.label === selectedWeightLabel;
-          }
-          return true;
+      let matchedWeight: ProductWeightOption | undefined;
+      if (product.availableWeights && product.availableWeights.length > 0) {
+        if (selectedWeightMultiplier !== undefined) {
+          matchedWeight = product.availableWeights.find((w) => {
+            if (w.multiplier === selectedWeightMultiplier) {
+              if (selectedWeightLabel !== undefined) {
+                return w.label === selectedWeightLabel;
+              }
+              return true;
+            }
+            return false;
+          });
+        } else if (selectedWeightLabel !== undefined) {
+          matchedWeight = product.availableWeights.find((w) => w.label === selectedWeightLabel);
         }
-        if (selectedWeightLabel !== undefined && w.label === selectedWeightLabel) {
-          return true;
+
+        if (!matchedWeight) {
+          matchedWeight = getDefaultWeightOption(product);
         }
-        return false;
-      });
-
-      const finalMultiplier = selectedWeightMultiplier ?? matchedWeight?.multiplier;
-      const finalLabel = selectedWeightLabel ?? matchedWeight?.label;
-
-      const basePrice = product.salePrice ?? product.price;
-      let unitPrice: number;
-
-      if (matchedWeight) {
-        if (
-          matchedWeight.multiplier === 1 &&
-          product.salePrice !== undefined &&
-          product.salePrice < product.price
-        ) {
-          unitPrice = product.salePrice;
-        } else {
-          unitPrice = matchedWeight.price;
-        }
-      } else if (finalMultiplier !== undefined && finalMultiplier > 0) {
-        unitPrice = Math.round(basePrice * finalMultiplier * 100) / 100;
-      } else {
-        unitPrice = basePrice;
       }
 
-      const generatedId =
-        finalMultiplier !== undefined
-          ? finalLabel
-            ? `${product.id}-${finalMultiplier}-${finalLabel}`
-            : `${product.id}-${finalMultiplier}`
-          : product.id;
+      const finalMultiplier = matchedWeight?.multiplier ?? selectedWeightMultiplier;
+      const finalLabel = matchedWeight?.label ?? selectedWeightLabel;
+
+      const resolvedPackagingId: PackagingOptionId =
+        packagingOptionId ?? DEFAULT_PACKAGING_OPTION_ID;
+      const packagingOption =
+        PACKAGING_OPTIONS.find((pkg) => pkg.id === resolvedPackagingId) ?? PACKAGING_OPTIONS[0];
+
+      const pricing = computeLinePrice({
+        product,
+        weightOption: matchedWeight,
+        packagingOptionId: packagingOption.id,
+        quantity: qty,
+      });
+
+      const generatedId = [
+        product.id,
+        finalMultiplier !== undefined ? `${finalMultiplier}` : undefined,
+        finalLabel ? finalLabel : undefined,
+        packagingOption.id !== DEFAULT_PACKAGING_OPTION_ID ? packagingOption.id : undefined,
+      ]
+        .filter(Boolean)
+        .join("-");
 
       setItems((prevItems) => {
         const existingIndex = prevItems.findIndex((item) => {
@@ -153,17 +165,29 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
           return (
             item.productId === product.id &&
             (item.selectedWeightMultiplier ?? null) === (finalMultiplier ?? null) &&
-            (item.selectedWeightLabel ?? null) === (finalLabel ?? null)
+            (item.selectedWeightLabel ?? null) === (finalLabel ?? null) &&
+            (item.packagingOptionId ?? DEFAULT_PACKAGING_OPTION_ID) === packagingOption.id
           );
         });
 
         if (existingIndex > -1) {
           const existingItem = prevItems[existingIndex];
           const newQty = Math.min(existingItem.quantity + qty, MAX_CART_QTY);
+          const linePricing = computeLinePrice({
+            product,
+            weightOption: matchedWeight,
+            packagingOptionId: packagingOption.id,
+            quantity: newQty,
+          });
           const updatedItem: CartItem = {
             ...existingItem,
+            unitPrice: linePricing.unitPrice,
+            listUnitPrice: linePricing.listUnitPrice,
+            packagingOptionId: packagingOption.id,
+            packagingLabel: packagingOption.label,
+            packagingFee: packagingOption.fee,
             quantity: newQty,
-            lineTotal: Math.round(existingItem.unitPrice * newQty * 100) / 100,
+            lineTotal: linePricing.lineTotal,
           };
           const updatedList = [...prevItems];
           updatedList[existingIndex] = updatedItem;
@@ -176,12 +200,16 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
           productName: product.name,
           productSlug: product.slug,
           imageUrl: product.imageUrl,
-          unitPrice,
+          unitPrice: pricing.unitPrice,
+          listUnitPrice: pricing.listUnitPrice,
+          packagingOptionId: packagingOption.id,
+          packagingLabel: packagingOption.label,
+          packagingFee: packagingOption.fee,
           unit: product.unit,
           selectedWeightMultiplier: finalMultiplier,
           selectedWeightLabel: finalLabel,
           quantity: Math.min(qty, MAX_CART_QTY),
-          lineTotal: Math.round(unitPrice * Math.min(qty, MAX_CART_QTY) * 100) / 100,
+          lineTotal: pricing.lineTotal,
         };
 
         return [...prevItems, newItem];

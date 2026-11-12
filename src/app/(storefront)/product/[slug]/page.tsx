@@ -38,6 +38,13 @@ import {
 } from "@/components/storefront/product-detail";
 import { cn } from "@/lib/utils";
 import { getFavoriteProductIds, toggleFavoriteProduct } from "@/components/storefront/catalog/wishlist-utils";
+import {
+  computeLinePrice,
+  getDefaultWeightOption,
+  DEFAULT_PACKAGING_OPTION_ID,
+  PACKAGING_OPTIONS,
+  type PackagingOptionId,
+} from "@/lib/pricing";
 
 interface PageProps {
   params: { slug: string };
@@ -74,17 +81,12 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
 
   // Customization & Ordering State
   const [selectedWeight, setSelectedWeight] = React.useState<ProductWeightOption | null>(() => {
-    if (!initialProduct?.availableWeights || initialProduct.availableWeights.length === 0) {
-      return null;
-    }
-    // Default to 1kg or first available
-    return (
-      initialProduct.availableWeights.find((w) => w.multiplier === 1) ||
-      initialProduct.availableWeights[0]
-    );
+    if (!initialProduct) return null;
+    return getDefaultWeightOption(initialProduct) ?? null;
   });
 
-  const [packagingType, setPackagingType] = React.useState<"standard" | "luxury">("luxury");
+  const [packagingOptionId, setPackagingOptionId] =
+    React.useState<PackagingOptionId>(DEFAULT_PACKAGING_OPTION_ID);
   const [isGiftCardEnabled, setIsGiftCardEnabled] = React.useState<boolean>(false);
   const [giftMessage, setGiftMessage] = React.useState<string>("");
   const [quantity, setQuantity] = React.useState<number>(1);
@@ -120,10 +122,17 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
 
           // Default selected weight if not set or mismatched
           if (foundProduct.availableWeights && foundProduct.availableWeights.length > 0) {
-            setSelectedWeight(
-              foundProduct.availableWeights.find((w) => w.multiplier === 1) ||
-                foundProduct.availableWeights[0]
-            );
+            setSelectedWeight((prev) => {
+              if (
+                prev &&
+                foundProduct.availableWeights?.some(
+                  (w) => w.multiplier === prev.multiplier && w.label === prev.label
+                )
+              ) {
+                return prev;
+              }
+              return getDefaultWeightOption(foundProduct) ?? null;
+            });
           }
 
           // Fetch category details
@@ -208,16 +217,20 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
   }
 
   // Pricing calculations
-  const basePrice = product.salePrice ?? product.price;
+  const linePricing = computeLinePrice({
+    product,
+    weightOption: selectedWeight ?? undefined,
+    packagingOptionId,
+    quantity,
+  });
+
   const isAvailable = product.isAvailable !== false;
-  const packagingFee = packagingType === "luxury" ? 25 : 0;
-  const unitPrice = (selectedWeight ? selectedWeight.price : basePrice) + packagingFee;
-  const totalPrice = unitPrice * quantity;
+  const unitPrice = linePricing.unitPrice;
+  const totalPrice = linePricing.lineTotal;
+  const listUnitPrice = linePricing.listUnitPrice;
+  const discount = linePricing.discount;
   const tabbyInstallment = (totalPrice / 4).toFixed(2);
-  const discountAmount =
-    product.salePrice && product.salePrice < product.price
-      ? product.price - product.salePrice
-      : undefined;
+  const discountAmount = discount > 0 ? discount : undefined;
 
   // Add to Cart handler
   const handleAddToCart = () => {
@@ -226,12 +239,13 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
     try {
       setIsAdding(true);
 
-      // Call CartContext addItem with weight and quantity
+      // Call CartContext addItem with weight, quantity, and packaging
       addItem(
         product,
         quantity,
         selectedWeight?.multiplier,
-        selectedWeight?.label
+        selectedWeight?.label,
+        packagingOptionId
       );
 
       // Sync event for any decoupled listeners (e.g. mobile dock)
@@ -256,7 +270,14 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
   // Add related item to cart
   const handleAddRelatedToCart = (relatedProduct: Product) => {
     try {
-      addItem(relatedProduct, 1);
+      const defaultWeight = getDefaultWeightOption(relatedProduct);
+      addItem(
+        relatedProduct,
+        1,
+        defaultWeight?.multiplier,
+        defaultWeight?.label,
+        DEFAULT_PACKAGING_OPTION_ID
+      );
       if (typeof window !== "undefined") {
         window.dispatchEvent(new Event("candy_cart_updated"));
       }
@@ -406,9 +427,9 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                 <span className="font-sans font-bold text-sm text-candy-strawberry">
                   ₪
                 </span>
-                {discountAmount !== undefined && (
+                {discount > 0 && (
                   <span className="font-sans text-sm text-candy-muted line-through mr-1">
-                    {product.price + packagingFee} ₪
+                    {listUnitPrice} ₪
                   </span>
                 )}
               </div>
@@ -438,8 +459,9 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
 
           {/* Weight Selection Chips */}
           <WeightSelector
+            product={product}
             availableWeights={product.availableWeights}
-            basePrice={basePrice}
+            basePrice={product.price}
             unit={product.unit}
             selectedWeight={selectedWeight}
             onSelectWeight={(w) => setSelectedWeight(w)}
@@ -452,72 +474,57 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
               <span>طريقة التغليف والتقديم:</span>
             </span>
 
-            <div className="grid grid-cols-1 gap-2">
-              {/* Option 1: Standard Packaging */}
-              <button
-                type="button"
-                onClick={() => setPackagingType("standard")}
-                className={cn(
-                  "w-full text-right p-3 rounded-2xl flex items-center justify-between transition-all select-none border-2",
-                  packagingType === "standard"
-                    ? "bg-candy-soft border-candy-strawberry shadow-[0_4px_12px_rgba(215,45,88,0.12)]"
-                    : "bg-white border-transparent hover:border-candy-blush shadow-sm"
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <span
+            <div className="grid grid-cols-1 gap-2" role="radiogroup" aria-label="خيارات التغليف والتقديم">
+              {PACKAGING_OPTIONS.map((opt) => {
+                const isSelected = packagingOptionId === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={isSelected}
+                    onClick={() => setPackagingOptionId(opt.id)}
                     className={cn(
-                      "w-4 h-4 rounded-full flex items-center justify-center transition-colors",
-                      packagingType === "standard"
-                        ? "bg-candy-strawberry text-white"
-                        : "bg-candy-line-dark text-transparent"
+                      "w-full text-right p-3 rounded-2xl flex items-center justify-between transition-all select-none border-2",
+                      isSelected
+                        ? "bg-candy-soft border-candy-strawberry shadow-[0_4px_12px_rgba(215,45,88,0.12)]"
+                        : "bg-white border-transparent hover:border-candy-blush shadow-sm"
                     )}
                   >
-                    {packagingType === "standard" && (
-                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
-                    )}
-                  </span>
-                  <span className="font-sans text-sm font-bold text-candy-ink">
-                    تغليف كاندي لوز العادي الأنيق
-                  </span>
-                </div>
-                <span className="font-sans text-xs text-candy-muted font-bold">
-                  مشمول مجاناً
-                </span>
-              </button>
-
-              {/* Option 2: Luxury Gift Box */}
-              <button
-                type="button"
-                onClick={() => setPackagingType("luxury")}
-                className={cn(
-                  "w-full text-right p-3 rounded-2xl flex items-center justify-between transition-all select-none border-2",
-                  packagingType === "luxury"
-                    ? "bg-candy-soft border-candy-strawberry shadow-[0_4px_12px_rgba(215,45,88,0.12)]"
-                    : "bg-white border-transparent hover:border-candy-blush shadow-sm"
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <span
-                    className={cn(
-                      "w-4 h-4 rounded-full flex items-center justify-center transition-colors",
-                      packagingType === "luxury"
-                        ? "bg-candy-strawberry text-white"
-                        : "bg-candy-line-dark text-transparent"
-                    )}
-                  >
-                    {packagingType === "luxury" && (
-                      <span className="w-1.5 h-1.5 bg-white rounded-full" />
-                    )}
-                  </span>
-                  <span className="font-sans text-sm font-bold text-candy-berry">
-                    صندوق إهداء ملكي بشريط مخملي وبطاقة ذهبية
-                  </span>
-                </div>
-                <span className="font-sans text-xs text-candy-strawberry font-black">
-                  +25 ₪
-                </span>
-              </button>
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className={cn(
+                          "w-4 h-4 rounded-full flex items-center justify-center transition-colors",
+                          isSelected
+                            ? "bg-candy-strawberry text-white"
+                            : "bg-candy-line-dark text-transparent"
+                        )}
+                        aria-hidden="true"
+                      >
+                        {isSelected && (
+                          <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                        )}
+                      </span>
+                      <span
+                        className={cn(
+                          "font-sans text-sm font-bold",
+                          isSelected && opt.fee > 0 ? "text-candy-berry" : "text-candy-ink"
+                        )}
+                      >
+                        {opt.label}
+                      </span>
+                    </div>
+                    <span
+                      className={cn(
+                        "font-sans text-xs font-bold",
+                        opt.fee > 0 ? "text-candy-strawberry font-black" : "text-candy-muted"
+                      )}
+                    >
+                      {opt.fee > 0 ? `+${opt.fee} ₪` : "مشمول مجاناً"}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -737,7 +744,12 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             {relatedProducts.map((item) => {
-              const itemPrice = item.salePrice ?? item.price;
+              const itemPricing = computeLinePrice({
+                product: item,
+                weightOption: getDefaultWeightOption(item),
+                packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
+                quantity: 1,
+              });
               const isItemAdded = addedRelatedIds[item.id];
 
               return (
@@ -764,7 +776,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                   <div className="flex items-center justify-between mt-3 pt-2 border-t border-candy-line/40">
                     <div className="flex items-baseline gap-1">
                       <span className="font-sans font-extrabold text-sm text-candy-berry">
-                        {itemPrice}
+                        {itemPricing.unitPrice}
                       </span>
                       <span className="font-sans text-[10px] text-candy-muted font-bold">
                         ₪

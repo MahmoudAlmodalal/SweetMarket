@@ -128,6 +128,14 @@ export function OrderReviewSummary({
                             </span>
                           </>
                         )}
+                        {item.packagingLabel && (
+                          <>
+                            <span>•</span>
+                            <span className="text-candy-berry font-medium">
+                              {item.packagingLabel}
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
 
