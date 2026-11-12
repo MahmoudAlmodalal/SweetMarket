@@ -104,7 +104,7 @@ export function CategoryDialog({
         setName('');
         setSlug('');
         setDescription('');
-        setImageUrl(SUGGESTED_IMAGES[0].url);
+        setImageUrl('');
         setDisplayOrder(nextOrder);
         setIsActive(true);
       }
