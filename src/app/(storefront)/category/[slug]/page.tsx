@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
 import {
   Home,
   ChevronLeft,
@@ -24,8 +24,23 @@ import {
 } from "@/components/storefront/catalog/category-filter-chips";
 import { ProductGrid } from "@/components/storefront/catalog/product-grid";
 import { getCategories, getCategoryBySlug, getProducts } from "@/lib/repositories";
+import { matchesProductSearch } from "@/lib/search";
 import { MOCK_CATEGORIES } from "@/data/mock/categories";
 import { MOCK_PRODUCTS } from "@/data/mock/products";
+
+/**
+ * الكلمات المقترحة للبحث عند عدم وجود نتائج
+ */
+const SUGGESTED_SEARCH_KEYWORDS = [
+  "بقلاوة",
+  "كنافة",
+  "فستق",
+  "شوكولاتة",
+  "تورتة",
+  "سابليه",
+  "لوتس",
+  "قشطة",
+];
 
 // المساعدة في إيجاد التصنيف فورياً أثناء الإقلاع لضمان استقرار العرض التمهيدي
 function resolveCategoryFallback(slug: string): Category | null {
@@ -81,6 +96,7 @@ function resolveProductsFallback(
 }
 
 export default function CategoryListingPage() {
+  const router = useRouter();
   const routeParams = useParams();
   const searchParams = useSearchParams();
   const slug = (routeParams?.slug as string) || "";
@@ -102,9 +118,60 @@ export default function CategoryListingPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(!fallbackCat);
   const [activeFilter, setActiveFilter] = React.useState<FilterSortOption>("all");
   const [searchQuery, setSearchQuery] = React.useState<string>(querySearch);
+
+  // مزامنة حالة البحث مع معامل q في الرابط فور تغيره
   React.useEffect(() => {
     setSearchQuery(querySearch);
   }, [querySearch]);
+
+  // تحديث معامل البحث q في رابط الصفحة الحالية مع المحافظة على المسار
+  const updateUrlQuery = React.useCallback(
+    (newQuery: string) => {
+      const trimmed = newQuery.trim();
+      const params = new URLSearchParams(searchParams?.toString() ?? "");
+      if (trimmed) {
+        params.set("q", trimmed);
+      } else {
+        params.delete("q");
+      }
+      const qs = params.toString();
+      const targetUrl = qs ? `/category/${slug}?${qs}` : `/category/${slug}`;
+      router.replace(targetUrl, { scroll: false });
+    },
+    [searchParams, slug, router]
+  );
+
+  // مزامنة البحث مع الرابط بعد تأخير طفيف أثناء الكتابة لتفادي كثرة تحديثات التاريخ
+  React.useEffect(() => {
+    const trimmed = searchQuery.trim();
+    const currentQ = (searchParams?.get("q") || "").trim();
+    if (trimmed === currentQ) return;
+
+    const timer = setTimeout(() => {
+      updateUrlQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, searchParams, updateUrlQuery]);
+
+  // إرسال نموذج البحث فورياً
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    updateUrlQuery(searchQuery);
+  };
+
+  // تفريغ استعلام البحث
+  const handleClearSearch = React.useCallback(() => {
+    setSearchQuery("");
+    updateUrlQuery("");
+  }, [updateUrlQuery]);
+
+  // إعادة ضبط كاملة للفلاتر والبحث
+  const handleResetAll = React.useCallback(() => {
+    setActiveFilter("all");
+    setSearchQuery("");
+    updateUrlQuery("");
+  }, [updateUrlQuery]);
 
   // 3. جلب تفاصيل التصنيف والمنتجات عبر المستودع
   React.useEffect(() => {
@@ -195,14 +262,9 @@ export default function CategoryListingPage() {
   const filteredAndSortedProducts = React.useMemo(() => {
     let list = [...products];
 
-    // الفلترة النصية داخل التصنيف
+    // الفلترة النصية داخل التصنيف باستخدام المنقح العربي (الاسم والوصف)
     if (searchQuery.trim()) {
-      const q = searchQuery.trim().toLowerCase();
-      list = list.filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          (p.description && p.description.toLowerCase().includes(q))
-      );
+      list = list.filter((p) => matchesProductSearch(p, searchQuery));
     }
 
     // تطبيق رقائق الفلترة والترتيب (Filter Chips)
@@ -240,24 +302,56 @@ export default function CategoryListingPage() {
     [products]
   );
 
-  // في حال تعذر إيجاد التصنيف نهائياً
+  // في حال تعذر إيجاد التصنيف نهائياً، عرض بطاقة الاسترجاع مع روابط التصنيفات الفعلية
   if (!isLoading && !category) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 text-center max-w-lg mx-auto">
-        <div className="w-16 h-16 rounded-full bg-candy-blush text-candy-strawberry flex items-center justify-center mb-4">
-          <Cake className="w-8 h-8 stroke-1" />
+      <div className="flex flex-col items-center justify-center py-12 px-4 text-center max-w-xl mx-auto">
+        <div className="w-16 h-16 rounded-full bg-candy-blush text-candy-strawberry flex items-center justify-center mb-4 shadow-inner">
+          <Cake className="w-8 h-8 stroke-1.5" />
         </div>
-        <h1 className="font-display font-bold text-2xl text-candy-berry mb-2">
+        <h1 className="font-display font-bold text-2xl sm:text-3xl text-candy-berry mb-2">
           التصنيف المطلوب غير متوفر
         </h1>
-        <p className="font-sans text-sm text-candy-muted mb-6 leading-relaxed">
-          عذراً، لم نتمكن من العثور على تصنيف الحلويات المحدد. قد يكون قد تم تعديله أو نقله.
+        <p className="font-sans text-sm text-candy-muted mb-6 leading-relaxed max-w-md">
+          عذراً، لم نتمكن من العثور على تصنيف الحلويات المحدد. قد يكون الرابط قد تغيّر أو تم نقله. يمكنك الانتقال مباشرة إلى أحد أقسامنا الفاخرة:
         </p>
+
+        {/* روابط سريعة للتصنيفات الحقيقية لاسترجاع التصفح بنقرة واحدة */}
+        <div className="w-full bg-white border border-candy-line/80 rounded-candy-card p-5 sm:p-6 shadow-candy-1 mb-6">
+          <h2 className="font-sans font-bold text-xs text-candy-muted mb-3.5 text-right">
+            تصفح أقسام كاندي لوز الرئيسية:
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <Link
+              href="/category/all"
+              className="flex items-center justify-between p-3 rounded-candy-pill bg-candy-soft hover:bg-candy-blush border border-candy-line text-right font-sans text-xs font-bold text-candy-berry transition-all group"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-candy-strawberry group-hover:scale-110 transition-transform" />
+                <span>كل الحلويات الفاخرة</span>
+              </div>
+              <ChevronLeft className="w-4 h-4 text-candy-muted group-hover:text-candy-berry transition-colors shrink-0" />
+            </Link>
+
+            {MOCK_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/category/${cat.slug}`}
+                className="flex items-center justify-between p-3 rounded-candy-pill bg-candy-soft hover:bg-candy-blush border border-candy-line text-right font-sans text-xs font-bold text-candy-ink hover:text-candy-berry transition-all group"
+              >
+                <span className="line-clamp-1">{cat.name}</span>
+                <ChevronLeft className="w-4 h-4 text-candy-muted group-hover:text-candy-berry transition-colors shrink-0" />
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <Link
           href="/"
-          className="px-6 py-2.5 rounded-candy-pill bg-candy-berry text-white font-sans font-bold text-sm shadow-candy-cta hover:bg-candy-berry-dark transition-all"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-candy-pill bg-candy-berry text-white font-sans font-bold text-sm shadow-candy-cta hover:bg-candy-berry-dark transition-all"
         >
-          العودة للرئيسية
+          <Home className="w-4 h-4" />
+          <span>العودة للرئيسية</span>
         </Link>
       </div>
     );
@@ -369,30 +463,54 @@ export default function CategoryListingPage() {
         aria-label="تصفية وفرز الأصناف"
         className="sticky top-20 sm:top-24 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-2.5 bg-candy-cream/95 backdrop-blur-md border-b border-candy-line/60 flex flex-col gap-3"
       >
-        {/* حقل البحث داخل التصنيف (من تصاميم Stitch Screen #2 & #3) */}
-        <div className="relative flex items-center w-full">
+        {/* حقل البحث داخل التصنيف */}
+        <form
+          onSubmit={handleSearchSubmit}
+          className="relative flex items-center w-full"
+        >
           <Search className="absolute right-3.5 w-4 h-4 text-candy-muted pointer-events-none" />
           <input
-            type="text"
+            type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={`ابحث داخل ${categoryName}...`}
+            aria-label={`البحث داخل ${categoryName}`}
             className="w-full h-10 sm:h-11 pr-10 pl-9 rounded-candy-pill bg-white border border-candy-line/80 font-sans text-xs sm:text-sm text-candy-ink placeholder:text-candy-muted/80 focus:outline-none focus:border-candy-strawberry focus:ring-2 focus:ring-candy-strawberry/20 shadow-candy-1 transition-all"
           />
           {searchQuery && (
             <button
               type="button"
-              onClick={() => setSearchQuery("")}
+              onClick={handleClearSearch}
               aria-label="مسح البحث"
               className="absolute left-2.5 min-w-10 min-h-10 rounded-full bg-candy-soft text-candy-rose flex items-center justify-center hover:bg-candy-blush transition-colors touch-manipulation"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
-        </div>
+        </form>
+
+        {/* رقاقة الفلتر النشط للبحث مع إمكانية الإزالة */}
+        {searchQuery.trim() && (
+          <div className="flex items-center gap-2 flex-wrap px-1">
+            <span className="text-xs text-candy-muted font-sans font-medium">
+              الفلاتر النشطة:
+            </span>
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-blush text-candy-berry border border-candy-line font-sans text-xs font-bold transition-all hover:bg-candy-soft group active:scale-95 shadow-xs"
+              aria-label={`إزالة فلتر البحث ${searchQuery.trim()}`}
+            >
+              <span>بحث: {searchQuery.trim()}</span>
+              <span className="w-4 h-4 rounded-full bg-white/70 group-hover:bg-white flex items-center justify-center text-candy-strawberry transition-colors">
+                <X className="w-2.5 h-2.5 stroke-[2.5]" />
+              </span>
+            </button>
+          </div>
+        )}
 
         {/* شريط رقائق الفلترة والترتيب (Category Filter Chips) */}
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
           <CategoryFilterChips
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
@@ -402,17 +520,14 @@ export default function CategoryListingPage() {
           />
 
           {/* زر إعادة ضبط سريع في حال تفعيل فلاتر */}
-          {(activeFilter !== "all" || searchQuery) && (
+          {(activeFilter !== "all" || searchQuery.trim()) && (
             <button
               type="button"
-              onClick={() => {
-                setActiveFilter("all");
-                setSearchQuery("");
-              }}
+              onClick={handleResetAll}
               title="إلغاء التصفية"
-              className="shrink-0 min-h-11 text-xs font-sans font-bold text-candy-strawberry hover:text-candy-berry flex items-center gap-1 px-2.5 rounded-candy-pill hover:bg-candy-soft transition-colors touch-manipulation"
+              className="shrink-0 min-h-10 text-xs font-sans font-bold text-candy-strawberry hover:text-candy-berry flex items-center gap-1 px-2.5 rounded-candy-pill hover:bg-candy-soft transition-colors touch-manipulation"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">إعادة ضبط</span>
             </button>
           )}
@@ -420,18 +535,14 @@ export default function CategoryListingPage() {
       </section>
 
       {/* 4. إحصائية النتائج الحالية */}
-      <div className="flex items-center justify-between px-1 text-xs sm:text-sm font-sans text-candy-muted">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs sm:text-sm font-sans text-candy-muted">
         <span>
-          عرض{" "}
-          <strong className="text-candy-berry font-bold">
-            {filteredAndSortedProducts.length}
-          </strong>{" "}
-          من أصل {totalCount} صنف
+          عرض <strong className="text-candy-berry font-bold">{filteredAndSortedProducts.length}</strong> من أصل {totalCount} صنف
         </span>
 
-        {searchQuery && (
-          <span className="text-candy-rose text-xs">
-            نتائج البحث عن: &ldquo;{searchQuery}&rdquo;
+        {searchQuery.trim() && (
+          <span className="text-candy-rose text-xs font-semibold">
+            نتائج البحث عن: &ldquo;{searchQuery.trim()}&rdquo;
           </span>
         )}
       </div>
@@ -440,18 +551,19 @@ export default function CategoryListingPage() {
       <ProductGrid
         products={filteredAndSortedProducts}
         isLoading={isLoading}
+        searchQuery={searchQuery}
+        suggestedKeywords={SUGGESTED_SEARCH_KEYWORDS}
+        onSuggestionClick={(keyword) => {
+          setSearchQuery(keyword);
+          updateUrlQuery(keyword);
+        }}
         emptyMessage="لا توجد أصناف في هذا التصنيف حالياً"
         emptyDescription={
-          searchQuery
-            ? `لم يتم العثور على أي صنف يطابق "${searchQuery}". جرب البحث بكلمات أخرى أو إلغاء التصفية.`
-            : activeFilter === "available-only"
+          activeFilter === "available-only"
             ? "جميع أصناف هذا التصنيف نفدت مؤقتاً في المخزون. نعمل على تجهيز دفعة طازجة قريباً."
             : "نعمل على تجهيز أصناف طازجة وشهية قريباً، يمكنك استكشاف باقي التصنيفات الفاخرة."
         }
-        onResetFilter={() => {
-          setActiveFilter("all");
-          setSearchQuery("");
-        }}
+        onResetFilter={handleResetAll}
         skeletonCount={8}
       />
 

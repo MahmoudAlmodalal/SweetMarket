@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Cookie, RotateCcw, ArrowLeft } from "lucide-react";
+import { Cookie, RotateCcw, ArrowLeft, SearchX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types";
 import { ProductCard } from "@/components/storefront/catalog/product-card";
@@ -13,6 +13,9 @@ export interface ProductGridProps {
   isLoading?: boolean;
   emptyMessage?: string;
   emptyDescription?: string;
+  searchQuery?: string;
+  suggestedKeywords?: string[];
+  onSuggestionClick?: (keyword: string) => void;
   onResetFilter?: () => void;
   className?: string;
   skeletonCount?: number;
@@ -53,6 +56,9 @@ export function ProductGrid({
   isLoading = false,
   emptyMessage = "لا توجد أصناف في هذا التصنيف حالياً",
   emptyDescription = "نعمل على تجهيز أصناف طازجة ومميزة قريباً. يمكنك تجربة تغيير الفلاتر أو استكشاف باقي التصنيفات الفاخرة.",
+  searchQuery,
+  suggestedKeywords,
+  onSuggestionClick,
   onResetFilter,
   className,
   skeletonCount = 8,
@@ -75,8 +81,93 @@ export function ProductGrid({
     );
   }
 
-  // 2. حالة الفراغ (Empty State)
+  // 2. حالة الفراغ والبحث الصفري (Empty / Zero-Results State)
   if (!products || products.length === 0) {
+    const trimmedQuery = searchQuery?.trim();
+
+    // في حال عدم وجود نتائج لعبارة بحث نشطة
+    if (trimmedQuery) {
+      const defaultSuggestions = [
+        "بقلاوة",
+        "كنافة",
+        "فستق",
+        "شوكولاتة",
+        "تورتة",
+        "سابليه",
+        "لوتس",
+        "قشطة",
+      ];
+      const pills =
+        suggestedKeywords && suggestedKeywords.length > 0
+          ? suggestedKeywords
+          : defaultSuggestions;
+
+      return (
+        <section
+          role="region"
+          aria-label="نتائج البحث الصفرية"
+          className={cn(
+            "flex flex-col items-center justify-center p-8 sm:p-14 text-center rounded-candy-card bg-candy-soft border border-candy-line shadow-candy-1 gap-4 w-full my-4 animate-in fade-in-50 duration-200",
+            className
+          )}
+        >
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-candy-blush/70 text-candy-strawberry flex items-center justify-center shadow-inner">
+            <SearchX className="w-8 h-8 sm:w-10 sm:h-10 stroke-1.5" />
+          </div>
+
+          <div className="space-y-1.5 max-w-md">
+            <h3 className="font-display font-bold text-lg sm:text-2xl text-candy-berry leading-tight">
+              لم نجد أي نتائج تطابق &ldquo;{trimmedQuery}&rdquo;
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-candy-muted leading-relaxed">
+              لم نتمكن من العثور على أي صنف يطابق بحثك في هذا التصنيف. جرّب البحث بكلمة أخرى أو اختر من الكلمات المقترحة أدناه:
+            </p>
+          </div>
+
+          {/* الكلمات المقترحة للبحث */}
+          <div className="flex flex-col items-center gap-2 pt-1 w-full max-w-md">
+            <span className="text-xs font-bold text-candy-ink font-sans">
+              كلمات مقترحة للبحث:
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {pills.map((keyword) => (
+                <button
+                  key={keyword}
+                  type="button"
+                  onClick={() => onSuggestionClick?.(keyword)}
+                  className="px-3.5 py-1.5 rounded-candy-pill bg-white hover:bg-candy-blush border border-candy-line text-xs font-sans font-bold text-candy-berry shadow-xs hover:border-candy-strawberry active:scale-95 transition-all"
+                >
+                  {keyword}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* زر إعادة الضبط لاستعادة كافة البطاقات وتفريغ q */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+            {onResetFilter && (
+              <button
+                type="button"
+                onClick={onResetFilter}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-candy-pill bg-candy-strawberry text-white font-sans font-bold text-xs sm:text-sm shadow-candy-cta hover:bg-candy-berry active:scale-95 transition-all"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>إعادة ضبط البحث وعرض كل الأصناف</span>
+              </button>
+            )}
+
+            <Link
+              href="/category/all"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-candy-pill bg-white text-candy-berry border border-candy-line font-sans font-bold text-xs sm:text-sm shadow-xs hover:bg-candy-soft active:scale-95 transition-all"
+            >
+              <span>عرض كل الحلويات</span>
+              <ArrowLeft className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </section>
+      );
+    }
+
     return (
       <section
         aria-label="حالة الفراغ - لا توجد أصناف"

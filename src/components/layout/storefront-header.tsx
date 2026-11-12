@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Sparkles,
   ShoppingBag,
@@ -24,13 +24,23 @@ export interface StorefrontHeaderProps {
   className?: string;
 }
 
-export function StorefrontHeader({
+interface StorefrontHeaderUIProps extends StorefrontHeaderProps {
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+  onSubmitSearch: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+/**
+ * واجهة ترويسة المتجر المشتركة (Desktop & Mobile)
+ */
+function StorefrontHeaderUI({
   cartCount: propCartCount,
   className,
-}: StorefrontHeaderProps) {
+  searchQuery,
+  onSearchChange,
+  onSubmitSearch,
+}: StorefrontHeaderUIProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const [searchQuery, setSearchQuery] = React.useState("");
   const [internalCount, setInternalCount] = React.useState<number>(
     propCartCount ?? 0
   );
@@ -70,12 +80,6 @@ export function StorefrontHeader({
       window.removeEventListener("candy_cart_updated", handleStorageChange);
     };
   }, [propCartCount]);
-
-  const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const query = searchQuery.trim();
-    router.push(query ? `/category/all?q=${encodeURIComponent(query)}` : "/category/all");
-  };
 
   const navLinks = [
     {
@@ -174,15 +178,16 @@ export function StorefrontHeader({
             >
               <UserRound className="w-5 h-5" />
             </Link>
+
             {/* Desktop Search Bar */}
-            <form onSubmit={submitSearch} className="hidden lg:flex items-center relative w-56 xl:w-64">
+            <form onSubmit={onSubmitSearch} className="hidden lg:flex items-center relative w-56 xl:w-64">
               <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
               <input
                 type="search"
                 placeholder="ابحث عن حلاك..."
                 aria-label="البحث عن منتج"
                 value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
+                onChange={(event) => onSearchChange(event.target.value)}
                 className="w-full h-10 pr-9 pl-4 bg-candy-soft/80 hover:bg-candy-soft focus:bg-white text-candy-ink placeholder:text-candy-muted text-xs rounded-button border border-candy-line/60 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
               />
             </form>
@@ -216,7 +221,7 @@ export function StorefrontHeader({
         </div>
 
         {/* Mobile Search Bar Row (< 768px) */}
-        <form onSubmit={submitSearch} className="pb-3 md:hidden">
+        <form onSubmit={onSubmitSearch} className="pb-3 md:hidden">
           <div className="relative flex items-center w-full">
             <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
             <input
@@ -224,7 +229,7 @@ export function StorefrontHeader({
               placeholder="ابحث عن حلاك المفضل..."
               aria-label="البحث عن منتج"
               value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
+              onChange={(event) => onSearchChange(event.target.value)}
               enterKeyHint="search"
               className="w-full h-10 pr-9 pl-4 bg-candy-soft text-candy-ink placeholder:text-candy-muted text-xs rounded-candy-pill border border-candy-line/70 focus:outline-none focus:bg-white focus:ring-2 focus:ring-candy-strawberry/30 transition-all duration-200 shadow-sm"
             />
@@ -232,5 +237,98 @@ export function StorefrontHeader({
         </form>
       </div>
     </header>
+  );
+}
+
+/**
+ * مكون الترويسة الفعلي المتصل بـ SearchParams
+ */
+function StorefrontHeaderConnected(props: StorefrontHeaderProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeQ = searchParams?.get("q") ?? "";
+
+  const [searchQuery, setSearchQuery] = React.useState(activeQ);
+
+  // مزامنة حالة الإدخال فور تغير باراميتر q في الرابط
+  React.useEffect(() => {
+    setSearchQuery(activeQ);
+  }, [activeQ]);
+
+  const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    const isCategoryRoute =
+      pathname === "/category" || pathname.startsWith("/category/");
+
+    if (isCategoryRoute) {
+      // في مسار التصنيف: تحديث q في نفس المسار دون مغادرته
+      const params = new URLSearchParams(searchParams?.toString() ?? "");
+      if (query) {
+        params.set("q", query);
+      } else {
+        params.delete("q");
+      }
+      const qs = params.toString();
+      router.push(qs ? `${pathname}?${qs}` : pathname);
+    } else {
+      // خارج التصنيف: التوجيه لتصنيف الكل مع الاستعلام
+      router.push(
+        query ? `/category/all?q=${encodeURIComponent(query)}` : "/category/all"
+      );
+    }
+  };
+
+  return (
+    <StorefrontHeaderUI
+      {...props}
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+      onSubmitSearch={submitSearch}
+    />
+  );
+}
+
+/**
+ * مكون احتياطي أثناء التحميل الأولي لمنع إخفاق CSR Bailout في صفحات التوليد الساكن
+ */
+function StorefrontHeaderFallback(props: StorefrontHeaderProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const submitSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    const isCategoryRoute =
+      pathname === "/category" || pathname.startsWith("/category/");
+
+    if (isCategoryRoute) {
+      router.push(
+        query ? `${pathname}?q=${encodeURIComponent(query)}` : pathname
+      );
+    } else {
+      router.push(
+        query ? `/category/all?q=${encodeURIComponent(query)}` : "/category/all"
+      );
+    }
+  };
+
+  return (
+    <StorefrontHeaderUI
+      {...props}
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+      onSubmitSearch={submitSearch}
+    />
+  );
+}
+
+export function StorefrontHeader(props: StorefrontHeaderProps) {
+  return (
+    <React.Suspense fallback={<StorefrontHeaderFallback {...props} />}>
+      <StorefrontHeaderConnected {...props} />
+    </React.Suspense>
   );
 }
