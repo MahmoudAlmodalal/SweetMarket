@@ -1,0 +1,1341 @@
+{
+  "timestamp": "2026-11-05T13:45:47.675Z",
+  "testedUrl": "http://localhost:3000",
+  "screenResults": [
+    {
+      "id": "SCR-01",
+      "name": "الرئيسية (Home)",
+      "path": "/",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
+          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-02",
+      "name": "قائمة التصنيف (Category)",
+      "path": "/category/baklava-eastern",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "البقلاوة والحلويات الشرقية",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "البقلاوة والحلويات الشرقية",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "البقلاوة والحلويات الشرقية",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "البقلاوة والحلويات الشرقية",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "البقلاوة والحلويات الشرقية",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-03",
+      "name": "تفاصيل المنتج (Product Detail)",
+      "path": "/product/mixed-baklava-extra-pistachio",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "صينية مشكل بقلاوة إكسترا فستق",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "صينية مشكل بقلاوة إكسترا فستق",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "صينية مشكل بقلاوة إكسترا فستق",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "صينية مشكل بقلاوة إكسترا فستق",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "صينية مشكل بقلاوة إكسترا فستق",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-04",
+      "name": "سلة المشتريات (Cart)",
+      "path": "/cart",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-05",
+      "name": "إتمام الطلب (Checkout)",
+      "path": "/checkout",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "سلة المشتريات فارغة",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "سلة المشتريات فارغة",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "سلة المشتريات فارغة",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "سلة المشتريات فارغة",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "سلة المشتريات فارغة",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-06",
+      "name": "تأكيد الطلب (Success)",
+      "path": "/checkout/success/ORD-20261027-001",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-07",
+      "name": "تتبع الطلب (Track)",
+      "path": "/track",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-08",
+      "name": "من نحن وتواصل (Contact)",
+      "path": "/contact",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+          "h1": "تواصل معنا وساعات العمل",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": true,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+          "h1": "تواصل معنا وساعات العمل",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+          "h1": "تواصل معنا وساعات العمل",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+          "h1": "تواصل معنا وساعات العمل",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+          "h1": "تواصل معنا وساعات العمل",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-09",
+      "name": "صفحة 404 (Not Found)",
+      "path": "/non-existent-page-test-404",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 404,
+          "title": "الصفحة غير موجودة | كاندي لوز",
+          "h1": "عذراً، الصفحة غير موجودة",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 404,
+          "title": "الصفحة غير موجودة | كاندي لوز",
+          "h1": "عذراً، الصفحة غير موجودة",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 404,
+          "title": "الصفحة غير موجودة | كاندي لوز",
+          "h1": "عذراً، الصفحة غير موجودة",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 404,
+          "title": "الصفحة غير موجودة | كاندي لوز",
+          "h1": "عذراً، الصفحة غير موجودة",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 404,
+          "title": "الصفحة غير موجودة | كاندي لوز",
+          "h1": "عذراً، الصفحة غير موجودة",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ]
+    },
+    {
+      "id": "SCR-10",
+      "name": "معالج الخطأ العام وانقطاع الاتصال (ErrorBoundary)",
+      "path": "src/app/error.tsx",
+      "role": "guest",
+      "viewports": {
+        "All Viewports (390-1440px)": {
+          "passed": true,
+          "note": "Global Error Boundary Client Component (Next.js App Router)"
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-11",
+      "name": "تسجيل دخول الإدارة (Admin Login)",
+      "path": "/admin/login",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-12",
+      "name": "تغيير كلمة المرور (Password Change)",
+      "path": "/admin/account/password",
+      "role": "staff",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تغيير كلمة المرور",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تغيير كلمة المرور",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تغيير كلمة المرور",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تغيير كلمة المرور",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "تغيير كلمة المرور",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-13",
+      "name": "قائمة الطلبات (Orders List)",
+      "path": "/admin/orders",
+      "role": "staff",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-14",
+      "name": "تفاصيل الطلب (Order Detail)",
+      "path": "/admin/orders/ord-mock-01",
+      "role": "staff",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة الطلبات",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-15",
+      "name": "كتالوج المنتجات (Products List)",
+      "path": "/admin/products",
+      "role": "staff",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-16a",
+      "name": "إضافة منتج جديد (New Product)",
+      "path": "/admin/products/new",
+      "role": "admin",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-16b",
+      "name": "تعديل منتج (Edit Product)",
+      "path": "/admin/products/prod-baklava-mixed/edit",
+      "role": "admin",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة المنتجات",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-17",
+      "name": "إدارة التصنيفات (Categories)",
+      "path": "/admin/categories",
+      "role": "admin",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة التصنيفات",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة التصنيفات",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة التصنيفات",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة التصنيفات",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "إدارة التصنيفات",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-18",
+      "name": "مناطق التوصيل (Zones)",
+      "path": "/admin/zones",
+      "role": "admin",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "مناطق التوصيل",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "مناطق التوصيل",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "مناطق التوصيل",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "مناطق التوصيل",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "مناطق التوصيل",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-19",
+      "name": "إدارة فريق العمل (Users)",
+      "path": "/admin/users",
+      "role": "admin",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "فريق العمل",
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "فريق العمل",
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "فريق العمل",
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "فريق العمل",
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": "فريق العمل",
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "id": "SCR-20",
+      "name": "غير مصرح (Forbidden)",
+      "path": "/admin/forbidden",
+      "role": "guest",
+      "viewports": {
+        "390px (Mobile)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 390,
+          "innerWidth": 390,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "768px (Tablet)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 768,
+          "innerWidth": 768,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1024px (Small Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1024,
+          "innerWidth": 1024,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1366px (Standard Laptop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1366,
+          "innerWidth": 1366,
+          "isDockVisible": false,
+          "passed": true
+        },
+        "1440px (Wide Desktop)": {
+          "httpStatus": 200,
+          "title": "كاندي لوز | Candy Loz",
+          "h1": null,
+          "hasOverflow": false,
+          "scrollWidth": 1440,
+          "innerWidth": 1440,
+          "isDockVisible": false,
+          "passed": true
+        }
+      },
+      "passed": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "viewportResults": [],
+  "rbacResults": [
+    {
+      "test": "Guest access to /admin/orders redirected to /admin/login",
+      "expected": "Redirect to /admin/login",
+      "actualUrl": "http://localhost:3000/admin/login?redirect=%2Fadmin%2Forders",
+      "passed": true
+    },
+    {
+      "test": "Staff access to /admin/orders permitted",
+      "expected": "Allowed access to orders",
+      "actual": "إدارة الطلبات",
+      "passed": true
+    },
+    {
+      "test": "Staff access to /admin/users blocked & redirected to forbidden/403",
+      "expected": "Redirect to /admin/forbidden or 403 guard",
+      "actualUrl": "http://localhost:3000/admin/forbidden?from=/admin/users",
+      "passed": true
+    },
+    {
+      "test": "Staff cannot cancel orders on SCR-14 (Cancel reserved for Manager)",
+      "expected": "Cancel button absent or disabled for staff",
+      "passed": true
+    },
+    {
+      "test": "Staff can toggle product availability on SCR-15 (FR-022)",
+      "expected": "Availability toggle present and interactive",
+      "passed": true
+    },
+    {
+      "test": "Manager access to /admin/users granted",
+      "expected": "Allowed access",
+      "actual": "فريق العمل",
+      "passed": true
+    },
+    {
+      "test": "Manager can see Cancel Order button on SCR-14 (FR-018)",
+      "expected": "Cancel button visible",
+      "passed": false
+    },
+    {
+      "test": "Manager can access Add Product on SCR-15/16",
+      "expected": "Add product button present",
+      "passed": true
+    }
+  ],
+  "formInteractionResults": [
+    {
+      "flow": "Add to Cart from SCR-03 and view in SCR-04",
+      "expected": "Item successfully added to cart and displayed",
+      "passed": false
+    },
+    {
+      "flow": "Empty checkout submission triggers proactive validation guards & disabled CTA",
+      "expected": "Submit button disabled and guidance displayed",
+      "passed": true
+    },
+    {
+      "flow": "Valid checkout submission completes and navigates to SCR-06",
+      "expected": "Redirect to /checkout/success/:orderNumber",
+      "actualUrl": "http://localhost:3000/checkout/success/CL-2026-4437",
+      "passed": true
+    },
+    {
+      "flow": "Track placed order CL-2026-4437 on SCR-07",
+      "expected": "Order timeline and status displayed",
+      "passed": true
+    }
+  ],
+  "a11yResults": {
+    "rtlSupport": true,
+    "arabicLang": true,
+    "skipLinkValid": true,
+    "semanticLandmarks": {
+      "header": true,
+      "main": true,
+      "footer": true,
+      "nav": true
+    },
+    "imagesWithoutAlt": 0,
+    "buttonsWithoutLabels": 0
+  },
+  "summary": {
+    "passed": 20,
+    "failed": 1,
+    "notRun": 0
+  }
+}
