@@ -2,14 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Package, Plus, Sparkles, Layers, ArrowLeft } from 'lucide-react';
-import { useAdminAuth } from '@/context/admin-auth-context';
-import { Button } from '@/components/ui/button';
+import { Package } from 'lucide-react';
 import { ProductsTable } from '@/components/admin/products/products-table';
 
 export default function AdminProductsPage() {
-  const { isManager } = useAdminAuth();
-
   return (
     <div className="space-y-6 max-w-7xl mx-auto" dir="rtl">
       {/* رأس الصفحة مع العنوان والمسار */}
@@ -30,22 +26,6 @@ export default function AdminProductsPage() {
             إدارة أصناف الحلويات والأسعار، وتبديل حالة التوفر الفوري في المتجر (FR-022)
           </p>
         </div>
-
-        {/* زر إضافة منتج سريع في الشريط العلوي للمدير */}
-        {isManager && (
-          <div className="flex items-center gap-2">
-            <Link href="/admin/products/new">
-              <Button
-                variant="primary"
-                size="md"
-                leftIcon={<Plus className="w-4 h-4" />}
-                className="font-sans font-bold shadow-candy-cta"
-              >
-                إضافة منتج جديد
-              </Button>
-            </Link>
-          </div>
-        )}
       </div>
 
       {/* جدول المنتجات التفاعلي مع الفلاتر والتبديل السريع */}

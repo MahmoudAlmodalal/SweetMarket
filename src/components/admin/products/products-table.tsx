@@ -493,15 +493,15 @@ export function ProductsTable() {
                         <td className="py-3 px-4 whitespace-nowrap">
                           {hasDiscount ? (
                             <div className="space-y-0.5">
-                              <div className="font-bold text-candy-berry text-base">
+                              <div className="font-bold text-candy-berry text-base font-mono whitespace-nowrap select-none">
                                 {product.salePrice} ₪
                               </div>
-                              <div className="text-xs text-candy-muted line-through">
+                              <div className="text-xs text-candy-muted line-through font-mono whitespace-nowrap select-none">
                                 {product.price} ₪
                               </div>
                             </div>
                           ) : (
-                            <div className="font-bold text-candy-ink text-base">
+                            <div className="font-bold text-candy-ink text-base font-mono whitespace-nowrap select-none">
                               {product.price} ₪
                             </div>
                           )}
@@ -611,11 +611,11 @@ export function ProductsTable() {
                       <div className="mt-1 flex items-baseline gap-2">
                         {hasDiscount ? (
                           <>
-                            <span className="font-bold text-candy-berry text-base">{product.salePrice} ₪</span>
-                            <span className="text-xs text-candy-muted line-through">{product.price} ₪</span>
+                            <span className="font-bold text-candy-berry text-base font-mono whitespace-nowrap select-none">{product.salePrice} ₪</span>
+                            <span className="text-xs text-candy-muted line-through font-mono whitespace-nowrap select-none">{product.price} ₪</span>
                           </>
                         ) : (
-                          <span className="font-bold text-candy-ink text-base">{product.price} ₪</span>
+                          <span className="font-bold text-candy-ink text-base font-mono whitespace-nowrap select-none">{product.price} ₪</span>
                         )}
                       </div>
                     </div>
