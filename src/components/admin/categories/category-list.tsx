@@ -275,7 +275,7 @@ export function CategoryList({
                   }
                   title={
                     hasProducts
-                      ? `لا يمكن حذف هذا التصنيف لوجود ${count} منتجات مرتبطة به (ER-001)`
+                      ? `لا يمكن حذف هذا التصنيف لوجود ${count} منتجات مرتبطة به`
                       : `حذف تصنيف ${cat.name}`
                   }
                   className={cn(

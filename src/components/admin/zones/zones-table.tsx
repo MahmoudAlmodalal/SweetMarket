@@ -237,12 +237,12 @@ export function ZonesTable({
                             disabled={hasActiveOrders || !canManage}
                             aria-label={
                               hasActiveOrders
-                                ? `لا يمكن حذف ${zone.name} لوجود طلبات نشطة (EC-09)`
+                                ? `لا يمكن حذف ${zone.name} لوجود طلبات نشطة`
                                 : `حذف منطقة ${zone.name}`
                             }
                             title={
                               hasActiveOrders
-                                ? `لا يمكن حذف منطقة مرتبطة بطلبات نشطة قيد التجهيز (EC-09)، يرجى تعطيلها بدلاً من ذلك`
+                                ? `لا يمكن حذف منطقة مرتبطة بطلبات نشطة قيد التجهيز، يرجى تعطيلها بدلاً من ذلك`
                                 : `حذف منطقة ${zone.name}`
                             }
                             className={cn(
@@ -369,7 +369,7 @@ export function ZonesTable({
                   disabled={hasActiveOrders || !canManage}
                   title={
                     hasActiveOrders
-                      ? 'لا يمكن حذف المنطقة لوجود طلبات نشطة (EC-09)'
+                      ? 'لا يمكن حذف المنطقة لوجود طلبات نشطة'
                       : 'حذف المنطقة'
                   }
                   className={cn(

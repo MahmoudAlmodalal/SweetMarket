@@ -18,6 +18,7 @@ import { AdminAuthProvider, useAdminAuth, PRE_SEEDED_USERS } from '@/context/adm
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { StoreLogo } from '@/components/ui/store-logo';
+import { cn } from '@/lib/utils';
 
 function LoginFormContent() {
   const router = useRouter();
@@ -32,21 +33,26 @@ function LoginFormContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [quickLoginRole, setQuickLoginRole] = useState<'manager' | 'staff' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ identifier?: string; password?: string }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
 
+    const errors: { identifier?: string; password?: string } = {};
     if (!identifier.trim()) {
-      setErrorMessage('يرجى إدخال البريد الإلكتروني أو اسم المستخدم');
-      return;
+      errors.identifier = 'يرجى إدخال البريد الإلكتروني أو اسم المستخدم';
     }
-
     if (!password) {
-      setErrorMessage('يرجى إدخال كلمة المرور');
+      errors.password = 'يرجى إدخال كلمة المرور';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
 
+    setFieldErrors({});
     setIsSubmitting(true);
     try {
       const result = await login(identifier, password);
@@ -67,6 +73,7 @@ function LoginFormContent() {
    */
   const handleQuickLogin = async (targetRole: 'manager' | 'staff') => {
     setErrorMessage(null);
+    setFieldErrors({});
     setQuickLoginRole(targetRole);
 
     try {
@@ -84,7 +91,7 @@ function LoginFormContent() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto relative">
+    <div className="w-full max-w-[390px] sm:max-w-md mx-auto relative px-1 sm:px-0">
       <div className="absolute -top-16 -right-20 w-40 h-40 rounded-full bg-candy-blush/70 blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="absolute -bottom-20 -left-16 w-44 h-44 rounded-full bg-candy-pastel-2/60 blur-3xl pointer-events-none" aria-hidden="true" />
       <Card elevation="md" className="relative border-candy-line/80 shadow-candy-2 bg-white/95 backdrop-blur-sm overflow-hidden">
@@ -105,7 +112,7 @@ function LoginFormContent() {
         </CardHeader>
 
         <CardContent className="p-6 sm:p-8 pt-6">
-          {/* تنبيه الخطأ */}
+          {/* تنبيه الخطأ العام (المصادقة غير الصحيحة) */}
           {errorMessage && (
             <div
               role="alert"
@@ -158,13 +165,26 @@ function LoginFormContent() {
                   autoComplete="username"
                   dir="ltr"
                   value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
+                  onChange={(e) => {
+                    setIdentifier(e.target.value);
+                    if (fieldErrors.identifier) setFieldErrors((prev) => ({ ...prev, identifier: undefined }));
+                  }}
                   placeholder="staff@candyloz.com"
                   disabled={isSubmitting || quickLoginRole !== null}
-                  className="w-full h-12 pr-10 pl-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 text-right disabled:opacity-50"
+                  className={cn(
+                    'w-full h-12 pr-10 pl-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50',
+                    fieldErrors.identifier
+                      ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200'
+                      : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20'
+                  )}
                   required
                 />
               </div>
+              {fieldErrors.identifier && (
+                <p role="alert" className="mt-1 text-xs text-rose-600 font-sans font-medium">
+                  {fieldErrors.identifier}
+                </p>
+              )}
             </div>
 
             {/* حقل كلمة المرور */}
@@ -186,10 +206,18 @@ function LoginFormContent() {
                   autoComplete="current-password"
                   dir="ltr"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (fieldErrors.password) setFieldErrors((prev) => ({ ...prev, password: undefined }));
+                  }}
                   placeholder="••••••••"
                   disabled={isSubmitting || quickLoginRole !== null}
-                  className="w-full h-12 pr-10 pl-11 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 text-right disabled:opacity-50"
+                  className={cn(
+                    'w-full h-12 pr-10 pl-11 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50',
+                    fieldErrors.password
+                      ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200'
+                      : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20'
+                  )}
                   required
                 />
                 <button
@@ -206,6 +234,11 @@ function LoginFormContent() {
                   )}
                 </button>
               </div>
+              {fieldErrors.password && (
+                <p role="alert" className="mt-1 text-xs text-rose-600 font-sans font-medium">
+                  {fieldErrors.password}
+                </p>
+              )}
             </div>
 
             {/* زر تسجيل الدخول */}

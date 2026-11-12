@@ -54,10 +54,10 @@ export function ZoneEditDialog({
   const isEditing = Boolean(zone);
 
   const [name, setName] = useState('');
-  const [deliveryFee, setDeliveryFee] = useState<number | string>(10);
-  const [minOrderAmount, setMinOrderAmount] = useState<number | string>(30);
-  const [estimatedTimeMin, setEstimatedTimeMin] = useState<number | string>(30);
-  const [estimatedTimeMax, setEstimatedTimeMax] = useState<number | string>(50);
+  const [deliveryFee, setDeliveryFee] = useState<number | string>('');
+  const [minOrderAmount, setMinOrderAmount] = useState<number | string>('');
+  const [estimatedTimeMin, setEstimatedTimeMin] = useState<number | string>('');
+  const [estimatedTimeMax, setEstimatedTimeMax] = useState<number | string>('');
   const [isActive, setIsActive] = useState(true);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -74,10 +74,10 @@ export function ZoneEditDialog({
         setIsActive(zone.isActive);
       } else {
         setName('');
-        setDeliveryFee(10);
-        setMinOrderAmount(30);
-        setEstimatedTimeMin(30);
-        setEstimatedTimeMax(50);
+        setDeliveryFee('');
+        setMinOrderAmount('');
+        setEstimatedTimeMin('');
+        setEstimatedTimeMax('');
         setIsActive(true);
       }
       setErrors({});
