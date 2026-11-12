@@ -46,12 +46,12 @@ function DashboardProtectedShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-candy-cream flex flex-row antialiased">
+    <div className="h-screen bg-candy-cream flex flex-row antialiased overflow-hidden">
       {/* القائمة الجانبية للإدارة */}
       <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* منطقة المحتوى الرئيسية مع الشريط العلوي */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         <AdminNavbar onMenuToggle={() => setSidebarOpen((prev) => !prev)} />
         <main id="main-content" className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {children}
