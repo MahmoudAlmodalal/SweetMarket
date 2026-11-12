@@ -50,11 +50,13 @@ const NAV_ITEMS: NavItem[] = [
     name: 'التصنيفات',
     href: '/admin/categories',
     icon: Layers,
+    managerOnly: true,
   },
   {
     name: 'مناطق التوصيل',
     href: '/admin/zones',
     icon: MapPin,
+    managerOnly: true,
   },
   {
     name: 'فريق العمل',
@@ -73,7 +75,17 @@ function SidebarContent({ isMobile = false, onClose }: SidebarContentProps) {
   const pathname = usePathname();
   const { user, role, isManager, logout } = useAdminAuth();
 
-  const visibleNavItems = NAV_ITEMS.filter((item) => !item.managerOnly || isManager);
+  const visibleNavItems = NAV_ITEMS
+    .filter((item) => !item.managerOnly || isManager)
+    .map((item) => {
+      if (item.href === '/admin/products') {
+        return {
+          ...item,
+          name: isManager ? 'المنتجات' : 'المنتجات (التوفر الفوري)',
+        };
+      }
+      return item;
+    });
 
   return (
     <div className="flex flex-col h-full bg-white select-none">
@@ -277,11 +289,11 @@ export function AdminSidebar({ isOpen = false, onClose, className }: AdminSideba
       {/* Mobile Drawer Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 lg:hidden" aria-modal="true" role="dialog">
-          {/* Backdrop */}
+          {/* Backdrop Scrim */}
           <div
             onClick={onClose}
             aria-hidden="true"
-            className="fixed inset-0 bg-candy-ink/40 backdrop-blur-xs transition-opacity duration-300"
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 z-50"
           />
 
           {/* Off-canvas sidebar */}
