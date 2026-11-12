@@ -1,18 +1,26 @@
 import type { AdminUser } from '@/types';
 
 /**
- * المستخدمون الإداريون المعتمدون للوحة التحكم
- * الدور الإداري المعتمد: admin مع الحفاظ على التوافقية لـ manager و staff
+ * المستخدمون الإداريون الأساسيون للوحة التحكم — 3 حسابات بأدوار RBAC صارمة: manager | staff
  */
 export const MOCK_ADMIN_USERS: AdminUser[] = [
   {
-    id: 'user-admin-01',
-    username: 'admin_tariq',
+    id: 'user-manager-01',
+    username: 'manager_tariq',
     fullName: 'طارق رضوان (مدير المتجر العام)',
-    email: 'admin@candyloz.com',
-    role: 'admin',
+    email: 'manager@candyloz.com',
+    role: 'manager',
     isActive: true,
     createdAt: '2026-08-01T08:00:00Z',
+  },
+  {
+    id: 'user-manager-02',
+    username: 'manager_rami',
+    fullName: 'رامي الكرد (مدير العمليات)',
+    email: 'rami@candyloz.com',
+    role: 'manager',
+    isActive: true,
+    createdAt: '2026-08-15T08:00:00Z',
   },
   {
     id: 'user-staff-01',
@@ -22,15 +30,6 @@ export const MOCK_ADMIN_USERS: AdminUser[] = [
     role: 'staff',
     isActive: true,
     createdAt: '2026-09-01T08:00:00Z',
-  },
-  {
-    id: 'user-manager-01',
-    username: 'manager_tariq',
-    fullName: 'طارق رضوان (مدير العمليات)',
-    email: 'manager@candyloz.com',
-    role: 'manager',
-    isActive: true,
-    createdAt: '2026-08-01T08:00:00Z',
   },
 ];
 
@@ -42,13 +41,13 @@ export const MOCK_ADMIN_CREDENTIALS: Record<
   string,
   { password?: string; user: AdminUser; passwordHash?: string }
 > = {
-  'admin@candyloz.com': {
+  'manager@candyloz.com': {
     user: MOCK_ADMIN_USERS[0],
   },
-  'staff@candyloz.com': {
+  'rami@candyloz.com': {
     user: MOCK_ADMIN_USERS[1],
   },
-  'manager@candyloz.com': {
+  'staff@candyloz.com': {
     user: MOCK_ADMIN_USERS[2],
   },
 };

@@ -150,6 +150,14 @@ export default function AdminUsersPage() {
   };
 
   const handleToggleStatusClick = async (user: AdminUser) => {
+    // حظر إيقاف الحساب الذاتي
+    if (user.id === currentAdmin?.id) {
+      toast.error(
+        'لا يمكن إيقاف حسابك الحالي',
+        'لا يمكن إيقاف تفعيل حسابك أثناء تسجيل الدخول.'
+      );
+      return;
+    }
     // إذا كان الحساب نشطاً وسيتم إيقافه، نتحقق من حظر إيقاف آخر مدير نشط أولاً
     if (user.isActive) {
       if (user.role === 'manager' && isLastActiveManager(user.id)) {

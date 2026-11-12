@@ -368,8 +368,8 @@ export async function cancelOrder(
   const currentOrder = orders[index];
   const allowed = ALLOWED_STATUS_TRANSITIONS[currentOrder.status];
 
-  // إذا كان المستخدم مديراً (admin / manager) أو الحالة الحالية تسمح بالإلغاء
-  const isManager = user?.role === 'admin' || user?.role === 'manager';
+  // إذا كان المستخدم مديراً أو الحالة الحالية تسمح بالإلغاء
+  const isManager = user?.role === 'manager';
   if (!allowed.includes('cancelled') && !isManager) {
     throw new Error(
       `لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}" إلا بصلاحية مدير (Admin)`

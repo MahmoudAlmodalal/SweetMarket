@@ -33,11 +33,6 @@ export interface PreSeededAccount {
  * حسابات الإدارة المعتمدة للاختبار التجريبي (بدون كلمات مرور مكشوفة في الكود)
  */
 export const PRE_SEEDED_USERS: Record<AdminRole, PreSeededAccount> = {
-  admin: {
-    email: 'admin@candyloz.com',
-    role: 'admin',
-    user: MOCK_ADMIN_USERS.find((u) => u.role === 'admin') || MOCK_ADMIN_USERS[0],
-  },
   manager: {
     email: 'manager@candyloz.com',
     role: 'manager',
@@ -46,7 +41,7 @@ export const PRE_SEEDED_USERS: Record<AdminRole, PreSeededAccount> = {
   staff: {
     email: 'staff@candyloz.com',
     role: 'staff',
-    user: MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[1],
+    user: MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[2],
   },
 };
 
@@ -131,8 +126,8 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   /**
    * تسجيل دخول تجريبي آمن دون تداول كلمات مرور في واجهة المتصفح
    */
-  const quickLogin = useCallback(async (targetRole: AdminRole = 'admin'): Promise<{ success: boolean; error?: string }> => {
-    const target = PRE_SEEDED_USERS[targetRole] || PRE_SEEDED_USERS.admin;
+  const quickLogin = useCallback(async (targetRole: AdminRole = 'manager'): Promise<{ success: boolean; error?: string }> => {
+    const target = PRE_SEEDED_USERS[targetRole] || PRE_SEEDED_USERS.manager;
     const sessionToken = generateSecureSessionToken();
     const session: AdminSession = {
       token: sessionToken,
@@ -174,9 +169,6 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   const hasRole = useCallback(
     (targetRole: AdminRole): boolean => {
       if (!user) return false;
-      if (targetRole === 'admin' || targetRole === 'manager') {
-        return user.role === 'admin' || user.role === 'manager';
-      }
       return user.role === targetRole;
     },
     [user]
@@ -184,14 +176,14 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
 
   const value = useMemo<AdminAuthContextValue>(() => {
     const role = user?.role ?? null;
-    const isAdmin = user?.role === 'admin' || user?.role === 'manager';
+    const isManager = user?.role === 'manager';
     return {
       user,
       role,
       isAuthenticated: Boolean(user),
       isLoading,
-      isAdmin,
-      isManager: isAdmin,
+      isAdmin: isManager,
+      isManager,
       isStaff: user?.role === 'staff',
       login,
       quickLogin,

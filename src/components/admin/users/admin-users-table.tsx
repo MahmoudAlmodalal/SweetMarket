@@ -350,8 +350,18 @@ export function AdminUsersTable({
                             <button
                               type="button"
                               onClick={() => onEditUser(member)}
-                              className="p-1.5 rounded-lg text-candy-ink hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
-                              title="تعديل الدور والبيانات"
+                              disabled={isSelf}
+                              className={cn(
+                                'p-1.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30',
+                                isSelf
+                                  ? 'opacity-30 cursor-not-allowed text-candy-muted'
+                                  : 'text-candy-ink hover:text-candy-berry hover:bg-candy-soft'
+                              )}
+                              title={
+                                isSelf
+                                  ? 'لا يمكن تعديل دور حسابك الحالي أثناء تسجيل الدخول'
+                                  : 'تعديل الدور والبيانات'
+                              }
                               aria-label={`تعديل دور ${member.fullName}`}
                             >
                               <Edit2 className="w-4 h-4" aria-hidden="true" />
@@ -368,21 +378,23 @@ export function AdminUsersTable({
                               <KeyRound className="w-4 h-4" aria-hidden="true" />
                             </button>
 
-                            {/* تفعيل / تعطيل الحساب مع فحص حظر إيقاف آخر مدير نشط */}
+                            {/* تفعيل / تعطيل الحساب مع فحص حظر إيقاف آخر مدير نشط أو الحساب الذاتي */}
                             <button
                               type="button"
                               onClick={() => onToggleStatus(member)}
-                              disabled={isLast && member.isActive}
+                              disabled={isSelf || (isLast && member.isActive)}
                               className={cn(
                                 'p-1.5 rounded-lg transition-colors focus:outline-none focus:ring-2',
-                                isLast && member.isActive
+                                isSelf || (isLast && member.isActive)
                                   ? 'opacity-30 cursor-not-allowed text-candy-muted'
                                   : member.isActive
                                   ? 'text-rose-600 hover:text-rose-700 hover:bg-rose-50 focus:ring-rose-500/30'
                                   : 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 focus:ring-emerald-500/30'
                               )}
                               title={
-                                isLast && member.isActive
+                                isSelf
+                                  ? 'لا يمكن إيقاف حسابك الحالي أثناء تسجيل الدخول'
+                                  : isLast && member.isActive
                                   ? 'لا يمكن إيقاف آخر مدير نشط في النظام'
                                   : member.isActive
                                   ? 'إيقاف الحساب'
@@ -499,8 +511,14 @@ export function AdminUsersTable({
                       variant="secondary"
                       size="sm"
                       onClick={() => onEditUser(member)}
+                      disabled={isSelf}
                       leftIcon={<Edit2 className="w-3.5 h-3.5" />}
                       className="text-xs font-sans h-8 px-2.5"
+                      title={
+                        isSelf
+                          ? 'لا يمكن تعديل دور حسابك الحالي أثناء تسجيل الدخول'
+                          : 'تعديل الدور'
+                      }
                     >
                       تعديل الدور
                     </Button>
@@ -521,14 +539,23 @@ export function AdminUsersTable({
                       variant={member.isActive ? 'secondary' : 'primary'}
                       size="sm"
                       onClick={() => onToggleStatus(member)}
-                      disabled={isLast && member.isActive}
+                      disabled={isSelf || (isLast && member.isActive)}
                       leftIcon={<Power className="w-3.5 h-3.5" />}
                       className={cn(
                         'text-xs font-sans h-8 px-2.5',
-                        member.isActive && !isLast
+                        member.isActive && !isLast && !isSelf
                           ? 'text-rose-700 border-rose-200 hover:bg-rose-50'
                           : ''
                       )}
+                      title={
+                        isSelf
+                          ? 'لا يمكن إيقاف حسابك الحالي أثناء تسجيل الدخول'
+                          : isLast && member.isActive
+                          ? 'لا يمكن إيقاف آخر مدير نشط في النظام'
+                          : member.isActive
+                          ? 'إيقاف الحساب'
+                          : 'تفعيل الحساب'
+                      }
                     >
                       {member.isActive ? 'إيقاف' : 'تفعيل'}
                     </Button>
