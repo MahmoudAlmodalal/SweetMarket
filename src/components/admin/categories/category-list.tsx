@@ -204,7 +204,7 @@ export function CategoryList({
                 </div>
 
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="font-mono text-[11px] text-candy-muted dir-ltr">
+                  <span className="font-mono text-[11px] text-candy-muted" dir="ltr">
                     /{cat.slug}
                   </span>
                   {cat.description && (

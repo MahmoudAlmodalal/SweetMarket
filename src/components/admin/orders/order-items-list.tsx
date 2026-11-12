@@ -7,6 +7,9 @@ import { cn } from '@/lib/utils';
 import type { CartItem } from '@/types';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
+const DEFAULT_FALLBACK_IMAGE =
+  'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80';
+
 export interface OrderItemsListProps {
   items: CartItem[];
   subtotal: number;
@@ -70,7 +73,7 @@ export function OrderItemsList({
                         <div className="flex items-center gap-3">
                           <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0">
                             <Image
-                              src={item.imageUrl}
+                              src={item.imageUrl || DEFAULT_FALLBACK_IMAGE}
                               alt={item.productName}
                               fill
                               sizes="48px"
@@ -123,7 +126,7 @@ export function OrderItemsList({
                 <div key={item.id} className="p-4 flex gap-3 items-center">
                   <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0">
                     <Image
-                      src={item.imageUrl}
+                      src={item.imageUrl || DEFAULT_FALLBACK_IMAGE}
                       alt={item.productName}
                       fill
                       sizes="56px"

@@ -33,6 +33,7 @@ import { OrderStatusStepper } from '@/components/admin/orders/order-status-stepp
 import { CancelOrderDialog } from '@/components/admin/orders/cancel-order-dialog';
 import { CustomerDetailsCard } from '@/components/admin/orders/customer-details-card';
 import { OrderItemsList } from '@/components/admin/orders/order-items-list';
+import { cn } from '@/lib/utils';
 
 /**
  * تنسيق التاريخ والوقت باللغة العربية
@@ -362,7 +363,7 @@ export default function OrderDetailPage() {
                   </div>
                   <div>
                     <CardTitle className="text-base font-bold text-candy-ink font-sans">
-                      سجل تدقيق وتغييرات الطلب (FR-017)
+                      سجل تدقيق وتغييرات الطلب
                     </CardTitle>
                     <p className="text-[11px] text-candy-muted">
                       توثيق التواريخ والانتقالات ومن قام بكل خطوة
@@ -393,19 +394,26 @@ export default function OrderDetailPage() {
                           </p>
                         )}
 
-                        {/* اسم ودور القائم بالإجراء */}
+                        {/* اسم ودور القائم بالإجراء مع شارة واضحة */}
                         <div className="flex items-center gap-1.5 text-[11px] text-candy-muted pt-0.5">
                           <UserCheck className="w-3.5 h-3.5 text-candy-muted/80" />
                           <span>
                             بواسطة:{' '}
                             <strong className="text-candy-ink">
-                              {event.performedBy?.name || 'النظام التلقائي'}
+                              {event.performedBy?.name || (event.status === 'new' ? 'العميل (عبر المتجر)' : 'فريق العمل')}
                             </strong>{' '}
-                            {event.performedBy?.role && (
-                              <span className="text-[10px] bg-candy-soft px-1.5 py-0.5 rounded border border-candy-line">
+                            {event.performedBy?.role ? (
+                              <span
+                                className={cn(
+                                  'text-[10px] px-1.5 py-0.5 rounded font-bold border inline-block mr-1',
+                                  event.performedBy.role === 'manager'
+                                    ? 'bg-candy-berry text-white border-candy-berry-dark'
+                                    : 'bg-candy-blush text-candy-berry border-candy-line-dark'
+                                )}
+                              >
                                 {event.performedBy.role === 'manager' ? 'مدير' : 'موظف'}
                               </span>
-                            )}
+                            ) : null}
                           </span>
                         </div>
                       </div>

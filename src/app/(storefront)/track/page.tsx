@@ -75,7 +75,7 @@ function TrackOrderContent() {
         <div className="text-center space-y-3 relative">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-candy-pill bg-candy-blush/60 border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Compass className="w-3.5 h-3.5 text-candy-strawberry animate-spin-slow" />
-            <span>نظام التتبع المباشر (SCR-07)</span>
+            <span>نظام التتبع المباشر للطلبات</span>
           </div>
 
           <h1 className="font-display text-2xl sm:text-4xl font-black text-candy-berry tracking-tight">

@@ -109,7 +109,7 @@ export function ZoneEditDialog({
     if (deliveryFee === '' || isNaN(feeNum)) {
       newErrors.deliveryFee = 'يرجى إدخال رسوم التوصيل بالشيكل';
     } else if (feeNum < 0) {
-      newErrors.deliveryFee = 'رسوم التوصيل لا يمكن أن تكون سالبة (F-4: الصفر مسموح للتوصيل المجاني)';
+      newErrors.deliveryFee = 'رسوم التوصيل لا يمكن أن تكون سالبة (الصفر مسموح للتوصيل المجاني)';
     }
 
     const minOrderNum = Number(minOrderAmount);
@@ -178,7 +178,7 @@ export function ZoneEditDialog({
               <DialogDescription className="text-xs text-candy-muted font-sans mt-0.5">
                 {isEditing
                   ? 'تعديل رسوم التوصيل والحد الأدنى للطلب وأوقات الوصول المتوقعة'
-                  : 'إضافة محافظة أو حي جديد وضبط تكلفة التوصيل بالشيكل (SCR-18)'}
+                  : 'إضافة محافظة أو حي جديد وضبط تكلفة التوصيل بالشيكل'}
               </DialogDescription>
             </div>
           </div>
@@ -256,7 +256,7 @@ export function ZoneEditDialog({
                 }}
                 error={errors.deliveryFee}
                 disabled={isSubmitting}
-                helperText="أدخل 0 للتوصيل المجاني (F-4)"
+                helperText="أدخل 0 للتوصيل المجاني"
                 iconSuffix={<span className="text-xs text-candy-muted font-bold">₪</span>}
               />
             </div>
@@ -347,7 +347,7 @@ export function ZoneEditDialog({
                   {isActive ? 'المنطقة مفعّلة ومتاحة للزبائن' : 'المنطقة معطّلة (مخفية عن قائمة التوصيل)'}
                 </span>
                 <span className="text-[11px] text-candy-muted font-sans block mt-0.5">
-                  عند التعطيل لن يتمكن الزبون من اختيار هذه المنطقة أثناء إتمام الطلب (SCR-05)
+                  عند التعطيل لن يتمكن الزبون من اختيار هذه المنطقة أثناء إتمام الطلب
                 </span>
               </div>
             </label>

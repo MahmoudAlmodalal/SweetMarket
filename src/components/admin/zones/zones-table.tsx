@@ -341,8 +341,8 @@ export function ZonesTable({
 
                 <div>
                   <span className="text-[10px] text-candy-muted block mb-0.5">الوقت المتوقع</span>
-                  <span className="font-bold text-candy-ink font-mono">
-                    {zone.estimatedTimeMin}-{zone.estimatedTimeMax} د
+                  <span className="font-bold text-candy-ink font-mono text-xs whitespace-nowrap">
+                    {zone.estimatedTimeMin}–{zone.estimatedTimeMax} دقيقة
                   </span>
                 </div>
               </div>

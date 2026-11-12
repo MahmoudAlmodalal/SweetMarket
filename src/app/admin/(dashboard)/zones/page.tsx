@@ -219,7 +219,7 @@ export default function AdminZonesPage() {
           لوحة الإدارة
         </Link>
         <span>/</span>
-        <span className="font-bold text-candy-ink">مناطق التوصيل (SCR-18)</span>
+        <span className="font-bold text-candy-ink">مناطق التوصيل</span>
       </nav>
 
       {/* ترويسة الصفحة مع زر الإضافة */}
@@ -234,7 +234,7 @@ export default function AdminZonesPage() {
                 مناطق التوصيل والرسوم
               </h1>
               <p className="font-sans text-xs sm:text-sm text-candy-muted mt-0.5">
-                تحديد المحافظات والمدن المتاحة وتكلفة التوصيل بالشيكل (ILS ₪) والحد الأدنى للطلب (SCR-18)
+                تحديد المحافظات والمدن المتاحة وتكلفة التوصيل بالشيكل (ILS ₪) والحد الأدنى للطلب
               </p>
             </div>
           </div>
@@ -267,7 +267,7 @@ export default function AdminZonesPage() {
           <div className="space-y-1">
             <span className="font-bold block">وضع العرض فقط (صلاحية موظف تشغيل)</span>
             <p className="text-amber-800 text-xs">
-              أنت مسجل حالياً بحساب موظف، تعديل رسوم التوصيل والحد الأدنى للمناطق مخصص لمدير النظام (FR-013).
+              أنت مسجل حالياً بحساب موظف، تعديل رسوم التوصيل والحد الأدنى للمناطق مخصص لمدير النظام.
             </p>
           </div>
         </div>

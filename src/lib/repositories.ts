@@ -309,17 +309,18 @@ export async function updateOrderStatus(
   }
 
   const now = new Date().toISOString();
+  const activeUser = user || getActiveSession()?.user;
   const updatedTimeline = [
     ...currentOrder.timeline,
     {
       status: nextStatus,
       timestamp: now,
       note: note || undefined,
-      performedBy: user
+      performedBy: activeUser
         ? {
-            id: user.id,
-            name: user.fullName,
-            role: user.role,
+            id: activeUser.id,
+            name: activeUser.fullName,
+            role: activeUser.role,
           }
         : undefined,
     },
@@ -378,17 +379,18 @@ export async function cancelOrder(
 
   const now = new Date().toISOString();
   const cancelNote = `تم إلغاء الطلب: ${reason.trim()}`;
+  const activeUser = user || getActiveSession()?.user;
   const updatedTimeline = [
     ...currentOrder.timeline,
     {
       status: 'cancelled' as OrderStatus,
       timestamp: now,
       note: cancelNote,
-      performedBy: user
+      performedBy: activeUser
         ? {
-            id: user.id,
-            name: user.fullName,
-            role: user.role,
+            id: activeUser.id,
+            name: activeUser.fullName,
+            role: activeUser.role,
           }
         : undefined,
     },
