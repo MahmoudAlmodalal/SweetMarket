@@ -417,7 +417,7 @@ export function ProductsTable() {
                     <th className="py-3.5 px-4">التصنيف</th>
                     <th className="py-3.5 px-4">السعر</th>
                     <th className="py-3.5 px-4">وحدة البيع</th>
-                    <th className="py-3.5 px-4">التوفر الفوري (FR-022)</th>
+                    <th className="py-3.5 px-4">التوفر الفوري</th>
                     <th className="py-3.5 px-4 text-center">الإجراءات</th>
                   </tr>
                 </thead>

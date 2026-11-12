@@ -163,7 +163,7 @@ export function TempPasswordDialog({
             <p className="leading-relaxed text-amber-800 pr-6">
               تُعرض كلمة المرور المؤقتة هذه <strong>مرة واحدة فقط</strong> ولن يمكن
               استرجاعها لاحقاً. يجب على العضو تغيير كلمة المرور فور أول تسجيل دخول عبر
-              قسم حسابي (SCR-12).
+              قسم حسابي.
             </p>
           </div>
         </div>

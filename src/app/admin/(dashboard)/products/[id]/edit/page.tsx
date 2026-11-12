@@ -98,7 +98,7 @@ export default function EditProductPage() {
               <span>العودة إلى قائمة المنتجات</span>
             </Link>
             <span>/</span>
-            <span className="text-candy-ink font-semibold">تعديل المنتج (SCR-16)</span>
+            <span className="text-candy-ink font-semibold">تعديل المنتج</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display text-candy-ink flex items-center gap-2.5">
             <Edit className="w-7 h-7 text-candy-berry" />

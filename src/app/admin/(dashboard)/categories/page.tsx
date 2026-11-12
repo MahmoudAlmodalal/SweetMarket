@@ -247,7 +247,7 @@ export default function AdminCategoriesPage() {
           لوحة الإدارة
         </Link>
         <span>/</span>
-        <span className="font-bold text-candy-ink">التصنيفات (SCR-17)</span>
+        <span className="font-bold text-candy-ink">التصنيفات</span>
       </nav>
 
       {/* ترويسة الصفحة مع زر الإضافة */}
@@ -262,7 +262,7 @@ export default function AdminCategoriesPage() {
                 إدارة التصنيفات
               </h1>
               <p className="font-sans text-xs sm:text-sm text-candy-muted mt-0.5">
-                إدارة أقسام الحلويات وترتيب ظهورها في واجهة المتجر وشريط التصفح (SCR-17)
+                إدارة أقسام الحلويات وترتيب ظهورها في واجهة المتجر وشريط التصفح
               </p>
             </div>
           </div>
@@ -295,7 +295,7 @@ export default function AdminCategoriesPage() {
           <div className="space-y-1">
             <span className="font-bold block">وضع العرض فقط (صلاحية موظف تشغيل)</span>
             <p className="text-amber-800 text-xs">
-              أنت مسجل حالياً بحساب موظف، الإضافة والتعديل وإعادة الترتيب مخصصة لمدير النظام (FR-023).
+              أنت مسجل حالياً بحساب موظف، الإضافة والتعديل وإعادة الترتيب مخصصة لمدير النظام.
             </p>
           </div>
         </div>

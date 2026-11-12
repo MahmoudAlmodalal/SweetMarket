@@ -307,7 +307,7 @@ export function OrderStatusStepper({
           {!isManager && !isTerminal && (
             <div
               className="hidden lg:flex items-center gap-1 text-[11px] text-candy-muted"
-              title="إلغاء الطلب محصور بالمدير فقط (FR-018)"
+              title="إلغاء الطلب محصور بالمدير فقط"
             >
               <ShieldAlert className="w-3.5 h-3.5 text-candy-muted/80" />
               <span>إلغاء الطلب صلاحية مدير فقط</span>

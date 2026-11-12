@@ -105,7 +105,7 @@ export function CancelOrderDialog({
                 إلغاء الطلب محصور بالمدير
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm text-candy-muted">
-                وفق سياسة المتجر وقاعدة العمل (FR-018)، فقط مدير النظام مخوّل بإلغاء الطلبات وتوثيق السبب.
+                وفق سياسة المتجر وقاعدة العمل، فقط مدير النظام مخوّل بإلغاء الطلبات وتوثيق السبب.
               </DialogDescription>
             </div>
             <DialogFooter className="justify-center sm:justify-center">
@@ -124,7 +124,7 @@ export function CancelOrderDialog({
                 </DialogTitle>
               </div>
               <DialogDescription className="text-xs sm:text-sm text-candy-muted leading-relaxed">
-                هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟ هذا الإجراء نهائي وسيتم توثيق السبب واسم المدير في سجل تدقيق الطلب (FR-018).
+                هل أنت متأكد من رغبتك في إلغاء هذا الطلب؟ هذا الإجراء نهائي وسيتم توثيق السبب واسم المدير في سجل تدقيق الطلب.
               </DialogDescription>
             </DialogHeader>
 
@@ -183,7 +183,7 @@ export function CancelOrderDialog({
                 type="submit"
                 variant="danger"
                 size="md"
-                disabled={isSubmitting}
+                disabled={isSubmitting || reason.trim().length < 5}
                 isLoading={isSubmitting}
                 leftIcon={<XCircle className="w-4 h-4" />}
               >

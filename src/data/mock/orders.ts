@@ -307,14 +307,29 @@ export const MOCK_ORDERS: Order[] = [
       {
         status: 'accepted',
         timestamp: '2026-10-30T16:15:00Z',
+        performedBy: {
+          id: 'user-staff-01',
+          name: 'نور أحمد',
+          role: 'staff',
+        },
       },
       {
         status: 'in_preparation',
         timestamp: '2026-10-30T16:30:00Z',
+        performedBy: {
+          id: 'user-staff-01',
+          name: 'نور أحمد',
+          role: 'staff',
+        },
       },
       {
         status: 'out_for_delivery',
         timestamp: '2026-10-30T17:05:00Z',
+        performedBy: {
+          id: 'user-staff-01',
+          name: 'نور أحمد',
+          role: 'staff',
+        },
       },
       {
         status: 'delivered',

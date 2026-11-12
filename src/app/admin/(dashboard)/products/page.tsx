@@ -16,14 +16,14 @@ export default function AdminProductsPage() {
               لوحة الإدارة
             </Link>
             <span>/</span>
-            <span className="text-candy-ink font-semibold">إدارة الكتالوج والمنتجات (SCR-15)</span>
+            <span className="text-candy-ink font-semibold">إدارة الكتالوج والمنتجات</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display text-candy-ink flex items-center gap-2.5">
             <Package className="w-7 h-7 text-candy-berry" />
             <span>كتالوج المنتجات والتوفر الفوري</span>
           </h1>
           <p className="text-xs sm:text-sm font-sans text-candy-muted mt-1">
-            إدارة أصناف الحلويات والأسعار، وتبديل حالة التوفر الفوري في المتجر (FR-022)
+            إدارة أصناف الحلويات والأسعار، وتبديل حالة التوفر الفوري في المتجر
           </p>
         </div>
       </div>

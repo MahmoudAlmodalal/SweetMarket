@@ -17,7 +17,7 @@ export default function NewProductPage() {
               <span>العودة إلى قائمة المنتجات</span>
             </Link>
             <span>/</span>
-            <span className="text-candy-ink font-semibold">إضافة منتج جديد (SCR-16)</span>
+            <span className="text-candy-ink font-semibold">إضافة منتج جديد</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold font-display text-candy-ink flex items-center gap-2.5">
             <PackagePlus className="w-7 h-7 text-candy-berry" />

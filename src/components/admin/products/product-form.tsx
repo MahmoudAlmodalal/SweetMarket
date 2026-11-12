@@ -322,7 +322,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
           <Lock className="w-8 h-8" />
         </div>
         <h3 className="text-xl font-bold font-display text-candy-ink">
-          غير مسموح لك بهذا الإجراء (SCR-20)
+          غير مسموح لك بهذا الإجراء
         </h3>
         <p className="text-sm font-sans text-candy-muted leading-relaxed">
           عذراً، إضافة المنتجات وتعديل أسعارها ومواصفاتها مقتصر على <strong>مدير المتجر (Manager)</strong>. يمكنك كـ <strong>موظف تشغيل</strong> تبديل حالة توفر المنتج الفورية من قائمة الكتالوج.
@@ -598,7 +598,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
         <CardHeader>
           <div className="flex items-center gap-2.5 text-candy-berry font-bold text-base">
             <ImageIcon className="w-5 h-5" />
-            <span>صورة المنتج الرئيسية (ER-008)</span>
+            <span>صورة المنتج الرئيسية</span>
           </div>
           <CardDescription>
             ضع رابط صورة عالية الدقة للمنتج، أو اختر من الصور الجاهزة بالأسفل
@@ -679,7 +679,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
         <CardHeader>
           <div className="flex items-center gap-2.5 text-candy-berry font-bold text-base">
             <Sparkles className="w-5 h-5" />
-            <span>حالة العرض والتوفر الفوري (FR-022)</span>
+            <span>حالة العرض والتوفر الفوري</span>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">

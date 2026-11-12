@@ -136,7 +136,7 @@ export default function ChangePasswordPage() {
         <ChevronLeft className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
         <span>الحساب</span>
         <ChevronLeft className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-        <span className="text-candy-ink font-bold">تغيير كلمة المرور (SCR-12)</span>
+        <span className="text-candy-ink font-bold">تغيير كلمة المرور</span>
       </nav>
 
       {/* بطاقة معلومات الحساب الحالي */}
@@ -447,7 +447,7 @@ export default function ChangePasswordPage() {
               <p>• كلمة المرور يجب ألا تقل عن 6 خانات.</p>
               <p>• احرص على استخدام مزيج من الأحرف والأرقام لتعزيز أمان الحساب.</p>
               <p>• لا تشارك كلمة المرور مع أي شخص أو موظف آخر.</p>
-              <p>• في حال نسيان كلمة المرور، يمكن للمدير إعادة تعيينها من قسم فريق العمل (SCR-19).</p>
+              <p>• في حال نسيان كلمة المرور، يمكن للمدير إعادة تعيينها من قسم فريق العمل.</p>
             </CardContent>
           </Card>
 

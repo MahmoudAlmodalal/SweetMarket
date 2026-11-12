@@ -96,9 +96,6 @@ export default function AdminOrdersPage() {
             <h1 className="text-2xl sm:text-3xl font-serif font-black text-candy-ink">
               إدارة الطلبات
             </h1>
-            <span className="bg-candy-blush text-candy-berry font-bold text-xs px-2.5 py-0.5 rounded-full border border-candy-line-dark">
-              SCR-13
-            </span>
           </div>
           <p className="font-sans text-xs sm:text-sm text-candy-muted mt-1">
             متابعة ومراجعة طلبات الزبائن الواردة، ومعالجة الطلبات الجديدة أولاً وتحديث مسار التوصيل.

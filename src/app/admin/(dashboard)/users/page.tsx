@@ -98,7 +98,7 @@ export default function AdminUsersPage() {
           وصول محظور (403) • هذه الصفحة للمدير فقط
         </h2>
         <p className="font-sans text-xs text-candy-muted max-w-md mx-auto leading-relaxed">
-          حسابك الحالي يحمل دور <strong>موظف (Staff)</strong>، ولا يملك صلاحية إدارة المستخدمين وتعيين الأدوار (SCR-19).
+          حسابك الحالي يحمل دور <strong>موظف (Staff)</strong>، ولا يملك صلاحية إدارة المستخدمين وتعيين الأدوار.
         </p>
         <div className="pt-4 flex flex-col sm:flex-row gap-2 justify-center">
           <Button
@@ -231,7 +231,7 @@ export default function AdminUsersPage() {
         <ChevronLeft className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
         <span>فريق العمل</span>
         <ChevronLeft className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-        <span className="text-candy-ink font-bold">إدارة المستخدمين والصلاحيات (SCR-19)</span>
+        <span className="text-candy-ink font-bold">إدارة المستخدمين والصلاحيات</span>
       </nav>
 
       {/* ترويسة الصفحة مع زر الإضافة الرئيسي */}

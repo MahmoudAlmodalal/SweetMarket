@@ -92,7 +92,7 @@ export default function NotFound() {
               className="text-candy-berry hover:text-candy-strawberry font-medium transition-colors inline-flex items-center gap-1"
             >
               <span>تشكيلة الحلويات</span>
-              <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-180" aria-hidden="true" />
+              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
             <span className="text-candy-rose/30" aria-hidden="true">
               •
