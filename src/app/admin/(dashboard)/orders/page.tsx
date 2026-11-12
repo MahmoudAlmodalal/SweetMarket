@@ -82,7 +82,8 @@ export default function AdminOrdersPage() {
     (o) => o.status === 'accepted' || o.status === 'in_preparation' || o.status === 'out_for_delivery'
   ).length;
   const deliveredCount = orders.filter((o) => o.status === 'delivered').length;
-  const totalRevenue = orders
+  const grossRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+  const netRevenue = orders
     .filter((o) => o.status !== 'cancelled')
     .reduce((sum, o) => sum + o.total, 0);
 
@@ -201,21 +202,26 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        {/* إجمالي المبيعات النشطة */}
+        {/* صافي المبيعات غير الملغية ومطابقة الإجمالي */}
         <div className="bg-white p-4 rounded-2xl border border-candy-line shadow-candy-1 flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div className="min-w-0">
             <span className="font-sans text-xs text-emerald-800 font-semibold block truncate">
-              إجمالي القيمة
+              صافي المبيعات (المعتمدة)
             </span>
             {isLoading ? (
               <Skeleton className="h-6 w-20 mt-1" />
             ) : (
-              <strong className="font-sans font-extrabold text-lg sm:text-xl text-emerald-800">
-                {totalRevenue.toFixed(0)} ₪
-              </strong>
+              <div className="space-y-0.5">
+                <strong className="font-sans font-extrabold text-lg sm:text-xl text-emerald-800 font-mono whitespace-nowrap block">
+                  {netRevenue.toFixed(0)} ₪
+                </strong>
+                <span className="text-[11px] text-candy-muted block font-sans whitespace-nowrap">
+                  الإجمالي العام: {grossRevenue.toFixed(0)} ₪
+                </span>
+              </div>
             )}
           </div>
         </div>

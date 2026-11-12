@@ -161,9 +161,9 @@ export function OrderStatusStepper({
 
       {/* 2. مؤشر مسار الحالات خطوة بخطوة (Visual Pipeline) */}
       {!isCancelled && (
-        <div className="mb-6 overflow-x-auto pb-2 scrollbar-thin">
+        <div className="mb-6 w-full">
           <ol
-            className="flex items-center justify-between min-w-[560px] relative"
+            className="grid grid-cols-5 w-full relative"
             aria-live="polite"
           >
             {ORDER_STEPS.map((step, index) => {
@@ -175,7 +175,7 @@ export function OrderStatusStepper({
               return (
                 <li
                   key={step.status}
-                  className="flex-1 flex flex-col items-center relative text-center group"
+                  className="flex flex-col items-center relative text-center group px-0.5 sm:px-1"
                   aria-current={isCurrent ? 'step' : undefined}
                 >
                   {/* خط الربط بين الخطوات */}
@@ -183,7 +183,7 @@ export function OrderStatusStepper({
                     <div
                       aria-hidden="true"
                       className={cn(
-                        'absolute top-4 sm:top-5 right-[-50%] w-full h-1 -translate-y-1/2 transition-colors duration-300',
+                        'absolute top-3.5 sm:top-5 right-[-50%] w-full h-0.5 sm:h-1 -translate-y-1/2 transition-colors duration-300',
                         isPassed || (isCurrent && !isUndelivered)
                           ? 'bg-candy-berry'
                           : 'bg-candy-line'
@@ -194,27 +194,27 @@ export function OrderStatusStepper({
                   {/* دائرة أيقونة الخطوة */}
                   <div
                     className={cn(
-                      'relative z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 font-bold text-xs',
+                      'relative z-10 w-7 h-7 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 font-bold text-xs shrink-0',
                       isPassed &&
                         'bg-candy-berry text-white shadow-candy-1',
                       isCurrent &&
                         !isUndelivered &&
-                        'bg-candy-berry text-white ring-4 ring-candy-strawberry/30 shadow-md scale-105',
+                        'bg-candy-berry text-white ring-2 sm:ring-4 ring-candy-strawberry/30 shadow-md scale-105',
                       isCurrent &&
                         isUndelivered &&
-                        'bg-amber-600 text-white ring-4 ring-amber-300 shadow-md',
+                        'bg-amber-600 text-white ring-2 sm:ring-4 ring-amber-300 shadow-md',
                       isPending &&
                         'bg-candy-soft text-candy-muted border border-candy-line'
                     )}
                   >
-                    <StepIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <StepIcon className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                   </div>
 
                   {/* نص الخطوة */}
-                  <div className="mt-2 text-right">
+                  <div className="mt-1 sm:mt-2 text-center w-full">
                     <p
                       className={cn(
-                        'text-xs sm:text-sm font-bold font-sans transition-colors',
+                        'text-[10px] sm:text-xs md:text-sm font-bold font-sans transition-colors leading-tight line-clamp-1 sm:line-clamp-none',
                         (isPassed || isCurrent) ? 'text-candy-ink' : 'text-candy-muted'
                       )}
                     >

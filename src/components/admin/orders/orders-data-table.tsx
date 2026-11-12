@@ -160,8 +160,8 @@ export function OrdersDataTable({
     <div className="space-y-4">
       {/* 1. أشرطة التبويبات الفلترة وأدوات البحث */}
       <div className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
-        {/* التبويبات الأفقية للفلترة السريعة */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 no-scrollbar scroll-smooth">
+        {/* التبويبات للفلترة السريعة متجاوبة مع الشاشات الصغيرة */}
+        <div className="flex flex-wrap items-center gap-1.5 pb-1">
           {FILTER_TABS.map((tab) => {
             const count = tabCounts[tab.key] || 0;
             const isActive = activeTab === tab.key;
@@ -296,7 +296,7 @@ export function OrdersDataTable({
               onClick={handleResetFilters}
               className="mx-auto"
             >
-              عرض كافة الطلبات
+              إعادة تعيين الفلاتر والبحث
             </Button>
           )}
         </div>
