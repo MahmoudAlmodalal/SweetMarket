@@ -25,11 +25,11 @@ const LOGO_PATHS: Record<StoreLogoVariant, { src: string; defaultAlt: string; de
   main: {
     src: "/logo/logo.svg",
     defaultAlt: "متجر كاندي لوز للحلويات الفاخرة | Candy Loz",
-    defaultWidth: 200,
-    defaultHeight: 58,
+    defaultWidth: 512,
+    defaultHeight: 512,
   },
   icon: {
-    src: "/logo/logo-icon.svg",
+    src: "/logo/logo.svg",
     defaultAlt: "شعار كاندي لوز",
     defaultWidth: 48,
     defaultHeight: 48,
