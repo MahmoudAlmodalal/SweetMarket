@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { getOrders, getDeliveryZones } from '@/lib/repositories';
 import type { Order, DeliveryZone } from '@/types';
-import { OrdersDataTable } from '@/components/admin/orders/orders-data-table';
+import { OrdersDataTable, type FilterTabKey } from '@/components/admin/orders/orders-data-table';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/toast';
@@ -25,6 +25,7 @@ export default function AdminOrdersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<FilterTabKey>('all');
 
   const { toast } = useToast();
 
@@ -118,9 +119,21 @@ export default function AdminOrdersPage() {
         </div>
       </div>
 
-      {/* 2. مؤشر الطلبات الجديدة (FR-027 / UX_BLUEPRINT SCR-13) */}
+      {/* 2. مؤشر الطلبات الجديدة */}
       {!isLoading && newOrdersCount > 0 && (
-        <div className="bg-gradient-to-l from-blue-50 to-indigo-50 border border-blue-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setActiveTab('new')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setActiveTab('new');
+            }
+          }}
+          className="bg-gradient-to-l from-blue-50 to-indigo-50 border border-blue-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm hover:shadow-md hover:border-blue-300 transition-all cursor-pointer select-none animate-in fade-in slide-in-from-top-2 duration-300"
+          title="انقر لتصفية الطلبات الجديدة"
+        >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm animate-pulse">
               <Bell className="w-5 h-5" />
@@ -134,9 +147,16 @@ export default function AdminOrdersPage() {
               </p>
             </div>
           </div>
-          <span className="text-xs font-mono font-bold text-blue-800 bg-white/80 border border-blue-200 px-3 py-1 rounded-full whitespace-nowrap self-end sm:self-auto">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveTab('new');
+            }}
+            className="text-xs font-mono font-bold text-blue-800 bg-white/80 border border-blue-200 px-3 py-1 rounded-full whitespace-nowrap self-end sm:self-auto hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
+          >
             معالجة عاجلة
-          </span>
+          </button>
         </div>
       )}
 
@@ -205,18 +225,18 @@ export default function AdminOrdersPage() {
             <TrendingUp className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-emerald-800 font-semibold block truncate">
-              صافي المبيعات (المعتمدة)
-            </span>
             {isLoading ? (
-              <Skeleton className="h-6 w-20 mt-1" />
+              <div className="space-y-1">
+                <Skeleton className="h-5 w-28" />
+                <Skeleton className="h-4 w-36" />
+              </div>
             ) : (
               <div className="space-y-0.5">
-                <strong className="font-sans font-extrabold text-lg sm:text-xl text-emerald-800 font-mono whitespace-nowrap block">
-                  {netRevenue.toFixed(0)} ₪
+                <strong className="font-sans font-extrabold text-sm sm:text-base text-emerald-800 block whitespace-nowrap">
+                  صافي المبيعات (المعتمدة): {netRevenue.toFixed(0)} ₪
                 </strong>
-                <span className="text-[11px] text-candy-muted block font-sans whitespace-nowrap">
-                  الإجمالي العام: {grossRevenue.toFixed(0)} ₪
+                <span className="text-[11px] sm:text-xs text-candy-muted block font-sans whitespace-nowrap">
+                  الإجمالي العام: {grossRevenue.toFixed(0)} ₪ (شامل الملغي)
                 </span>
               </div>
             )}
@@ -252,7 +272,7 @@ export default function AdminOrdersPage() {
         <div className="space-y-4">
           {/* Skeleton Tabs & Search Bar */}
           <div className="bg-white rounded-2xl border border-candy-line p-4 space-y-4">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2">
+            <div className="flex flex-wrap items-center gap-1.5 pb-2">
               {[...Array(6)].map((_, i) => (
                 <Skeleton key={i} className="h-9 w-24 rounded-xl shrink-0" />
               ))}
@@ -287,8 +307,8 @@ export default function AdminOrdersPage() {
           <OrdersDataTable
             orders={orders}
             zones={zones}
-            onRefresh={() => loadData(true)}
-            isRefreshing={isRefreshing}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
           />
         )
       )}

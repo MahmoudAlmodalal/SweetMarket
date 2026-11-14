@@ -161,7 +161,7 @@ export function OrderStatusStepper({
 
       {/* 2. مؤشر مسار الحالات خطوة بخطوة (Visual Pipeline) */}
       {!isCancelled && (
-        <div className="mb-6 w-full">
+        <div className="mb-6 w-full overflow-hidden">
           <ol
             className="grid grid-cols-5 w-full relative"
             aria-live="polite"
@@ -289,7 +289,7 @@ export function OrderStatusStepper({
             </Button>
           )}
 
-          {/* زر إلغاء الطلب (متاح حصرياً للمدير وفق FR-018 طالما لم يكتمل أو يلغى) */}
+          {/* زر إلغاء الطلب (متاح حصرياً للمدير طالما لم يكتمل أو يلغى) */}
           {isManager && !isTerminal && (
             <Button
               type="button"
