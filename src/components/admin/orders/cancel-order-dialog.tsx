@@ -57,7 +57,9 @@ export function CancelOrderDialog({
 
   const handleReasonChange = (value: string) => {
     setReason(value);
-    if (hasInteracted) {
+    if (error && value.trim().length >= 5) {
+      setError(null);
+    } else if (hasInteracted) {
       const result = CancelOrderSchema.safeParse({ reason: value.trim() });
       if (!result.success) {
         setError(result.error.issues[0]?.message || 'السبب قصير جداً');
@@ -78,6 +80,11 @@ export function CancelOrderDialog({
     setHasInteracted(true);
 
     const trimmed = reason.trim();
+    if (trimmed.length < 5) {
+      setError('يجب كتابة سبب الإلغاء (5 أحرف على الأقل)');
+      return;
+    }
+
     const result = CancelOrderSchema.safeParse({ reason: trimmed });
 
     if (!result.success) {
@@ -95,7 +102,7 @@ export function CancelOrderDialog({
     <Dialog open={isOpen} onOpenChange={(open) => !open && !isSubmitting && onClose()}>
       <DialogContent className="max-w-md sm:max-w-lg p-6">
         {!isManager ? (
-          // في حال حاول موظف الوصول بدون صلاحية مدير (FR-018)
+          // في حال حاول موظف الوصول بدون صلاحية مدير
           <div className="text-center py-4 space-y-4">
             <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center">
               <ShieldAlert className="w-6 h-6" />
