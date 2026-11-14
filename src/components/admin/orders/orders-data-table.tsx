@@ -14,7 +14,6 @@ import {
   ChevronLeft,
   Package,
   MapPin,
-  RefreshCw,
   Filter,
   Inbox,
   User,
@@ -24,14 +23,16 @@ import { OrderStatusBadge } from './order-status-badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
+export type FilterTabKey = 'all' | OrderStatus;
+
 export interface OrdersDataTableProps {
   orders: Order[];
   zones?: DeliveryZone[];
   onRefresh?: () => void;
   isRefreshing?: boolean;
+  activeTab?: FilterTabKey;
+  onTabChange?: (tab: FilterTabKey) => void;
 }
-
-type FilterTabKey = 'all' | OrderStatus;
 
 interface TabDefinition {
   key: FilterTabKey;
@@ -78,12 +79,21 @@ function formatOrderDateTime(isoString: string): { date: string; time: string } 
 export function OrdersDataTable({
   orders,
   zones = [],
-  onRefresh,
-  isRefreshing = false,
+  activeTab: controlledTab,
+  onTabChange,
 }: OrdersDataTableProps) {
-  const [activeTab, setActiveTab] = useState<FilterTabKey>('all');
+  const [internalTab, setInternalTab] = useState<FilterTabKey>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
+
+  const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
+
+  const handleTabChange = (tab: FilterTabKey) => {
+    if (controlledTab === undefined) {
+      setInternalTab(tab);
+    }
+    onTabChange?.(tab);
+  };
 
   // خريطة مناطق التوصيل لسهولة وسرعة جلب اسم المنطقة
   const zonesMap = useMemo(() => {
@@ -150,7 +160,7 @@ export function OrdersDataTable({
   }, [orders, activeTab, searchQuery, sortOrder, zonesMap]);
 
   const handleResetFilters = () => {
-    setActiveTab('all');
+    handleTabChange('all');
     setSearchQuery('');
   };
 
@@ -171,7 +181,7 @@ export function OrdersDataTable({
               <button
                 key={tab.key}
                 type="button"
-                onClick={() => setActiveTab(tab.key)}
+                onClick={() => handleTabChange(tab.key)}
                 className={cn(
                   'flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-sans font-bold whitespace-nowrap transition-all duration-150',
                   isActive
@@ -223,7 +233,7 @@ export function OrdersDataTable({
             )}
           </div>
 
-          <div className="flex items-center gap-2 justify-between sm:justify-end">
+          <div className="flex items-center gap-2 justify-end">
             {/* زر ترتيب النتائج الأحدث/الأقدم */}
             <button
               type="button"
@@ -234,20 +244,6 @@ export function OrdersDataTable({
               <ArrowUpDown className="w-3.5 h-3.5 text-candy-berry" />
               <span>{sortOrder === 'desc' ? 'الأحدث أولاً' : 'الأقدم أولاً'}</span>
             </button>
-
-            {/* زر إعادة التحميل اليدوي */}
-            {onRefresh && (
-              <button
-                type="button"
-                onClick={onRefresh}
-                disabled={isRefreshing}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-sans font-semibold border border-candy-line bg-candy-cream/50 text-candy-ink hover:bg-candy-soft disabled:opacity-50 transition-colors"
-                title="تحديث البيانات"
-              >
-                <RefreshCw className={cn('w-3.5 h-3.5 text-candy-berry', isRefreshing && 'animate-spin')} />
-                <span className="hidden sm:inline">تحديث</span>
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -269,7 +265,7 @@ export function OrdersDataTable({
             className="text-candy-berry font-bold hover:underline flex items-center gap-1"
           >
             <Filter className="w-3 h-3" />
-            <span>إعادة ضبط الفلاتر</span>
+            <span>إعادة ضبط البحث</span>
           </button>
         )}
       </div>
@@ -296,7 +292,7 @@ export function OrdersDataTable({
               onClick={handleResetFilters}
               className="mx-auto"
             >
-              إعادة تعيين الفلاتر والبحث
+              إعادة ضبط البحث
             </Button>
           )}
         </div>
