@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:admin": "node tests/admin-portal-suite.mjs"
+    "test:admin": "node tests/admin-portal-suite.mjs",
+    "test:e2e:rbac": "node tests/e2e-rbac-recovery.mjs",
+    "capture:gallery": "node tests/capture-gallery.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
