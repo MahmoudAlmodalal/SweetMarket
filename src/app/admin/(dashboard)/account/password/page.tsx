@@ -11,7 +11,7 @@ import {
   AlertCircle,
   ShieldCheck,
   User,
-  ArrowRight,
+  ArrowLeft,
   Save,
   Lock,
   ChevronLeft,
@@ -46,6 +46,58 @@ export default function ChangePasswordPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // تقييم قوة كلمة المرور الجديدة في الوقت الفعلي
+  const hasMinLength = newPassword.length >= 6;
+  const hasNumber = /\d/.test(newPassword);
+  const hasLetter = /[a-zA-Z\u0600-\u06FF]/.test(newPassword);
+
+  const passwordCriteria = [
+    { id: 'length', label: '6 خانات على الأقل', met: hasMinLength },
+    { id: 'letter', label: 'يحتوي على حروف', met: hasLetter },
+    { id: 'number', label: 'يحتوي على أرقام (0-9)', met: hasNumber },
+  ];
+
+  const metCriteriaCount = (hasMinLength ? 1 : 0) + (hasNumber ? 1 : 0) + (hasLetter ? 1 : 0);
+
+  const getPasswordStrength = () => {
+    if (!newPassword) {
+      return {
+        label: '',
+        level: 'empty',
+        colorClass: 'text-candy-muted',
+        barColorClass: 'bg-candy-line/60',
+        widthPercent: 0,
+      };
+    }
+    if (metCriteriaCount === 3) {
+      return {
+        label: 'قوية',
+        level: 'strong',
+        colorClass: 'text-emerald-600',
+        barColorClass: 'bg-emerald-500',
+        widthPercent: 100,
+      };
+    }
+    if (metCriteriaCount === 2) {
+      return {
+        label: 'متوسطة',
+        level: 'medium',
+        colorClass: 'text-amber-600',
+        barColorClass: 'bg-amber-500',
+        widthPercent: 66,
+      };
+    }
+    return {
+      label: 'ضعيفة',
+      level: 'weak',
+      colorClass: 'text-rose-600',
+      barColorClass: 'bg-rose-500',
+      widthPercent: 33,
+    };
+  };
+
+  const strength = getPasswordStrength();
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -310,7 +362,7 @@ export default function ChangePasswordPage() {
                         }
                       }}
                       autoComplete="new-password"
-                      placeholder="أدخل كلمة المرور الجديدة (6 أحرف على الأقل)"
+                      placeholder="أدخل كلمة المرور الجديدة"
                       aria-invalid={Boolean(errors.newPassword)}
                       aria-describedby={errors.newPassword ? 'new-password-error' : 'new-password-helper'}
                       className={cn(
@@ -334,6 +386,61 @@ export default function ChangePasswordPage() {
                       )}
                     </button>
                   </div>
+
+                  {/* مؤشر قوة كلمة المرور المتحرك وقائمة المعايير التفاعلية */}
+                  <div className="pt-1.5 space-y-1.5">
+                    <div className="flex items-center justify-between text-xs font-sans">
+                      <span className="text-candy-muted font-medium">مستوى قوة كلمة المرور:</span>
+                      {strength.label ? (
+                        <span className={cn('font-bold transition-colors duration-200', strength.colorClass)}>
+                          {strength.label}
+                        </span>
+                      ) : (
+                        <span className="text-candy-muted/80 text-[11px]">أدخل كلمة المرور للتقييم</span>
+                      )}
+                    </div>
+                    <div
+                      role="progressbar"
+                      aria-label="مؤشر قوة كلمة المرور"
+                      aria-valuenow={metCriteriaCount}
+                      aria-valuemin={0}
+                      aria-valuemax={3}
+                      className="h-2 w-full bg-candy-soft rounded-full overflow-hidden border border-candy-line/60"
+                    >
+                      <div
+                        className={cn(
+                          'h-full transition-all duration-300 ease-out rounded-full',
+                          strength.barColorClass
+                        )}
+                        style={{ width: `${strength.widthPercent}%` }}
+                      />
+                    </div>
+
+                    {/* قائمة المعايير التفاعلية مع أيقونات التحقق CheckCircle2 */}
+                    <div className="pt-1 grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                      {passwordCriteria.map((item) => (
+                        <div
+                          key={item.id}
+                          className={cn(
+                            'flex items-center gap-1.5 py-1 px-2 rounded-lg border text-xs font-sans transition-all duration-200',
+                            item.met
+                              ? 'bg-emerald-50/90 border-emerald-200 text-emerald-800 font-semibold'
+                              : 'bg-candy-soft/50 border-candy-line/60 text-candy-muted font-normal'
+                          )}
+                        >
+                          <CheckCircle2
+                            className={cn(
+                              'w-3.5 h-3.5 shrink-0 transition-transform duration-200',
+                              item.met ? 'text-emerald-600 scale-105' : 'text-candy-muted/40'
+                            )}
+                            aria-hidden="true"
+                          />
+                          <span className="text-[11px] leading-tight select-none">{item.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   {errors.newPassword ? (
                     <p
                       id="new-password-error"
@@ -343,8 +450,8 @@ export default function ChangePasswordPage() {
                       {errors.newPassword}
                     </p>
                   ) : (
-                    <p id="new-password-helper" className="text-xs text-candy-muted font-sans mt-1">
-                      يجب ألا تقل كلمة المرور عن 6 خانات، ويفضل أن تحتوي على حروف وأرقام.
+                    <p id="new-password-helper" className="text-xs text-candy-muted font-sans mt-1 leading-normal break-words">
+                      يجب ألا تقل كلمة المرور عن 6 خانات، وتتضمن أحرفاً وأرقاماً.
                     </p>
                   )}
                 </div>
@@ -412,7 +519,7 @@ export default function ChangePasswordPage() {
                     onClick={() => router.push('/admin/orders')}
                     disabled={isSubmitting}
                     className="w-full sm:w-auto"
-                    rightIcon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}
+                    rightIcon={<ArrowLeft className="w-4 h-4" aria-hidden="true" />}
                   >
                     رجوع للطلبات
                   </Button>

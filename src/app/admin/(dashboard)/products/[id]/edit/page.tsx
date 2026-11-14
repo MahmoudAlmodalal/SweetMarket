@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowRight, Edit, AlertCircle, Loader2, Package } from 'lucide-react';
+import { ArrowLeft, Edit, AlertCircle, Loader2, Package } from 'lucide-react';
 import type { Product } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -94,7 +94,7 @@ export default function EditProductPage() {
               href="/admin/products"
               className="hover:text-candy-berry transition-colors flex items-center gap-1"
             >
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowLeft className="w-3.5 h-3.5" />
               <span>العودة إلى قائمة المنتجات</span>
             </Link>
             <span>/</span>

@@ -11,7 +11,7 @@ import {
   AlertCircle,
   ShieldCheck,
   UserCheck,
-  ArrowRight,
+  ArrowLeft,
   Sparkles,
 } from 'lucide-react';
 import { AdminAuthProvider, useAdminAuth, PRE_SEEDED_USERS } from '@/context/admin-auth-context';
@@ -309,7 +309,7 @@ function LoginFormContent() {
               href="/"
               className="inline-flex items-center gap-1.5 text-xs text-candy-muted hover:text-candy-berry transition-colors font-medium"
             >
-              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
               العودة إلى متجر كاندي لوز
             </Link>
           </div>

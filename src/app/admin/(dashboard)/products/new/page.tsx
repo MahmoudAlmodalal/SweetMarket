@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, PackagePlus } from 'lucide-react';
+import { ArrowLeft, PackagePlus } from 'lucide-react';
 import { ProductForm } from '@/components/admin/products/product-form';
 
 export default function NewProductPage() {
@@ -13,7 +13,7 @@ export default function NewProductPage() {
         <div>
           <div className="flex items-center gap-2 text-xs font-sans text-candy-muted mb-1">
             <Link href="/admin/products" className="hover:text-candy-berry transition-colors flex items-center gap-1">
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowLeft className="w-3.5 h-3.5" />
               <span>العودة إلى قائمة المنتجات</span>
             </Link>
             <span>/</span>
