@@ -144,6 +144,13 @@ process.on('SIGTERM', () => {
  */
 async function loginAsRole(page, role = 'staff') {
   await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle' });
+  await page.evaluate(() => {
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch {}
+  });
+  await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle' });
   const buttonText = role === 'manager' || role === 'admin' ? 'دخول كمدير' : 'دخول كموظف';
   const quickBtn = page.locator(`button:has-text("${buttonText}")`).first();
   await quickBtn.waitFor({ state: 'visible', timeout: 5000 });
