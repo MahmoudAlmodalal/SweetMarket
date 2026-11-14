@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import type { AdminUser } from '@/types';
+import { getArabicRoleLabel } from '@/lib/auth/authorization';
 
 export interface TempPasswordDialogProps {
   open: boolean;
@@ -95,7 +96,12 @@ export function TempPasswordDialog({
                   <User className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
-                  <p className="font-bold text-candy-ink truncate">{user.fullName}</p>
+                  <div className="flex items-center gap-1.5">
+                    <p className="font-bold text-candy-ink truncate">{user.fullName}</p>
+                    {user.jobTitle && (
+                      <span className="text-[10px] text-candy-muted font-medium">({user.jobTitle})</span>
+                    )}
+                  </div>
                   <p className="text-candy-muted flex items-center gap-1 mt-0.5 truncate" dir="ltr">
                     <Mail className="w-3 h-3 text-candy-muted/80 shrink-0" />
                     <span>{user.email}</span>
@@ -110,7 +116,7 @@ export function TempPasswordDialog({
                     : 'bg-candy-blush text-candy-berry border-candy-rose/30'
                 }`}
               >
-                {user.role === 'manager' ? 'مدير' : 'موظف'}
+                {getArabicRoleLabel(user.role)}
               </span>
             </div>
           )}
