@@ -165,212 +165,218 @@ export function ZoneEditDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-center gap-2.5 mb-1">
-            <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
-              <MapPin className="w-5 h-5" aria-hidden="true" />
+      <DialogContent className="max-w-lg max-h-[90dvh] flex flex-col overflow-hidden p-0">
+        <div className="p-5 sm:p-6 pb-3 border-b border-candy-line/60 shrink-0">
+          <DialogHeader className="mb-0 text-right">
+            <div className="flex items-center gap-2.5 pl-6 sm:pl-8">
+              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
+                <MapPin className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div>
+                <DialogTitle className="text-lg font-bold font-display text-candy-ink">
+                  {isEditing ? `تعديل منطقة: ${zone?.name}` : 'إضافة منطقة توصيل جديدة'}
+                </DialogTitle>
+                <DialogDescription className="text-xs text-candy-muted font-sans mt-0.5">
+                  {isEditing
+                    ? 'تعديل رسوم التوصيل والحد الأدنى للطلب وأوقات الوصول المتوقعة'
+                    : 'إضافة محافظة أو حي جديد وضبط تكلفة التوصيل بالشيكل'}
+                </DialogDescription>
+              </div>
             </div>
-            <div>
-              <DialogTitle className="text-lg font-bold font-display text-candy-ink">
-                {isEditing ? `تعديل منطقة: ${zone?.name}` : 'إضافة منطقة توصيل جديدة'}
-              </DialogTitle>
-              <DialogDescription className="text-xs text-candy-muted font-sans mt-0.5">
-                {isEditing
-                  ? 'تعديل رسوم التوصيل والحد الأدنى للطلب وأوقات الوصول المتوقعة'
-                  : 'إضافة محافظة أو حي جديد وضبط تكلفة التوصيل بالشيكل'}
-              </DialogDescription>
-            </div>
-          </div>
-        </DialogHeader>
+          </DialogHeader>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 py-2">
-          {errors.form && (
-            <div
-              role="alert"
-              className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-sans font-medium"
-            >
-              {errors.form}
-            </div>
-          )}
-
-          {/* اسم المنطقة */}
-          <div>
-            <Input
-              id="zone-name"
-              label="اسم المنطقة / المحافظة *"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
-              }}
-              placeholder="مثال: مدينة غزة والرمال والنصر"
-              error={errors.name}
-              disabled={isSubmitting}
-              autoFocus
-            />
-
-            {/* اقتراحات سريعة للمناطق الفلسطينية عند الإنشاء */}
-            {!isEditing && (
-              <div className="mt-2">
-                <span className="text-[11px] text-candy-muted font-sans font-medium block mb-1">
-                  اقتراحات لمحافظات ومناطق فلسطينية:
-                </span>
-                <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1 bg-candy-soft/60 rounded-xl border border-candy-line">
-                  {SUGGESTED_PALESTINIAN_ZONES.map((s, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => {
-                        setName(s.name);
-                        setDeliveryFee(s.fee);
-                        setMinOrderAmount(s.minOrder);
-                        setEstimatedTimeMin(s.tMin);
-                        setEstimatedTimeMax(s.tMax);
-                        if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
-                      }}
-                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-sans bg-white border border-candy-line hover:border-candy-rose hover:text-candy-berry transition-colors"
-                    >
-                      <Sparkles className="w-2.5 h-2.5 text-candy-strawberry" />
-                      <span>{s.name}</span>
-                    </button>
-                  ))}
-                </div>
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="px-5 sm:px-6 py-4 overflow-y-auto flex-1 space-y-4">
+            {errors.form && (
+              <div
+                role="alert"
+                className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-sans font-medium"
+              >
+                {errors.form}
               </div>
             )}
-          </div>
 
-          {/* رسوم التوصيل والحد الأدنى للطلب (بالشيكل ILS) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* اسم المنطقة */}
             <div>
               <Input
-                id="zone-delivery-fee"
-                type="number"
-                min="0"
-                step="0.5"
-                label="رسوم التوصيل (شيكل ₪) *"
-                value={deliveryFee}
+                id="zone-name"
+                label="اسم المنطقة / المحافظة *"
+                value={name}
                 onChange={(e) => {
-                  setDeliveryFee(e.target.value);
-                  if (errors.deliveryFee) setErrors((prev) => ({ ...prev, deliveryFee: '' }));
+                  setName(e.target.value);
+                  if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
                 }}
-                error={errors.deliveryFee}
+                placeholder="مثال: مدينة غزة والرمال والنصر"
+                error={errors.name}
                 disabled={isSubmitting}
-                helperText="أدخل 0 للتوصيل المجاني"
-                iconSuffix={<span className="text-xs text-candy-muted font-bold">₪</span>}
+                autoFocus
               />
+
+              {/* اقتراحات سريعة للمناطق الفلسطينية عند الإنشاء */}
+              {!isEditing && (
+                <div className="mt-2">
+                  <span className="text-[11px] text-candy-muted font-sans font-medium block mb-1">
+                    اقتراحات لمحافظات ومناطق فلسطينية:
+                  </span>
+                  <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1 bg-candy-soft/60 rounded-xl border border-candy-line">
+                    {SUGGESTED_PALESTINIAN_ZONES.map((s, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          setName(s.name);
+                          setDeliveryFee(s.fee);
+                          setMinOrderAmount(s.minOrder);
+                          setEstimatedTimeMin(s.tMin);
+                          setEstimatedTimeMax(s.tMax);
+                          if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
+                        }}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-sans bg-white border border-candy-line hover:border-candy-rose hover:text-candy-berry transition-colors"
+                      >
+                        <Sparkles className="w-2.5 h-2.5 text-candy-strawberry" />
+                        <span>{s.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            <div>
-              <Input
-                id="zone-min-order"
-                type="number"
-                min="0"
-                step="1"
-                label="الحد الأدنى للطلب (شيكل ₪) *"
-                value={minOrderAmount}
-                onChange={(e) => {
-                  setMinOrderAmount(e.target.value);
-                  if (errors.minOrderAmount) setErrors((prev) => ({ ...prev, minOrderAmount: '' }));
-                }}
-                error={errors.minOrderAmount}
-                disabled={isSubmitting}
-                helperText="أدخل 0 إن لم يوجد حد أدنى"
-                iconSuffix={<span className="text-xs text-candy-muted font-bold">₪</span>}
-              />
-            </div>
-          </div>
-
-          {/* الوقت التقديري للتوصيل (بالدقائق) */}
-          <div className="p-3 rounded-2xl bg-candy-soft/60 border border-candy-line space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-candy-ink font-sans">
-              <Clock className="w-3.5 h-3.5 text-candy-berry" />
-              <span>وقت التوصيل التقديري للزبون (بالدقائق) *</span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
+            {/* رسوم التوصيل والحد الأدنى للطلب (بالشيكل ILS) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <Input
-                  id="zone-time-min"
+                  id="zone-delivery-fee"
                   type="number"
-                  min="5"
-                  step="5"
-                  label="من (دقيقة)"
-                  value={estimatedTimeMin}
+                  min="0"
+                  step="0.5"
+                  label="رسوم التوصيل (شيكل ₪) *"
+                  value={deliveryFee}
                   onChange={(e) => {
-                    setEstimatedTimeMin(e.target.value);
-                    if (errors.estimatedTimeMin) setErrors((prev) => ({ ...prev, estimatedTimeMin: '' }));
+                    setDeliveryFee(e.target.value);
+                    if (errors.deliveryFee) setErrors((prev) => ({ ...prev, deliveryFee: '' }));
                   }}
-                  error={errors.estimatedTimeMin}
+                  error={errors.deliveryFee}
                   disabled={isSubmitting}
+                  helperText="أدخل 0 للتوصيل المجاني"
+                  iconSuffix={<span className="text-xs text-candy-muted font-bold">₪</span>}
                 />
               </div>
 
               <div>
                 <Input
-                  id="zone-time-max"
+                  id="zone-min-order"
                   type="number"
-                  min="5"
-                  step="5"
-                  label="إلى (دقيقة)"
-                  value={estimatedTimeMax}
+                  min="0"
+                  step="1"
+                  label="الحد الأدنى للطلب (شيكل ₪) *"
+                  value={minOrderAmount}
                   onChange={(e) => {
-                    setEstimatedTimeMax(e.target.value);
-                    if (errors.estimatedTimeMax) setErrors((prev) => ({ ...prev, estimatedTimeMax: '' }));
+                    setMinOrderAmount(e.target.value);
+                    if (errors.minOrderAmount) setErrors((prev) => ({ ...prev, minOrderAmount: '' }));
                   }}
-                  error={errors.estimatedTimeMax}
+                  error={errors.minOrderAmount}
                   disabled={isSubmitting}
+                  helperText="أدخل 0 إن لم يوجد حد أدنى"
+                  iconSuffix={<span className="text-xs text-candy-muted font-bold">₪</span>}
                 />
               </div>
             </div>
-            <p className="text-[11px] text-candy-muted font-sans">
-              يظهر للمشتري في صفحة إتمام الطلب مثل: {estimatedTimeMin || 30} - {estimatedTimeMax || 50} دقيقة
-            </p>
-          </div>
 
-          {/* حالة تفعيل المنطقة */}
-          <div className="pt-2 border-t border-candy-line/60">
-            <label
-              htmlFor="zone-is-active"
-              className="flex items-center gap-2.5 p-3 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
-            >
-              <input
-                id="zone-is-active"
-                type="checkbox"
-                checked={isActive}
-                onChange={(e) => setIsActive(e.target.checked)}
-                disabled={isSubmitting}
-                className="w-4 h-4 rounded text-candy-berry focus:ring-candy-strawberry border-candy-line"
-              />
-              <div className="text-right">
-                <span className="text-xs font-bold text-candy-ink font-sans block">
-                  {isActive ? 'المنطقة مفعّلة ومتاحة للزبائن' : 'المنطقة معطّلة (مخفية عن قائمة التوصيل)'}
-                </span>
-                <span className="text-[11px] text-candy-muted font-sans block mt-0.5">
-                  عند التعطيل لن يتمكن الزبون من اختيار هذه المنطقة أثناء إتمام الطلب
-                </span>
+            {/* الوقت التقديري للتوصيل (بالدقائق) */}
+            <div className="p-3 rounded-2xl bg-candy-soft/60 border border-candy-line space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-candy-ink font-sans">
+                <Clock className="w-3.5 h-3.5 text-candy-berry" />
+                <span>وقت التوصيل التقديري للزبون (بالدقائق) *</span>
               </div>
-            </label>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Input
+                    id="zone-time-min"
+                    type="number"
+                    min="5"
+                    step="5"
+                    label="من (دقيقة)"
+                    value={estimatedTimeMin}
+                    onChange={(e) => {
+                      setEstimatedTimeMin(e.target.value);
+                      if (errors.estimatedTimeMin) setErrors((prev) => ({ ...prev, estimatedTimeMin: '' }));
+                    }}
+                    error={errors.estimatedTimeMin}
+                    disabled={isSubmitting}
+                  />
+                </div>
+
+                <div>
+                  <Input
+                    id="zone-time-max"
+                    type="number"
+                    min="5"
+                    step="5"
+                    label="إلى (دقيقة)"
+                    value={estimatedTimeMax}
+                    onChange={(e) => {
+                      setEstimatedTimeMax(e.target.value);
+                      if (errors.estimatedTimeMax) setErrors((prev) => ({ ...prev, estimatedTimeMax: '' }));
+                    }}
+                    error={errors.estimatedTimeMax}
+                    disabled={isSubmitting}
+                  />
+                </div>
+              </div>
+              <p className="text-[11px] text-candy-muted font-sans">
+                يظهر للمشتري في صفحة إتمام الطلب مثل: {estimatedTimeMin || 30} - {estimatedTimeMax || 50} دقيقة
+              </p>
+            </div>
+
+            {/* حالة تفعيل المنطقة */}
+            <div className="pt-2 border-t border-candy-line/60">
+              <label
+                htmlFor="zone-is-active"
+                className="flex items-center gap-2.5 p-3 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
+              >
+                <input
+                  id="zone-is-active"
+                  type="checkbox"
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.checked)}
+                  disabled={isSubmitting}
+                  className="w-4 h-4 rounded text-candy-berry focus:ring-candy-strawberry border-candy-line"
+                />
+                <div className="text-right">
+                  <span className="text-xs font-bold text-candy-ink font-sans block">
+                    {isActive ? 'المنطقة مفعّلة ومتاحة للزبائن' : 'المنطقة معطّلة (مخفية عن قائمة التوصيل)'}
+                  </span>
+                  <span className="text-[11px] text-candy-muted font-sans block mt-0.5">
+                    عند التعطيل لن يتمكن الزبون من اختيار هذه المنطقة أثناء إتمام الطلب
+                  </span>
+                </div>
+              </label>
+            </div>
           </div>
 
-          <DialogFooter className="pt-4 border-t border-candy-line/60 gap-2">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => onOpenChange(false)}
-              disabled={isSubmitting}
-            >
-              إلغاء
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              isLoading={isSubmitting}
-              leftIcon={<Check className="w-4 h-4" />}
-            >
-              {isEditing ? 'حفظ التعديلات' : 'إضافة المنطقة'}
-            </Button>
-          </DialogFooter>
+          <div className="p-4 sm:px-6 border-t border-candy-line/60 shrink-0 bg-candy-cream/40 flex items-center justify-end gap-2">
+            <DialogFooter className="mt-0 sm:mt-0 flex-row items-center justify-end gap-2 w-full sm:w-auto">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => onOpenChange(false)}
+                disabled={isSubmitting}
+              >
+                إلغاء
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                isLoading={isSubmitting}
+                leftIcon={<Check className="w-4 h-4" />}
+              >
+                {isEditing ? 'حفظ التعديلات' : 'إضافة المنطقة'}
+              </Button>
+            </DialogFooter>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

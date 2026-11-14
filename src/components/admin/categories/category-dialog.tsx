@@ -202,229 +202,235 @@ export function CategoryDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-center gap-2.5 mb-1">
-            <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
-              <Layers className="w-5 h-5" aria-hidden="true" />
+      <DialogContent className="max-w-xl max-h-[90dvh] flex flex-col overflow-hidden p-0">
+        <div className="p-5 sm:p-6 pb-3 border-b border-candy-line/60 shrink-0">
+          <DialogHeader className="mb-0 text-right">
+            <div className="flex items-center gap-2.5 pl-6 sm:pl-8">
+              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
+                <Layers className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div>
+                <DialogTitle className="text-lg font-bold font-display text-candy-ink">
+                  {isEditing ? `تعديل تصنيف: ${category?.name}` : 'إضافة تصنيف جديد'}
+                </DialogTitle>
+                <DialogDescription className="text-xs text-candy-muted font-sans mt-0.5">
+                  {isEditing
+                    ? 'تعديل بيانات التصنيف وصورته وترتيبه في المتجر'
+                    : 'أدخل تفاصيل التصنيف الجديد لعرضه في شريط الأقسام وواجهة المتجر'}
+                </DialogDescription>
+              </div>
             </div>
-            <div>
-              <DialogTitle className="text-lg font-bold font-display text-candy-ink">
-                {isEditing ? `تعديل تصنيف: ${category?.name}` : 'إضافة تصنيف جديد'}
-              </DialogTitle>
-              <DialogDescription className="text-xs text-candy-muted font-sans mt-0.5">
-                {isEditing
-                  ? 'تعديل بيانات التصنيف وصورته وترتيبه في المتجر'
-                  : 'أدخل تفاصيل التصنيف الجديد لعرضه في شريط الأقسام وواجهة المتجر'}
-              </DialogDescription>
-            </div>
-          </div>
-        </DialogHeader>
+          </DialogHeader>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 py-2">
-          {errors.form && (
-            <div
-              role="alert"
-              className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-sans font-medium"
-            >
-              {errors.form}
-            </div>
-          )}
-
-          {/* اسم التصنيف */}
-          <div>
-            <Input
-              id="category-name"
-              label="اسم التصنيف *"
-              value={name}
-              onChange={(e) => handleNameChange(e.target.value)}
-              placeholder="مثال: البقلاوة والحلويات الشرقية"
-              error={errors.name}
-              disabled={isSubmitting}
-              autoFocus
-            />
-          </div>
-
-          {/* المعرف الرابطي (slug) مع زر توليد تلقائي */}
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label
-                htmlFor="category-slug"
-                className="block text-xs font-bold text-candy-ink font-sans"
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="px-5 sm:px-6 py-4 overflow-y-auto flex-1 space-y-4">
+            {errors.form && (
+              <div
+                role="alert"
+                className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-sans font-medium"
               >
-                المعرف الرابطي (Slug) *
-              </label>
-              <button
-                type="button"
-                onClick={() => setSlug(generateSlug(name || 'category'))}
-                className="text-[11px] text-candy-berry hover:text-candy-berry-dark hover:underline font-sans flex items-center gap-1"
-              >
-                <RefreshCw className="w-3 h-3" />
-                توليد من الاسم
-              </button>
-            </div>
-            <Input
-              id="category-slug"
-              value={slug}
-              onChange={(e) => {
-                setSlug(e.target.value);
-                if (errors.slug) setErrors((prev) => ({ ...prev, slug: '' }));
-              }}
-              placeholder="مثال: baklava-eastern"
-              error={errors.slug}
-              disabled={isSubmitting}
-              dir="ltr"
-              className="text-left font-mono text-xs"
-            />
-            <p className="text-[11px] text-candy-muted font-sans mt-1">
-              يُستخدم في رابط التصنيف بالمتجر مثل: /category/{slug || '...'}
-            </p>
-          </div>
-
-          {/* وصف التصنيف */}
-          <div>
-            <label
-              htmlFor="category-description"
-              className="block text-xs font-bold text-candy-ink font-sans mb-1.5"
-            >
-              وصف التصنيف (اختياري)
-            </label>
-            <Textarea
-              id="category-description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="نبذة تسويقية تظهر للزبون عند تصفح هذا القسم..."
-              rows={2}
-              disabled={isSubmitting}
-            />
-          </div>
-
-          {/* رابط الصورة ومعاينتها */}
-          <div>
-            <Input
-              id="category-image"
-              label="رابط صورة التصنيف *"
-              value={imageUrl}
-              onChange={(e) => {
-                setImageUrl(e.target.value);
-                setImageError(false);
-                if (errors.imageUrl) setErrors((prev) => ({ ...prev, imageUrl: '' }));
-              }}
-              placeholder="https://images.unsplash.com/..."
-              error={errors.imageUrl}
-              disabled={isSubmitting}
-              dir="ltr"
-              className="text-left font-mono text-xs"
-            />
-
-            {/* معاينة الصورة */}
-            <div className="mt-2 p-2.5 rounded-xl bg-candy-soft border border-candy-line flex items-center gap-3">
-              <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-candy-line shrink-0 flex items-center justify-center">
-                {imageUrl && !imageError ? (
-                  <img
-                    src={imageUrl}
-                    alt={name || 'معاينة التصنيف'}
-                    onError={() => setImageError(true)}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <ImageIcon className="w-6 h-6 text-candy-muted/50" />
-                )}
+                {errors.form}
               </div>
-              <div className="flex-1 min-w-0">
-                <span className="text-xs font-bold text-candy-ink block">معاينة الصورة الحية</span>
-                <span className="text-[11px] text-candy-muted block mt-0.5">
-                  {imageError
-                    ? 'تعذر تحميل الصورة من الرابط، يرجى التأكد من صحته'
-                    : 'صورة واضحة وجميلة تعبّر عن محتوى القسم'}
-                </span>
-              </div>
-            </div>
+            )}
 
-            {/* اقتراحات صور سريعة */}
-            <div className="mt-2">
-              <span className="text-[11px] text-candy-muted font-sans font-medium block mb-1.5">
-                أو اختر صورة جاهزة من التشكيلة:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {SUGGESTED_IMAGES.map((item, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => {
-                      setImageUrl(item.url);
-                      setImageError(false);
-                    }}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-sans bg-white border border-candy-line hover:border-candy-rose hover:bg-candy-soft transition-colors"
-                  >
-                    <Sparkles className="w-3 h-3 text-candy-strawberry" />
-                    <span>{item.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* الترتيب والحالة النشطة */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-candy-line/60">
+            {/* اسم التصنيف */}
             <div>
               <Input
-                id="category-order"
-                type="number"
-                min="1"
-                label="ترتيب الظهور *"
-                value={displayOrder}
-                onChange={(e) => setDisplayOrder(parseInt(e.target.value) || 1)}
-                error={errors.displayOrder}
+                id="category-name"
+                label="اسم التصنيف *"
+                value={name}
+                onChange={(e) => handleNameChange(e.target.value)}
+                placeholder="مثال: البقلاوة والحلويات الشرقية"
+                error={errors.name}
                 disabled={isSubmitting}
-                helperText="الأقل رقماً يظهر أولاً في شريط الأقسام"
+                autoFocus
               />
             </div>
 
-            <div className="flex flex-col justify-center pt-2 sm:pt-0">
+            {/* المعرف الرابطي (slug) مع زر توليد تلقائي */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label
+                  htmlFor="category-slug"
+                  className="block text-xs font-bold text-candy-ink font-sans"
+                >
+                  المعرف الرابطي (Slug) *
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setSlug(generateSlug(name || 'category'))}
+                  className="text-[11px] text-candy-berry hover:text-candy-berry-dark hover:underline font-sans flex items-center gap-1"
+                >
+                  <RefreshCw className="w-3 h-3" />
+                  توليد من الاسم
+                </button>
+              </div>
+              <Input
+                id="category-slug"
+                value={slug}
+                onChange={(e) => {
+                  setSlug(e.target.value);
+                  if (errors.slug) setErrors((prev) => ({ ...prev, slug: '' }));
+                }}
+                placeholder="مثال: baklava-eastern"
+                error={errors.slug}
+                disabled={isSubmitting}
+                dir="ltr"
+                className="text-left font-mono text-xs"
+              />
+              <p className="text-[11px] text-candy-muted font-sans mt-1">
+                يُستخدم في رابط التصنيف بالمتجر مثل: /category/{slug || '...'}
+              </p>
+            </div>
+
+            {/* وصف التصنيف */}
+            <div>
               <label
-                htmlFor="category-is-active"
-                className="text-xs font-bold text-candy-ink font-sans mb-1.5"
+                htmlFor="category-description"
+                className="block text-xs font-bold text-candy-ink font-sans mb-1.5"
               >
-                حالة التصنيف
+                وصف التصنيف (اختياري)
               </label>
-              <label
-                htmlFor="category-is-active"
-                className="flex items-center gap-2.5 p-2.5 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
-              >
-                <input
-                  id="category-is-active"
-                  type="checkbox"
-                  checked={isActive}
-                  onChange={(e) => setIsActive(e.target.checked)}
-                  disabled={isSubmitting}
-                  className="w-4 h-4 rounded text-candy-berry focus:ring-candy-strawberry border-candy-line"
-                />
-                <span className="text-xs font-semibold text-candy-ink font-sans">
-                  {isActive ? 'مفعّل (يظهر للزبائن في المتجر)' : 'معطّل (مخفي مؤقتاً)'}
+              <Textarea
+                id="category-description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="نبذة تسويقية تظهر للزبون عند تصفح هذا القسم..."
+                rows={2}
+                disabled={isSubmitting}
+              />
+            </div>
+
+            {/* رابط الصورة ومعاينتها */}
+            <div>
+              <Input
+                id="category-image"
+                label="رابط صورة التصنيف *"
+                value={imageUrl}
+                onChange={(e) => {
+                  setImageUrl(e.target.value);
+                  setImageError(false);
+                  if (errors.imageUrl) setErrors((prev) => ({ ...prev, imageUrl: '' }));
+                }}
+                placeholder="https://images.unsplash.com/..."
+                error={errors.imageUrl}
+                disabled={isSubmitting}
+                dir="ltr"
+                className="text-left font-mono text-xs"
+              />
+
+              {/* معاينة الصورة */}
+              <div className="mt-2 p-2.5 rounded-xl bg-candy-soft border border-candy-line flex items-center gap-3">
+                <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-candy-line shrink-0 flex items-center justify-center">
+                  {imageUrl && !imageError ? (
+                    <img
+                      src={imageUrl}
+                      alt={name || 'معاينة التصنيف'}
+                      onError={() => setImageError(true)}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <ImageIcon className="w-6 h-6 text-candy-muted/50" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs font-bold text-candy-ink block">معاينة الصورة الحية</span>
+                  <span className="text-[11px] text-candy-muted block mt-0.5">
+                    {imageError
+                      ? 'تعذر تحميل الصورة من الرابط، يرجى التأكد من صحته'
+                      : 'صورة واضحة وجميلة تعبّر عن محتوى القسم'}
+                  </span>
+                </div>
+              </div>
+
+              {/* اقتراحات صور سريعة */}
+              <div className="mt-2">
+                <span className="text-[11px] text-candy-muted font-sans font-medium block mb-1.5">
+                  أو اختر صورة جاهزة من التشكيلة:
                 </span>
-              </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {SUGGESTED_IMAGES.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setImageUrl(item.url);
+                        setImageError(false);
+                      }}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-sans bg-white border border-candy-line hover:border-candy-rose hover:bg-candy-soft transition-colors"
+                    >
+                      <Sparkles className="w-3 h-3 text-candy-strawberry" />
+                      <span>{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* الترتيب والحالة النشطة */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-candy-line/60">
+              <div>
+                <Input
+                  id="category-order"
+                  type="number"
+                  min="1"
+                  label="ترتيب الظهور *"
+                  value={displayOrder}
+                  onChange={(e) => setDisplayOrder(parseInt(e.target.value) || 1)}
+                  error={errors.displayOrder}
+                  disabled={isSubmitting}
+                  helperText="الأقل رقماً يظهر أولاً في شريط الأقسام"
+                />
+              </div>
+
+              <div className="flex flex-col justify-center pt-2 sm:pt-0">
+                <label
+                  htmlFor="category-is-active"
+                  className="text-xs font-bold text-candy-ink font-sans mb-1.5"
+                >
+                  حالة التصنيف
+                </label>
+                <label
+                  htmlFor="category-is-active"
+                  className="flex items-center gap-2.5 p-2.5 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
+                >
+                  <input
+                    id="category-is-active"
+                    type="checkbox"
+                    checked={isActive}
+                    onChange={(e) => setIsActive(e.target.checked)}
+                    disabled={isSubmitting}
+                    className="w-4 h-4 rounded text-candy-berry focus:ring-candy-strawberry border-candy-line"
+                  />
+                  <span className="text-xs font-semibold text-candy-ink font-sans">
+                    {isActive ? 'مفعّل (يظهر للزبائن في المتجر)' : 'معطّل (مخفي مؤقتاً)'}
+                  </span>
+                </label>
+              </div>
             </div>
           </div>
 
-          <DialogFooter className="pt-4 border-t border-candy-line/60 gap-2">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => onOpenChange(false)}
-              disabled={isSubmitting}
-            >
-              إلغاء
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              isLoading={isSubmitting}
-              leftIcon={<Check className="w-4 h-4" />}
-            >
-              {isEditing ? 'حفظ التعديلات' : 'إضافة التصنيف'}
-            </Button>
-          </DialogFooter>
+          <div className="p-4 sm:px-6 border-t border-candy-line/60 shrink-0 bg-candy-cream/40 flex items-center justify-end gap-2">
+            <DialogFooter className="mt-0 sm:mt-0 flex-row items-center justify-end gap-2 w-full sm:w-auto">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => onOpenChange(false)}
+                disabled={isSubmitting}
+              >
+                إلغاء
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                isLoading={isSubmitting}
+                leftIcon={<Check className="w-4 h-4" />}
+              >
+                {isEditing ? 'حفظ التعديلات' : 'إضافة التصنيف'}
+              </Button>
+            </DialogFooter>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
