@@ -9,6 +9,7 @@ export const ADMIN_USERS_STORAGE_KEY = 'candy_admin_users_v1';
 
 export interface UserFormData {
   fullName: string;
+  jobTitle?: string;
   username: string;
   email: string;
   role: AdminRole;
@@ -153,6 +154,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
       const newUser: AdminUser = {
         id: `user-${data.role}-${Date.now()}`,
         fullName: data.fullName.trim(),
+        jobTitle: data.jobTitle?.trim() || undefined,
         username: data.username.trim(),
         email: normalizedEmail,
         role: data.role,
@@ -199,6 +201,18 @@ export function useAdminUsers(): UseAdminUsersReturn {
         );
       }
 
+      // إذا كان التعديل يعطل آخر مدير نشط
+      if (
+        current.role === 'manager' &&
+        current.isActive &&
+        data.isActive === false &&
+        activeManagersCount <= 1
+      ) {
+        throw new Error(
+          'لا يُسمح بإيقاف آخر مدير نشط في النظام؛ يجب توفر مدير نشط واحد على الأقل لضمان استمرارية الإدارة.'
+        );
+      }
+
       // التحقق من البريد إذا تغير
       if (data.email) {
         const normalizedEmail = data.email.trim().toLowerCase();
@@ -224,6 +238,10 @@ export function useAdminUsers(): UseAdminUsersReturn {
       const updatedUser: AdminUser = {
         ...current,
         fullName: data.fullName ? data.fullName.trim() : current.fullName,
+        jobTitle:
+          data.jobTitle !== undefined
+            ? data.jobTitle.trim() || undefined
+            : current.jobTitle,
         username: data.username ? data.username.trim() : current.username,
         email: data.email ? data.email.trim().toLowerCase() : current.email,
         role: data.role || current.role,

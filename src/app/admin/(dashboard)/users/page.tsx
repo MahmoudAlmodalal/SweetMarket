@@ -8,12 +8,8 @@ import {
   UserPlus,
   ShieldCheck,
   UserCheck,
-  ShieldAlert,
   ChevronLeft,
-  KeyRound,
   AlertCircle,
-  Loader2,
-  Lock,
   CheckCircle2,
 } from 'lucide-react';
 import { useAdminAuth } from '@/context/admin-auth-context';
@@ -38,7 +34,7 @@ import type { AdminUser } from '@/types';
 
 export default function AdminUsersPage() {
   const router = useRouter();
-  const { user: currentAdmin, role, isManager, isLoading: isAuthLoading, switchRole } = useAdminAuth();
+  const { user: currentAdmin, isManager, isLoading: isAuthLoading } = useAdminAuth();
 
   const {
     users,
@@ -77,45 +73,41 @@ export default function AdminUsersPage() {
     }
   }, [isAuthLoading, isManager, router]);
 
-  // حالة انتظار التحقق من المصادقة والصلاحيات
-  if (isAuthLoading) {
+  // حالة انتظار التحقق من المصادقة والصلاحيات أو الحظر قبل اكتمال التوجيه
+  // يُعرض هيكل تحميل محايد يمنع أي ظهور مؤقت لجدول الإدارة أو بطاقة 403 السابقة
+  if (isAuthLoading || !isManager) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center">
-        <Loader2 className="w-8 h-8 text-candy-berry animate-spin mb-3" aria-hidden="true" />
-        <p className="font-sans font-bold text-sm text-candy-ink">جاري التحقق من صلاحيات المدير...</p>
-      </div>
-    );
-  }
-
-  // في حال كان المستخدم موظفاً وقبل اكتمال التوجيه إلى صفحة الحظر (Fallback Message)
-  if (!isManager) {
-    return (
-      <div className="max-w-xl mx-auto my-12 p-8 rounded-3xl bg-white border border-candy-line shadow-candy-2 text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-rose-50 border-2 border-rose-100 text-rose-600 mx-auto flex items-center justify-center animate-pulse">
-          <ShieldAlert className="w-8 h-8" aria-hidden="true" />
+      <div
+        className="max-w-6xl mx-auto space-y-6 animate-pulse"
+        aria-busy="true"
+        aria-label="جاري التحميل..."
+      >
+        <div className="h-4 w-48 bg-candy-line/60 rounded-lg" />
+        <div className="p-6 rounded-3xl bg-white border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-candy-soft/80" />
+            <div className="space-y-2">
+              <div className="h-5 w-44 bg-candy-soft rounded-lg" />
+              <div className="h-3 w-64 bg-candy-soft/80 rounded" />
+            </div>
+          </div>
+          <div className="h-10 w-32 bg-candy-soft/80 rounded-xl" />
         </div>
-        <h2 className="font-display font-bold text-xl text-candy-ink">
-          وصول محظور (403) • هذه الصفحة للمدير فقط
-        </h2>
-        <p className="font-sans text-xs text-candy-muted max-w-md mx-auto leading-relaxed">
-          حسابك الحالي يحمل دور <strong>موظف (Staff)</strong>، ولا يملك صلاحية إدارة المستخدمين وتعيين الأدوار.
-        </p>
-        <div className="pt-4 flex flex-col sm:flex-row gap-2 justify-center">
-          <Button
-            type="button"
-            variant="primary"
-            onClick={() => switchRole('manager')}
-            leftIcon={<ShieldCheck className="w-4 h-4" />}
-          >
-            التبديل لدور مدير
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={() => router.push('/admin/orders')}
-          >
-            العودة للطلبات
-          </Button>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm space-y-3">
+              <div className="h-3 w-20 bg-candy-soft rounded" />
+              <div className="h-7 w-12 bg-candy-soft/80 rounded" />
+            </div>
+          ))}
+        </div>
+        <div className="p-6 rounded-2xl bg-white border border-candy-line shadow-sm space-y-4">
+          <div className="h-10 w-full bg-candy-soft/60 rounded-xl" />
+          <div className="space-y-3 pt-2">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-14 bg-candy-soft/40 rounded-xl" />
+            ))}
+          </div>
         </div>
       </div>
     );

@@ -11,6 +11,7 @@ import {
   AlertCircle,
   Save,
   Info,
+  Briefcase,
 } from 'lucide-react';
 import {
   Dialog,
@@ -54,6 +55,7 @@ export function UserRoleDialog({
   const isEdit = Boolean(user);
 
   const [fullName, setFullName] = React.useState('');
+  const [jobTitle, setJobTitle] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [role, setRole] = React.useState<AdminRole>('staff');
@@ -67,12 +69,14 @@ export function UserRoleDialog({
     if (open) {
       if (user) {
         setFullName(user.fullName);
+        setJobTitle(user.jobTitle || '');
         setUsername(user.username);
         setEmail(user.email);
         setRole(user.role);
         setIsActive(user.isActive);
       } else {
         setFullName('');
+        setJobTitle('');
         setUsername('');
         setEmail('');
         setRole('staff');
@@ -125,9 +129,14 @@ export function UserRoleDialog({
       }
     }
 
-    // 4. فحص حظر تجريد آخر مدير نشط من دوره
-    if (isEdit && user && user.role === 'manager' && user.isActive && isLastManager && role === 'staff') {
-      newErrors.role = 'لا يمكن تحويل آخر مدير نشط إلى موظف؛ يجب ترقية مدير آخر أولاً';
+    // 4. فحص حظر تجريد أو إيقاف آخر مدير نشط
+    if (isEdit && user && user.role === 'manager' && user.isActive && isLastManager) {
+      if (role === 'staff') {
+        newErrors.role = 'لا يمكن تحويل آخر مدير نشط إلى موظف؛ يجب ترقية مدير آخر أولاً';
+      }
+      if (!isActive) {
+        newErrors.general = 'لا يمكن إيقاف آخر مدير نشط في النظام؛ يجب توفر مدير نشط واحد على الأقل';
+      }
     }
 
     setErrors(newErrors);
@@ -143,6 +152,7 @@ export function UserRoleDialog({
       await onSave(
         {
           fullName: fullName.trim(),
+          jobTitle: jobTitle.trim() || undefined,
           username: username.trim().toLowerCase(),
           email: email.trim().toLowerCase(),
           role,
@@ -195,20 +205,33 @@ export function UserRoleDialog({
         )}
 
         <form onSubmit={handleSubmit} noValidate className="space-y-4 font-sans">
-          {/* الاسم الكامل */}
-          <div className="space-y-1">
-            <Input
-              id="user-full-name"
-              label="الاسم الكامل"
-              placeholder="مثال: سارة خالد"
-              value={fullName}
-              onChange={(e) => {
-                setFullName(e.target.value);
-                if (errors.fullName) setErrors((prev) => ({ ...prev, fullName: undefined }));
-              }}
-              error={errors.fullName}
-              iconPrefix={<User className="w-4 h-4" />}
-            />
+          {/* الاسم الكامل والمسمى الوظيفي */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <Input
+                id="user-full-name"
+                label="الاسم الكامل"
+                placeholder="مثال: سارة خالد"
+                value={fullName}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  if (errors.fullName) setErrors((prev) => ({ ...prev, fullName: undefined }));
+                }}
+                error={errors.fullName}
+                iconPrefix={<User className="w-4 h-4" />}
+              />
+            </div>
+
+            <div className="space-y-1">
+              <Input
+                id="user-job-title"
+                label="المسمى الوظيفي"
+                placeholder="مثال: مدير المتجر أو مشرف تشغيل"
+                value={jobTitle}
+                onChange={(e) => setJobTitle(e.target.value)}
+                iconPrefix={<Briefcase className="w-4 h-4" />}
+              />
+            </div>
           </div>
 
           {/* اسم المستخدم والبريد الإلكتروني */}
@@ -257,16 +280,26 @@ export function UserRoleDialog({
               {/* خيار موظف تشغيل */}
               <button
                 type="button"
+                disabled={isLastManager && user?.role === 'manager'}
                 onClick={() => {
+                  if (isLastManager && user?.role === 'manager') return;
                   setRole('staff');
                   if (errors.role) setErrors((prev) => ({ ...prev, role: undefined }));
                 }}
                 className={cn(
-                  'p-3.5 rounded-2xl border text-right transition-all flex flex-col justify-between relative cursor-pointer',
+                  'p-3.5 rounded-2xl border text-right transition-all flex flex-col justify-between relative',
+                  isLastManager && user?.role === 'manager'
+                    ? 'opacity-40 cursor-not-allowed bg-gray-50 border-gray-200'
+                    : 'cursor-pointer',
                   role === 'staff'
                     ? 'border-candy-berry bg-candy-soft/60 shadow-candy-1 ring-2 ring-candy-strawberry/20'
                     : 'border-candy-line bg-white hover:bg-candy-soft/30 hover:border-candy-blush'
                 )}
+                title={
+                  isLastManager && user?.role === 'manager'
+                    ? 'لا يمكن تخفيض صلاحيات آخر مدير نشط إلى موظف'
+                    : undefined
+                }
               >
                 <div className="flex items-center justify-between w-full mb-1.5">
                   <span className="font-bold text-sm text-candy-ink flex items-center gap-1.5">
