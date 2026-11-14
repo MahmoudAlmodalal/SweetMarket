@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e:rbac": "node tests/e2e-rbac-recovery.mjs",
+    "capture:gallery": "node tests/capture-gallery.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",
