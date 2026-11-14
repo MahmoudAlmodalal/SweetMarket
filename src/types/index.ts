@@ -177,11 +177,17 @@ export interface AdminUser {
   id: string;
   username: string;
   fullName: string;
+  jobTitle?: string;
   email: string;
   role: AdminRole;
   isActive: boolean;
   createdAt: string;
 }
+
+/**
+ * نموذج المستخدم الموحد لضمان فصل fullName عن jobTitle
+ */
+export type User = AdminUser;
 
 /**
  * جلسة الإدارة المخزنة

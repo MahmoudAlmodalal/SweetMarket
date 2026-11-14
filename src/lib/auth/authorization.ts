@@ -4,6 +4,8 @@
  * Enforces separation between Authentication (identity) and Authorization (permissions & ownership)
  */
 
+import type { AdminUser } from '@/types';
+
 export type Role = 'admin' | 'client' | 'guest';
 
 export type ResourceType =
@@ -183,4 +185,181 @@ export function maskSensitiveCustomerData(customer: {
     streetAddress: 'منطقة التسليم المعتمدة',
     buildingOrApt: undefined,
   };
+}
+
+/**
+ * الخريطة الموحدة لتسميات الأدوار الإدارية باللغة العربية (ADR Invariant: Unified Arabic Role Mapping)
+ * 'admin' و 'manager' -> 'مدير النظام'
+ * 'staff' -> 'موظف'
+ */
+export const ROLE_LABELS_AR: Record<string, string> = {
+  admin: 'مدير النظام',
+  manager: 'مدير النظام',
+  staff: 'موظف',
+  client: 'عميل',
+  guest: 'زائر',
+};
+
+export const ADMIN_ROLE_LABELS_AR: Record<string, string> = {
+  admin: 'مدير النظام',
+  manager: 'مدير النظام',
+  staff: 'موظف',
+};
+
+/**
+ * دالة مساعدة معتمدة للحصول على المسمى العربي الموحد للأدوار
+ */
+export function getRoleLabelAr(role?: string | null): string {
+  if (!role) return '';
+  const normalized = role.toLowerCase().trim();
+  if (normalized === 'admin' || normalized === 'manager') {
+    return 'مدير النظام';
+  }
+  if (normalized === 'staff') {
+    return 'موظف';
+  }
+  return ROLE_LABELS_AR[normalized] || role;
+}
+
+export const getAdminRoleLabelAr = getRoleLabelAr;
+export const getRoleLabel = getRoleLabelAr;
+export const getArabicRoleLabel = getRoleLabelAr;
+
+export type RouteAccessStatus = 'allowed' | 'unauthenticated' | 'forbidden';
+
+export interface RouteAccessResult {
+  status: RouteAccessStatus;
+  requiredRole?: string;
+  requiredScopeLabel?: string;
+}
+
+/**
+ * تقييم صلاحية الوصول للمسارات الإدارية وفق سياسة مركزية موحدة
+ * Protected admin routes:
+ * - /admin/login متاح للجميع (status: 'allowed')
+ * - /admin/users يتطلب دور مدير النظام ('manager' أو 'admin')
+ * - باقي مسارات /admin تتطلب مستخدم إداري نشط موثق (staff أو manager)
+ */
+export function evaluateRouteAccess(
+  pathname: string,
+  user: AdminUser | null
+): RouteAccessResult {
+  // تنظيف المسار من معلمات الاستعلام وعلامات التجزئة والشرطات الزائدة
+  const cleanPath = (pathname || '')
+    .split('?')[0]
+    .split('#')[0]
+    .replace(/\/+$/, '') || '/';
+
+  // 1. المسارات غير الإدارية مسموحة دائماً للجميع (متجر، سلة، تتبع، إلخ)
+  if (!cleanPath.startsWith('/admin')) {
+    return { status: 'allowed' };
+  }
+
+  // 2. صفحة تسجيل الدخول متاحة للجميع دائماً
+  if (cleanPath === '/admin/login') {
+    return { status: 'allowed' };
+  }
+
+  // 3. التحقق من توفر جلسة مستخدم إداري نشطة
+  if (!user || !user.isActive) {
+    return {
+      status: 'unauthenticated',
+      requiredRole: 'staff',
+      requiredScopeLabel: 'تسجيل دخول بحساب موظف أو مدير نشط',
+    };
+  }
+
+  // 4. صفحة إدارة المستخدمين وفريق العمل (/admin/users) تتطلب دور مدير النظام حصراً
+  const isUsersRoute =
+    cleanPath === '/admin/users' || cleanPath.startsWith('/admin/users/');
+
+  if (isUsersRoute) {
+    const isManagerOrAdmin =
+      user.role === 'manager' || (user.role as string) === 'admin';
+
+    if (isManagerOrAdmin) {
+      return { status: 'allowed' };
+    }
+
+    return {
+      status: 'forbidden',
+      requiredRole: 'manager',
+      requiredScopeLabel: 'إدارة المستخدمين وصلاحيات النظام (مدير النظام)',
+    };
+  }
+
+  // 5. صفحة الوصول المحظور (/admin/forbidden):
+  // إذا كان المستخدم مديراً، يسمح له بالمرور (للتحويل التلقائي إلى وجهته المطلوبة)
+  // إذا لم يكن مديراً، status: forbidden
+  if (cleanPath === '/admin/forbidden') {
+    const isManagerOrAdmin =
+      user.role === 'manager' || (user.role as string) === 'admin';
+    if (isManagerOrAdmin) {
+      return { status: 'allowed' };
+    }
+    return {
+      status: 'forbidden',
+      requiredRole: 'manager',
+      requiredScopeLabel: 'صلاحيات إدارية موسعة (مدير النظام)',
+    };
+  }
+
+  // 6. باقي مسارات لوحة الإدارة متاحة لأي موظف أو مدير موثق ونشط
+  const isAuthorizedAdminRole =
+    user.role === 'manager' ||
+    user.role === 'staff' ||
+    (user.role as string) === 'admin';
+
+  if (isAuthorizedAdminRole) {
+    return { status: 'allowed' };
+  }
+
+  return {
+    status: 'forbidden',
+    requiredRole: 'staff',
+    requiredScopeLabel: 'حساب إدارة معتمد',
+  };
+}
+
+/**
+ * التحقق الأمني الصارم من وجهة إعادة التوجيه الإدارية (Return URL / from)
+ * يسمح فقط بالمسارات النسبية المطابقة لنطاق لوحة التحكم /admin/*
+ * يحمي ضد هجمات إعادة التوجيه المفتوح (Open Redirect) ومسارات الحلقات المفرغة
+ */
+export function validateAdminReturnUrl(url: string | null | undefined): string {
+  const fallback = '/admin/orders';
+  if (!url || typeof url !== 'string') {
+    return fallback;
+  }
+
+  const trimmed = url.trim();
+
+  // رفض المسارات التي لا تبدأ بشرطة مائلة واحدة أو تبدأ ببروتوكول نسبي // أو /\
+  if (!trimmed.startsWith('/') || trimmed.startsWith('//') || trimmed.startsWith('/\\')) {
+    return fallback;
+  }
+
+  // رفض أي بروتوكول صريح أو رموز محارف مشبوهة
+  if (
+    /^(?:[a-z]+:|\/\/)/i.test(trimmed) ||
+    trimmed.includes('\\') ||
+    trimmed.includes('\0')
+  ) {
+    return fallback;
+  }
+
+  // استخراج المسار المجرد بدون query parameters
+  const pathOnly = trimmed.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/';
+
+  // التأكد من أن المسار يقع حصراً داخل نطاق الإدارة /admin
+  if (!pathOnly.startsWith('/admin')) {
+    return fallback;
+  }
+
+  // منع التوجيه لصفحات الدخول أو الحظر لتفادي الحلقات التكرارية اللانهائية
+  if (pathOnly === '/admin/login' || pathOnly === '/admin/forbidden') {
+    return fallback;
+  }
+
+  return trimmed;
 }
