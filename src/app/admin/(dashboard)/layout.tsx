@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { AdminAuthProvider, useAdminAuth } from '@/context/admin-auth-context';
 import { ToastProvider } from '@/components/ui/toast';
+import { evaluateRouteAccess } from '@/lib/auth/authorization';
 import { AdminSidebar } from '@/components/layout/admin-sidebar';
 import { AdminNavbar } from '@/components/layout/admin-navbar';
 
@@ -19,15 +20,21 @@ function DashboardProtectedShell({ children }: { children: React.ReactNode }) {
     setSidebarOpen(false);
   }, [pathname]);
 
-  // التحقق من حماية لوحة الإدارة وإعادة التوجيه لصفحة تسجيل الدخول إذا لم يوجد مستخدم
+  // التحقق من حماية مسارات لوحة الإدارة وإعادة التوجيه لصفحة تسجيل الدخول أو الحظر وفق تقييم الصلاحيات
   useEffect(() => {
-    if (!isLoading && (!isAuthenticated || !user)) {
+    if (isLoading) return;
+
+    const access = evaluateRouteAccess(pathname, user);
+    if (access.status === 'unauthenticated') {
       const redirectTarget = encodeURIComponent(pathname);
       router.replace(`/admin/login?redirect=${redirectTarget}`);
+    } else if (access.status === 'forbidden') {
+      const fromTarget = encodeURIComponent(pathname);
+      router.replace(`/admin/forbidden?from=${fromTarget}`);
     }
-  }, [isLoading, isAuthenticated, user, router, pathname]);
+  }, [isLoading, user, router, pathname]);
 
-  // حالة انتظار استرجاع الجلسة من التخزين المحلي
+  // حالة انتظار استرجاع الجلسة من التخزين المحلي لمنع الوميض العابر
   if (isLoading) {
     return (
       <div className="min-h-screen bg-candy-cream flex flex-col items-center justify-center p-6 text-candy-ink">
@@ -40,8 +47,9 @@ function DashboardProtectedShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // في حالة عدم وجود مصادقة، منع عرض المحتوى أثناء إعادة التوجيه
-  if (!isAuthenticated || !user) {
+  // منع عرض أي محتوى إذا كان المستخدم غير مصرح له أو غير مسجل دخول لمنع الوميض
+  const access = evaluateRouteAccess(pathname, user);
+  if (access.status !== 'allowed') {
     return null;
   }
 
