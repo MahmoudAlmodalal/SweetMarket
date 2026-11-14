@@ -87,32 +87,43 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   // حقول النموذج
-  const [name, setName] = useState(initialProduct?.name || '');
-  const [nameEn, setNameEn] = useState(initialProduct?.nameEn || '');
-  const [categoryId, setCategoryId] = useState(initialProduct?.categoryId || '');
-  const [price, setPrice] = useState<string>(initialProduct?.price ? String(initialProduct.price) : '');
+  const [name, setName] = useState(mode === 'create' ? '' : (initialProduct?.name || ''));
+  const [nameEn, setNameEn] = useState(mode === 'create' ? '' : (initialProduct?.nameEn || ''));
+  const [categoryId, setCategoryId] = useState(mode === 'create' ? '' : (initialProduct?.categoryId || ''));
+  const [price, setPrice] = useState<string>(
+    mode === 'create' ? '' : (initialProduct?.price ? String(initialProduct.price) : '')
+  );
   const [salePrice, setSalePrice] = useState<string>(
-    initialProduct?.salePrice ? String(initialProduct.salePrice) : ''
+    mode === 'create' ? '' : (initialProduct?.salePrice ? String(initialProduct.salePrice) : '')
   );
-  const [unit, setUnit] = useState<ProductUnit>(initialProduct?.unit || 'kg');
+  const [unit, setUnit] = useState<ProductUnit>(
+    mode === 'create' ? 'kg' : (initialProduct?.unit || 'kg')
+  );
   const [imageUrl, setImageUrl] = useState(
-    initialProduct?.imageUrl || ''
+    mode === 'create' ? '' : (initialProduct?.imageUrl || '')
   );
-  const [description, setDescription] = useState(initialProduct?.description || '');
+  const [description, setDescription] = useState(
+    mode === 'create' ? '' : (initialProduct?.description || '')
+  );
   const [isAvailable, setIsAvailable] = useState<boolean>(
-    initialProduct !== undefined && initialProduct !== null ? initialProduct.isAvailable : true
+    mode === 'create' ? true : (initialProduct !== undefined && initialProduct !== null ? initialProduct.isAvailable : true)
   );
-  const [isFeatured, setIsFeatured] = useState<boolean>(initialProduct?.isFeatured || false);
+  const [isFeatured, setIsFeatured] = useState<boolean>(
+    mode === 'create' ? false : Boolean(initialProduct?.isFeatured)
+  );
 
   // خيارات الأوزان المتعددة
   const [weights, setWeights] = useState<ProductWeightOption[]>(
-    initialProduct?.availableWeights && initialProduct.availableWeights.length > 0
-      ? initialProduct.availableWeights
-      : []
+    mode === 'create'
+      ? []
+      : (initialProduct?.availableWeights && initialProduct.availableWeights.length > 0
+          ? initialProduct.availableWeights
+          : [])
   );
 
   // حالة الخطأ والإرسال
   const [errors, setErrors] = useState<FormErrors>({});
+  const [submitAttempted, setSubmitAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageLoadError, setImageLoadError] = useState(false);
 
@@ -122,7 +133,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
       try {
         const cats = await getAdminCategories();
         setCategories(cats);
-        if (!categoryId && cats.length > 0) {
+        if (mode === 'edit' && !categoryId && cats.length > 0) {
           setCategoryId(cats[0].id);
         }
       } catch (err) {
@@ -132,11 +143,11 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
       }
     }
     fetchCats();
-  }, [categoryId]);
+  }, [categoryId, mode]);
 
   // تحديث القيم عند تغير initialProduct
   useEffect(() => {
-    if (initialProduct) {
+    if (mode === 'edit' && initialProduct) {
       setName(initialProduct.name);
       setNameEn(initialProduct.nameEn || '');
       setCategoryId(initialProduct.categoryId);
@@ -149,9 +160,9 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
       setIsFeatured(Boolean(initialProduct.isFeatured));
       setWeights(initialProduct.availableWeights || []);
     }
-  }, [initialProduct]);
+  }, [initialProduct, mode]);
 
-  // التحقق من صحة النموذج (Validation Rules - ER-001, ER-008)
+  // التحقق من صحة النموذج
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -269,6 +280,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
   // حفظ المنتج
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitAttempted(true);
 
     if (!validate()) {
       toast.error('بيانات غير مكتملة', 'يرجى تصحيح الأخطاء الموضحة في النموذج أدناه');
@@ -373,7 +385,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
               label="اسم المنتج بالإنجليزية (اختياري)"
               value={nameEn}
               onChange={(e) => setNameEn(e.target.value)}
-              placeholder="e.g. Mixed Baklava Extra Tray"
+              placeholder="مثال: Mixed Baklava Extra Tray"
               dir="ltr"
               className="text-left"
             />
@@ -389,6 +401,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                   if (errors.categoryId) setErrors((prev) => ({ ...prev, categoryId: undefined }));
                 }}
                 error={errors.categoryId}
+                placeholder="اختر تصنيف المنتج..."
                 options={categoryOptions}
                 disabled={isLoadingCategories}
               />
@@ -614,7 +627,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
               if (errors.imageUrl) setErrors((prev) => ({ ...prev, imageUrl: undefined }));
             }}
             error={errors.imageUrl}
-            placeholder="https://images.unsplash.com/photo-..."
+            placeholder="أدخل رابط صورة المنتج (مثال: https://...)"
             dir="ltr"
             className="text-left font-mono text-xs"
           />
@@ -660,7 +673,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center p-2 text-candy-muted text-center">
                   <ImageIcon className="w-8 h-8 opacity-40 mb-1" />
-                  <span className="text-[10px]">الصورة غير صالحة</span>
+                  <span className="text-[10px]">{imageLoadError ? 'الصورة غير صالحة' : 'لم يتم تحديد صورة'}</span>
                 </div>
               )}
             </div>
@@ -744,6 +757,45 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
           </div>
         </CardContent>
       </Card>
+
+      {/* ضمان عدم حجب الإشعارات المنبثقة لأزرار الإجراءات السفلية عبر تثبيتها في أعلى الشاشة */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          div[aria-label="الإشعارات"] {
+            top: 1.5rem !important;
+            bottom: auto !important;
+          }
+          @media (min-width: 640px) {
+            div[aria-label="الإشعارات"] {
+              top: 1.5rem !important;
+              bottom: auto !important;
+            }
+          }
+        `
+      }} />
+
+      {/* تنبيه الأخطاء العام - موضعه أعلى أزرار الإجراءات السفلية ضمن انسياب الصفحة دون حجب أزرار الحفظ والإلغاء */}
+      {submitAttempted && Object.keys(errors).length > 0 && (
+        <div
+          role="alert"
+          aria-live="polite"
+          className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-start gap-3 text-rose-800 text-sm font-sans shadow-sm"
+        >
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-600 mt-0.5" />
+          <div className="space-y-1 flex-1">
+            <p className="font-bold">يرجى تصحيح الأخطاء التالية قبل حفظ المنتج:</p>
+            <ul className="list-disc list-inside text-xs space-y-1 text-rose-700">
+              {errors.name && <li>{errors.name}</li>}
+              {errors.categoryId && <li>{errors.categoryId}</li>}
+              {errors.price && <li>{errors.price}</li>}
+              {errors.salePrice && <li>{errors.salePrice}</li>}
+              {errors.imageUrl && <li>{errors.imageUrl}</li>}
+              {errors.description && <li>{errors.description}</li>}
+              {errors.weights && <li>{errors.weights}</li>}
+            </ul>
+          </div>
+        </div>
+      )}
 
       {/* أزرار الإجراءات السفلية */}
       <div className="sticky bottom-4 z-10 bg-white/95 backdrop-blur-md p-4 rounded-candy-card border border-candy-line shadow-candy-2 flex items-center justify-between gap-3">
