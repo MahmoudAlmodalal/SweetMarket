@@ -5,6 +5,7 @@ import type {
   Order,
   OrderStatus,
   AdminUser,
+  AdminRole,
   AdminSession,
   CreateOrderData,
 } from '@/types';
@@ -141,7 +142,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 /**
- * تبديل حالة توفر المنتج الفورية في المخزون (FR-022)
+ * تبديل حالة توفر المنتج الفورية في المخزون
  */
 export async function toggleProductAvailability(id: string): Promise<Product> {
   await simulateLatency();
@@ -204,7 +205,7 @@ export async function getOrderById(id: string): Promise<Order | null> {
 }
 
 /**
- * استعلام تتبع الطلب برقم الطلب ورقم هاتف الزبون (SCR-07 / ER-005)
+ * استعلام تتبع الطلب برقم الطلب ورقم هاتف الزبون
  */
 export async function getOrderByNumberAndPhone(
   orderNumber: string,
@@ -276,16 +277,91 @@ export async function createOrder(data: CreateOrderData): Promise<Order> {
   return newOrder;
 }
 
+export interface PerformedByPayload {
+  id?: string;
+  name: string;
+  role: AdminRole;
+}
+
+export type PerformedByInput =
+  | AdminUser
+  | PerformedByPayload
+  | { performedBy?: PerformedByPayload }
+  | undefined;
+
 /**
- * ترقية وتحديث حالة الطلب وفق آلة الحالات (BR-004)
+ * استخلاص بيانات القائم بالإجراء من معطيات الدالة أو الجلسة النشطة
+ */
+function resolveActor(
+  input?: PerformedByInput
+): { id: string; name: string; role: AdminRole } | undefined {
+  if (!input) {
+    const session = getActiveSession();
+    if (session?.user) {
+      return {
+        id: session.user.id || 'usr-admin',
+        name: session.user.fullName,
+        role: session.user.role,
+      };
+    }
+    return undefined;
+  }
+
+  if ('performedBy' in input && input.performedBy) {
+    return {
+      id: input.performedBy.id || 'usr-admin',
+      name: input.performedBy.name,
+      role: input.performedBy.role,
+    };
+  }
+
+  if ('fullName' in input && typeof input.fullName === 'string') {
+    return {
+      id: input.id || 'usr-admin',
+      name: input.fullName,
+      role: input.role,
+    };
+  }
+
+  if ('name' in input && 'role' in input && typeof input.name === 'string') {
+    return {
+      id: input.id || 'usr-admin',
+      name: input.name,
+      role: input.role,
+    };
+  }
+
+  const session = getActiveSession();
+  if (session?.user) {
+    return {
+      id: session.user.id || 'usr-admin',
+      name: session.user.fullName,
+      role: session.user.role,
+    };
+  }
+
+  return undefined;
+}
+
+/**
+ * ترقية وتحديث حالة الطلب وفق آلة الحالات وقواعد العمل
  */
 export async function updateOrderStatus(
   id: string,
   nextStatus: OrderStatus,
-  note?: string,
-  user?: AdminUser
+  note?: string | PerformedByInput,
+  user?: PerformedByInput
 ): Promise<Order> {
   await simulateLatency();
+
+  let actualNote: string | undefined = undefined;
+  let actorInput: PerformedByInput = user;
+
+  if (typeof note === 'string') {
+    actualNote = note;
+  } else if (typeof note === 'object' && note !== null) {
+    actorInput = note;
+  }
 
   let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
   if (!orders || orders.length === 0) {
@@ -309,20 +385,19 @@ export async function updateOrderStatus(
   }
 
   const now = new Date().toISOString();
-  const activeUser = user || getActiveSession()?.user;
+  const actor = resolveActor(actorInput) || {
+    id: 'usr-admin',
+    name: 'مسؤول المتجر',
+    role: 'staff',
+  };
+
   const updatedTimeline = [
     ...currentOrder.timeline,
     {
       status: nextStatus,
       timestamp: now,
-      note: note || undefined,
-      performedBy: activeUser
-        ? {
-            id: activeUser.id,
-            name: activeUser.fullName,
-            role: activeUser.role,
-          }
-        : undefined,
+      note: actualNote || undefined,
+      performedBy: actor,
     },
   ];
 
@@ -341,12 +416,12 @@ export async function updateOrderStatus(
 }
 
 /**
- * إلغاء الطلب الإلزامي مع تدوين السبب بواسطة الإدارة (SCR-14 / FR-018)
+ * إلغاء الطلب الإلزامي مع تدوين السبب بواسطة الإدارة
  */
 export async function cancelOrder(
   id: string,
   reason: string,
-  user?: AdminUser
+  user?: PerformedByInput
 ): Promise<Order> {
   await simulateLatency();
 
@@ -369,8 +444,14 @@ export async function cancelOrder(
   const currentOrder = orders[index];
   const allowed = ALLOWED_STATUS_TRANSITIONS[currentOrder.status];
 
+  const actor = resolveActor(user) || {
+    id: 'usr-admin',
+    name: 'مدير المتجر',
+    role: 'manager',
+  };
+
   // إذا كان المستخدم مديراً أو الحالة الحالية تسمح بالإلغاء
-  const isManager = user?.role === 'manager';
+  const isManager = actor.role === 'manager';
   if (!allowed.includes('cancelled') && !isManager) {
     throw new Error(
       `لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}" إلا بصلاحية مدير (Admin)`
@@ -379,20 +460,13 @@ export async function cancelOrder(
 
   const now = new Date().toISOString();
   const cancelNote = `تم إلغاء الطلب: ${reason.trim()}`;
-  const activeUser = user || getActiveSession()?.user;
   const updatedTimeline = [
     ...currentOrder.timeline,
     {
       status: 'cancelled' as OrderStatus,
       timestamp: now,
       note: cancelNote,
-      performedBy: activeUser
-        ? {
-            id: activeUser.id,
-            name: activeUser.fullName,
-            role: activeUser.role,
-          }
-        : undefined,
+      performedBy: actor,
     },
   ];
 

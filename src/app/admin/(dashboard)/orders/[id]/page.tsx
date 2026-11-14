@@ -132,11 +132,15 @@ export default function OrderDetailPage() {
 
     try {
       setIsMutating(true);
+      const performedBy = user
+        ? { name: user.fullName, role: user.role }
+        : { name: 'مسؤول المتجر', role: userRole };
+
       const updatedOrder = await updateOrderStatus(
         order.id,
         nextStatus,
         undefined,
-        user || undefined
+        { performedBy }
       );
 
       setOrder(updatedOrder);
@@ -160,15 +164,19 @@ export default function OrderDetailPage() {
   };
 
   // تنفيذ إلغاء الطلب الإلزامي للمدير مع السبب
-  const handleConfirmCancel = async (reason: string) => {
+  const handleCancelOrder = async (reason: string) => {
     if (!order) return;
 
     try {
       setIsMutating(true);
+      const performedBy = user
+        ? { name: user.fullName, role: user.role }
+        : { name: 'مدير المتجر', role: 'manager' as AdminRole };
+
       const updatedOrder = await cancelOrder(
         order.id,
         reason,
-        user || undefined
+        { performedBy }
       );
 
       setOrder(updatedOrder);
@@ -191,6 +199,8 @@ export default function OrderDetailPage() {
       setIsMutating(false);
     }
   };
+
+  const handleConfirmCancel = handleCancelOrder;
 
   // اسم منطقة التوصيل
   const zoneName = React.useMemo(() => {
@@ -397,24 +407,33 @@ export default function OrderDetailPage() {
                         {/* اسم ودور القائم بالإجراء مع شارة واضحة */}
                         <div className="flex items-center gap-1.5 text-[11px] text-candy-muted pt-0.5">
                           <UserCheck className="w-3.5 h-3.5 text-candy-muted/80" />
-                          <span>
-                            بواسطة:{' '}
-                            <strong className="text-candy-ink">
-                              {event.performedBy?.name || (event.status === 'new' ? 'العميل (عبر المتجر)' : 'فريق العمل')}
-                            </strong>{' '}
-                            {event.performedBy?.role ? (
-                              <span
-                                className={cn(
-                                  'text-[10px] px-1.5 py-0.5 rounded font-bold border inline-block mr-1',
-                                  event.performedBy.role === 'manager'
-                                    ? 'bg-candy-berry text-white border-candy-berry-dark'
-                                    : 'bg-candy-blush text-candy-berry border-candy-line-dark'
-                                )}
-                              >
-                                {event.performedBy.role === 'manager' ? 'مدير' : 'موظف'}
-                              </span>
-                            ) : null}
-                          </span>
+                          {event.status === 'new' ? (
+                            <span>
+                              بواسطة:{' '}
+                              <strong className="text-candy-ink">
+                                النظام التلقائي (بوابة المتجر)
+                              </strong>
+                            </span>
+                          ) : (
+                            <span>
+                              بواسطة:{' '}
+                              <strong className="text-candy-ink">
+                                {event.performedBy?.name || 'فريق العمل'}
+                              </strong>{' '}
+                              {event.performedBy?.role ? (
+                                <span
+                                  className={cn(
+                                    'text-[10px] px-1.5 py-0.5 rounded font-bold border inline-block mr-1',
+                                    event.performedBy.role === 'manager'
+                                      ? 'bg-candy-berry text-white border-candy-berry-dark'
+                                      : 'bg-candy-blush text-candy-berry border-candy-line-dark'
+                                  )}
+                                >
+                                  {event.performedBy.role === 'manager' ? 'مدير' : 'موظف'}
+                                </span>
+                              ) : null}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </li>
@@ -442,7 +461,7 @@ export default function OrderDetailPage() {
       <CancelOrderDialog
         isOpen={isCancelDialogOpen}
         onClose={() => setIsCancelDialogOpen(false)}
-        onConfirmCancel={handleConfirmCancel}
+        onConfirmCancel={handleCancelOrder}
         orderNumber={order.orderNumber}
         userRole={userRole}
         isSubmitting={isMutating}
