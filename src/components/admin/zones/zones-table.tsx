@@ -172,13 +172,13 @@ export function ZonesTable({
                     </td>
 
                     {/* الوقت التقديري */}
-                    <td className="py-3.5 px-4">
-                      <span className="inline-flex items-center gap-1.5 text-xs text-candy-muted font-sans">
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-candy-muted font-sans whitespace-nowrap">
                         <Clock className="w-3.5 h-3.5 text-candy-berry shrink-0" aria-hidden="true" />
                         <span className="font-semibold text-candy-ink font-mono">
                           {zone.estimatedTimeMin} - {zone.estimatedTimeMax}
                         </span>
-                        <span>دقيقة</span>
+                        <span className="whitespace-nowrap">دقيقة</span>
                       </span>
                     </td>
 
@@ -340,9 +340,9 @@ export function ZonesTable({
                 </div>
 
                 <div>
-                  <span className="text-[10px] text-candy-muted block mb-0.5">الوقت المتوقع</span>
-                  <span className="font-bold text-candy-ink font-mono text-xs whitespace-nowrap">
-                    {zone.estimatedTimeMin}–{zone.estimatedTimeMax} دقيقة
+                  <span className="text-[10px] text-candy-muted block mb-0.5 whitespace-nowrap">الوقت المتوقع</span>
+                  <span className="font-bold text-candy-ink font-mono text-xs whitespace-nowrap inline-block">
+                    {zone.estimatedTimeMin}-{zone.estimatedTimeMax} <span className="whitespace-nowrap">دقيقة</span>
                   </span>
                 </div>
               </div>
