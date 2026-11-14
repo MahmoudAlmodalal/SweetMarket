@@ -7,7 +7,8 @@ export const MOCK_ADMIN_USERS: AdminUser[] = [
   {
     id: 'user-manager-01',
     username: 'manager_tariq',
-    fullName: 'طارق رضوان (مدير المتجر العام)',
+    fullName: 'طارق رضوان',
+    jobTitle: 'مدير المتجر العام',
     email: 'manager@candyloz.com',
     role: 'manager',
     isActive: true,
@@ -16,7 +17,8 @@ export const MOCK_ADMIN_USERS: AdminUser[] = [
   {
     id: 'user-manager-02',
     username: 'manager_rami',
-    fullName: 'رامي الكرد (مدير العمليات)',
+    fullName: 'رامي الكرد',
+    jobTitle: 'مدير العمليات',
     email: 'rami@candyloz.com',
     role: 'manager',
     isActive: true,
@@ -25,7 +27,8 @@ export const MOCK_ADMIN_USERS: AdminUser[] = [
   {
     id: 'user-staff-01',
     username: 'staff_nour',
-    fullName: 'نور أحمد (مشرف تشغيل)',
+    fullName: 'نور أحمد',
+    jobTitle: 'مشرف تشغيل',
     email: 'staff@candyloz.com',
     role: 'staff',
     isActive: true,

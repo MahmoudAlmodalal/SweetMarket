@@ -15,6 +15,53 @@ export interface AuthenticationResult {
 }
 
 /**
+ * دمج وتصحيح بيانات المستخدم الإداري لضمان فصل jobTitle عن fullName
+ * وتوفير قيم افتراضية آمنة حتى لا تنكسر جلسات localStorage القديمة
+ */
+export function normalizeAdminUser(rawUser: unknown): AdminUser | null {
+  if (!rawUser || typeof rawUser !== 'object') return null;
+  const user = rawUser as Partial<AdminUser>;
+
+  const mock = MOCK_ADMIN_USERS.find(
+    (u) =>
+      (user.id && u.id === user.id) ||
+      (user.email && u.email.toLowerCase() === user.email.toLowerCase()) ||
+      (user.username && u.username.toLowerCase() === user.username.toLowerCase())
+  );
+
+  let fullName = (user.fullName || mock?.fullName || '').trim();
+  let extractedJobTitle: string | undefined;
+
+  // استخراج المسمى الوظيفي إذا كان مدمجاً داخل الاسم بين قوسين: "طارق رضوان (مدير المتجر العام)"
+  const titleMatch = fullName.match(/^(.*?)\s*[\(\[（](.*?)[\)\]）]\s*$/);
+  if (titleMatch) {
+    fullName = titleMatch[1].trim();
+    extractedJobTitle = titleMatch[2].trim();
+  }
+
+  const role = user.role || mock?.role || 'staff';
+  const defaultJobTitle =
+    role === 'manager' ? 'مدير المتجر العام' : 'مشرف تشغيل';
+
+  const jobTitle =
+    user.jobTitle?.trim() ||
+    extractedJobTitle ||
+    mock?.jobTitle ||
+    defaultJobTitle;
+
+  return {
+    id: user.id || mock?.id || 'admin-user',
+    username: user.username || mock?.username || 'user',
+    fullName,
+    jobTitle,
+    email: user.email || mock?.email || '',
+    role,
+    isActive: typeof user.isActive === 'boolean' ? user.isActive : true,
+    createdAt: user.createdAt || mock?.createdAt || new Date().toISOString(),
+  };
+}
+
+/**
  * توليد رمز جلسة عشوائي آمن غير قابل للتنبؤ
  */
 export function generateSecureSessionToken(): string {
@@ -72,10 +119,11 @@ export async function authenticateAdminUser(
 
   // في بيئة الإنتاج: يتم الاستدعاء عبر API خادم آمن
   // في بيئة Mock: التحقق من إعطاء كلمة مرور صالحة (6 أحرف فأكثر) وتطابق الحساب
+  const normalizedUser = normalizeAdminUser(targetUser)!;
   const sessionToken = generateSecureSessionToken();
   const session: AdminSession = {
     token: sessionToken,
-    user: targetUser,
+    user: normalizedUser,
   };
 
   if (isBrowser()) {
@@ -84,7 +132,7 @@ export async function authenticateAdminUser(
 
   return {
     success: true,
-    user: targetUser,
+    user: normalizedUser,
   };
 }
 
@@ -98,10 +146,11 @@ export async function demoLoginAsAdmin(): Promise<AuthenticationResult> {
     return { success: false, error: 'تعذر العثور على حساب إداري' };
   }
 
+  const normalizedUser = normalizeAdminUser(adminUser)!;
   const sessionToken = generateSecureSessionToken();
   const session: AdminSession = {
     token: sessionToken,
-    user: adminUser,
+    user: normalizedUser,
   };
 
   if (isBrowser()) {
@@ -110,7 +159,7 @@ export async function demoLoginAsAdmin(): Promise<AuthenticationResult> {
 
   return {
     success: true,
-    user: adminUser,
+    user: normalizedUser,
   };
 }
 
@@ -119,9 +168,15 @@ export async function demoLoginAsAdmin(): Promise<AuthenticationResult> {
  */
 export function getActiveSession(): AdminSession | null {
   if (!isBrowser()) return null;
-  const session = getStorageItem(STORAGE_KEYS.ADMIN_SESSION, null);
+  const session = getStorageItem(STORAGE_KEYS.ADMIN_SESSION);
   if (session && session.user && session.user.isActive) {
-    return session;
+    const normalized = normalizeAdminUser(session.user);
+    if (normalized && normalized.isActive) {
+      return {
+        token: session.token,
+        user: normalized,
+      };
+    }
   }
   return null;
 }

@@ -21,7 +21,11 @@ import {
   authenticateAdminUser,
   demoLoginAsAdmin,
   generateSecureSessionToken,
+  getActiveSession,
+  normalizeAdminUser,
 } from '@/lib/auth/authentication';
+
+export { normalizeAdminUser };
 
 export interface PreSeededAccount {
   email: string;
@@ -36,12 +40,12 @@ export const PRE_SEEDED_USERS: Record<AdminRole, PreSeededAccount> = {
   manager: {
     email: 'manager@candyloz.com',
     role: 'manager',
-    user: MOCK_ADMIN_USERS.find((u) => u.role === 'manager') || MOCK_ADMIN_USERS[0],
+    user: normalizeAdminUser(MOCK_ADMIN_USERS.find((u) => u.role === 'manager') || MOCK_ADMIN_USERS[0])!,
   },
   staff: {
     email: 'staff@candyloz.com',
     role: 'staff',
-    user: MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[2],
+    user: normalizeAdminUser(MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[2])!,
   },
 };
 
@@ -55,6 +59,10 @@ export interface AdminAuthContextValue {
   isStaff: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   quickLogin: (role?: AdminRole) => Promise<{ success: boolean; error?: string }>;
+  /**
+   * @deprecated Role self-escalation is disabled on production error surfaces.
+   * Retained for dev/QA environment testing and backwards-compatibility.
+   */
   switchRole: (role: AdminRole) => void;
   logout: () => void;
   hasRole: (role: AdminRole) => boolean;
@@ -66,12 +74,21 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   const [user, setUser] = useState<AdminUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // استرجاع الجلسة عند التحميل الأولي من التخزين المحلي
+  // استرجاع الجلسة عند التحميل الأولي من التخزين المحلي مع دمج الحقول الافتراضية بأمان (ADR Invariant)
   useEffect(() => {
     try {
-      const session = getStorageItem(STORAGE_KEYS.ADMIN_SESSION, null);
-      if (session && session.user && session.user.isActive) {
-        setUser(session.user);
+      const activeSession = getActiveSession();
+      if (activeSession && activeSession.user && activeSession.user.isActive) {
+        setUser(activeSession.user);
+      } else {
+        // فحص احتياطي مباشر من التخزين مع المعالجة والدمج
+        const rawSession = getStorageItem(STORAGE_KEYS.ADMIN_SESSION);
+        if (rawSession && rawSession.user) {
+          const normalized = normalizeAdminUser(rawSession.user);
+          if (normalized && normalized.isActive) {
+            setUser(normalized);
+          }
+        }
       }
     } catch (err) {
       console.error('[AdminAuth] Error reading initial session:', err);
@@ -80,7 +97,7 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
     }
   }, []);
 
-  // المزامنة التلقائية عبر النوافذ والتبويبات
+  // المزامنة التلقائية عبر النوافذ والتبويبات مع معالجة البيانات القديمة
   useEffect(() => {
     if (!isBrowser()) return;
 
@@ -89,9 +106,12 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
         if (e.newValue) {
           try {
             const parsed = JSON.parse(e.newValue) as AdminSession;
-            if (parsed && parsed.user && parsed.user.isActive) {
-              setUser(parsed.user);
-              return;
+            if (parsed && parsed.user) {
+              const normalized = normalizeAdminUser(parsed.user);
+              if (normalized && normalized.isActive) {
+                setUser(normalized);
+                return;
+              }
             }
           } catch {
             // تجاهل خطأ التحليل
@@ -112,7 +132,8 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
     async (identifier: string, secret: string): Promise<{ success: boolean; error?: string }> => {
       const result = await authenticateAdminUser(identifier, secret);
       if (result.success && result.user) {
-        setUser(result.user);
+        const normalized = normalizeAdminUser(result.user);
+        setUser(normalized);
         return { success: true };
       }
       return {
@@ -139,9 +160,20 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   }, []);
 
   /**
-   * تبديل الدور تحت إطار التحكم الآمن
+   * تبديل الدور - معطل في واجهات الأخطاء الإنتاجية لمنع الترقية الذاتية (Self-Escalation)
+   * متاح فقط للاختبار في بيئة التطوير أو مع راية NEXT_PUBLIC_DEMO_MODE
    */
   const switchRole = useCallback((newRole: AdminRole) => {
+    const isDev = process.env.NODE_ENV !== 'production';
+    const isDemo = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+
+    if (!isDev && !isDemo) {
+      console.warn(
+        '[AdminAuth] Role self-escalation is blocked on production error surfaces.'
+      );
+      return;
+    }
+
     const targetAccount = PRE_SEEDED_USERS[newRole];
     if (!targetAccount) return;
 
