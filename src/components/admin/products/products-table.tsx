@@ -235,9 +235,9 @@ export function ProductsTable() {
             )}
           </div>
 
-          {/* زر إضافة منتج جديد (SCR-16) - للمدير فقط */}
+          {/* زر إضافة منتج جديد - للمدير فقط */}
           <div className="flex items-center gap-2">
-            {isManager ? (
+            {isManager && (
               <Link href="/admin/products/new">
                 <Button
                   variant="primary"
@@ -248,19 +248,6 @@ export function ProductsTable() {
                   إضافة منتج جديد
                 </Button>
               </Link>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="secondary"
-                  size="md"
-                  disabled
-                  leftIcon={<Lock className="w-4 h-4 text-candy-muted" />}
-                  className="opacity-60 cursor-not-allowed font-sans text-xs"
-                  title="إضافة المنتجات مخصصة لمدير المتجر فقط"
-                >
-                  إضافة منتج جديد (للمدير)
-                </Button>
-              </div>
             )}
 
             <Button
@@ -512,7 +499,7 @@ export function ProductsTable() {
                           {UNIT_LABELS[product.unit] || product.unit}
                         </td>
 
-                        {/* مفتاح التبديل الفوري للتوفر (FR-022) */}
+                        {/* مفتاح التبديل الفوري للتوفر */}
                         <td className="py-3 px-4">
                           <AvailabilityToggle
                             productId={product.id}
@@ -525,7 +512,7 @@ export function ProductsTable() {
                           />
                         </td>
 
-                        {/* زر التعديل (SCR-16) - للمدير فقط */}
+                        {/* زر التعديل - للمدير فقط */}
                         <td className="py-3 px-4 text-center whitespace-nowrap">
                           {isManager ? (
                             <Link href={`/admin/products/${product.id}/edit`}>
