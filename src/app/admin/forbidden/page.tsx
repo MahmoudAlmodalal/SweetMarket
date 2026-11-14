@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {
   ShieldAlert,
   ShieldCheck,
-  ArrowRight,
+  ArrowLeft,
   RotateCcw,
   LogIn,
   User,
@@ -128,7 +128,7 @@ function ForbiddenContent() {
               size="lg"
               onClick={() => router.push('/admin/orders')}
               disabled={isSwitching}
-              leftIcon={<ArrowRight className="w-4 h-4" />}
+              leftIcon={<ArrowLeft className="w-4 h-4" />}
               className="flex-1 font-display"
             >
               العودة إلى الطلبات

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import {
-  ArrowRight,
+  ArrowLeft,
   RefreshCw,
   AlertCircle,
   Clock,
@@ -242,7 +242,7 @@ export default function OrderDetailPage() {
         </p>
         <div className="pt-2 flex justify-center gap-3">
           <Link href="/admin/orders">
-            <Button variant="secondary" size="md" leftIcon={<ArrowRight className="w-4 h-4" />}>
+            <Button variant="secondary" size="md" leftIcon={<ArrowLeft className="w-4 h-4" />}>
               العودة لقائمة الطلبات
             </Button>
           </Link>
@@ -319,7 +319,7 @@ export default function OrderDetailPage() {
               type="button"
               variant="ghost"
               size="sm"
-              leftIcon={<ArrowRight className="w-4 h-4" />}
+              leftIcon={<ArrowLeft className="w-4 h-4" />}
             >
               الطلبات
             </Button>
@@ -353,7 +353,7 @@ export default function OrderDetailPage() {
             />
           </section>
 
-          {/* سجل تتبع وتدقيق حالات الطلب (Order Timeline - FR-017) */}
+          {/* سجل تتبع وتدقيق حالات الطلب (Order Timeline) */}
           <section aria-label="سجل التغييرات ومتابعة الحالة">
             <Card className="bg-white border border-candy-line shadow-candy-1">
               <CardHeader className="pb-3 border-b border-candy-line/60">
@@ -438,7 +438,7 @@ export default function OrderDetailPage() {
         </div>
       </div>
 
-      {/* 4. نافذة إلغاء الطلب الإلزامية للمدير (SCR-14 / FR-018) */}
+      {/* 4. نافذة إلغاء الطلب الإلزامية للمدير */}
       <CancelOrderDialog
         isOpen={isCancelDialogOpen}
         onClose={() => setIsCancelDialogOpen(false)}
