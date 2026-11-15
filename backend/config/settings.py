@@ -162,6 +162,8 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ),
     'EXCEPTION_HANDLER': 'apps.common.exception_handler.custom_exception_handler',
+    'DEFAULT_PAGINATION_CLASS': 'apps.common.pagination.StandardPagination',
+    'PAGE_SIZE': 20,
 }
 
 # SimpleJWT Configuration
