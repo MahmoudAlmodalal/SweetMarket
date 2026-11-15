@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ZoomIn, X, ChevronLeft, ChevronRight, Sparkles, ImageOff } from "lucide-react";
+import { ZoomIn, X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface ImageGalleryProps {
   images: string[];
@@ -22,7 +23,7 @@ export function ImageGallery({
   // Ensure we have at least one fallback image entry
   const galleryList = React.useMemo(() => {
     const list = images.filter((img) => Boolean(img && img.trim().length > 0));
-    return list.length > 0 ? list : ["/images/placeholder-sweet.jpg"];
+    return list.length > 0 ? list : [""];
   }, [images]);
 
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -93,21 +94,15 @@ export function ImageGallery({
 
       {/* Main Hero Visual Cradle */}
       <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-sm flex items-center justify-center group">
-        {!isCurrentFailed ? (
-          <img
-            src={currentImage}
-            alt={`${productName} - صورة ${activeIndex + 1}`}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            onError={() => handleImageError(activeIndex)}
-          />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-candy-soft/60 text-candy-muted p-6 text-center">
-            <ImageOff className="w-12 h-12 text-candy-rose/60 mb-2" />
-            <span className="font-sans text-xs font-semibold text-candy-ink/70">
-              {productName}
-            </span>
-          </div>
-        )}
+        <ProductImage
+          src={currentImage}
+          alt={`${productName} - صورة ${activeIndex + 1}`}
+          fill
+          priority={activeIndex === 0}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          onError={() => handleImageError(activeIndex)}
+        />
 
         {/* Zoom Trigger Button (Bottom Left in RTL) */}
         <button
@@ -147,18 +142,14 @@ export function ImageGallery({
                     : "opacity-65 hover:opacity-100 border border-candy-line hover:border-candy-rose/50"
                 )}
               >
-                {!isFailed ? (
-                  <img
-                    src={thumbUrl}
-                    alt={`${productName} مصغر ${idx + 1}`}
-                    className="w-full h-full object-cover"
-                    onError={() => handleImageError(idx)}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-candy-soft text-candy-muted">
-                    <ImageOff className="w-4 h-4 text-candy-rose/50" />
-                  </div>
-                )}
+                <ProductImage
+                  src={thumbUrl}
+                  alt={`${productName} مصغر ${idx + 1}`}
+                  fill
+                  sizes="(max-width: 640px) 20vw, 80px"
+                  className="w-full h-full object-cover"
+                  onError={() => handleImageError(idx)}
+                />
               </button>
             );
           })}
@@ -214,23 +205,17 @@ export function ImageGallery({
 
           {/* Large image container */}
           <div
-            className="relative max-w-4xl max-h-[85vh] w-full flex items-center justify-center"
+            className="relative max-w-4xl max-h-[85vh] w-full min-h-[300px] flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
-            {!isCurrentFailed ? (
-              <img
-                src={currentImage}
-                alt={`${productName} مكبر`}
-                className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"
-              />
-            ) : (
-              <div className="bg-candy-soft p-12 rounded-2xl flex flex-col items-center justify-center text-candy-muted">
-                <ImageOff className="w-16 h-16 text-candy-rose mb-3" />
-                <p className="font-sans text-sm text-candy-ink font-semibold">
-                  تعذر تحميل الصورة بدقة عالية
-                </p>
-              </div>
-            )}
+            <ProductImage
+              src={currentImage}
+              alt={`${productName} مكبر`}
+              width={800}
+              height={600}
+              sizes="(max-width: 1024px) 90vw, 800px"
+              className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-2xl shadow-2xl"
+            />
           </div>
         </div>
       )}

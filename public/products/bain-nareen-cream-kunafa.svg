@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>كنافة بين نارين بالقشطة والمكسرات - كاندي لوز</title>
+  <defs>
+    <linearGradient id="bn-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFAF8" />
+      <stop offset="50%" stop-color="#FBECC8" />
+      <stop offset="100%" stop-color="#F9DCD9" />
+    </linearGradient>
+    <linearGradient id="kunafa-crust" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD54F" />
+      <stop offset="40%" stop-color="#FFA000" />
+      <stop offset="80%" stop-color="#E65100" />
+      <stop offset="100%" stop-color="#8D2B0B" />
+    </linearGradient>
+    <linearGradient id="ashta-cream" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#FFFDE7" />
+      <stop offset="100%" stop-color="#FFF9C4" />
+    </linearGradient>
+    <linearGradient id="almond-slice" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E1" />
+      <stop offset="70%" stop-color="#FFE0B2" />
+      <stop offset="100%" stop-color="#D7CCC8" />
+    </linearGradient>
+    <filter id="bn-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#8D2B0B" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#bn-bg)" />
+
+  <!-- Serving Plate -->
+  <g filter="url(#bn-shadow)" transform="translate(300, 300)">
+    <ellipse cx="0" cy="50" rx="190" ry="34" fill="#FFFFFF" stroke="#E8A33D" stroke-width="3" />
+    <ellipse cx="0" cy="46" rx="175" ry="30" fill="#FFFDF8" stroke="#FBECC8" stroke-width="2" stroke-dasharray="6 4" />
+
+    <!-- Bain Nareen Cake Form Sandwich -->
+    <!-- Bottom Crispy Kunafa Crust -->
+    <path d="M-135,18 C-135,46 135,46 135,18 L135,0 C135,28 -135,28 -135,0 Z" fill="url(#kunafa-crust)" />
+
+    <!-- Thick Ashta Cream Center Layer with lush curves -->
+    <path d="M-135,0 C-135,28 135,28 135,0 L135,-38 C135,-10 -135,-10 -135,-38 Z" fill="url(#ashta-cream)" stroke="#FFE082" stroke-width="1.5" />
+    <!-- Fluffy Ashta Cream Puffs along seam -->
+    <g fill="#FFFFFF" opacity="0.9">
+      <circle cx="-120" cy="-6" r="14" />
+      <circle cx="-90" cy="-3" r="16" />
+      <circle cx="-55" cy="0" r="17" />
+      <circle cx="-20" cy="2" r="18" />
+      <circle cx="20" cy="2" r="18" />
+      <circle cx="55" cy="0" r="17" />
+      <circle cx="90" cy="-3" r="16" />
+      <circle cx="120" cy="-6" r="14" />
+    </g>
+
+    <!-- Top Crispy Golden Kunafa Crust Layer -->
+    <path d="M-135,-38 C-135,-10 135,-10 135,-38 L135,-60 C135,-32 -135,-32 -135,-60 Z" fill="url(#kunafa-crust)" />
+    <!-- Top Crust Surface -->
+    <ellipse cx="0" cy="-60" rx="135" ry="30" fill="url(#kunafa-crust)" stroke="#FFB74D" stroke-width="2" />
+
+    <!-- Shredded Kunafa Texture on top -->
+    <g stroke="#FFE082" stroke-width="2" fill="none" opacity="0.7">
+      <path d="M-100,-65 Q-50,-80 0,-62 Q50,-45 100,-65" />
+      <path d="M-90,-50 Q-30,-70 20,-50 Q70,-70 100,-52" />
+      <path d="M-80,-75 Q-20,-55 40,-72 Q80,-55 90,-70" />
+    </g>
+
+    <!-- Toasted Sliced Almonds and Pistachio Garnish on Top -->
+    <!-- Almond Slices -->
+    <g transform="translate(0, -68)">
+      <ellipse cx="-45" cy="5" rx="16" ry="8" fill="url(#almond-slice)" stroke="#BCAAA4" stroke-width="1" transform="rotate(-25, -45, 5)" />
+      <ellipse cx="-15" cy="-8" rx="16" ry="8" fill="url(#almond-slice)" stroke="#BCAAA4" stroke-width="1" transform="rotate(15, -15, -8)" />
+      <ellipse cx="20" cy="-5" rx="16" ry="8" fill="url(#almond-slice)" stroke="#BCAAA4" stroke-width="1" transform="rotate(-35, 20, -5)" />
+      <ellipse cx="50" cy="8" rx="16" ry="8" fill="url(#almond-slice)" stroke="#BCAAA4" stroke-width="1" transform="rotate(30, 50, 8)" />
+      <ellipse cx="-5" cy="12" rx="16" ry="8" fill="url(#almond-slice)" stroke="#BCAAA4" stroke-width="1" transform="rotate(-5, -5, 12)" />
+
+      <!-- Emerald Pistachio Garnish -->
+      <g fill="#43A047">
+        <circle cx="-35" cy="-4" r="5" />
+        <circle cx="-55" cy="15" r="4.5" />
+        <circle cx="5" cy="-14" r="5" />
+        <circle cx="35" cy="-12" r="4" />
+        <circle cx="65" cy="16" r="5" />
+        <circle cx="10" cy="16" r="4.5" />
+      </g>
+    </g>
+
+    <!-- Honey Glaze Drop -->
+    <circle cx="-75" cy="5" r="3.5" fill="#FFC837" />
+    <circle cx="80" cy="8" r="4" fill="#FFC837" />
+
+    <!-- Sparkles -->
+    <path d="M-140,-95 Q-140,-105 -150,-105 Q-140,-105 -140,-115 Q-140,-105 -130,-105 Q-140,-105 -140,-95 Z" fill="#E8A33D" />
+    <path d="M140,-85 Q140,-93 132,-93 Q140,-93 140,-101 Q140,-93 148,-93 Q140,-93 140,-85 Z" fill="#E8A33D" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#bn-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">كنافة بين نارين بالقشطة</text>
+  </g>
+</svg>

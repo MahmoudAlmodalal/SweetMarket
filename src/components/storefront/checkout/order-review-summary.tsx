@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import {
   ShoppingBag,
   Truck,
@@ -17,6 +16,7 @@ import type { CartItem, DeliveryZone } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface OrderReviewSummaryProps {
   items: CartItem[];
@@ -43,12 +43,6 @@ export function OrderReviewSummary({
   isMinOrderMet,
   className,
 }: OrderReviewSummaryProps) {
-  const [imageErrors, setImageErrors] = React.useState<Record<string, boolean>>({});
-
-  const handleImageError = (itemId: string) => {
-    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
-  };
-
   const isCartEmpty = items.length === 0;
   const isSubmitDisabled = isCartEmpty || !isFormValid || !isMinOrderMet || isSubmitting;
 
@@ -91,7 +85,6 @@ export function OrderReviewSummary({
           ) : (
             <div className="max-h-64 overflow-y-auto space-y-2.5 pr-1 -mr-1">
               {items.map((item) => {
-                const hasError = imageErrors[item.id];
                 return (
                   <div
                     key={item.id}
@@ -99,18 +92,13 @@ export function OrderReviewSummary({
                   >
                     {/* Item Thumbnail */}
                     <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white shrink-0 border border-candy-line/60">
-                      {hasError ? (
-                        <div className="w-full h-full flex items-center justify-center bg-candy-blush text-candy-berry">
-                          <ShoppingBag className="w-5 h-5" />
-                        </div>
-                      ) : (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.productName}
-                          onError={() => handleImageError(item.id)}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
+                      <ProductImage
+                        src={item.imageUrl}
+                        alt={item.productName}
+                        fill
+                        sizes="48px"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
                     {/* Details */}

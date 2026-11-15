@@ -57,8 +57,7 @@ function resolveCategoryFallback(slug: string): Category | null {
       name: "كل الحلويات الفاخرة",
       description:
         "تشكيلة كاندي لوز المتكاملة من أشهى وأعرق أصناف الحلويات الشرقية والغربية المحضرة يومياً بأعلى معايير الجودة.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=800&q=80",
+      imageUrl: "/categories/all.svg",
       displayOrder: 0,
       isActive: true,
     };
@@ -198,8 +197,7 @@ export default function CategoryListingPage() {
             name: "كل الحلويات الفاخرة",
             description:
               "تشكيلة كاندي لوز المتكاملة من أشهى وأعرق أصناف الحلويات الشرقية والغربية المحضرة يومياً بأعلى معايير الجودة.",
-            imageUrl:
-              "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=800&q=80",
+            imageUrl: "/categories/all.svg",
             displayOrder: 0,
             isActive: true,
           };

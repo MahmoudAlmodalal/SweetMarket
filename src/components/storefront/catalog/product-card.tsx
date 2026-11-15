@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Heart, Plus, Check, Star, ShoppingBag } from "lucide-react";
+import { Heart, Plus, Check, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product, CartItem } from "@/types";
 import { CartContext } from "@/context/cart-context";
@@ -16,6 +15,7 @@ import {
   PACKAGING_OPTIONS,
 } from "@/lib/pricing";
 import { getFavoriteProductIds, toggleFavoriteProduct } from "./wishlist-utils";
+import { ProductImage } from "./product-image";
 
 export interface ProductCardProps {
   product: Product;
@@ -39,7 +39,6 @@ export function ProductCard({
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = React.useState(false);
   const [isAdded, setIsAdded] = React.useState(false);
-  const [imageError, setImageError] = React.useState(false);
   const cartContext = React.useContext(CartContext);
 
   const tintClass = PASTEL_TINTS[pastelIndex % PASTEL_TINTS.length];
@@ -170,21 +169,13 @@ export function ProductCard({
             className="block w-full h-full"
             aria-label={product.name}
           >
-            {imageError ? (
-              <div className="w-full h-full flex flex-col items-center justify-center bg-candy-soft text-candy-rose">
-                <ShoppingBag className="w-10 h-10 stroke-1 mb-1" />
-                <span className="text-xs font-sans">كاندي لوز</span>
-              </div>
-            ) : (
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                fill
-                sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 23vw"
-                onError={() => setImageError(true)}
-                className="w-full h-full object-cover transition-transform duration-500 ease-candy-ease group-hover:scale-105"
-              />
-            )}
+            <ProductImage
+              src={product.imageUrl}
+              alt={product.name}
+              fill
+              sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 23vw"
+              className="w-full h-full object-cover transition-transform duration-500 ease-candy-ease group-hover:scale-105"
+            />
           </Link>
 
           {/* Floating Wishlist Button */}

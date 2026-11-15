@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>أصابع بقلاوة مقرمشة بالكاجو - كاندي لوز</title>
+  <defs>
+    <linearGradient id="cf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFAF8" />
+      <stop offset="50%" stop-color="#FBECC8" />
+      <stop offset="100%" stop-color="#F9DCD9" />
+    </linearGradient>
+    <linearGradient id="finger-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B26E17" />
+      <stop offset="25%" stop-color="#F7C469" />
+      <stop offset="50%" stop-color="#FFE094" />
+      <stop offset="75%" stop-color="#EA9F2D" />
+      <stop offset="100%" stop-color="#8C4D05" />
+    </linearGradient>
+    <linearGradient id="finger-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EAA335" />
+      <stop offset="100%" stop-color="#7A3D02" />
+    </linearGradient>
+    <linearGradient id="cashew-nut" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0" />
+      <stop offset="60%" stop-color="#D7A15C" />
+      <stop offset="100%" stop-color="#A56729" />
+    </linearGradient>
+    <filter id="cf-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#7A3D02" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#cf-bg)" />
+
+  <!-- Background Geometry -->
+  <g opacity="0.15" stroke="#E8A33D" stroke-width="2" fill="none">
+    <rect x="70" y="70" width="460" height="460" rx="36" />
+    <rect x="85" y="85" width="430" height="430" rx="28" stroke-dasharray="6 5" />
+  </g>
+
+  <!-- Serving Board -->
+  <g filter="url(#cf-shadow)" transform="translate(300, 275)">
+    <rect x="-210" y="-140" width="420" height="280" rx="28" fill="#FFFFFF" stroke="#FBECC8" stroke-width="3" />
+    <rect x="-195" y="-125" width="390" height="250" rx="20" fill="#FFFDF9" stroke="#E6DED8" stroke-width="1.5" stroke-dasharray="8 6" />
+
+    <!-- Arranged Filo Fingers (Layered diagonally/horizontally) -->
+    <!-- Finger 1 -->
+    <g transform="translate(-160, -85)">
+      <rect x="0" y="0" width="320" height="24" rx="12" fill="url(#finger-gold)" />
+      <!-- Filo folds / lines -->
+      <line x1="30" y1="6" x2="290" y2="6" stroke="#FFF3C4" stroke-width="1.5" opacity="0.8" />
+      <line x1="20" y1="16" x2="300" y2="16" stroke="#8C4D05" stroke-width="1.5" opacity="0.5" />
+      <!-- End spiral -->
+      <ellipse cx="12" cy="12" rx="10" ry="11" fill="url(#finger-shadow)" />
+      <circle cx="12" cy="12" r="5" fill="#FFE094" />
+    </g>
+
+    <!-- Finger 2 -->
+    <g transform="translate(-160, -45)">
+      <rect x="0" y="0" width="320" height="24" rx="12" fill="url(#finger-gold)" />
+      <line x1="25" y1="7" x2="295" y2="7" stroke="#FFF3C4" stroke-width="1.5" opacity="0.8" />
+      <line x1="15" y1="17" x2="305" y2="17" stroke="#8C4D05" stroke-width="1.5" opacity="0.5" />
+      <ellipse cx="12" cy="12" rx="10" ry="11" fill="url(#finger-shadow)" />
+      <circle cx="12" cy="12" r="5" fill="#FFE094" />
+    </g>
+
+    <!-- Finger 3 -->
+    <g transform="translate(-160, -5)">
+      <rect x="0" y="0" width="320" height="24" rx="12" fill="url(#finger-gold)" />
+      <line x1="35" y1="6" x2="285" y2="6" stroke="#FFF3C4" stroke-width="1.5" opacity="0.8" />
+      <line x1="20" y1="16" x2="300" y2="16" stroke="#8C4D05" stroke-width="1.5" opacity="0.5" />
+      <ellipse cx="12" cy="12" rx="10" ry="11" fill="url(#finger-shadow)" />
+      <circle cx="12" cy="12" r="5" fill="#FFE094" />
+    </g>
+
+    <!-- Finger 4 -->
+    <g transform="translate(-160, 35)">
+      <rect x="0" y="0" width="320" height="24" rx="12" fill="url(#finger-gold)" />
+      <line x1="25" y1="7" x2="295" y2="7" stroke="#FFF3C4" stroke-width="1.5" opacity="0.8" />
+      <line x1="15" y1="17" x2="305" y2="17" stroke="#8C4D05" stroke-width="1.5" opacity="0.5" />
+      <ellipse cx="12" cy="12" rx="10" ry="11" fill="url(#finger-shadow)" />
+      <circle cx="12" cy="12" r="5" fill="#FFE094" />
+    </g>
+
+    <!-- Finger 5 -->
+    <g transform="translate(-160, 75)">
+      <rect x="0" y="0" width="320" height="24" rx="12" fill="url(#finger-gold)" />
+      <line x1="30" y1="6" x2="290" y2="6" stroke="#FFF3C4" stroke-width="1.5" opacity="0.8" />
+      <line x1="20" y1="16" x2="300" y2="16" stroke="#8C4D05" stroke-width="1.5" opacity="0.5" />
+      <ellipse cx="12" cy="12" rx="10" ry="11" fill="url(#finger-shadow)" />
+      <circle cx="12" cy="12" r="5" fill="#FFE094" />
+    </g>
+
+    <!-- Glistening Cashew Nuts scattered across fingers -->
+    <!-- Cashew 1 -->
+    <g transform="translate(-70, -75) rotate(-20)">
+      <path d="M-15,-10 C-5,-20 18,-15 22,2 C25,18 5,25 -8,18 C-18,12 -12,2 -5,5 C5,8 14,3 12,-4 C10,-10 -5,-12 -15,-10 Z" fill="url(#cashew-nut)" stroke="#8C4D05" stroke-width="1" />
+    </g>
+    <!-- Cashew 2 -->
+    <g transform="translate(40, -35) rotate(15)">
+      <path d="M-15,-10 C-5,-20 18,-15 22,2 C25,18 5,25 -8,18 C-18,12 -12,2 -5,5 C5,8 14,3 12,-4 C10,-10 -5,-12 -15,-10 Z" fill="url(#cashew-nut)" stroke="#8C4D05" stroke-width="1" />
+    </g>
+    <!-- Cashew 3 -->
+    <g transform="translate(-20, 20) rotate(-10)">
+      <path d="M-15,-10 C-5,-20 18,-15 22,2 C25,18 5,25 -8,18 C-18,12 -12,2 -5,5 C5,8 14,3 12,-4 C10,-10 -5,-12 -15,-10 Z" fill="url(#cashew-nut)" stroke="#8C4D05" stroke-width="1" />
+    </g>
+    <!-- Cashew 4 -->
+    <g transform="translate(80, 50) rotate(35)">
+      <path d="M-15,-10 C-5,-20 18,-15 22,2 C25,18 5,25 -8,18 C-18,12 -12,2 -5,5 C5,8 14,3 12,-4 C10,-10 -5,-12 -15,-10 Z" fill="url(#cashew-nut)" stroke="#8C4D05" stroke-width="1" />
+    </g>
+    <!-- Cashew 5 -->
+    <g transform="translate(-100, 45) rotate(-40)">
+      <path d="M-15,-10 C-5,-20 18,-15 22,2 C25,18 5,25 -8,18 C-18,12 -12,2 -5,5 C5,8 14,3 12,-4 C10,-10 -5,-12 -15,-10 Z" fill="url(#cashew-nut)" stroke="#8C4D05" stroke-width="1" />
+    </g>
+
+    <!-- Honey Drizzle highlights -->
+    <circle cx="-130" cy="-60" r="4" fill="#FFC837" />
+    <circle cx="120" cy="-10" r="5" fill="#FFC837" />
+    <circle cx="20" cy="65" r="3.5" fill="#FFC837" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#cf-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">أصابع بقلاوة بالكاجو</text>
+  </g>
+</svg>

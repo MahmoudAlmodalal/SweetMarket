@@ -19,6 +19,7 @@ import {
   EmptyCart,
 } from "@/components/storefront/cart";
 import { Button } from "@/components/ui/button";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 import {
   Dialog,
   DialogContent,
@@ -221,11 +222,12 @@ function CartPageInner() {
                     >
                       <div>
                         <div className="relative w-full h-24 rounded-xl overflow-hidden bg-candy-soft mb-2.5">
-                          <img
+                          <ProductImage
                             src={product.imageUrl}
                             alt={product.name}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 30vw"
                             className="w-full h-full object-cover"
-                            loading="lazy"
                           />
                         </div>
                         <h4 className="font-sans font-bold text-xs sm:text-sm text-candy-ink line-clamp-1 leading-snug">
