@@ -1,0 +1,780 @@
+{
+  "generatedAt": "2026-11-14T11:57:36.752Z",
+  "baseUrl": "http://localhost:3000",
+  "viewports": [
+    {
+      "name": "mobile",
+      "label": "Mobile (390×844)",
+      "width": 390,
+      "height": 844,
+      "isMobile": true,
+      "hasTouch": true
+    },
+    {
+      "name": "desktop",
+      "label": "Desktop (1440×900)",
+      "width": 1440,
+      "height": 900,
+      "isMobile": false,
+      "hasTouch": false
+    }
+  ],
+  "items": [
+    {
+      "id": "sf-home-default",
+      "section": "storefront",
+      "category": "Default",
+      "title": "الرئيسية (Home)",
+      "stateLabel": "Default Loaded State",
+      "route": "/",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-home-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-home-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-home-quick-add",
+      "section": "storefront",
+      "category": "Button Interaction",
+      "title": "الرئيسية (Home)",
+      "stateLabel": "Quick-Add to Cart Clicked (Toast + Badge)",
+      "route": "/",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-home-quick-add__mobile.png",
+        "desktop": "../screenshots/storefront/sf-home-quick-add__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-home-wishlist",
+      "section": "storefront",
+      "category": "Button Interaction",
+      "title": "الرئيسية (Home)",
+      "stateLabel": "Wishlist Heart Toggled",
+      "route": "/",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-home-wishlist__mobile.png",
+        "desktop": "../screenshots/storefront/sf-home-wishlist__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-category-default",
+      "section": "storefront",
+      "category": "Default",
+      "title": "قائمة التصنيف (Category)",
+      "stateLabel": "Default Product Grid",
+      "route": "/category/baklava-eastern",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-category-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-category-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-category-search-filtered",
+      "section": "storefront",
+      "category": "Form / Filter",
+      "title": "قائمة التصنيف (Category)",
+      "stateLabel": "Search Input & Filter Applied",
+      "route": "/category/baklava-eastern",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-category-search-filtered__mobile.png",
+        "desktop": "../screenshots/storefront/sf-category-search-filtered__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-category-empty",
+      "section": "storefront",
+      "category": "Empty State",
+      "title": "قائمة التصنيف (Category)",
+      "stateLabel": "Empty Search Results",
+      "route": "/category/baklava-eastern",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-category-empty__mobile.png",
+        "desktop": "../screenshots/storefront/sf-category-empty__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-category-not-found",
+      "section": "storefront",
+      "category": "Empty State",
+      "title": "قائمة التصنيف (Category)",
+      "stateLabel": "Invalid Category Slug",
+      "route": "/category/non-existent-category",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-category-not-found__mobile.png",
+        "desktop": "../screenshots/storefront/sf-category-not-found__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-product-default",
+      "section": "storefront",
+      "category": "Default",
+      "title": "تفاصيل المنتج (Product Detail)",
+      "stateLabel": "Default Loaded State",
+      "route": "/product/mixed-baklava-extra-pistachio",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-product-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-product-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-product-gift-filled",
+      "section": "storefront",
+      "category": "Form / Filter",
+      "title": "تفاصيل المنتج (Product Detail)",
+      "stateLabel": "Gift Card Enabled + Message + Quantity Incremented",
+      "route": "/product/mixed-baklava-extra-pistachio",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-product-gift-filled__mobile.png",
+        "desktop": "../screenshots/storefront/sf-product-gift-filled__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-product-added",
+      "section": "storefront",
+      "category": "Button Interaction",
+      "title": "تفاصيل المنتج (Product Detail)",
+      "stateLabel": "Add to Cart Success State",
+      "route": "/product/mixed-baklava-extra-pistachio",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-product-added__mobile.png",
+        "desktop": "../screenshots/storefront/sf-product-added__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-cart-empty",
+      "section": "storefront",
+      "category": "Empty State",
+      "title": "سلة المشتريات (Cart)",
+      "stateLabel": "Empty Cart State",
+      "route": "/cart",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-cart-empty__mobile.png",
+        "desktop": "../screenshots/storefront/sf-cart-empty__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-cart-populated",
+      "section": "storefront",
+      "category": "Default",
+      "title": "سلة المشتريات (Cart)",
+      "stateLabel": "Populated Cart + Summary",
+      "route": "/cart",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-cart-populated__mobile.png",
+        "desktop": "../screenshots/storefront/sf-cart-populated__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-checkout-empty-cart",
+      "section": "storefront",
+      "category": "Empty State",
+      "title": "إتمام الطلب (Checkout)",
+      "stateLabel": "Empty Cart Guard State",
+      "route": "/checkout",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-checkout-empty-cart__mobile.png",
+        "desktop": "../screenshots/storefront/sf-checkout-empty-cart__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-checkout-default",
+      "section": "storefront",
+      "category": "Form / Filter",
+      "title": "إتمام الطلب (Checkout)",
+      "stateLabel": "Populated Cart + Empty Form",
+      "route": "/checkout",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-checkout-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-checkout-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-checkout-validation-error",
+      "section": "storefront",
+      "category": "Validation Error",
+      "title": "إتمام الطلب (Checkout)",
+      "stateLabel": "Validation Errors (Submit Empty Form)",
+      "route": "/checkout",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-checkout-validation-error__mobile.png",
+        "desktop": "../screenshots/storefront/sf-checkout-validation-error__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-checkout-filled",
+      "section": "storefront",
+      "category": "Form / Filter",
+      "title": "إتمام الطلب (Checkout)",
+      "stateLabel": "Filled Valid Checkout Form",
+      "route": "/checkout",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-checkout-filled__mobile.png",
+        "desktop": "../screenshots/storefront/sf-checkout-filled__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-checkout-success",
+      "section": "storefront",
+      "category": "Default",
+      "title": "تأكيد الطلب (Order Success)",
+      "stateLabel": "Order Confirmation Card",
+      "route": "/checkout/success/CL-2026-1001",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-checkout-success__mobile.png",
+        "desktop": "../screenshots/storefront/sf-checkout-success__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-default",
+      "section": "storefront",
+      "category": "Form / Filter",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Initial Search Form",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-validation-error",
+      "section": "storefront",
+      "category": "Validation Error",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Empty Submit Validation Error",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-validation-error__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-validation-error__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-status-new",
+      "section": "storefront",
+      "category": "Default",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Found: New Order (CL-2026-1001)",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-status-new__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-status-new__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-status-prep",
+      "section": "storefront",
+      "category": "Default",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Found: In Preparation (CL-2026-1003)",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-status-prep__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-status-prep__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-status-delivered",
+      "section": "storefront",
+      "category": "Default",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Found: Delivered (CL-2026-1005)",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-status-delivered__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-status-delivered__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-status-cancelled",
+      "section": "storefront",
+      "category": "Empty State",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Found: Cancelled (CL-2026-1006)",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-status-cancelled__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-status-cancelled__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-track-not-found",
+      "section": "storefront",
+      "category": "Validation Error",
+      "title": "تتبع الطلب (Track Order)",
+      "stateLabel": "Order Not Found (CL-9999-9999)",
+      "route": "/track",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-track-not-found__mobile.png",
+        "desktop": "../screenshots/storefront/sf-track-not-found__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-favorites-empty",
+      "section": "storefront",
+      "category": "Empty State",
+      "title": "المفضلة (Favorites)",
+      "stateLabel": "Empty Favorites State",
+      "route": "/favorites",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-favorites-empty__mobile.png",
+        "desktop": "../screenshots/storefront/sf-favorites-empty__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-favorites-populated",
+      "section": "storefront",
+      "category": "Default",
+      "title": "المفضلة (Favorites)",
+      "stateLabel": "Populated Favorites Grid",
+      "route": "/favorites",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-favorites-populated__mobile.png",
+        "desktop": "../screenshots/storefront/sf-favorites-populated__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-account-default",
+      "section": "storefront",
+      "category": "Form / Filter",
+      "title": "حسابي (Account)",
+      "stateLabel": "Customer Draft Form",
+      "route": "/account",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-account-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-account-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sf-contact-default",
+      "section": "storefront",
+      "category": "Default",
+      "title": "من نحن وتواصل (Contact)",
+      "stateLabel": "Store Info & Working Hours",
+      "route": "/contact",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/storefront/sf-contact-default__mobile.png",
+        "desktop": "../screenshots/storefront/sf-contact-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sys-404",
+      "section": "system",
+      "category": "Empty State",
+      "title": "صفحة غير موجودة (404)",
+      "stateLabel": "Not Found Page",
+      "route": "/non-existent-page-test-404",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/system/sys-404__mobile.png",
+        "desktop": "../screenshots/system/sys-404__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sys-forbidden",
+      "section": "system",
+      "category": "RBAC",
+      "title": "غير مصرح (403 Forbidden)",
+      "stateLabel": "Direct Forbidden Page",
+      "route": "/admin/forbidden",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/system/sys-forbidden__mobile.png",
+        "desktop": "../screenshots/system/sys-forbidden__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "sys-rbac-staff-users",
+      "section": "system",
+      "category": "RBAC",
+      "title": "حماية الصلاحيات (RBAC Guard)",
+      "stateLabel": "Staff Blocked from /admin/users",
+      "route": "/admin/users",
+      "role": "staff",
+      "images": {
+        "mobile": "../screenshots/system/sys-rbac-staff-users__mobile.png",
+        "desktop": "../screenshots/system/sys-rbac-staff-users__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-login-default",
+      "section": "admin",
+      "category": "Form / Filter",
+      "title": "تسجيل دخول الإدارة (Login)",
+      "stateLabel": "Default Login Form & Quick Buttons",
+      "route": "/admin/login",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/admin/adm-login-default__mobile.png",
+        "desktop": "../screenshots/admin/adm-login-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-login-error",
+      "section": "admin",
+      "category": "Validation Error",
+      "title": "تسجيل دخول الإدارة (Login)",
+      "stateLabel": "Empty / Invalid Submit Error",
+      "route": "/admin/login",
+      "role": "guest",
+      "images": {
+        "mobile": "../screenshots/admin/adm-login-error__mobile.png",
+        "desktop": "../screenshots/admin/adm-login-error__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-mobile-drawer",
+      "section": "admin",
+      "category": "Dialog / Drawer",
+      "title": "القائمة الجانبية (Admin Sidebar)",
+      "stateLabel": "Mobile Drawer Open / Desktop Persistent",
+      "route": "/admin/orders",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-mobile-drawer__mobile.png",
+        "desktop": "../screenshots/admin/adm-mobile-drawer__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-orders-all",
+      "section": "admin",
+      "category": "Default",
+      "title": "قائمة الطلبات (Admin Orders)",
+      "stateLabel": "All Orders Table / Cards",
+      "route": "/admin/orders",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-orders-all__mobile.png",
+        "desktop": "../screenshots/admin/adm-orders-all__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-orders-tab-new",
+      "section": "admin",
+      "category": "Form / Filter",
+      "title": "قائمة الطلبات (Admin Orders)",
+      "stateLabel": "Filtered by \"جديد\" (New) Tab",
+      "route": "/admin/orders",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-orders-tab-new__mobile.png",
+        "desktop": "../screenshots/admin/adm-orders-tab-new__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-orders-empty-search",
+      "section": "admin",
+      "category": "Empty State",
+      "title": "قائمة الطلبات (Admin Orders)",
+      "stateLabel": "Empty Search Results",
+      "route": "/admin/orders",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-orders-empty-search__mobile.png",
+        "desktop": "../screenshots/admin/adm-orders-empty-search__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-order-detail-admin",
+      "section": "admin",
+      "category": "RBAC",
+      "title": "تفاصيل الطلب (Order Detail)",
+      "stateLabel": "Admin View (With Cancel Button)",
+      "route": "/admin/orders/ord-1001",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-order-detail-admin__mobile.png",
+        "desktop": "../screenshots/admin/adm-order-detail-admin__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-order-detail-staff",
+      "section": "admin",
+      "category": "RBAC",
+      "title": "تفاصيل الطلب (Order Detail)",
+      "stateLabel": "Staff View (Cancel Button Hidden)",
+      "route": "/admin/orders/ord-1001",
+      "role": "staff",
+      "images": {
+        "mobile": "../screenshots/admin/adm-order-detail-staff__mobile.png",
+        "desktop": "../screenshots/admin/adm-order-detail-staff__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-order-cancel-dialog",
+      "section": "admin",
+      "category": "Dialog / Drawer",
+      "title": "تفاصيل الطلب (Order Detail)",
+      "stateLabel": "Cancel Order Dialog Open",
+      "route": "/admin/orders/ord-1001",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-order-cancel-dialog__mobile.png",
+        "desktop": "../screenshots/admin/adm-order-cancel-dialog__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-order-detail-delivered",
+      "section": "admin",
+      "category": "Default",
+      "title": "تفاصيل الطلب (Order Detail)",
+      "stateLabel": "Delivered Order Stepper (ord-1005)",
+      "route": "/admin/orders/ord-1005",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-order-detail-delivered__mobile.png",
+        "desktop": "../screenshots/admin/adm-order-detail-delivered__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-order-detail-cancelled",
+      "section": "admin",
+      "category": "Empty State",
+      "title": "تفاصيل الطلب (Order Detail)",
+      "stateLabel": "Cancelled Order State (ord-1006)",
+      "route": "/admin/orders/ord-1006",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-order-detail-cancelled__mobile.png",
+        "desktop": "../screenshots/admin/adm-order-detail-cancelled__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-products-list",
+      "section": "admin",
+      "category": "Default",
+      "title": "كتالوج المنتجات (Admin Products)",
+      "stateLabel": "Products Table / Cards",
+      "route": "/admin/products",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-products-list__mobile.png",
+        "desktop": "../screenshots/admin/adm-products-list__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-product-new-empty",
+      "section": "admin",
+      "category": "Form / Filter",
+      "title": "إضافة منتج (New Product)",
+      "stateLabel": "Empty Product Form",
+      "route": "/admin/products/new",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-product-new-empty__mobile.png",
+        "desktop": "../screenshots/admin/adm-product-new-empty__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-product-new-error",
+      "section": "admin",
+      "category": "Validation Error",
+      "title": "إضافة منتج (New Product)",
+      "stateLabel": "Validation Errors on Submit",
+      "route": "/admin/products/new",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-product-new-error__mobile.png",
+        "desktop": "../screenshots/admin/adm-product-new-error__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-product-edit",
+      "section": "admin",
+      "category": "Form / Filter",
+      "title": "تعديل منتج (Edit Product)",
+      "stateLabel": "Pre-filled Product Form",
+      "route": "/admin/products/prod-baklava-mixed/edit",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-product-edit__mobile.png",
+        "desktop": "../screenshots/admin/adm-product-edit__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-categories-list",
+      "section": "admin",
+      "category": "Default",
+      "title": "التصنيفات (Admin Categories)",
+      "stateLabel": "Categories List",
+      "route": "/admin/categories",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-categories-list__mobile.png",
+        "desktop": "../screenshots/admin/adm-categories-list__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-categories-dialog",
+      "section": "admin",
+      "category": "Dialog / Drawer",
+      "title": "التصنيفات (Admin Categories)",
+      "stateLabel": "Add Category Dialog Open",
+      "route": "/admin/categories",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-categories-dialog__mobile.png",
+        "desktop": "../screenshots/admin/adm-categories-dialog__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-zones-list",
+      "section": "admin",
+      "category": "Default",
+      "title": "مناطق التوصيل (Admin Zones)",
+      "stateLabel": "Zones Table",
+      "route": "/admin/zones",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-zones-list__mobile.png",
+        "desktop": "../screenshots/admin/adm-zones-list__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-zones-dialog",
+      "section": "admin",
+      "category": "Dialog / Drawer",
+      "title": "مناطق التوصيل (Admin Zones)",
+      "stateLabel": "Add Zone Dialog Open",
+      "route": "/admin/zones",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-zones-dialog__mobile.png",
+        "desktop": "../screenshots/admin/adm-zones-dialog__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-users-list",
+      "section": "admin",
+      "category": "Default",
+      "title": "المستخدمون الإداريون (Admin Users)",
+      "stateLabel": "Users Table",
+      "route": "/admin/users",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-users-list__mobile.png",
+        "desktop": "../screenshots/admin/adm-users-list__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-users-role-dialog",
+      "section": "admin",
+      "category": "Dialog / Drawer",
+      "title": "المستخدمون الإداريون (Admin Users)",
+      "stateLabel": "User Role / Add User Dialog Open",
+      "route": "/admin/users",
+      "role": "admin",
+      "images": {
+        "mobile": "../screenshots/admin/adm-users-role-dialog__mobile.png",
+        "desktop": "../screenshots/admin/adm-users-role-dialog__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-password-default",
+      "section": "admin",
+      "category": "Form / Filter",
+      "title": "تغيير كلمة المرور (Change Password)",
+      "stateLabel": "Default Password Form",
+      "route": "/admin/account/password",
+      "role": "staff",
+      "images": {
+        "mobile": "../screenshots/admin/adm-password-default__mobile.png",
+        "desktop": "../screenshots/admin/adm-password-default__desktop.png"
+      },
+      "errors": []
+    },
+    {
+      "id": "adm-password-error",
+      "section": "admin",
+      "category": "Validation Error",
+      "title": "تغيير كلمة المرور (Change Password)",
+      "stateLabel": "Empty Submit Validation Error",
+      "route": "/admin/account/password",
+      "role": "staff",
+      "images": {
+        "mobile": "../screenshots/admin/adm-password-error__mobile.png",
+        "desktop": "../screenshots/admin/adm-password-error__desktop.png"
+      },
+      "errors": []
+    }
+  ]
+}
