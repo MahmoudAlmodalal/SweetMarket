@@ -161,6 +161,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'EXCEPTION_HANDLER': 'apps.common.exception_handler.custom_exception_handler',
 }
 
 # SimpleJWT Configuration
