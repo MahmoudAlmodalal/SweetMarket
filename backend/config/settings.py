@@ -50,7 +50,12 @@ INSTALLED_APPS = [
 
     # Local apps
     'apps.common',
+    'apps.accounts',
+    'apps.catalog',
+    'apps.delivery',
 ]
+
+AUTH_USER_MODEL = 'accounts.AdminUser'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -86,7 +91,7 @@ ASGI_APPLICATION = 'config.asgi.application'
 
 # Database
 DATABASE_URL = os.environ.get('DATABASE_URL') or os.environ.get('DB_URL')
-if DATABASE_URL:
+if DATABASE_URL and 'test' not in sys.argv:
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.parse(
