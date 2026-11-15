@@ -21,3 +21,13 @@ build/
 *.key
 *.cert
 *.crt
+
+# Python & Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.sqlite3-journal
+/backend/media/
+/backend/staticfiles/
+.pytest_cache/
