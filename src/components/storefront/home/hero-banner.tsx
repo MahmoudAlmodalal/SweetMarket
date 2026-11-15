@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Sparkles, ShoppingBag, ArrowLeft, Star, Heart, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface HeroBannerProps {
   className?: string;
@@ -99,9 +100,12 @@ export function HeroBanner({ className }: HeroBannerProps) {
         {/* Hero Visual Showcase Column */}
         <div className="lg:col-span-5 relative">
           <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-square rounded-candy-card overflow-hidden shadow-candy-2 border-2 border-white bg-candy-soft">
-            <img
-              src="https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=1200&q=80"
+            <ProductImage
+              src="/products/mixed-baklava-extra-pistachio.svg"
               alt="تشكيلة حلويات كاندي لوز الملكية"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="w-full h-full object-cover transition-transform duration-700 ease-candy-ease hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-candy-ink/60 via-transparent to-transparent pointer-events-none" />

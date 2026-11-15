@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>كل الحلويات الفاخرة - كاندي لوز</title>
+  <defs>
+    <linearGradient id="cat-all-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFAF8" />
+      <stop offset="50%" stop-color="#FBD3DD" />
+      <stop offset="100%" stop-color="#FBECC8" />
+    </linearGradient>
+    <linearGradient id="cat-all-brand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="50%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#800A40" />
+    </linearGradient>
+    <linearGradient id="cat-all-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFDA73" />
+      <stop offset="60%" stop-color="#E8A33D" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+    <filter id="cat-all-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#A31D56" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#cat-all-bg)" />
+
+  <g filter="url(#cat-all-shadow)" transform="translate(300, 275)">
+    <!-- Base Plate -->
+    <circle cx="0" cy="0" r="210" fill="#FFFFFF" stroke="#FED7E7" stroke-width="4" />
+    <circle cx="0" cy="0" r="198" fill="#FFFDF8" stroke="#E8A33D" stroke-width="2" stroke-dasharray="6 4" />
+
+    <!-- Big Center Candy Loz Crest Motif -->
+    <circle cx="0" cy="0" r="120" fill="url(#cat-all-brand)" />
+    <circle cx="0" cy="0" r="110" fill="none" stroke="#FFDA73" stroke-width="2" stroke-dasharray="5 3.5" />
+
+    <!-- Centered Bonbon Candy -->
+    <g transform="rotate(-28)">
+      <!-- Left Wrapper Wing -->
+      <path d="M-55,0 L-95,-32 C-105,-25 -99,-16 -102,0 C-99,16 -105,25 -95,32 Z" fill="url(#cat-all-gold)" opacity="0.9" />
+      <!-- Right Wrapper Wing -->
+      <path d="M55,0 L95,-32 C105,-25 99,-16 102,0 C99,16 105,25 95,32 Z" fill="url(#cat-all-gold)" opacity="0.9" />
+      <!-- Candy Oval Body -->
+      <ellipse cx="0" cy="0" rx="65" ry="48" fill="#FFFFFF" stroke="#E8A33D" stroke-width="3" />
+      <ellipse cx="0" cy="0" rx="45" ry="32" fill="url(#cat-all-brand)" />
+    </g>
+
+    <!-- Sparkles -->
+    <path d="M-130,-100 Q-130,-110 -140,-110 Q-130,-110 -130,-120 Q-130,-110 -120,-110 Q-130,-110 -130,-100 Z" fill="#E8A33D" />
+    <path d="M130,-90 Q130,-98 122,-98 Q130,-98 130,-106 Q130,-98 138,-98 Q130,-98 130,-90 Z" fill="#E8A33D" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#cat-all-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">كل الحلويات الفاخرة</text>
+  </g>
+</svg>

@@ -38,6 +38,7 @@ import {
 } from "@/components/storefront/product-detail";
 import { cn } from "@/lib/utils";
 import { getFavoriteProductIds, toggleFavoriteProduct } from "@/components/storefront/catalog/wishlist-utils";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 interface PageProps {
   params: { slug: string };
@@ -747,9 +748,11 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                 >
                   <Link href={`/product/${item.slug}`} className="block">
                     <div className="w-full aspect-square rounded-xl overflow-hidden bg-candy-soft mb-2.5 relative">
-                      <img
+                      <ProductImage
                         src={item.imageUrl}
                         alt={item.name}
+                        fill
+                        sizes="(max-width: 640px) 45vw, 20vw"
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>

@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import type { Order, DeliveryZone } from "@/types";
 import { cn } from "@/lib/utils";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface OrderSuccessCardProps {
   order: Order;
@@ -35,7 +36,6 @@ export function OrderSuccessCard({
   className,
 }: OrderSuccessCardProps) {
   const [copied, setCopied] = React.useState(false);
-  const [imageErrors, setImageErrors] = React.useState<Record<string, boolean>>({});
   const [isItemsExpanded, setIsItemsExpanded] = React.useState(true);
 
   const handleCopyOrderNumber = React.useCallback(async () => {
@@ -50,10 +50,6 @@ export function OrderSuccessCard({
       console.error("Failed to copy order number:", err);
     }
   }, [order.orderNumber]);
-
-  const handleImageError = React.useCallback((itemId: string) => {
-    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
-  }, []);
 
   const totalItemsCount = React.useMemo(() => {
     return order.items.reduce((sum, item) => sum + item.quantity, 0);
@@ -199,7 +195,6 @@ export function OrderSuccessCard({
         {isItemsExpanded && (
           <div className="p-5 sm:p-6 divide-y divide-candy-line/60 space-y-4">
             {order.items.map((item) => {
-              const hasError = imageErrors[item.id];
               return (
                 <div
                   key={item.id}
@@ -207,16 +202,13 @@ export function OrderSuccessCard({
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-candy-soft shrink-0 border border-candy-line/80 flex items-center justify-center">
-                      {hasError || !item.imageUrl ? (
-                        <ShoppingBag className="w-6 h-6 text-candy-berry" />
-                      ) : (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.productName}
-                          onError={() => handleImageError(item.id)}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
+                      <ProductImage
+                        src={item.imageUrl}
+                        alt={item.productName}
+                        fill
+                        sizes="56px"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="min-w-0 flex flex-col">
                       <h3 className="font-sans font-bold text-sm text-candy-ink truncate">

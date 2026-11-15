@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>صندوق هدايا كاندي لوز الملكي - كاندي لوز</title>
+  <defs>
+    <linearGradient id="gb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9" />
+      <stop offset="50%" stop-color="#FBD3DD" />
+      <stop offset="100%" stop-color="#FED7E7" />
+    </linearGradient>
+    <linearGradient id="box-velvet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C22367" />
+      <stop offset="40%" stop-color="#A31D56" />
+      <stop offset="100%" stop-color="#670522" />
+    </linearGradient>
+    <linearGradient id="gold-satin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF6CC" />
+      <stop offset="30%" stop-color="#FFD54F" />
+      <stop offset="70%" stop-color="#FFA000" />
+      <stop offset="100%" stop-color="#C78018" />
+    </linearGradient>
+    <filter id="gb-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#670522" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#gb-bg)" />
+
+  <!-- Gift Box Assembly -->
+  <g filter="url(#gb-shadow)" transform="translate(300, 280)">
+    <!-- Main Velvet Hexagonal / Octagonal Luxury Box Body -->
+    <rect x="-160" y="-130" width="320" height="260" rx="36" fill="url(#box-velvet)" stroke="#FED7E7" stroke-width="3" />
+    <rect x="-145" y="-115" width="290" height="230" rx="28" fill="#52031B" stroke="#A31D56" stroke-width="2" />
+
+    <!-- Truffles & Pralines Grid Inside Box -->
+    <!-- Row 1 -->
+    <g transform="translate(0, -50)">
+      <!-- Truffle 1 (Dark Choco Swirl) -->
+      <circle cx="-90" cy="0" r="24" fill="#2B1A10" stroke="#FFD54F" stroke-width="1.5" />
+      <path d="M-98,-8 Q-90,-16 -82,-8 Q-74,0 -82,8 Q-90,16 -98,8" fill="none" stroke="#E8A33D" stroke-width="2" />
+
+      <!-- Truffle 2 (Ruby Berry Truffle) -->
+      <circle cx="-30" cy="0" r="24" fill="#A31D56" stroke="#FED7E7" stroke-width="1.5" />
+      <polygon points="-30,-10 -24,-2 -30,6 -36,-2" fill="#FFD54F" />
+
+      <!-- Truffle 3 (Gold Dusted Hazelnut) -->
+      <circle cx="30" cy="0" r="24" fill="#3E2723" stroke="#FFD54F" stroke-width="1.5" />
+      <circle cx="30" cy="0" r="12" fill="#D7A15C" />
+      <circle cx="30" cy="0" r="5" fill="#FFE082" />
+
+      <!-- Truffle 4 (Pistachio Praline) -->
+      <circle cx="90" cy="0" r="24" fill="#145A32" stroke="#82E0AA" stroke-width="1.5" />
+      <circle cx="90" cy="0" r="10" fill="#28B463" />
+    </g>
+
+    <!-- Row 2 -->
+    <g transform="translate(0, 30)">
+      <!-- Truffle 5 (White chocolate dome) -->
+      <circle cx="-90" cy="0" r="24" fill="#FFFDF8" stroke="#FED7E7" stroke-width="1.5" />
+      <path d="M-102,0 L-78,0" stroke="#A31D56" stroke-width="2" />
+      <path d="M-90,-12 L-90,12" stroke="#A31D56" stroke-width="2" />
+
+      <!-- Truffle 6 (Salted Caramel Square) -->
+      <rect x="-50" y="-20" width="40" height="40" rx="8" fill="#D68910" stroke="#FFE082" stroke-width="1.5" />
+      <circle cx="-30" cy="0" r="4" fill="#FFFFFF" />
+
+      <!-- Truffle 7 (Belgian Dark Ganache) -->
+      <circle cx="30" cy="0" r="24" fill="#1B0000" stroke="#FFD54F" stroke-width="1.5" />
+      <circle cx="30" cy="0" r="8" fill="#5D4037" />
+
+      <!-- Truffle 8 (Berry Pearl) -->
+      <circle cx="90" cy="0" r="24" fill="#C22367" stroke="#FED7E7" stroke-width="1.5" />
+      <circle cx="86" cy="-4" r="5" fill="#FFFFFF" opacity="0.8" />
+    </g>
+
+    <!-- Shimmering Gold Satin Cross Ribbons -->
+    <!-- Vertical Ribbon -->
+    <rect x="-24" y="-132" width="48" height="264" fill="url(#gold-satin)" rx="4" />
+    <line x1="-12" y1="-130" x2="-12" y2="130" stroke="#FFF6CC" stroke-width="2" opacity="0.7" />
+    <line x1="12" y1="-130" x2="12" y2="130" stroke="#C78018" stroke-width="2" opacity="0.6" />
+
+    <!-- Center Luxurious Ribbon Bow -->
+    <g transform="translate(0, -10)">
+      <!-- Left Bow Loop -->
+      <path d="M0,0 C-40,-35 -70,-30 -75,-10 C-80,10 -50,15 0,0 Z" fill="url(#gold-satin)" stroke="#C78018" stroke-width="1.5" />
+      <path d="M-10,-2 C-35,-22 -55,-18 -60,-8" fill="none" stroke="#FFF6CC" stroke-width="2" />
+      <!-- Right Bow Loop -->
+      <path d="M0,0 C40,-35 70,-30 75,-10 C80,10 50,15 0,0 Z" fill="url(#gold-satin)" stroke="#C78018" stroke-width="1.5" />
+      <path d="M10,-2 C35,-22 55,-18 60,-8" fill="none" stroke="#FFF6CC" stroke-width="2" />
+
+      <!-- Hanging Ribbon Tails -->
+      <path d="M-6,0 C-20,35 -40,55 -55,75 L-35,70 C-25,50 -10,30 -2,0 Z" fill="url(#gold-satin)" />
+      <path d="M6,0 C20,35 40,55 55,75 L35,70 C25,50 10,30 2,0 Z" fill="url(#gold-satin)" />
+
+      <!-- Bow Knot with Candy Loz Emblem -->
+      <circle cx="0" cy="0" r="18" fill="url(#box-velvet)" stroke="#FFD54F" stroke-width="2" />
+      <circle cx="0" cy="0" r="10" fill="#FFD54F" />
+    </g>
+
+    <!-- Sparkles -->
+    <path d="M-120,-110 Q-120,-120 -130,-120 Q-120,-120 -120,-130 Q-120,-120 -110,-120 Q-120,-120 -120,-110 Z" fill="#FFD54F" />
+    <path d="M120,-100 Q120,-108 112,-108 Q120,-108 120,-116 Q120,-108 128,-108 Q120,-108 120,-100 Z" fill="#FFD54F" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#gb-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">صندوق هدايا ملكي</text>
+  </g>
+</svg>

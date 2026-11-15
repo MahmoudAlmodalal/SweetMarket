@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Plus, Minus, Trash2, AlertTriangle, CakeSlice } from "lucide-react";
+import { Plus, Minus, Trash2, AlertTriangle } from "lucide-react";
 import type { CartItem } from "@/types";
 import { cn } from "@/lib/utils";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 import {
   Dialog,
   DialogContent,
@@ -57,7 +58,6 @@ export function CartItemRow({
   className,
 }: CartItemRowProps) {
   const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
-  const [imgError, setImgError] = React.useState(false);
 
   const weightText = getDisplayWeight(item);
 
@@ -90,19 +90,13 @@ export function CartItemRow({
             href={item.productSlug ? `/product/${item.productSlug}` : "#"}
             className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-candy-soft border border-candy-line/60 shrink-0 block group focus:outline-none focus:ring-2 focus:ring-candy-berry/30"
           >
-            {item.imageUrl && !imgError ? (
-              <img
-                src={item.imageUrl}
-                alt={item.productName}
-                onError={() => setImgError(true)}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-              />
-            ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center text-candy-rose bg-candy-soft">
-                <CakeSlice className="w-8 h-8 opacity-60" />
-              </div>
-            )}
+            <ProductImage
+              src={item.imageUrl}
+              alt={item.productName}
+              fill
+              sizes="(max-width: 640px) 80px, 96px"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
             <span className="absolute bottom-1 right-1 font-sans text-[10px] px-1.5 py-0.5 rounded bg-white/95 text-candy-ink font-semibold shadow-xs backdrop-blur-xs">
               طازج
             </span>

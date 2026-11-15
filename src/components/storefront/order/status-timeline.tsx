@@ -25,6 +25,7 @@ import type { Order, OrderStatus, OrderTimelineEvent } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface StatusTimelineProps {
   order: Order;
@@ -104,7 +105,6 @@ export function StatusTimeline({
 }: StatusTimelineProps) {
   const [copied, setCopied] = React.useState(false);
   const [isItemsExpanded, setIsItemsExpanded] = React.useState(true);
-  const [imageErrors, setImageErrors] = React.useState<Record<string, boolean>>({});
 
   const isCancelled = order.status === "cancelled";
   const isUndelivered = order.status === "undelivered";
@@ -136,10 +136,6 @@ export function StatusTimeline({
       console.error("Failed to copy order number:", err);
     }
   }, [order.orderNumber]);
-
-  const handleImageError = (itemId: string) => {
-    setImageErrors((prev) => ({ ...prev, [itemId]: true }));
-  };
 
   const totalItemsCount = React.useMemo(() => {
     return order.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
@@ -447,8 +443,6 @@ export function StatusTimeline({
           <div className="p-5 sm:p-6 space-y-4 animate-in fade-in">
             <div className="divide-y divide-candy-line/60">
               {order.items?.map((item) => {
-                const hasImgError = imageErrors[item.id];
-
                 return (
                   <div
                     key={item.id}
@@ -456,18 +450,14 @@ export function StatusTimeline({
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
                       {/* Product Thumbnail or Fallback */}
-                      <div className="w-12 h-12 rounded-xl bg-candy-soft border border-candy-line/80 overflow-hidden shrink-0 flex items-center justify-center">
-                        {item.imageUrl && !hasImgError ? (
-                          <img
-                            src={item.imageUrl}
-                            alt={item.productName}
-                            onError={() => handleImageError(item.id)}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <Package className="w-6 h-6 text-candy-muted/60" />
-                        )}
+                      <div className="relative w-12 h-12 rounded-xl bg-candy-soft border border-candy-line/80 overflow-hidden shrink-0 flex items-center justify-center">
+                        <ProductImage
+                          src={item.imageUrl}
+                          alt={item.productName}
+                          fill
+                          sizes="48px"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
 
                       <div className="min-w-0">

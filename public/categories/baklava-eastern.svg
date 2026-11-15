@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>البقلاوة والحلويات الشرقية - كاندي لوز</title>
+  <defs>
+    <linearGradient id="cat-bak-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFAF8" />
+      <stop offset="50%" stop-color="#FBECC8" />
+      <stop offset="100%" stop-color="#F6E0D2" />
+    </linearGradient>
+    <linearGradient id="cat-bak-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082" />
+      <stop offset="40%" stop-color="#FFA000" />
+      <stop offset="100%" stop-color="#8D2B0B" />
+    </linearGradient>
+    <linearGradient id="cat-bak-pist" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9CCC65" />
+      <stop offset="100%" stop-color="#33691E" />
+    </linearGradient>
+    <filter id="cat-bak-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#8D2B0B" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#cat-bak-bg)" />
+
+  <g filter="url(#cat-bak-shadow)" transform="translate(300, 275)">
+    <!-- Ornate Brass Tray Frame -->
+    <circle cx="0" cy="0" r="210" fill="#FFFFFF" stroke="#E8A33D" stroke-width="4" />
+    <circle cx="0" cy="0" r="198" fill="#FFFDF8" stroke="#FED7E7" stroke-width="2" stroke-dasharray="6 4" />
+
+    <!-- Diamond baklava cluster -->
+    <g transform="translate(0, -10)">
+      <polygon points="0,-70 65,-18 0,34 -65,-18" fill="#8D2B0B" />
+      <polygon points="0,-75 65,-23 0,29 -65,-23" fill="url(#cat-bak-gold)" />
+      <ellipse cx="0" cy="-23" rx="30" ry="14" fill="url(#cat-bak-pist)" />
+
+      <!-- Left Diamond -->
+      <g transform="translate(-75, 40)">
+        <polygon points="0,-50 45,-12 0,24 -45,-12" fill="#8D2B0B" />
+        <polygon points="0,-54 45,-16 0,20 -45,-16" fill="url(#cat-bak-gold)" />
+        <ellipse cx="0" cy="-16" rx="20" ry="10" fill="url(#cat-bak-pist)" />
+      </g>
+
+      <!-- Right Diamond -->
+      <g transform="translate(75, 40)">
+        <polygon points="0,-50 45,-12 0,24 -45,-12" fill="#8D2B0B" />
+        <polygon points="0,-54 45,-16 0,20 -45,-16" fill="url(#cat-bak-gold)" />
+        <ellipse cx="0" cy="-16" rx="20" ry="10" fill="url(#cat-bak-pist)" />
+      </g>
+    </g>
+
+    <path d="M-130,-100 Q-130,-110 -140,-110 Q-130,-110 -130,-120 Q-130,-110 -120,-110 Q-130,-110 -130,-100 Z" fill="#E8A33D" />
+    <path d="M130,-90 Q130,-98 122,-98 Q130,-98 130,-106 Q130,-98 138,-98 Q130,-98 130,-90 Z" fill="#E8A33D" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#cat-bak-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">البقلاوة والحلويات الشرقية</text>
+  </g>
+</svg>

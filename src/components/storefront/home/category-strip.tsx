@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types";
 import { MOCK_CATEGORIES } from "@/data/mock/categories";
+import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface CategoryStripProps {
   categories?: Category[];
@@ -140,11 +141,12 @@ export function CategoryStrip({
                     : `${pastelBorder} group-hover:scale-105 group-active:scale-95`
                 )}
               >
-                <div className="w-full h-full rounded-full overflow-hidden bg-white">
-                  <img
+                <div className="relative w-full h-full rounded-full overflow-hidden bg-white">
+                  <ProductImage
                     src={cat.imageUrl}
                     alt={cat.name}
-                    loading="lazy"
+                    fill
+                    sizes="(max-width: 640px) 64px, 80px"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>علبة شوكولاتة برالين مشكلة - كاندي لوز</title>
+  <defs>
+    <linearGradient id="pb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFAF8" />
+      <stop offset="60%" stop-color="#FBECC8" />
+      <stop offset="100%" stop-color="#F6E0D2" />
+    </linearGradient>
+    <linearGradient id="box-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEAA7" />
+      <stop offset="40%" stop-color="#F5B041" />
+      <stop offset="80%" stop-color="#D68910" />
+      <stop offset="100%" stop-color="#935116" />
+    </linearGradient>
+    <linearGradient id="choco-milk" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#795548" />
+      <stop offset="100%" stop-color="#4E342E" />
+    </linearGradient>
+    <linearGradient id="choco-white" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#FFF3E0" />
+    </linearGradient>
+    <filter id="pb-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#4E342E" flood-opacity="0.2" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#pb-bg)" />
+
+  <!-- Ballotin Box Assembly -->
+  <g filter="url(#pb-shadow)" transform="translate(300, 275)">
+    <!-- Box Body with warm chocolate and gold rim -->
+    <rect x="-170" y="-130" width="340" height="260" rx="28" fill="#FFFFFF" stroke="url(#box-gold)" stroke-width="4" />
+    <rect x="-155" y="-115" width="310" height="230" rx="20" fill="#FFFDF8" stroke="#E6DED8" stroke-width="1.5" />
+
+    <!-- Compartment Grids -->
+    <!-- Horizontal Divider -->
+    <line x1="-150" y1="0" x2="150" y2="0" stroke="#FBECC8" stroke-width="2.5" />
+    <!-- Vertical Dividers -->
+    <line x1="-50" y1="-110" x2="-50" y2="110" stroke="#FBECC8" stroke-width="2.5" />
+    <line x1="50" y1="-110" x2="50" y2="110" stroke="#FBECC8" stroke-width="2.5" />
+
+    <!-- 6 Pralines in individual fluted cups -->
+    <!-- Praline 1: Milk Chocolate Swirl (Top Left) -->
+    <g transform="translate(-100, -55)">
+      <circle cx="0" cy="0" r="32" fill="#E6DED8" />
+      <circle cx="0" cy="0" r="28" fill="url(#choco-milk)" />
+      <!-- Cream swirl -->
+      <path d="M-15,-8 Q0,-22 15,-8 Q20,10 0,16 Q-18,10 -15,-8 Z" fill="none" stroke="#FFE0B2" stroke-width="3" />
+      <circle cx="0" cy="0" r="4" fill="#FFE0B2" />
+    </g>
+
+    <!-- Praline 2: White Chocolate Raspberry (Top Center) -->
+    <g transform="translate(0, -55)">
+      <circle cx="0" cy="0" r="32" fill="#E6DED8" />
+      <circle cx="0" cy="0" r="28" fill="url(#choco-white)" stroke="#FED7E7" stroke-width="1" />
+      <!-- Berry drizzle -->
+      <path d="M-18,-12 Q-6,0 6,-14 Q14,2 20,-8" fill="none" stroke="#A31D56" stroke-width="2.5" />
+      <path d="M-20,4 Q-8,14 4,2 Q12,16 18,6" fill="none" stroke="#A31D56" stroke-width="2.5" />
+      <circle cx="0" cy="0" r="3" fill="#D72D58" />
+    </g>
+
+    <!-- Praline 3: Roasted Hazelnut Rocher (Top Right) -->
+    <g transform="translate(100, -55)">
+      <circle cx="0" cy="0" r="32" fill="#E6DED8" />
+      <circle cx="0" cy="0" r="28" fill="#3E2723" />
+      <!-- Crunchy hazelnut chunks -->
+      <circle cx="-10" cy="-10" r="4" fill="#D7A15C" />
+      <circle cx="10" cy="-8" r="5" fill="#D7A15C" />
+      <circle cx="-6" cy="10" r="4.5" fill="#D7A15C" />
+      <circle cx="12" cy="8" r="4" fill="#D7A15C" />
+      <circle cx="0" cy="0" r="7" fill="#FFE082" />
+    </g>
+
+    <!-- Praline 4: Dark Belgian Diamond (Bottom Left) -->
+    <g transform="translate(-100, 55)">
+      <circle cx="0" cy="0" r="32" fill="#E6DED8" />
+      <polygon points="0,-24 24,0 0,24 -24,0" fill="#211009" stroke="#E8A33D" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="5" fill="#E8A33D" />
+    </g>
+
+    <!-- Praline 5: Emerald Pistachio Praline (Bottom Center) -->
+    <g transform="translate(0, 55)">
+      <circle cx="0" cy="0" r="32" fill="#E6DED8" />
+      <rect x="-20" y="-20" width="40" height="40" rx="8" fill="#2E7D32" stroke="#81C784" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="10" fill="#A5D6A7" />
+      <circle cx="0" cy="0" r="4" fill="#1B5E20" />
+    </g>
+
+    <!-- Praline 6: Salted Caramel Gold Dome (Bottom Right) -->
+    <g transform="translate(100, 55)">
+      <circle cx="0" cy="0" r="32" fill="#E6DED8" />
+      <circle cx="0" cy="0" r="28" fill="#D68910" stroke="#FFE082" stroke-width="1.5" />
+      <!-- Caramel stripes -->
+      <line x1="-15" y1="-8" x2="15" y2="8" stroke="#FFFFFF" stroke-width="2.5" />
+      <line x1="-15" y1="4" x2="10" y2="16" stroke="#FFFFFF" stroke-width="2.5" />
+    </g>
+
+    <!-- Sparkles -->
+    <path d="M-130,-100 Q-130,-110 -140,-110 Q-130,-110 -130,-120 Q-130,-110 -120,-110 Q-130,-110 -130,-100 Z" fill="#E8A33D" />
+    <path d="M130,-90 Q130,-98 122,-98 Q130,-98 130,-106 Q130,-98 138,-98 Q130,-98 130,-90 Z" fill="#E8A33D" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#pb-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">علبة شوكولاتة برالين</text>
+  </g>
+</svg>

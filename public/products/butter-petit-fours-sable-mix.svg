@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <title>مشكل بيتيفور زبدة وسابليه شوكولاتة - كاندي لوز</title>
+  <defs>
+    <linearGradient id="pf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9" />
+      <stop offset="50%" stop-color="#FBD3DD" />
+      <stop offset="100%" stop-color="#F6E0D2" />
+    </linearGradient>
+    <linearGradient id="cookie-butter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E7" />
+      <stop offset="50%" stop-color="#FCE1A4" />
+      <stop offset="100%" stop-color="#E5AA52" />
+    </linearGradient>
+    <linearGradient id="jam-ruby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5252" />
+      <stop offset="60%" stop-color="#D72D58" />
+      <stop offset="100%" stop-color="#880E4F" />
+    </linearGradient>
+    <linearGradient id="jam-apricot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082" />
+      <stop offset="60%" stop-color="#FFA000" />
+      <stop offset="100%" stop-color="#E65100" />
+    </linearGradient>
+    <filter id="pf-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#880E4F" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#pf-bg)" />
+
+  <!-- Scalloped Porcelain Plate -->
+  <g filter="url(#pf-shadow)" transform="translate(300, 275)">
+    <circle cx="0" cy="0" r="210" fill="#FFFFFF" stroke="#FED7E7" stroke-width="4" />
+    <circle cx="0" cy="0" r="198" fill="#FFFDF8" stroke="#E8A33D" stroke-width="1.5" stroke-dasharray="6 4" />
+
+    <!-- Assortment of Piped Petit Fours & Sablé -->
+
+    <!-- Sablé with Heart Window & Jam (Center Top) -->
+    <g transform="translate(0, -65)">
+      <!-- Scalloped round sablé cookie -->
+      <circle cx="0" cy="0" r="42" fill="url(#cookie-butter)" stroke="#D7A15C" stroke-width="1.5" />
+      <!-- Dusted powder ring -->
+      <circle cx="0" cy="0" r="36" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="4 3" opacity="0.8" />
+      <!-- Heart cutout window showing jam -->
+      <path d="M0,8 C-18,-8 -22,-20 -10,-26 C-2,-28 0,-18 0,-18 C0,-18 2,-28 10,-26 C22,-20 18,-8 0,8 Z" fill="url(#jam-ruby)" />
+    </g>
+
+    <!-- Star Rosette Petit Four (Apricot Jam, Left) -->
+    <g transform="translate(-75, 10)">
+      <!-- Piped star rosette shape -->
+      <path d="M0,-36 L11,-11 L36,-6 L18,12 L22,36 L0,24 L-22,36 L-18,12 L-36,-6 L-11,-11 Z" fill="url(#cookie-butter)" stroke="#D7A15C" stroke-width="1.5" />
+      <!-- Apricot center jewel -->
+      <circle cx="0" cy="0" r="12" fill="url(#jam-apricot)" stroke="#FFE082" stroke-width="1" />
+      <circle cx="-3" cy="-3" r="3" fill="#FFFFFF" opacity="0.8" />
+    </g>
+
+    <!-- Chocolate-Dipped Finger Sablé (Right) -->
+    <g transform="translate(75, 10) rotate(20)">
+      <!-- Oval sandwich cookie -->
+      <rect x="-20" y="-36" width="40" height="72" rx="20" fill="url(#cookie-butter)" stroke="#D7A15C" stroke-width="1.5" />
+      <!-- Dipped in dark Belgian chocolate (bottom half) -->
+      <path d="M-20,0 C-10,6 0,-4 10,6 C15,10 20,4 20,0 L20,16 C20,27 11,36 0,36 C-11,36 -20,27 -20,16 Z" fill="#211009" />
+      <!-- Chopped pistachio sprinkles on chocolate -->
+      <circle cx="-8" cy="18" r="2.5" fill="#81C784" />
+      <circle cx="4" cy="22" r="2.5" fill="#81C784" />
+      <circle cx="10" cy="12" r="2" fill="#81C784" />
+    </g>
+
+    <!-- Swirled Vanilla & Chocolate Duo Petit Four (Bottom Center) -->
+    <g transform="translate(0, 80)">
+      <circle cx="-16" cy="0" r="28" fill="url(#cookie-butter)" stroke="#D7A15C" stroke-width="1" />
+      <circle cx="16" cy="0" r="28" fill="#4E342E" stroke="#211009" stroke-width="1" />
+      <!-- Jam button connecting both -->
+      <circle cx="0" cy="0" r="10" fill="url(#jam-ruby)" stroke="#FFFFFF" stroke-width="1" />
+      <circle cx="-2" cy="-2" r="2.5" fill="#FFFFFF" opacity="0.9" />
+    </g>
+
+    <!-- Sparkles -->
+    <path d="M-130,-90 Q-130,-100 -140,-100 Q-130,-100 -130,-110 Q-130,-100 -120,-100 Q-130,-100 -130,-90 Z" fill="#E8A33D" />
+    <path d="M130,-80 Q130,-88 122,-88 Q130,-88 130,-96 Q130,-88 138,-88 Q130,-88 130,-80 Z" fill="#E8A33D" />
+  </g>
+
+  <!-- Bottom Brand Pill -->
+  <g transform="translate(300, 520)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#FFFFFF" stroke="#FED7E7" stroke-width="2" filter="url(#pf-shadow)" />
+    <circle cx="-105" cy="0" r="14" fill="#A31D56" />
+    <path d="M-109,-4 L-101,0 L-109,4 Z" fill="#FFFFFF" />
+    <text x="-80" y="6" font-family="'El Messiri', 'IBM Plex Sans Arabic', sans-serif" font-weight="700" font-size="16" fill="#A31D56">كاندي لوز</text>
+    <text x="5" y="5" font-family="'IBM Plex Sans Arabic', sans-serif" font-weight="600" font-size="12" fill="#E8A33D">مشكل بيتيفور وسابليه</text>
+  </g>
+</svg>
