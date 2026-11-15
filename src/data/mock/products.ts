@@ -47,7 +47,7 @@ export const MOCK_PRODUCTS: Product[] = [
       '/products/mixed-baklava-extra-pistachio.svg',
     ],
     isAvailable: true,
-    isFeatured: false,
+    isFeatured: true,
     availableWeights: [
       { label: 'نصف كيلو (500 جم)', multiplier: 0.5, price: 28 },
       { label: 'كيلو كامل (1000 جم)', multiplier: 1, price: 50 },
