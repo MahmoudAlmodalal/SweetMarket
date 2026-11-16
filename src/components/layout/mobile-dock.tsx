@@ -134,8 +134,10 @@ export function MobileDock({
 
   return (
     <div
+      data-mobile-dock
       className={cn(
-        "fixed bottom-3 inset-x-2 sm:inset-x-6 z-50 md:hidden pointer-events-none",
+        "fixed bottom-3 inset-x-2 sm:inset-x-6 z-50 md:hidden pointer-events-none transition-all duration-200",
+        "[[data-capture-mode=true]_&]:relative [[data-capture-mode=true]_&]:bottom-auto [[data-capture-mode=true]_&]:inset-x-auto [[data-capture-mode=true]_&]:mt-auto [[data-capture-mode=true]_&]:mb-4",
         className
       )}
     >

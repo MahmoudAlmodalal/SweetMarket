@@ -163,14 +163,14 @@ function StorefrontHeaderUI({
           {/* Brand Logo & Title */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1 -m-1"
+            className="flex items-center gap-2 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1 -m-1"
           >
             <StoreLogo
               variant="main"
-              width={154}
-              height={45}
+              width={140}
+              height={40}
               priority
-              className="w-[124px] sm:w-[142px] md:w-[154px] group-hover:scale-[1.02] transition-transform duration-200"
+              className="w-[110px] sm:w-[142px] md:w-[154px] group-hover:scale-[1.02] transition-transform duration-200"
             />
           </Link>
 
@@ -200,17 +200,17 @@ function StorefrontHeaderUI({
           </nav>
 
           {/* Header Action Elements */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <Link
               href="/favorites"
               aria-label={favoriteCount > 0 ? `المفضلة (${favoriteCount} عناصر)` : "المفضلة"}
-              className="relative hidden sm:flex w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-candy-rose items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="relative flex w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-candy-rose items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {favoriteCount > 0 && (
                 <span
                   aria-label={`${favoriteCount} عناصر في المفضلة`}
-                  className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200"
+                  className="absolute -top-1.5 -right-1.5 min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 sm:px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[10px] sm:text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200"
                 >
                   {favoriteCount > 99 ? "+99" : favoriteCount}
                 </span>
@@ -219,9 +219,9 @@ function StorefrontHeaderUI({
             <Link
               href="/account"
               aria-label="حسابي"
-              className="hidden sm:flex w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-primary items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="flex w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-primary items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              <UserRound className="w-5 h-5" />
+              <UserRound className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
 
             {/* Desktop Search Bar */}

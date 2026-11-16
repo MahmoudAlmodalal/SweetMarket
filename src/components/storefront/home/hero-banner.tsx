@@ -120,13 +120,13 @@ export function HeroBanner({ className }: HeroBannerProps) {
 
             {/* Bottom Caption Overlay */}
             <div className="absolute bottom-3 right-3 left-3 flex items-center justify-between text-white">
-              <div className="flex items-center gap-1.5 bg-candy-ink/60 backdrop-blur-md px-3 py-1 rounded-candy-pill">
+              <div className="flex items-center gap-1.5 bg-candy-ink/80 backdrop-blur-md px-3.5 py-1.5 rounded-candy-pill border border-white/20 shadow-md">
                 <Star className="w-4 h-4 fill-candy-amber text-candy-amber" />
-                <span className="text-xs font-sans font-bold">
+                <span className="text-xs font-sans font-extrabold text-white">
                   الأعلى تقييماً في المناسبات
                 </span>
               </div>
-              <span className="text-xs font-sans font-bold bg-candy-strawberry/90 backdrop-blur-md px-3 py-1 rounded-candy-pill">
+              <span className="text-xs font-sans font-bold bg-candy-strawberry/90 backdrop-blur-md px-3 py-1 rounded-candy-pill shadow-sm">
                 طازج اليوم
               </span>
             </div>

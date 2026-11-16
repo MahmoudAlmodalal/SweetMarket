@@ -216,14 +216,23 @@ export async function getOrderByNumberAndPhone(
 
   const orders = await getOrders();
   const normalizedNumber = orderNumber.trim().toUpperCase();
-  const normalizedInputPhone = normalizePalestinianPhone(phone.trim());
+  let normalizedInputPhone = phone.trim();
+  try {
+    normalizedInputPhone = normalizePalestinianPhone(phone.trim());
+  } catch {
+    // Keep raw
+  }
 
-  const order = orders.find(
-    (o) =>
-      o.orderNumber.toUpperCase() === normalizedNumber &&
-      (normalizePalestinianPhone(o.customer.phone.trim()) === normalizedInputPhone ||
-        o.customer.phone.trim() === phone.trim())
-  );
+  const order = orders.find((o) => {
+    if (o.orderNumber.toUpperCase() !== normalizedNumber) return false;
+    let storedPhone = o.customer.phone.trim();
+    try {
+      storedPhone = normalizePalestinianPhone(o.customer.phone.trim());
+    } catch {
+      // Keep raw
+    }
+    return storedPhone === normalizedInputPhone || o.customer.phone.trim() === phone.trim();
+  });
 
   return order || null;
 }

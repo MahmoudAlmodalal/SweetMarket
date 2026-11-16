@@ -39,6 +39,7 @@ export interface CartContextType {
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
+  restoreCartItems: (items: CartItem[]) => void;
   setDeliveryZone: (zoneId: string, deliveryFee: number) => void;
 }
 
@@ -270,6 +271,17 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
     }
   }, []);
 
+  const restoreCartItems = useCallback((itemsToRestore: CartItem[]) => {
+    if (!itemsToRestore || itemsToRestore.length === 0) return;
+    setItems((prev) => {
+      const newItems = itemsToRestore.map((item) => ({
+        ...item,
+        id: `${item.productId}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      }));
+      return [...prev, ...newItems];
+    });
+  }, []);
+
   const setDeliveryZone = useCallback((zoneId: string, fee: number) => {
     setSelectedZoneId(zoneId);
     setDeliveryFee(typeof fee === "number" && fee >= 0 ? fee : 0);
@@ -306,6 +318,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
       removeItem,
       updateQuantity,
       clearCart,
+      restoreCartItems,
       setDeliveryZone,
     }),
     [
@@ -317,6 +330,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
       removeItem,
       updateQuantity,
       clearCart,
+      restoreCartItems,
       setDeliveryZone,
     ]
   );
@@ -343,6 +357,7 @@ const defaultCartContext: CartContextType = {
   removeItem: () => {},
   updateQuantity: () => {},
   clearCart: () => {},
+  restoreCartItems: () => {},
   setDeliveryZone: () => {},
 };
 

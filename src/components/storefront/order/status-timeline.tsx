@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Sparkles,
   CheckCircle2,
@@ -21,12 +22,13 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import type { Order, OrderStatus, OrderTimelineEvent } from "@/types";
+import type { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink } from "@/lib/store-identity";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
+import { useCart } from "@/context/cart-context";
 
 export interface StatusTimelineProps {
   order: Order;
@@ -35,52 +37,47 @@ export interface StatusTimelineProps {
 }
 
 interface StepMeta {
-  status: "new" | "accepted" | "in_preparation" | "out_for_delivery" | "delivered";
+  id: "new" | "in_preparation" | "out_for_delivery" | "delivered";
   title: string;
   subtitle: string;
   icon: React.ComponentType<{ className?: string }>;
 }
 
-const ORDER_STEPS: StepMeta[] = [
+const FOUR_CUSTOMER_STEPS: StepMeta[] = [
   {
-    status: "new",
-    title: ORDER_STATUS_LABELS.new,
-    subtitle: "تم استلام وتأكيد الطلب بنجاح",
+    id: "new",
+    title: "استلام وتأكيد الطلب",
+    subtitle: "تم استلام الطلب ومراجعته وتأكيده بنجاح",
     icon: Sparkles,
   },
   {
-    status: "accepted",
-    title: ORDER_STATUS_LABELS.accepted,
-    subtitle: "تمت مراجعة الطلب والموافقة عليه",
-    icon: CheckCircle2,
-  },
-  {
-    status: "in_preparation",
-    title: ORDER_STATUS_LABELS.in_preparation,
-    subtitle: "جاري تجهيز وتزيين الحلويات في المعمل",
+    id: "in_preparation",
+    title: "تجهيز وتزيين الحلويات",
+    subtitle: "جاري تجهيز وتزيين الحلويات الطازجة في المعمل",
     icon: ChefHat,
   },
   {
-    status: "out_for_delivery",
-    title: ORDER_STATUS_LABELS.out_for_delivery,
+    id: "out_for_delivery",
+    title: "خرج للتوصيل",
     subtitle: "الطلب بصحبة كابتن التوصيل في طريقه إليك",
     icon: Truck,
   },
   {
-    status: "delivered",
-    title: ORDER_STATUS_LABELS.delivered,
+    id: "delivered",
+    title: "تم التسليم",
     subtitle: "تم تسليم الطلب بالهناء والعافية",
     icon: Package,
   },
 ];
 
+// Step index mapper for the 4 customer steps
 const STEP_ORDER_INDEX: Record<OrderStatus, number> = {
   new: 0,
-  accepted: 1,
-  in_preparation: 2,
-  out_for_delivery: 3,
-  delivered: 4,
-  undelivered: 3,
+  accepted: 0,
+  in_preparation: 1,
+  out_for_delivery: 2,
+  delivered: 4, // all 4 steps complete
+  undelivered: 2,
   cancelled: -1,
 };
 
@@ -104,25 +101,22 @@ export function StatusTimeline({
   onNewSearch,
   className,
 }: StatusTimelineProps) {
+  const router = useRouter();
+  const { restoreCartItems } = useCart();
   const [copied, setCopied] = React.useState(false);
   const [isItemsExpanded, setIsItemsExpanded] = React.useState(true);
 
   const isCancelled = order.status === "cancelled";
   const isUndelivered = order.status === "undelivered";
-  const currentStepIndex = STEP_ORDER_INDEX[order.status];
+  const currentStepIndex = STEP_ORDER_INDEX[order.status] ?? 0;
 
-  // Latest timeline event or cancellation reason
+  // Timeline events for cancellation or undelivered
   const cancelledEvent = React.useMemo(() => {
     return order.timeline?.find((e) => e.status === "cancelled");
   }, [order.timeline]);
 
   const undeliveredEvent = React.useMemo(() => {
     return order.timeline?.find((e) => e.status === "undelivered");
-  }, [order.timeline]);
-
-  const latestEvent = React.useMemo(() => {
-    if (!order.timeline || order.timeline.length === 0) return null;
-    return order.timeline[order.timeline.length - 1];
   }, [order.timeline]);
 
   const handleCopyOrderNumber = React.useCallback(async () => {
@@ -137,6 +131,13 @@ export function StatusTimeline({
       console.error("Failed to copy order number:", err);
     }
   }, [order.orderNumber]);
+
+  const handleReorder = React.useCallback(() => {
+    if (order.items && order.items.length > 0) {
+      restoreCartItems(order.items);
+      router.push("/cart");
+    }
+  }, [order.items, restoreCartItems, router]);
 
   const totalItemsCount = React.useMemo(() => {
     return order.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
@@ -211,31 +212,35 @@ export function StatusTimeline({
             <span
               className={cn(
                 "inline-flex items-center gap-2 px-4 py-2 rounded-candy-pill font-sans text-sm font-bold shadow-xs",
+                order.status === "new" &&
+                  "bg-candy-blush text-candy-berry border border-candy-line ring-2 ring-candy-strawberry/30",
+                order.status === "in_preparation" &&
+                  "bg-amber-100 text-amber-800 border border-amber-300",
+                order.status === "out_for_delivery" &&
+                  "bg-blue-100 text-blue-800 border border-blue-300",
                 order.status === "delivered" &&
                   "bg-emerald-100 text-emerald-800 border border-emerald-300",
                 order.status === "cancelled" &&
                   "bg-rose-100 text-rose-800 border border-rose-300",
                 order.status === "undelivered" &&
                   "bg-amber-100 text-amber-800 border border-amber-300",
-                order.status !== "delivered" &&
-                  order.status !== "cancelled" &&
-                  order.status !== "undelivered" &&
-                  "bg-candy-soft text-candy-berry border border-candy-line"
+                order.status === "accepted" &&
+                  "bg-purple-100 text-purple-800 border border-purple-300"
               )}
             >
               <span
                 className={cn(
                   "w-2.5 h-2.5 rounded-full",
+                  order.status === "new" && "bg-candy-strawberry animate-pulse",
+                  order.status === "in_preparation" && "bg-amber-500 animate-pulse",
+                  order.status === "out_for_delivery" && "bg-blue-500 animate-pulse",
                   order.status === "delivered" && "bg-emerald-500",
                   order.status === "cancelled" && "bg-rose-500",
                   order.status === "undelivered" && "bg-amber-500 animate-pulse",
-                  order.status !== "delivered" &&
-                    order.status !== "cancelled" &&
-                    order.status !== "undelivered" &&
-                    "bg-candy-strawberry animate-pulse"
+                  order.status === "accepted" && "bg-purple-500"
                 )}
               />
-              <span>الحالة الحالية: {ORDER_STATUS_LABELS[order.status]}</span>
+              <span>الحالة الحالية: {ORDER_STATUS_LABELS[order.status] || order.status}</span>
             </span>
           </div>
         </div>
@@ -303,112 +308,166 @@ export function StatusTimeline({
             aria-label="مراحل معالجة وتوصيل الطلب"
             className="relative flex flex-col space-y-6 sm:space-y-8 before:absolute before:right-[23px] before:top-4 before:bottom-4 before:w-1 before:bg-candy-line/80"
           >
-            {ORDER_STEPS.map((step, idx) => {
-              const StepIcon = step.icon;
-              const matchingEvent = order.timeline?.find(
-                (e) => e.status === step.status
-              );
-
-              // Step state determination
-              const isPast =
-                !isCancelled && currentStepIndex !== -1 && idx < currentStepIndex;
-              const isCurrent =
-                !isCancelled && !isUndelivered && idx === currentStepIndex;
-              const isUndeliveredCurrent =
-                isUndelivered && step.status === "out_for_delivery";
-              const isPassedBeforeCancel =
-                isCancelled && Boolean(matchingEvent);
-              const isPending =
-                (!isPast && !isCurrent && !isUndeliveredCurrent && !isPassedBeforeCancel);
-
-              return (
-                <li
-                  key={step.status}
-                  aria-current={isCurrent ? "step" : undefined}
-                  className="relative flex items-start gap-4 sm:gap-5 pr-2 group"
-                >
-                  {/* Step Icon Node */}
-                  <div
-                    className={cn(
-                      "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0",
-                      // Completed Step
-                      (isPast || (isCancelled && isPassedBeforeCancel)) &&
-                        "bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)] scale-100",
-                      // Active Current Step
-                      isCurrent &&
-                        "bg-candy-strawberry text-white ring-4 ring-candy-strawberry/25 shadow-candy-cta scale-110 animate-pulse",
-                      // Undelivered Current
-                      isUndeliveredCurrent &&
-                        "bg-amber-600 text-white ring-4 ring-amber-300/40 shadow-md scale-105",
-                      // Pending Step
-                      isPending &&
-                        "bg-white border-2 border-candy-line text-candy-muted/70 shadow-xs"
-                    )}
-                  >
-                    {isPast || (isCancelled && isPassedBeforeCancel) ? (
-                      <Check className="w-5 h-5 text-white" strokeWidth={3} />
-                    ) : (
-                      <StepIcon className="w-5 h-5" />
-                    )}
+            {isCancelled ? (
+              <>
+                {/* Step 1 for Cancelled: Completed initial receipt */}
+                <li className="relative flex items-start gap-4 sm:gap-5 pr-2 group">
+                  <div className="relative z-10 w-11 h-11 rounded-full flex items-center justify-center shrink-0 bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)]">
+                    <Check className="w-5 h-5 text-white" strokeWidth={3} />
                   </div>
-
-                  {/* Step Description & Timestamp */}
                   <div className="flex-1 pt-1 text-right">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <h4
-                        className={cn(
-                          "font-sans text-sm sm:text-base font-bold",
-                          isCurrent && "text-candy-berry font-extrabold",
-                          (isPast || isPassedBeforeCancel) && "text-candy-ink",
-                          isPending && "text-candy-muted/80"
-                        )}
-                      >
-                        {step.title}
-                        {isCurrent && (
-                          <span className="mr-2 text-xs font-semibold px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry inline-block">
-                            المرحلة الحالية
-                          </span>
-                        )}
-                      </h4>
-
-                      {/* Timestamp from order.timeline */}
-                      {matchingEvent?.timestamp && (
-                        <span className="font-sans text-xs text-candy-muted flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-candy-muted/70" />
-                          <span>{formatArabicDateTime(matchingEvent.timestamp)}</span>
-                        </span>
-                      )}
-                    </div>
-
-                    <p
-                      className={cn(
-                        "font-sans text-xs sm:text-sm mt-0.5",
-                        isCurrent
-                          ? "text-candy-ink/90 font-medium"
-                          : "text-candy-muted"
-                      )}
-                    >
-                      {step.subtitle}
+                    <h4 className="font-sans text-sm sm:text-base font-bold text-candy-ink">
+                      استلام وتأكيد الطلب
+                    </h4>
+                    <p className="font-sans text-xs sm:text-sm text-candy-muted mt-0.5">
+                      تم استلام طلبك ومراجعته بنجاح
                     </p>
-
-                    {/* Timeline Event Note (if available) */}
-                    {matchingEvent?.note && (
-                      <div className="mt-2 text-xs font-sans bg-candy-soft/80 border border-candy-line/60 rounded-xl p-2.5 text-candy-ink leading-relaxed">
-                        <span className="font-bold text-candy-berry ml-1">
-                          ملاحظة التحديث:
-                        </span>
-                        {matchingEvent.note}
-                      </div>
+                    {order.createdAt && (
+                      <span className="font-sans text-xs text-candy-muted flex items-center gap-1 mt-1">
+                        <Clock className="w-3.5 h-3.5 text-candy-muted/70" />
+                        <span>{formatArabicDateTime(order.createdAt)}</span>
+                      </span>
                     )}
                   </div>
                 </li>
-              );
-            })}
+
+                {/* Step 2 for Cancelled: Red Termination Node with Reason */}
+                <li className="relative flex items-start gap-4 sm:gap-5 pr-2 group">
+                  <div className="relative z-10 w-11 h-11 rounded-full flex items-center justify-center shrink-0 bg-rose-600 text-white shadow-[0_4px_14px_rgba(225,29,72,0.35)] ring-4 ring-rose-200">
+                    <XCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 pt-1 text-right">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                      <h4 className="font-sans text-sm sm:text-base font-bold text-rose-800">
+                        تم إلغاء الطلب (توقف المسار)
+                      </h4>
+                      {cancelledEvent?.timestamp && (
+                        <span className="font-sans text-xs text-rose-600 flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>{formatArabicDateTime(cancelledEvent.timestamp)}</span>
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-2 text-xs font-sans bg-rose-50 border border-rose-200 rounded-xl p-3 text-rose-900 leading-relaxed">
+                      <span className="font-bold ml-1">سبب الإلغاء:</span>
+                      {order.cancelReason ||
+                        cancelledEvent?.note ||
+                        "تم إلغاء الطلب من قبل إدارة المتجر. لمزيد من الاستفسار أو إعادة الطلب يرجى مراسلة خدمة العملاء."}
+                    </div>
+                  </div>
+                </li>
+              </>
+            ) : (
+              FOUR_CUSTOMER_STEPS.map((step, idx) => {
+                const StepIcon = step.icon;
+                const matchingEvent = order.timeline?.find(
+                  (e) => e.status === step.id
+                );
+
+                // Step status calculation
+                const isPast = currentStepIndex > idx;
+                const isCurrent = currentStepIndex === idx;
+                const isUndeliveredCurrent =
+                  isUndelivered && step.id === "out_for_delivery";
+                const isPending = !isPast && !isCurrent && !isUndeliveredCurrent;
+
+                return (
+                  <li
+                    key={step.id}
+                    aria-current={isCurrent ? "step" : undefined}
+                    className="relative flex items-start gap-4 sm:gap-5 pr-2 group"
+                  >
+                    {/* Step Icon Node */}
+                    <div
+                      className={cn(
+                        "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0",
+                        // Completed Step
+                        isPast &&
+                          "bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)] scale-100",
+                        // Active Current Step
+                        isCurrent &&
+                          "bg-candy-strawberry text-white ring-4 ring-candy-strawberry/25 shadow-candy-cta scale-110 animate-pulse",
+                        // Undelivered Current
+                        isUndeliveredCurrent &&
+                          "bg-amber-600 text-white ring-4 ring-amber-300/40 shadow-md scale-105",
+                        // Pending Step
+                        isPending &&
+                          "bg-white border-2 border-candy-line text-candy-muted/70 shadow-xs"
+                      )}
+                    >
+                      {isPast ? (
+                        <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                      ) : (
+                        <StepIcon className="w-5 h-5" />
+                      )}
+                    </div>
+
+                    {/* Step Description & Timestamp */}
+                    <div className="flex-1 pt-1 text-right">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                        <h4
+                          className={cn(
+                            "font-sans text-sm sm:text-base font-bold",
+                            isCurrent && "text-candy-berry font-extrabold",
+                            isPast && "text-candy-ink",
+                            isPending && "text-candy-muted/80"
+                          )}
+                        >
+                          {step.title}
+                          {isCurrent && (
+                            <span className="mr-2 text-xs font-semibold px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry inline-block">
+                              المرحلة الحالية
+                            </span>
+                          )}
+                        </h4>
+
+                        {/* Timestamp from order.timeline */}
+                        {matchingEvent?.timestamp && (
+                          <span className="font-sans text-xs text-candy-muted flex items-center gap-1">
+                            <Clock className="w-3.5 h-3.5 text-candy-muted/70" />
+                            <span>{formatArabicDateTime(matchingEvent.timestamp)}</span>
+                          </span>
+                        )}
+                      </div>
+
+                      <p
+                        className={cn(
+                          "font-sans text-xs sm:text-sm mt-0.5",
+                          isCurrent
+                            ? "text-candy-ink/90 font-medium"
+                            : "text-candy-muted"
+                        )}
+                      >
+                        {step.subtitle}
+                      </p>
+
+                      {/* Remaining time cue for preparation step */}
+                      {isCurrent && step.id === "in_preparation" && (
+                        <div className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-amber-50 border border-amber-200 text-amber-900 font-sans text-xs font-bold shadow-xs">
+                          <Clock className="w-4 h-4 text-amber-600 animate-spin-slow" />
+                          <span>الوقت التقديري المتبقي للتجهيز: حوالي 15 - 25 دقيقة ⏱️</span>
+                        </div>
+                      )}
+
+                      {/* Timeline Event Note (if available) */}
+                      {matchingEvent?.note && (
+                        <div className="mt-2 text-xs font-sans bg-candy-soft/80 border border-candy-line/60 rounded-xl p-2.5 text-candy-ink leading-relaxed">
+                          <span className="font-bold text-candy-berry ml-1">
+                            ملاحظة التحديث:
+                          </span>
+                          {matchingEvent.note}
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                );
+              })
+            )}
           </ol>
         </div>
       </div>
 
-      {/* 5. Safe Order Items & Financial Summary (No Personal Data Exposed - Privacy/Security) */}
+      {/* 5. Safe Order Items & Financial Summary */}
       <div className="bg-white border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
         <div className="p-5 sm:p-6 bg-candy-soft/40 border-b border-candy-line/60 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -471,8 +530,19 @@ export function StatusTimeline({
                               {item.selectedWeightLabel}
                             </span>
                           )}
+                          {item.packagingLabel && (
+                            <span className="bg-candy-soft px-2 py-0.5 rounded-md border border-candy-line/60 text-candy-berry">
+                              {item.packagingLabel}
+                              {item.packagingFee && item.packagingFee > 0 ? ` (+${item.packagingFee} ₪)` : ""}
+                            </span>
+                          )}
                           <span>الكمية: {item.quantity}</span>
                         </div>
+                        {item.giftMessage && (
+                          <div className="text-xs text-candy-strawberry mt-1">
+                            رسالة الإهداء: &ldquo;{item.giftMessage}&rdquo;
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -518,18 +588,19 @@ export function StatusTimeline({
         )}
       </div>
 
-      {/* 6. Action Bar: New Query & WhatsApp Support */}
+      {/* 6. Action Bar: Re-order, Contact WhatsApp, New Query, Home */}
       <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-        {onNewSearch && (
+        {/* Re-order action available for delivered and cancelled orders */}
+        {(order.status === "delivered" || order.status === "cancelled") && (
           <Button
             type="button"
-            variant="secondary"
+            variant="primary"
             size="lg"
-            onClick={onNewSearch}
-            className="w-full sm:flex-1"
-            leftIcon={<RotateCcw className="w-4 h-4 text-candy-berry" />}
+            onClick={handleReorder}
+            className="w-full sm:flex-1 bg-candy-strawberry hover:bg-candy-berry text-white shadow-candy-cta"
+            leftIcon={<RotateCcw className="w-4 h-4" />}
           >
-            <span>استعلام عن طلب آخر</span>
+            <span>إعادة الطلب (نفس الأصناف)</span>
           </Button>
         )}
 
@@ -542,6 +613,19 @@ export function StatusTimeline({
           <MessageCircle className="w-4 h-4 text-white" />
           <span>تواصل مع الدعم عبر واتساب</span>
         </a>
+
+        {onNewSearch && (
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            onClick={onNewSearch}
+            className="w-full sm:w-auto"
+            leftIcon={<RotateCcw className="w-4 h-4 text-candy-berry" />}
+          >
+            <span>استعلام آخر</span>
+          </Button>
+        )}
 
         <Link
           href="/"
