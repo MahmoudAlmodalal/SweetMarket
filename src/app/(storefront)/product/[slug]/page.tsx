@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useSearchParams } from "next/navigation";
 import {
   Sparkles,
   ChevronLeft,
@@ -53,6 +53,7 @@ interface PageProps {
 
 export default function ProductDetailPage({ params: propParams }: PageProps) {
   const routerParams = useParams();
+  const searchParams = useSearchParams();
   const rawSlug = (routerParams?.slug as string) || propParams?.slug || "";
   const decodedSlug = React.useMemo(() => {
     try {
@@ -95,6 +96,25 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
   const [isAdding, setIsAdding] = React.useState<boolean>(false);
   const [isSuccess, setIsSuccess] = React.useState<boolean>(false);
   const [addedRelatedIds, setAddedRelatedIds] = React.useState<Record<string, boolean>>({});
+
+  // Sync preselected options from searchParams (for 'تعديل الخيارات' handoff)
+  React.useEffect(() => {
+    if (!searchParams) return;
+    const pkg = searchParams.get("packaging");
+    if (pkg && (pkg === "standard" || pkg === "royal")) {
+      setPackagingOptionId(pkg as PackagingOptionId);
+    }
+    const gift = searchParams.get("gift");
+    if (gift) {
+      setIsGiftCardEnabled(true);
+      setGiftMessage(gift.slice(0, 120));
+    }
+    const weightLabel = searchParams.get("weight");
+    if (weightLabel && product?.availableWeights) {
+      const match = product.availableWeights.find((w) => w.label === weightLabel);
+      if (match) setSelectedWeight(match);
+    }
+  }, [searchParams, product]);
 
   const { addItem } = useCart();
 
@@ -240,13 +260,14 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
     try {
       setIsAdding(true);
 
-      // Call CartContext addItem with weight, quantity, and packaging
+      // Call CartContext addItem with weight, quantity, packaging, and gift message
       addItem(
         product,
         quantity,
         selectedWeight?.multiplier,
         selectedWeight?.label,
-        packagingOptionId
+        packagingOptionId,
+        isGiftCardEnabled && giftMessage.trim() ? giftMessage.trim() : undefined
       );
 
       // Sync event for any decoupled listeners (e.g. mobile dock)

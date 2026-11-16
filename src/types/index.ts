@@ -108,6 +108,7 @@ export interface CartItem {
   packagingOptionId?: PackagingOptionId;
   packagingLabel?: string;
   packagingFee?: number;
+  giftMessage?: string;
   quantity: number;
   lineTotal: number;
 }

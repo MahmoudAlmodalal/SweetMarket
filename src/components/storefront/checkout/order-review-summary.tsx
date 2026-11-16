@@ -125,6 +125,11 @@ export function OrderReviewSummary({
                           </>
                         )}
                       </div>
+                      {item.giftMessage && (
+                        <div className="text-[11px] text-candy-strawberry mt-0.5 truncate">
+                          رسالة الإهداء: &ldquo;{item.giftMessage}&rdquo;
+                        </div>
+                      )}
                     </div>
 
                     {/* Line Total */}

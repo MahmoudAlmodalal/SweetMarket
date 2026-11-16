@@ -31,7 +31,8 @@ export interface CartContextType {
     quantity?: number,
     selectedWeightMultiplier?: number,
     selectedWeightLabel?: string,
-    packagingOptionId?: PackagingOptionId
+    packagingOptionId?: PackagingOptionId,
+    giftMessage?: string
   ) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
@@ -60,7 +61,13 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
         if (stored) {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed)) {
-            setItems(parsed);
+            const normalized = parsed.map((item: CartItem) => ({
+              ...item,
+              packagingOptionId: item.packagingOptionId ?? DEFAULT_PACKAGING_OPTION_ID,
+              packagingLabel: item.packagingLabel ?? PACKAGING_OPTIONS[0].label,
+              packagingFee: item.packagingFee ?? 0,
+            }));
+            setItems(normalized);
           }
         }
       }
@@ -109,9 +116,11 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
       quantity = 1,
       selectedWeightMultiplier?: number,
       selectedWeightLabel?: string,
-      packagingOptionId?: PackagingOptionId
+      packagingOptionId?: PackagingOptionId,
+      giftMessage?: string
     ) => {
       const qty = typeof quantity === "number" && quantity > 0 ? Math.floor(quantity) : 1;
+      const cleanGiftMessage = giftMessage?.trim() ? giftMessage.trim().slice(0, 120) : undefined;
 
       // Find matching weight option from product if available
       let matchedWeight: ProductWeightOption | undefined;
@@ -155,6 +164,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
         finalMultiplier !== undefined ? `${finalMultiplier}` : undefined,
         finalLabel ? finalLabel : undefined,
         packagingOption.id !== DEFAULT_PACKAGING_OPTION_ID ? packagingOption.id : undefined,
+        cleanGiftMessage ? cleanGiftMessage : undefined,
       ]
         .filter(Boolean)
         .join("-");
@@ -166,7 +176,8 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
             item.productId === product.id &&
             (item.selectedWeightMultiplier ?? null) === (finalMultiplier ?? null) &&
             (item.selectedWeightLabel ?? null) === (finalLabel ?? null) &&
-            (item.packagingOptionId ?? DEFAULT_PACKAGING_OPTION_ID) === packagingOption.id
+            (item.packagingOptionId ?? DEFAULT_PACKAGING_OPTION_ID) === packagingOption.id &&
+            (item.giftMessage ?? null) === (cleanGiftMessage ?? null)
           );
         });
 
@@ -186,6 +197,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
             packagingOptionId: packagingOption.id,
             packagingLabel: packagingOption.label,
             packagingFee: packagingOption.fee,
+            giftMessage: cleanGiftMessage ?? existingItem.giftMessage,
             quantity: newQty,
             lineTotal: linePricing.lineTotal,
           };
@@ -205,6 +217,7 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
           packagingOptionId: packagingOption.id,
           packagingLabel: packagingOption.label,
           packagingFee: packagingOption.fee,
+          giftMessage: cleanGiftMessage,
           unit: product.unit,
           selectedWeightMultiplier: finalMultiplier,
           selectedWeightLabel: finalLabel,

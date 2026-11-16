@@ -225,9 +225,23 @@ export function OrderSuccessCard({
                             </span>
                           </>
                         )}
+                        {item.packagingLabel && (
+                          <>
+                            <span>•</span>
+                            <span className="text-candy-berry font-medium">
+                              {item.packagingLabel}
+                              {item.packagingFee && item.packagingFee > 0 ? ` (+${item.packagingFee} ₪)` : ""}
+                            </span>
+                          </>
+                        )}
                         <span>•</span>
                         <span>{item.unitPrice.toFixed(2)} ₪ للوحدة</span>
                       </div>
+                      {item.giftMessage && (
+                        <div className="text-xs text-candy-strawberry mt-1">
+                          رسالة الإهداء: &ldquo;{item.giftMessage}&rdquo;
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="text-left shrink-0">
