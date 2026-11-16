@@ -52,9 +52,38 @@ export function OrderSuccessCard({
     }
   }, [order.orderNumber]);
 
-  const totalItemsCount = React.useMemo(() => {
+  const distinctItemsCount = React.useMemo(() => order.items.length, [order.items]);
+  const totalUnitsCount = React.useMemo(() => {
     return order.items.reduce((sum, item) => sum + item.quantity, 0);
   }, [order.items]);
+
+  const itemsSummaryText = React.useMemo(() => {
+    const formatArabicItemsCount = (count: number) => {
+      if (count === 1) return "صنف فاخر واحد";
+      if (count === 2) return "صنفان فاخران";
+      if (count >= 3 && count <= 10) return `${count} أصناف فاخرة`;
+      return `${count} صنفاً فاخراً`;
+    };
+    const formatArabicUnitsCount = (count: number) => {
+      if (count === 1) return "قطعة واحدة";
+      if (count === 2) return "قطعتان";
+      if (count >= 3 && count <= 10) return `${count} قطع`;
+      return `${count} قطعة`;
+    };
+    return `${formatArabicItemsCount(distinctItemsCount)} (إجمالي ${formatArabicUnitsCount(totalUnitsCount)})`;
+  }, [distinctItemsCount, totalUnitsCount]);
+
+  const handleTrackClick = React.useCallback(() => {
+    if (typeof window !== "undefined" && window.sessionStorage) {
+      window.sessionStorage.setItem(
+        "candy_tracking_handoff",
+        JSON.stringify({
+          orderNumber: order.orderNumber,
+          phone: order.customer.phone,
+        })
+      );
+    }
+  }, [order.orderNumber, order.customer.phone]);
 
   const zoneDisplayName =
     deliveryZone?.name || order.customer.zoneId || "منطقة التوصيل المحددة";
@@ -67,6 +96,57 @@ export function OrderSuccessCard({
         className
       )}
     >
+      {/* 0. Three-Step Completed Checkout Stepper */}
+      <section className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="flex items-center gap-2 text-emerald-800">
+            <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+            <span className="font-sans font-bold text-xs sm:text-sm">
+              تم إكمال الطلب بنجاح • خطوة 3 من 3 🔒
+            </span>
+          </div>
+          <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-sans font-bold text-xs">
+            مكتمل 100%
+          </span>
+        </div>
+
+        {/* Stepper Nodes */}
+        <div className="relative flex items-center justify-between max-w-xl mx-auto px-4">
+          {/* Background Connector Bar - 100% Complete */}
+          <div className="absolute top-1/2 left-8 right-8 h-1 bg-emerald-500 -translate-y-1/2 z-0 rounded-full" />
+
+          {/* Node 1: Cart (Completed) */}
+          <div className="relative z-10 flex flex-col items-center gap-1.5">
+            <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-sans font-bold text-xs shadow-sm">
+              <Check className="w-4 h-4" />
+            </div>
+            <span className="font-sans text-[11px] sm:text-xs text-emerald-700 font-bold">
+              السلة
+            </span>
+          </div>
+
+          {/* Node 2: Checkout (Completed) */}
+          <div className="relative z-10 flex flex-col items-center gap-1.5">
+            <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-sans font-bold text-xs shadow-sm">
+              <Check className="w-4 h-4" />
+            </div>
+            <span className="font-sans text-[11px] sm:text-xs text-emerald-700 font-bold">
+              بيانات التوصيل
+            </span>
+          </div>
+
+          {/* Node 3: Confirmation (Completed) */}
+          <div className="relative z-10 flex flex-col items-center gap-1.5">
+            <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-sans font-bold text-xs shadow-sm ring-4 ring-emerald-100">
+              <Check className="w-4 h-4" />
+            </div>
+            <span className="font-sans text-[11px] sm:text-xs text-emerald-700 font-extrabold">
+              التأكيد والتتبع
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* 1. Festive Header & Celebratory Checkmark */}
       <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 shadow-candy-2 text-center">
         {/* Ambient Berry Radial Glow */}
@@ -173,7 +253,7 @@ export function OrderSuccessCard({
                 تفاصيل الأصناف والطلب
               </h2>
               <p className="font-sans text-xs text-candy-muted">
-                {totalItemsCount} {totalItemsCount === 1 ? "صنف فاخر" : "أصناف فاخرة"}
+                {itemsSummaryText}
               </p>
             </div>
           </div>
@@ -371,6 +451,7 @@ export function OrderSuccessCard({
         {/* Direct button: Track Order */}
         <Link
           href={`/track?order=${encodeURIComponent(order.orderNumber)}`}
+          onClick={handleTrackClick}
           className="w-full sm:flex-1 min-h-[52px] bg-candy-strawberry hover:bg-candy-berry text-white rounded-candy-pill flex items-center justify-center gap-2.5 font-sans font-bold text-base shadow-candy-cta transition-all active:scale-[0.98] text-center"
         >
           <Truck className="w-5 h-5" />

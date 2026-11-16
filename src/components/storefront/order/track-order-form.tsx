@@ -12,14 +12,20 @@ import {
   Sparkles,
   RotateCcw,
   CheckCircle2,
+  MessageCircle,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { TrackOrderFormSchema } from "@/lib/validations";
+import {
+  TrackOrderFormSchema,
+  isValidPalestinianPhone,
+  normalizePalestinianPhone,
+} from "@/lib/validations";
 import { getOrderByNumberAndPhone } from "@/lib/repositories";
 import type { Order } from "@/types";
 import { cn } from "@/lib/utils";
+import { buildWhatsAppLink } from "@/lib/store-identity";
 
 export interface TrackOrderFormProps {
   initialOrderNumber?: string;
@@ -32,8 +38,18 @@ export interface TrackOrderFormProps {
 }
 
 const MAX_ATTEMPTS = 5;
-const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15-minute lockout, aligned with the API contract
-const ER_005_MESSAGE = "تعذر العثور على الطلب بالبيانات المدخلة، يرجى التأكد من رقم الطلب ورقم الهاتف";
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15-minute lockout
+
+export type LookupState = "idle" | "found" | "not-found" | "invalid" | "locked-out";
+
+const DEMO_PILLS = [
+  { label: "طلب جديد (1001)", orderNumber: "CL-2026-1001", phone: "0599123456" },
+  { label: "قيد التجهيز (1002)", orderNumber: "CL-2026-1002", phone: "0568987654" },
+  { label: "خرج للتوصيل (1004)", orderNumber: "CL-2026-1004", phone: "0597112233" },
+  { label: "تم التسليم (1005)", orderNumber: "CL-2026-1005", phone: "0569445566" },
+  { label: "ملغي (1006)", orderNumber: "CL-2026-1006", phone: "0598776655" },
+  { label: "رقم غير موجود (تجربة)", orderNumber: "CL-2026-9999", phone: "0599000000" },
+];
 
 export function TrackOrderForm({
   initialOrderNumber,
@@ -55,7 +71,7 @@ export function TrackOrderForm({
     orderNumber?: string;
     phone?: string;
   }>({});
-  const [lookupError, setLookupError] = React.useState<string | null>(null);
+  const [lookupState, setLookupState] = React.useState<LookupState>("idle");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [failedAttempts, setFailedAttempts] = React.useState<number>(0);
   const [lockoutUntil, setLockoutUntil] = React.useState<number | null>(null);
@@ -63,6 +79,10 @@ export function TrackOrderForm({
 
   const phoneInputRef = React.useRef<HTMLInputElement>(null);
   const orderInputRef = React.useRef<HTMLInputElement>(null);
+
+  const isDemoBuild =
+    process.env.NODE_ENV !== "production" ||
+    process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
   // Sync with query param or prop if it updates
   React.useEffect(() => {
@@ -84,7 +104,60 @@ export function TrackOrderForm({
     }
   }, [autoFocus, orderNumber, phone]);
 
-  // Handle countdown for temporary security lockout (AC-010 / NFR-015)
+  // One-shot tracking handoff consumption from sessionStorage
+  React.useEffect(() => {
+    if (typeof window === "undefined" || !window.sessionStorage) return;
+    const rawHandoff = window.sessionStorage.getItem("candy_tracking_handoff");
+    if (!rawHandoff) return;
+
+    try {
+      const data = JSON.parse(rawHandoff);
+      const targetOrderNumber = (queryOrder || initialOrderNumber || "").trim().toUpperCase();
+
+      if (
+        data &&
+        data.orderNumber &&
+        data.phone &&
+        targetOrderNumber &&
+        data.orderNumber.trim().toUpperCase() === targetOrderNumber
+      ) {
+        // One-shot consumption: delete immediately
+        window.sessionStorage.removeItem("candy_tracking_handoff");
+
+        setOrderNumber(data.orderNumber);
+        setPhone(data.phone);
+
+        setIsLoading(true);
+        getOrderByNumberAndPhone(data.orderNumber, data.phone)
+          .then((matchedOrder) => {
+            if (matchedOrder) {
+              setLookupState("found");
+              onOrderFound?.(matchedOrder);
+            } else {
+              setLookupState("not-found");
+            }
+          })
+          .catch(() => {
+            setLookupState("not-found");
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } else {
+        // Mismatched handoff: keep handoff or ignore, prefill orderNumber and focus phone
+        if (targetOrderNumber) {
+          setOrderNumber(targetOrderNumber);
+        }
+        setTimeout(() => {
+          phoneInputRef.current?.focus();
+        }, 50);
+      }
+    } catch {
+      window.sessionStorage.removeItem("candy_tracking_handoff");
+    }
+  }, [queryOrder, initialOrderNumber, onOrderFound]);
+
+  // Handle countdown for temporary security lockout
   React.useEffect(() => {
     if (!lockoutUntil) return;
 
@@ -96,7 +169,7 @@ export function TrackOrderForm({
       if (remaining <= 0) {
         setLockoutUntil(null);
         setFailedAttempts(0);
-        setLookupError(null);
+        setLookupState("idle");
       }
     }, 1000);
 
@@ -106,13 +179,12 @@ export function TrackOrderForm({
   const isLockedOut = Boolean(lockoutUntil && remainingLockoutSeconds > 0);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawDigits = e.target.value.replace(/\D/g, "").slice(0, 10);
-    setPhone(rawDigits);
+    setPhone(e.target.value);
     if (fieldErrors.phone) {
       setFieldErrors((prev) => ({ ...prev, phone: undefined }));
     }
-    if (lookupError) {
-      setLookupError(null);
+    if (lookupState === "not-found") {
+      setLookupState("idle");
     }
   };
 
@@ -121,8 +193,8 @@ export function TrackOrderForm({
     if (fieldErrors.orderNumber) {
       setFieldErrors((prev) => ({ ...prev, orderNumber: undefined }));
     }
-    if (lookupError) {
-      setLookupError(null);
+    if (lookupState === "not-found") {
+      setLookupState("idle");
     }
   };
 
@@ -131,10 +203,19 @@ export function TrackOrderForm({
 
     if (isLockedOut) return;
 
-    // Validate inputs with schema (ER-001)
+    const trimmedOrder = orderNumber.trim().toUpperCase();
+    const rawPhone = phone.trim();
+
+    let normalizedPhone = "";
+    try {
+      normalizedPhone = normalizePalestinianPhone(rawPhone);
+    } catch {
+      // Normalization failed; raw will fail validation
+    }
+
     const validation = TrackOrderFormSchema.safeParse({
-      orderNumber: orderNumber.trim(),
-      phone: phone.trim(),
+      orderNumber: trimmedOrder,
+      phone: normalizedPhone || rawPhone,
     });
 
     if (!validation.success) {
@@ -143,11 +224,11 @@ export function TrackOrderForm({
         orderNumber: formattedErrors.orderNumber?.[0],
         phone: formattedErrors.phone?.[0],
       });
+      setLookupState("invalid");
       return;
     }
 
     setFieldErrors({});
-    setLookupError(null);
     setIsLoading(true);
 
     try {
@@ -157,12 +238,10 @@ export function TrackOrderForm({
       );
 
       if (matchedOrder) {
-        // Reset failed attempts on success
         setFailedAttempts(0);
-        setLookupError(null);
+        setLookupState("found");
         onOrderFound?.(matchedOrder);
       } else {
-        // Handle mismatch / not found (ER-005 & AC-010)
         const nextAttempts = failedAttempts + 1;
         setFailedAttempts(nextAttempts);
 
@@ -170,19 +249,37 @@ export function TrackOrderForm({
           const until = Date.now() + LOCKOUT_DURATION_MS;
           setLockoutUntil(until);
           setRemainingLockoutSeconds(Math.ceil(LOCKOUT_DURATION_MS / 1000));
-          const lockMsg = "تم تجاوز الحد الأقصى للمحاولات الخاطئة. لأسباب أمنية، يرجى الانتظار قبل المحاولة مجدداً.";
-          setLookupError(lockMsg);
-          onError?.(lockMsg);
+          setLookupState("locked-out");
+          onError?.("تم حجب الاستعلام مؤقتاً لتجاوز الحد الأقصى للمحاولات الخاطئة");
         } else {
-          setLookupError(ER_005_MESSAGE);
-          onError?.(ER_005_MESSAGE);
+          setLookupState("not-found");
         }
       }
     } catch (err) {
       console.error("Order lookup error:", err);
-      const networkErrMsg = "حدث خطأ غير متوقع أثناء الاستعلام. يرجى إعادة المحاولة لاحقاً.";
-      setLookupError(networkErrMsg);
-      onError?.(networkErrMsg);
+      setLookupState("not-found");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDemoClick = async (demo: (typeof DEMO_PILLS)[0]) => {
+    setOrderNumber(demo.orderNumber);
+    setPhone(demo.phone);
+    setFieldErrors({});
+    setIsLoading(true);
+
+    try {
+      const matched = await getOrderByNumberAndPhone(demo.orderNumber, demo.phone);
+      if (matched) {
+        setLookupState("found");
+        onOrderFound?.(matched);
+      } else {
+        // Unknown demo order lands on not-found card without reducing attempt budget
+        setLookupState("not-found");
+      }
+    } catch {
+      setLookupState("not-found");
     } finally {
       setIsLoading(false);
     }
@@ -192,11 +289,65 @@ export function TrackOrderForm({
     setOrderNumber("");
     setPhone("");
     setFieldErrors({});
-    setLookupError(null);
+    setLookupState("idle");
     onReset?.();
   };
 
-  const isPhoneFormatValid = /^(059|056)\d{7}$/.test(phone.trim());
+  const isPhoneFormatValid = isValidPalestinianPhone(phone);
+
+  // Dedicated "لم نتمكن من العثور على الطلب" Not-Found Card State
+  if (lookupState === "not-found") {
+    return (
+      <Card
+        dir="rtl"
+        className={cn(
+          "overflow-hidden border-candy-line/80 shadow-candy-2 bg-white text-center p-6 sm:p-8 animate-in fade-in",
+          className
+        )}
+      >
+        <div className="w-16 h-16 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4 shadow-xs">
+          <AlertCircle className="w-8 h-8 text-candy-strawberry" />
+        </div>
+        <h2 className="font-display text-xl sm:text-2xl font-bold text-candy-ink mb-2">
+          لم نتمكن من العثور على الطلب
+        </h2>
+        <p className="font-sans text-sm text-candy-muted mb-6 max-w-md mx-auto leading-relaxed">
+          تعذر العثور على أي طلب برقم{" "}
+          <span className="font-mono font-bold text-candy-berry" dir="ltr">
+            {orderNumber || "غير محدد"}
+          </span>{" "}
+          ورقم الهاتف المدخل. يرجى التأكد من كتابة الرقم بشكل صحيح أو مراسلة فريق خدمة العملاء لمساعدتك فوراً.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+          <Button
+            type="button"
+            variant="primary"
+            size="lg"
+            onClick={() => {
+              setLookupState("idle");
+              setTimeout(() => orderInputRef.current?.focus(), 50);
+            }}
+            className="w-full sm:flex-1 bg-candy-strawberry hover:bg-candy-berry text-white"
+            leftIcon={<RotateCcw className="w-4 h-4" />}
+          >
+            <span>إعادة المحاولة</span>
+          </Button>
+          <a
+            href={buildWhatsAppLink(
+              `مرحباً كاندي لوز، أواجه مشكلة في تتبع طلبي رقم (${orderNumber}).`
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:flex-1 min-h-[44px] px-4 rounded-candy-pill bg-emerald-600 hover:bg-emerald-700 text-white font-sans font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
+          >
+            <MessageCircle className="w-4 h-4 text-white" />
+            <span>تواصل عبر واتساب</span>
+          </a>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card
@@ -230,7 +381,7 @@ export function TrackOrderForm({
 
       <CardContent className="p-5 sm:p-7 space-y-6">
         <form onSubmit={handleSubmit} noValidate className="space-y-5">
-          {/* Lockout Security Warning (AC-010 / NFR-015) */}
+          {/* Lockout Security Warning */}
           {isLockedOut && (
             <div
               role="alert"
@@ -252,30 +403,14 @@ export function TrackOrderForm({
             </div>
           )}
 
-          {/* Neutral Friendly Error Banner (ER-005) */}
-          {!isLockedOut && lookupError && (
-            <div
-              role="alert"
-              className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 flex items-start gap-3 animate-in fade-in"
-            >
-              <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-              <div className="text-xs sm:text-sm font-sans">
-                <p className="font-bold text-rose-800">تعذر العثور على الطلب</p>
-                <p className="text-rose-700 mt-1 leading-relaxed">
-                  {lookupError}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Order Number Input Field */}
+          {/* Order Number Input Field with bidi isolation */}
           <div>
             <Input
               ref={orderInputRef}
               id="track-order-number"
               name="orderNumber"
               label="رقم الطلب *"
-              placeholder="مثال: CL-2026-1001"
+              placeholder="مثال: &#x202A;CL-2026-1001&#x202C;"
               value={orderNumber}
               onChange={handleOrderNumberChange}
               error={fieldErrors.orderNumber}
@@ -298,7 +433,7 @@ export function TrackOrderForm({
             />
           </div>
 
-          {/* Palestinian Mobile Phone Input Field (with network pills) */}
+          {/* Palestinian Mobile Phone Input Field */}
           <div>
             <label
               htmlFor="track-phone"
@@ -322,12 +457,11 @@ export function TrackOrderForm({
                 id="track-phone"
                 name="phone"
                 type="tel"
-                inputMode="numeric"
+                inputMode="tel"
                 dir="ltr"
                 placeholder="0599123456"
                 value={phone}
                 onChange={handlePhoneChange}
-                maxLength={10}
                 autoComplete="tel"
                 disabled={isLoading || isLockedOut}
                 required
@@ -372,10 +506,10 @@ export function TrackOrderForm({
                   <span
                     className={cn(
                       "font-bold font-sans",
-                      phone.length === 10 ? "text-emerald-600" : "text-candy-muted"
+                      isPhoneFormatValid ? "text-emerald-600" : "text-candy-muted"
                     )}
                   >
-                    {phone.length}/10
+                    {isPhoneFormatValid ? "رقم صحيح ✓" : `${phone.length} حروف/أرقام`}
                   </span>
                 )}
               </p>
@@ -396,7 +530,7 @@ export function TrackOrderForm({
               <span>استعلام عن حالة الطلب</span>
             </Button>
 
-            {(orderNumber || phone || lookupError) && (
+            {(orderNumber || phone) && (
               <Button
                 type="button"
                 variant="secondary"
@@ -410,6 +544,28 @@ export function TrackOrderForm({
               </Button>
             )}
           </div>
+
+          {/* Demo Quick-Fill Pills (only in demo/dev builds) */}
+          {isDemoBuild && (
+            <div className="pt-3 border-t border-candy-line/60">
+              <span className="block text-xs font-bold text-candy-muted mb-2 font-sans">
+                تجربة سريعة (بيئة العرض التجريبية):
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {DEMO_PILLS.map((demo) => (
+                  <button
+                    key={demo.orderNumber}
+                    type="button"
+                    onClick={() => handleDemoClick(demo)}
+                    disabled={isLoading || isLockedOut}
+                    className="text-xs px-3 py-1.5 rounded-candy-pill bg-candy-soft hover:bg-candy-blush text-candy-berry border border-candy-line font-sans font-medium transition-colors"
+                  >
+                    {demo.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </form>
       </CardContent>
     </Card>

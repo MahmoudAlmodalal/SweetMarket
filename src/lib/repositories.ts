@@ -27,6 +27,7 @@ import {
   terminateSession,
   generateSecureSessionToken,
 } from '@/lib/auth/authentication';
+import { normalizePalestinianPhone } from './validations';
 
 /**
  * دالة مساعدة لمحاكاة تأخير الشبكة غير المتزامن (150-250ms)
@@ -215,12 +216,13 @@ export async function getOrderByNumberAndPhone(
 
   const orders = await getOrders();
   const normalizedNumber = orderNumber.trim().toUpperCase();
-  const normalizedPhone = phone.trim();
+  const normalizedInputPhone = normalizePalestinianPhone(phone.trim());
 
   const order = orders.find(
     (o) =>
       o.orderNumber.toUpperCase() === normalizedNumber &&
-      o.customer.phone.trim() === normalizedPhone
+      (normalizePalestinianPhone(o.customer.phone.trim()) === normalizedInputPhone ||
+        o.customer.phone.trim() === phone.trim())
   );
 
   return order || null;
