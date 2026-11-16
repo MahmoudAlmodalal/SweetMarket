@@ -24,6 +24,8 @@ export const CART_STORAGE_KEY = STORAGE_KEYS.CART_ITEMS;
 export interface CartContextType {
   items: CartItem[];
   summary: CartSummary;
+  distinctItemsCount: number;
+  totalUnitsCount: number;
   selectedZoneId?: string;
   isHydrated: boolean;
   addItem: (
@@ -236,8 +238,9 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
   }, []);
 
   const updateQuantity = useCallback((itemId: string, quantity: number) => {
-    if (quantity <= 0) {
-      setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    // Decrementing at 1 must not silently zero or drop the line.
+    // Line removal must be done explicitly via confirmation dialog and removeItem().
+    if (quantity < 1) {
       return;
     }
 
@@ -295,6 +298,8 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
     () => ({
       items,
       summary,
+      distinctItemsCount: summary.distinctItemsCount ?? items.length,
+      totalUnitsCount: summary.totalUnitsCount ?? items.reduce((acc, item) => acc + item.quantity, 0),
       selectedZoneId,
       isHydrated,
       addItem,
@@ -326,8 +331,12 @@ const defaultCartContext: CartContextType = {
     deliveryFee: 0,
     total: 0,
     itemsCount: 0,
+    distinctItemsCount: 0,
+    totalUnitsCount: 0,
     selectedZoneId: undefined,
   },
+  distinctItemsCount: 0,
+  totalUnitsCount: 0,
   selectedZoneId: undefined,
   isHydrated: false,
   addItem: () => {},

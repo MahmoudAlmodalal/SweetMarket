@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { CartSummary as CartSummaryType } from "@/types";
 import { cn } from "@/lib/utils";
+import { formatArabicDistinctItems, formatArabicTotalUnits } from "@/lib/pricing";
 
 export interface CartSummaryProps {
   summary: CartSummaryType;
@@ -74,7 +75,14 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
         </div>
 
         {/* Progress bar */}
-        <div className="relative w-full h-2.5 rounded-candy-pill bg-candy-line/80 overflow-hidden">
+        <div
+          role="progressbar"
+          aria-valuenow={freeShippingProgress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="شريط تقدم التوصيل المبرد المجاني"
+          className="relative w-full h-2.5 rounded-candy-pill bg-candy-line/80 overflow-hidden"
+        >
           <div
             className="h-full rounded-candy-pill bg-gradient-to-l from-candy-strawberry to-candy-berry transition-all duration-500 ease-out"
             style={{ width: `${freeShippingProgress}%` }}
@@ -102,10 +110,10 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
         <div className="flex items-center justify-between text-candy-ink">
           <div className="flex flex-col">
             <span className="text-candy-muted">
-              المجموع الفرعي ({distinctCount} {distinctCount === 1 ? "صنف" : "أصناف"})
+              المجموع الفرعي ({formatArabicDistinctItems(distinctCount)})
             </span>
             <span className="text-[11px] text-candy-muted font-sans">
-              إجمالي القطع: {unitsCount} {unitsCount === 1 ? "قطعة" : "قطع"}
+              إجمالي الوحدات: {formatArabicTotalUnits(unitsCount)}
             </span>
           </div>
           <span className="font-bold text-candy-ink font-sans">

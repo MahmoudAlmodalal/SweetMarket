@@ -2,14 +2,15 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ShoppingBag, Sparkles, ArrowLeft, Heart } from "lucide-react";
+import { ShoppingBag, Sparkles, ArrowLeft, Heart, Package, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface EmptyCartProps {
   className?: string;
+  isCheckout?: boolean;
 }
 
-export function EmptyCart({ className }: EmptyCartProps) {
+export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
   return (
     <div
       className={cn(
@@ -36,23 +37,43 @@ export function EmptyCart({ className }: EmptyCartProps) {
 
       {/* Main Cheerful Heading */}
       <h2 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry mb-3">
-        سلتك فارغة حالياً
+        {isCheckout ? "سلة المشتريات فارغة" : "سلتك فارغة حالياً"}
       </h2>
 
       {/* Warm Friendly Description */}
       <p className="font-sans text-candy-muted text-sm sm:text-base leading-relaxed mb-8 max-w-sm">
-        يبدو أنك لم تضف أي صنف من حلوياتنا الفاخرة بعد. استكشف تشكيلتنا الطازجة وأضف لمسة من البهجة لمناسباتك!
+        {isCheckout
+          ? "لم تقم بإضافة أي أصناف فاخرة إلى سلتك بعد. تفضل بتصفح قائمة الحلويات لاختيار ما يناسب ضيافتك وتأكيد طلبك."
+          : "يبدو أنك لم تضف أي صنف من حلوياتنا الفاخرة بعد. استكشف تشكيلتنا الطازجة وأضف لمسة من البهجة لمناسباتك!"}
       </p>
 
-      {/* Primary Action Button */}
-      <Link
-        href="/"
-        className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-candy-pill bg-candy-strawberry text-white font-sans font-bold text-base shadow-candy-cta hover:bg-candy-berry-dark hover:shadow-candy-2 active:scale-95 transition-all duration-200"
-      >
-        <ShoppingBag className="w-5 h-5" />
-        <span>استكشف الحلويات</span>
-        <ArrowLeft className="w-4 h-4" />
-      </Link>
+      {/* Action Buttons: Catalog Browsing, Tracking, Home (never 'العودة إلى السلة') */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md">
+        <Link
+          href="/category/all"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-strawberry text-white font-sans font-bold text-sm sm:text-base shadow-candy-cta hover:bg-candy-berry-dark hover:shadow-candy-2 active:scale-95 transition-all duration-200"
+        >
+          <ShoppingBag className="w-4 h-4" />
+          <span>تصفح قائمة الحلويات 🍰</span>
+          <ArrowLeft className="w-4 h-4" />
+        </Link>
+
+        <Link
+          href="/track"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-candy-pill bg-white text-candy-ink border border-candy-line font-sans font-semibold text-sm hover:bg-candy-soft hover:border-candy-berry/40 transition-all shadow-xs"
+        >
+          <Package className="w-4 h-4 text-candy-muted" />
+          <span>تتبع طلب سابق 📦</span>
+        </Link>
+
+        <Link
+          href="/"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-candy-pill bg-candy-soft text-candy-muted hover:text-candy-berry hover:bg-candy-blush/40 font-sans font-medium text-sm transition-all"
+        >
+          <Home className="w-4 h-4" />
+          <span>الرئيسية 🏠</span>
+        </Link>
+      </div>
 
       {/* Quick Suggested Categories */}
       <div className="mt-10 pt-8 border-t border-candy-line/60 w-full">
@@ -61,19 +82,19 @@ export function EmptyCart({ className }: EmptyCartProps) {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Link
-            href="/#categories"
+            href="/category/all"
             className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-rose/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             بقلاوة وحلويات شرقية
           </Link>
           <Link
-            href="/#categories"
+            href="/category/all"
             className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-rose/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             كيك وتورتات
           </Link>
           <Link
-            href="/#categories"
+            href="/category/all"
             className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-rose/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             معمول وبيتي فور

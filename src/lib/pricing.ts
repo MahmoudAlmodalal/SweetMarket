@@ -113,3 +113,28 @@ export function computeLinePrice(input: {
     discount,
   };
 }
+
+/**
+ * تنسيق عدد الأصناف المختلفة بقواعد النحو العربي الصحيحة
+ * e.g., 0 -> لا توجد أصناف، 1 -> صنف فاخر واحد، 2 -> صنفان فاخران، 3-10 -> X أصناف فاخرة، 11+ -> X صنفاً فاخراً
+ */
+export function formatArabicDistinctItems(count: number): string {
+  if (count <= 0) return "لا توجد أصناف";
+  if (count === 1) return "صنف فاخر واحد";
+  if (count === 2) return "صنفان فاخران";
+  if (count >= 3 && count <= 10) return `${count} أصناف فاخرة`;
+  return `${count} صنفاً فاخراً`;
+}
+
+/**
+ * تنسيق إجمالي الوحدات/القطع بقواعد النحو العربي الصحيحة
+ * e.g., 0 -> 0 قطعة، 1 -> قطعة واحدة، 2 -> قطعتان، 3-10 -> X قطع، 11+ -> X قطعة
+ */
+export function formatArabicTotalUnits(count: number): string {
+  if (count <= 0) return "0 قطعة";
+  if (count === 1) return "قطعة واحدة";
+  if (count === 2) return "قطعتان";
+  if (count >= 3 && count <= 10) return `${count} قطع`;
+  return `${count} قطعة`;
+}
+

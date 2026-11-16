@@ -13,6 +13,7 @@ import {
   Info,
 } from "lucide-react";
 import type { CartItem, DeliveryZone } from "@/types";
+import { formatArabicDistinctItems, formatArabicTotalUnits } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -62,7 +63,7 @@ export function OrderReviewSummary({
                 ملخص سلة الضيافة والطلب
               </CardTitle>
               <p className="text-xs text-candy-muted font-sans mt-0.5">
-                {distinctItemsCount} {distinctItemsCount === 1 ? "صنف فاخر" : "أصناف فاخرة"} (إجمالي {totalUnitsCount} {totalUnitsCount === 1 ? "قطعة" : "قطع"})
+                {formatArabicDistinctItems(distinctItemsCount)} (إجمالي {formatArabicTotalUnits(totalUnitsCount)})
               </p>
             </div>
           </div>
@@ -153,7 +154,14 @@ export function OrderReviewSummary({
         <div className="pt-4 border-t border-candy-line/70 space-y-3 font-sans text-sm">
           {/* Subtotal */}
           <div className="flex items-center justify-between text-candy-ink">
-            <span className="text-candy-muted">المجموع الفرعي للمنتجات</span>
+            <div className="flex flex-col">
+              <span className="text-candy-muted">
+                المجموع الفرعي للمنتجات ({formatArabicDistinctItems(distinctItemsCount)})
+              </span>
+              <span className="text-[11px] text-candy-muted font-sans">
+                إجمالي الوحدات: {formatArabicTotalUnits(totalUnitsCount)}
+              </span>
+            </div>
             <span className="font-bold text-candy-ink font-sans">
               {subtotal.toFixed(2)}{" "}
               <span className="text-xs text-candy-muted font-normal">₪</span>

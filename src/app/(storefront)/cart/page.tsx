@@ -35,6 +35,8 @@ import {
   computeLinePrice,
   getDefaultWeightOption,
   DEFAULT_PACKAGING_OPTION_ID,
+  formatArabicDistinctItems,
+  formatArabicTotalUnits,
 } from "@/lib/pricing";
 
 function CartPageInner() {
@@ -133,7 +135,7 @@ function CartPageInner() {
                   سلة المذاق الفاخر
                 </h1>
                 <span className="font-sans font-bold text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry">
-                  {summary.itemsCount} {summary.itemsCount === 1 ? "صنف" : "أصناف"}
+                  {formatArabicDistinctItems(summary.distinctItemsCount ?? items.length)}
                 </span>
               </div>
               <p className="font-sans text-xs text-candy-muted">
@@ -171,7 +173,7 @@ function CartPageInner() {
               محتويات السلة
             </h2>
             <span className="font-sans text-xs text-candy-muted">
-              إجمالي الأصناف ({summary.itemsCount})
+              {formatArabicDistinctItems(summary.distinctItemsCount ?? items.length)} ({formatArabicTotalUnits(summary.totalUnitsCount ?? summary.itemsCount)})
             </span>
           </div>
 
@@ -208,9 +210,10 @@ function CartPageInner() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                 {upsellProducts.map((product) => {
                   const isAdded = addedUpsellIds[product.id];
+                  const defaultWeight = getDefaultWeightOption(product);
                   const itemPricing = computeLinePrice({
                     product,
-                    weightOption: getDefaultWeightOption(product),
+                    weightOption: defaultWeight,
                     packagingOptionId: DEFAULT_PACKAGING_OPTION_ID,
                     quantity: 1,
                   });
@@ -236,6 +239,14 @@ function CartPageInner() {
                         <p className="font-sans text-[11px] text-candy-muted line-clamp-1 mt-0.5">
                           {product.description}
                         </p>
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                          <span className="text-[10px] font-medium text-candy-berry bg-candy-soft px-2 py-0.5 rounded-candy-pill border border-candy-line/40">
+                            {defaultWeight?.label || (product.unit === "kg" ? "1 كغم" : "قطعة")}
+                          </span>
+                          <span className="text-[10px] font-medium text-candy-muted bg-candy-soft/60 px-1.5 py-0.5 rounded-candy-pill border border-candy-line/30">
+                            تغليف عادي
+                          </span>
+                        </div>
                       </div>
 
                       <div className="flex items-center justify-between mt-3 pt-2 border-t border-candy-line/40">

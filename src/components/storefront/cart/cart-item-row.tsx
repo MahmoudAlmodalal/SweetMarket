@@ -177,16 +177,24 @@ export function CartItemRow({
                 <button
                   type="button"
                   onClick={handleDecrement}
-                  disabled={item.quantity <= 1}
-                  aria-label="تقليل الكمية"
-                  className={cn(
-                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full bg-white text-candy-ink flex items-center justify-center shadow-xs transition-all touch-manipulation",
+                  aria-label={
                     item.quantity <= 1
-                      ? "opacity-35 cursor-not-allowed text-candy-muted"
-                      : "hover:bg-candy-blush/40 hover:text-candy-berry active:scale-95"
+                      ? `حذف ${item.productName} من السلة`
+                      : "تقليل الكمية"
+                  }
+                  title={item.quantity <= 1 ? "حذف من السلة" : "تقليل الكمية"}
+                  className={cn(
+                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-xs transition-all touch-manipulation active:scale-95",
+                    item.quantity <= 1
+                      ? "text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+                      : "text-candy-ink hover:bg-candy-blush/40 hover:text-candy-berry"
                   )}
                 >
-                  <Minus className="w-3.5 h-3.5" />
+                  {item.quantity <= 1 ? (
+                    <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                  ) : (
+                    <Minus className="w-3.5 h-3.5" />
+                  )}
                 </button>
 
                 <span

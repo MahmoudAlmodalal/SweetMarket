@@ -26,6 +26,7 @@ import type { DeliveryZone, CheckoutCustomerData } from "@/types";
 import { toast } from "@/components/ui/toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { EmptyCart } from "@/components/storefront/cart/empty-cart";
 import {
   GuestInfoForm,
   DeliveryAddressForm,
@@ -309,34 +310,9 @@ export default function CheckoutPage() {
     );
   }
 
-  // Empty cart fallback
+  // Empty cart fallback (offers catalog browsing and tracking/home, never return to cart)
   if (items.length === 0) {
-    return (
-      <div className="py-12 sm:py-16 max-w-2xl mx-auto text-center px-4">
-        <div className="w-20 h-20 rounded-full bg-candy-blush text-candy-strawberry flex items-center justify-center mx-auto mb-5 shadow-candy-1">
-          <ShoppingBag className="w-10 h-10" />
-        </div>
-        <h1 className="font-display font-semibold text-2xl sm:text-3xl text-candy-ink mb-2">
-          سلة المشتريات فارغة
-        </h1>
-        <p className="font-sans text-sm text-candy-muted max-w-md mx-auto mb-8 leading-relaxed">
-          لم تقم بإضافة أي أصناف فاخرة إلى سلتك بعد. تفضل بزيارة قائمة الحلويات الشرقية والغربية
-          واختر ما يناسب ضيافتك.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link href="/category/all">
-            <Button size="lg" className="w-full sm:w-auto">
-              تصفح قائمة الحلويات 🍰
-            </Button>
-          </Link>
-          <Link href="/track">
-            <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-              تتبع طلب سابق 📦
-            </Button>
-          </Link>
-        </div>
-      </div>
-    );
+    return <EmptyCart isCheckout className="py-12 sm:py-16" />;
   }
 
   return (
