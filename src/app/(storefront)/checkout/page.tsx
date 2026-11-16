@@ -295,14 +295,14 @@ export default function CheckoutPage() {
           واختر ما يناسب ضيافتك.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Link href="/">
+          <Link href="/category/all">
             <Button size="lg" className="w-full sm:w-auto">
               تصفح قائمة الحلويات 🍰
             </Button>
           </Link>
-          <Link href="/cart">
+          <Link href="/track">
             <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-              العودة إلى السلة
+              تتبع طلب سابق 📦
             </Button>
           </Link>
         </div>

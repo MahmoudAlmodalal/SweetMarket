@@ -64,6 +64,8 @@ export function CartItemRow({
   const handleDecrement = () => {
     if (item.quantity > 1) {
       onUpdateQuantity(item.id, item.quantity - 1);
+    } else {
+      setIsConfirmOpen(true);
     }
   };
 

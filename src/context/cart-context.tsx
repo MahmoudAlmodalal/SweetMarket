@@ -277,13 +277,16 @@ export function CartProvider({ children, initialItems }: CartProviderProps) {
       Math.round(items.reduce((acc, item) => acc + item.lineTotal, 0) * 100) / 100;
     const fee = Math.round((deliveryFee || 0) * 100) / 100;
     const total = Math.round((subtotal + fee) * 100) / 100;
-    const itemsCount = items.reduce((acc, item) => acc + item.quantity, 0);
+    const totalUnitsCount = items.reduce((acc, item) => acc + item.quantity, 0);
+    const distinctItemsCount = items.length;
 
     return {
       subtotal,
       deliveryFee: fee,
       total,
-      itemsCount,
+      itemsCount: totalUnitsCount,
+      distinctItemsCount,
+      totalUnitsCount,
       selectedZoneId,
     };
   }, [items, deliveryFee, selectedZoneId]);

@@ -22,7 +22,9 @@ export interface CartSummaryProps {
 const FREE_SHIPPING_THRESHOLD = 250;
 
 export function CartSummary({ summary, className }: CartSummaryProps) {
-  const { subtotal, deliveryFee, total, itemsCount, selectedZoneId } = summary;
+  const { subtotal, deliveryFee, total, itemsCount, selectedZoneId, distinctItemsCount, totalUnitsCount } = summary;
+  const distinctCount = distinctItemsCount ?? itemsCount;
+  const unitsCount = totalUnitsCount ?? itemsCount;
 
   // Free shipping progress calculation
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
@@ -98,9 +100,14 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
       <div className="space-y-3 font-sans text-sm">
         {/* Subtotal */}
         <div className="flex items-center justify-between text-candy-ink">
-          <span className="text-candy-muted">
-            المجموع الفرعي ({itemsCount} {itemsCount === 1 ? "صنف" : "أصناف"})
-          </span>
+          <div className="flex flex-col">
+            <span className="text-candy-muted">
+              المجموع الفرعي ({distinctCount} {distinctCount === 1 ? "صنف" : "أصناف"})
+            </span>
+            <span className="text-[11px] text-candy-muted font-sans">
+              إجمالي القطع: {unitsCount} {unitsCount === 1 ? "قطعة" : "قطع"}
+            </span>
+          </div>
           <span className="font-bold text-candy-ink font-sans">
             {subtotal.toFixed(2)}{" "}
             <span className="text-xs text-candy-muted font-normal">₪</span>
@@ -156,7 +163,7 @@ export function CartSummary({ summary, className }: CartSummaryProps) {
               الإجمالي النهائي
             </span>
             <span className="text-[11px] text-candy-muted font-medium">
-              شامل الضريبة والشحن المبرد
+              شامل ضريبة القيمة المضافة • تُحسب رسوم التوصيل في الخطوة التالية
             </span>
           </div>
           <div className="flex items-baseline gap-1">

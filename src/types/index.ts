@@ -121,6 +121,8 @@ export interface CartSummary {
   deliveryFee: number;
   total: number;
   itemsCount: number;
+  distinctItemsCount?: number;
+  totalUnitsCount?: number;
   selectedZoneId?: string;
 }
 

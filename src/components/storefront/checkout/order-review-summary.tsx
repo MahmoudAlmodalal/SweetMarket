@@ -46,7 +46,8 @@ export function OrderReviewSummary({
   const isCartEmpty = items.length === 0;
   const isSubmitDisabled = isCartEmpty || !isFormValid || !isMinOrderMet || isSubmitting;
 
-  const totalItemsCount = items.reduce((acc, item) => acc + item.quantity, 0);
+  const distinctItemsCount = items.length;
+  const totalUnitsCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <Card className={cn("overflow-hidden border-candy-line/80 shadow-candy-2 bg-white", className)}>
@@ -61,7 +62,7 @@ export function OrderReviewSummary({
                 ملخص سلة الضيافة والطلب
               </CardTitle>
               <p className="text-xs text-candy-muted font-sans mt-0.5">
-                {totalItemsCount} {totalItemsCount === 1 ? "صنف فاخر" : "أصناف فاخرة"}
+                {distinctItemsCount} {distinctItemsCount === 1 ? "صنف فاخر" : "أصناف فاخرة"} (إجمالي {totalUnitsCount} {totalUnitsCount === 1 ? "قطعة" : "قطع"})
               </p>
             </div>
           </div>
