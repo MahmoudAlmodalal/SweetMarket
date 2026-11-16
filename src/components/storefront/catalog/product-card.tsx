@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Heart, Plus, Check, Star } from "lucide-react";
+import { Heart, Plus, Check, Star, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product, CartItem } from "@/types";
 import { CartContext } from "@/context/cart-context";
@@ -14,13 +14,20 @@ import {
   DEFAULT_PACKAGING_OPTION_ID,
   PACKAGING_OPTIONS,
 } from "@/lib/pricing";
-import { getFavoriteProductIds, toggleFavoriteProduct } from "./wishlist-utils";
+import {
+  getFavoriteProductIds,
+  toggleFavoriteProduct,
+  removeFavoriteProduct,
+  FAVORITES_UPDATED_EVENT,
+} from "./wishlist-utils";
 import { ProductImage } from "./product-image";
 
 export interface ProductCardProps {
   product: Product;
   className?: string;
   pastelIndex?: number;
+  showRemoveButton?: boolean;
+  onRemoveFavorite?: (productId: string) => void;
 }
 
 const PASTEL_TINTS = [
@@ -36,6 +43,8 @@ export function ProductCard({
   product,
   className,
   pastelIndex = 0,
+  showRemoveButton = false,
+  onRemoveFavorite,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = React.useState(false);
   const [isAdded, setIsAdded] = React.useState(false);
@@ -61,9 +70,11 @@ export function ProductCard({
   React.useEffect(() => {
     const syncWishlist = () => setIsWishlisted(getFavoriteProductIds().includes(product.id));
     syncWishlist();
+    window.addEventListener(FAVORITES_UPDATED_EVENT, syncWishlist);
     window.addEventListener("candy_favorites_updated", syncWishlist);
     window.addEventListener("storage", syncWishlist);
     return () => {
+      window.removeEventListener(FAVORITES_UPDATED_EVENT, syncWishlist);
       window.removeEventListener("candy_favorites_updated", syncWishlist);
       window.removeEventListener("storage", syncWishlist);
     };
@@ -149,7 +160,23 @@ export function ProductCard({
     e.stopPropagation();
     const nextValue = toggleFavoriteProduct(product.id);
     setIsWishlisted(nextValue);
-    toast.success(nextValue ? "تمت الإضافة إلى المفضلة" : "تمت الإزالة من المفضلة");
+    toast.success(
+      nextValue
+        ? `تمت إضافة "${product.name}" إلى المفضلة`
+        : `تمت إزالة "${product.name}" من المفضلة`
+    );
+  };
+
+  const handleDirectRemove = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onRemoveFavorite) {
+      onRemoveFavorite(product.id);
+    } else {
+      removeFavoriteProduct(product.id);
+      setIsWishlisted(false);
+      toast.success(`تمت إزالة "${product.name}" من المفضلة`);
+    }
   };
 
   return (
@@ -182,8 +209,9 @@ export function ProductCard({
           <button
             type="button"
             onClick={toggleWishlist}
-            aria-label={isWishlisted ? "إزالة من المفضلة" : "إضافة للمفضلة"}
-            className="absolute top-2 right-2 min-w-10 min-h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-candy-rose shadow-sm transition-transform active:scale-90 hover:bg-white hover:text-candy-strawberry touch-manipulation"
+            aria-label={isWishlisted ? `إزالة ${product.name} من المفضلة` : `إضافة ${product.name} للمفضلة`}
+            title={isWishlisted ? "إزالة من المفضلة" : "إضافة للمفضلة"}
+            className="absolute top-2 right-2 min-w-10 min-h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-candy-rose shadow-sm transition-transform active:scale-90 hover:bg-white hover:text-candy-strawberry touch-manipulation z-10"
           >
             <Heart
               className={cn(
@@ -230,7 +258,7 @@ export function ProductCard({
       </div>
 
       {/* Footer / Price & Quick Add Button */}
-      <div className="flex items-center justify-between pt-3 mt-2 border-t border-candy-line/40">
+      <div className="flex items-center justify-between pt-3 mt-2 border-t border-candy-line/40 gap-2">
         <div className="flex flex-col">
           <div className="flex items-baseline gap-1">
             <span className="font-sans font-extrabold text-lg sm:text-xl text-candy-berry tracking-tight">
@@ -250,32 +278,47 @@ export function ProductCard({
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          disabled={!isAvailable}
-          aria-label={`أضف ${product.name} للسلة`}
-          className={cn(
-            "relative min-h-[40px] px-3 sm:px-4 rounded-candy-pill font-sans font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-95 shadow-sm",
-            isAvailable
-              ? isAdded
-                ? "bg-candy-berry text-white shadow-candy-cta"
-                : "bg-white text-candy-berry border border-candy-blush hover:bg-candy-strawberry hover:text-white hover:border-transparent hover:shadow-candy-cta"
-              : "bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed shadow-none"
+        <div className="flex items-center gap-1.5">
+          {showRemoveButton && (
+            <button
+              type="button"
+              onClick={handleDirectRemove}
+              aria-label={`إزالة ${product.name} من المفضلة`}
+              title="إزالة من المفضلة"
+              className="min-h-[40px] px-2.5 rounded-candy-pill border border-rose-200 text-rose-500 hover:bg-rose-50 hover:text-rose-600 transition-colors flex items-center justify-center gap-1 text-xs font-bold active:scale-95"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">إزالة</span>
+            </button>
           )}
-        >
-          {isAdded ? (
-            <>
-              <Check className="w-4 h-4 text-white animate-in zoom-in-75" />
-              <span className="hidden sm:inline">أُضيف</span>
-            </>
-          ) : (
-            <>
-              <Plus className="w-4 h-4" />
-              <span>{isAvailable ? "أضف للسلة" : "نفد"}</span>
-            </>
-          )}
-        </button>
+
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            disabled={!isAvailable}
+            aria-label={`أضف ${product.name} للسلة`}
+            className={cn(
+              "relative min-h-[40px] px-3 sm:px-4 rounded-candy-pill font-sans font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-95 shadow-sm",
+              isAvailable
+                ? isAdded
+                  ? "bg-candy-berry text-white shadow-candy-cta"
+                  : "bg-white text-candy-berry border border-candy-blush hover:bg-candy-strawberry hover:text-white hover:border-transparent hover:shadow-candy-cta"
+                : "bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed shadow-none"
+            )}
+          >
+            {isAdded ? (
+              <>
+                <Check className="w-4 h-4 text-white animate-in zoom-in-75" />
+                <span className="hidden sm:inline">أُضيف</span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-4 h-4" />
+                <span>{isAvailable ? "أضف للسلة" : "نفد"}</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

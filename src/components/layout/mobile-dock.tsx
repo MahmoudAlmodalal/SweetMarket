@@ -3,23 +3,32 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LayoutGrid, ShoppingBag, Truck } from "lucide-react";
+import { Home, LayoutGrid, ShoppingBag, Truck, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
+import {
+  getFavoriteProductIds,
+  FAVORITES_UPDATED_EVENT,
+} from "@/components/storefront/catalog/wishlist-utils";
 import type { CartItem } from "@/types";
 
 export interface MobileDockProps {
   cartCount?: number;
+  favoritesCount?: number;
   className?: string;
 }
 
 export function MobileDock({
   cartCount: propCartCount,
+  favoritesCount: propFavoritesCount,
   className,
 }: MobileDockProps) {
   const pathname = usePathname();
   const [internalCount, setInternalCount] = React.useState<number>(
     propCartCount ?? 0
+  );
+  const [favoriteCount, setFavoriteCount] = React.useState<number>(
+    propFavoritesCount ?? 0
   );
 
   React.useEffect(() => {
@@ -58,6 +67,34 @@ export function MobileDock({
     };
   }, [propCartCount]);
 
+  React.useEffect(() => {
+    if (typeof propFavoritesCount === "number") {
+      setFavoriteCount(propFavoritesCount);
+      return;
+    }
+
+    const syncFavorites = () => {
+      try {
+        const ids = getFavoriteProductIds();
+        setFavoriteCount(Array.isArray(ids) ? ids.length : 0);
+      } catch {
+        setFavoriteCount(0);
+      }
+    };
+
+    syncFavorites();
+
+    window.addEventListener(FAVORITES_UPDATED_EVENT, syncFavorites);
+    window.addEventListener("candy_favorites_updated", syncFavorites);
+    window.addEventListener("storage", syncFavorites);
+
+    return () => {
+      window.removeEventListener(FAVORITES_UPDATED_EVENT, syncFavorites);
+      window.removeEventListener("candy_favorites_updated", syncFavorites);
+      window.removeEventListener("storage", syncFavorites);
+    };
+  }, [propFavoritesCount]);
+
   const dockItems = [
     {
       href: "/",
@@ -72,11 +109,20 @@ export function MobileDock({
       isActive: pathname.startsWith("/category"),
     },
     {
+      href: "/favorites",
+      label: "المفضلة",
+      icon: Heart,
+      isActive: pathname === "/favorites",
+      badgeCount: favoriteCount,
+      badgeLabel: "عناصر في المفضلة",
+    },
+    {
       href: "/cart",
       label: "السلة",
       icon: ShoppingBag,
       isActive: pathname === "/cart",
       badgeCount: internalCount,
+      badgeLabel: "عناصر بالسلة",
     },
     {
       href: "/track",
@@ -89,13 +135,13 @@ export function MobileDock({
   return (
     <div
       className={cn(
-        "fixed bottom-3 inset-x-3 sm:inset-x-6 z-50 md:hidden pointer-events-none",
+        "fixed bottom-3 inset-x-2 sm:inset-x-6 z-50 md:hidden pointer-events-none",
         className
       )}
     >
       <nav
         aria-label="شريط التنقل السفلي للهاتف"
-        className="pointer-events-auto mx-auto max-w-md min-h-16 px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
+        className="pointer-events-auto mx-auto max-w-md min-h-16 px-1.5 sm:px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
       >
         {dockItems.map((item) => {
           const Icon = item.icon;
@@ -108,7 +154,7 @@ export function MobileDock({
               href={item.href}
               aria-current={isItemActive ? "page" : undefined}
               className={cn(
-                "relative flex flex-col items-center justify-center min-w-[62px] min-h-[48px] px-2.5 py-1 rounded-candy-pill transition-all duration-200 select-none",
+                "relative flex flex-col items-center justify-center min-w-[54px] sm:min-w-[62px] min-h-[48px] px-1 sm:px-2 py-1 rounded-candy-pill transition-all duration-200 select-none",
                 isItemActive
                   ? "bg-primary text-white shadow-candy-cta scale-105"
                   : "text-candy-muted hover:text-primary active:scale-95"
@@ -123,12 +169,12 @@ export function MobileDock({
                 />
                 {hasBadge && (
                   <span
-                    aria-label={`${item.badgeCount} عناصر بالسلة`}
+                    aria-label={`${item.badgeCount} ${item.badgeLabel || "عناصر"}`}
                     className={cn(
                       "absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm",
                       isItemActive
                         ? "bg-white text-primary border border-primary/30"
-                        : "bg-secondary text-white shadow-candy-cta"
+                        : "bg-candy-strawberry text-white shadow-candy-cta"
                     )}
                   >
                     {(item.badgeCount ?? 0) > 99 ? "+99" : item.badgeCount}
@@ -137,7 +183,7 @@ export function MobileDock({
               </div>
               <span
                 className={cn(
-                  "font-sans text-[11px] font-bold mt-0.5 leading-none",
+                  "font-sans text-[10px] sm:text-[11px] font-bold mt-0.5 leading-none",
                   isItemActive ? "text-white" : "text-candy-ink/90"
                 )}
               >

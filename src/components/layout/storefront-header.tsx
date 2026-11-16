@@ -16,11 +16,16 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
+import {
+  getFavoriteProductIds,
+  FAVORITES_UPDATED_EVENT,
+} from "@/components/storefront/catalog/wishlist-utils";
 import { StoreLogo } from "@/components/ui/store-logo";
 import type { CartItem } from "@/types";
 
 export interface StorefrontHeaderProps {
   cartCount?: number;
+  favoritesCount?: number;
   className?: string;
 }
 
@@ -35,6 +40,7 @@ interface StorefrontHeaderUIProps extends StorefrontHeaderProps {
  */
 function StorefrontHeaderUI({
   cartCount: propCartCount,
+  favoritesCount: propFavoritesCount,
   className,
   searchQuery,
   onSearchChange,
@@ -44,6 +50,37 @@ function StorefrontHeaderUI({
   const [internalCount, setInternalCount] = React.useState<number>(
     propCartCount ?? 0
   );
+  const [favoriteCount, setFavoriteCount] = React.useState<number>(
+    propFavoritesCount ?? 0
+  );
+
+  React.useEffect(() => {
+    if (typeof propFavoritesCount === "number") {
+      setFavoriteCount(propFavoritesCount);
+      return;
+    }
+
+    const syncFavorites = () => {
+      try {
+        const ids = getFavoriteProductIds();
+        setFavoriteCount(Array.isArray(ids) ? ids.length : 0);
+      } catch {
+        setFavoriteCount(0);
+      }
+    };
+
+    syncFavorites();
+
+    window.addEventListener(FAVORITES_UPDATED_EVENT, syncFavorites);
+    window.addEventListener("candy_favorites_updated", syncFavorites);
+    window.addEventListener("storage", syncFavorites);
+
+    return () => {
+      window.removeEventListener(FAVORITES_UPDATED_EVENT, syncFavorites);
+      window.removeEventListener("candy_favorites_updated", syncFavorites);
+      window.removeEventListener("storage", syncFavorites);
+    };
+  }, [propFavoritesCount]);
 
   React.useEffect(() => {
     if (typeof propCartCount === "number") {
@@ -166,10 +203,18 @@ function StorefrontHeaderUI({
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/favorites"
-              aria-label="المفضلة"
-              className="hidden sm:flex w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-candy-rose items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label={favoriteCount > 0 ? `المفضلة (${favoriteCount} عناصر)` : "المفضلة"}
+              className="relative hidden sm:flex w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-candy-rose items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <Heart className="w-5 h-5" />
+              {favoriteCount > 0 && (
+                <span
+                  aria-label={`${favoriteCount} عناصر في المفضلة`}
+                  className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200"
+                >
+                  {favoriteCount > 99 ? "+99" : favoriteCount}
+                </span>
+              )}
             </Link>
             <Link
               href="/account"
