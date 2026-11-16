@@ -240,3 +240,17 @@
     animation: none;
   }
 }
+
+/* ---- Capture Mode for Truthful Full-Page Screenshots (Issue #35 / ADR-0001) ---- */
+[data-capture-mode] [data-mobile-dock],
+[data-capture-mode="true"] [data-mobile-dock],
+html[data-capture-mode] [data-mobile-dock],
+body[data-capture-mode] [data-mobile-dock] {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  margin-top: auto !important;
+  margin-bottom: 1rem !important;
+  pointer-events: auto !important;
+}
