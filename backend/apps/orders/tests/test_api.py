@@ -93,8 +93,9 @@ class OrderAPIEndpointsTestCase(APITestCase):
 
         response = self.client.post('/api/v1/orders', payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(response.data['success'])
-        data = response.data['data']
+        body = response.json()
+        self.assertTrue(body['success'])
+        data = body['data']
 
         self.assertIn('orderNumber', data)
         self.assertTrue(data['orderNumber'].startswith('CL-'))
@@ -119,11 +120,13 @@ class OrderAPIEndpointsTestCase(APITestCase):
 
         res1 = self.client.post('/api/v1/orders', payload, format='json', **headers)
         self.assertEqual(res1.status_code, status.HTTP_201_CREATED)
-        order_num1 = res1.data['data']['orderNumber']
+        body1 = res1.json()
+        order_num1 = body1['data']['orderNumber']
 
         res2 = self.client.post('/api/v1/orders', payload, format='json', **headers)
         self.assertEqual(res2.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(res2.data['data']['orderNumber'], order_num1)
+        body2 = res2.json()
+        self.assertEqual(body2['data']['orderNumber'], order_num1)
         self.assertEqual(Order.objects.count(), 1)
 
     def test_order_tracking_success_and_failure(self):
@@ -146,8 +149,9 @@ class OrderAPIEndpointsTestCase(APITestCase):
             'phone': '0568999888',
         }, format='json')
         self.assertEqual(res_ok.status_code, status.HTTP_200_OK)
-        self.assertTrue(res_ok.data['success'])
-        self.assertEqual(res_ok.data['data']['orderNumber'], 'CL-2026-9901')
+        body_ok = res_ok.json()
+        self.assertTrue(body_ok['success'])
+        self.assertEqual(body_ok['data']['orderNumber'], 'CL-2026-9901')
 
         # Failed tracking (mismatched phone)
         res_fail = self.client.post('/api/v1/orders/track', {
@@ -155,7 +159,8 @@ class OrderAPIEndpointsTestCase(APITestCase):
             'phone': '0599000000',
         }, format='json')
         self.assertEqual(res_fail.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertFalse(res_fail.data['success'])
+        body_fail = res_fail.json()
+        self.assertFalse(body_fail['success'])
 
     def test_admin_orders_rbac_and_listing(self):
         """Unauthenticated requests are rejected (401); Staff and Manager can view paginated list."""
@@ -167,8 +172,9 @@ class OrderAPIEndpointsTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.staff_token}')
         res_staff = self.client.get('/api/v1/admin/orders?page=1&limit=10')
         self.assertEqual(res_staff.status_code, status.HTTP_200_OK)
-        self.assertIn('meta', res_staff.data)
-        self.assertIn('page', res_staff.data['meta'])
+        body_staff = res_staff.json()
+        self.assertIn('meta', body_staff)
+        self.assertIn('page', body_staff['meta'])
 
     def test_admin_order_status_patch_and_policies(self):
         """Staff can advance status; Manager only can cancel with reason."""
@@ -192,7 +198,8 @@ class OrderAPIEndpointsTestCase(APITestCase):
             format='json'
         )
         self.assertEqual(res_accept.status_code, status.HTTP_200_OK)
-        self.assertEqual(res_accept.data['data']['status'], 'accepted')
+        body_accept = res_accept.json()
+        self.assertEqual(body_accept['data']['status'], 'accepted')
 
         # Staff attempts to cancel -> 403 Forbidden
         res_staff_cancel = self.client.patch(
@@ -210,4 +217,5 @@ class OrderAPIEndpointsTestCase(APITestCase):
             format='json'
         )
         self.assertEqual(res_mgr_cancel.status_code, status.HTTP_200_OK)
-        self.assertEqual(res_mgr_cancel.data['data']['status'], 'cancelled')
+        body_mgr = res_mgr_cancel.json()
+        self.assertEqual(body_mgr['data']['status'], 'cancelled')
