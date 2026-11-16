@@ -9,6 +9,7 @@
     "lint": "next lint",
     "test:admin": "node tests/admin-portal-suite.mjs",
     "test:e2e:rbac": "node tests/e2e-rbac-recovery.mjs",
+    "test:storefront": "node tests/storefront-assertions.mjs",
     "capture:gallery": "node tests/capture-gallery.mjs"
   },
   "dependencies": {

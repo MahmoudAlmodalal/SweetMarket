@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
+import { preparePageForCapture, restorePageAfterCapture, hashBuffer } from './capture-fixtures.mjs';
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 export const SCREENSHOTS_DIR = path.resolve('tests/screenshots/system');
@@ -12,6 +13,11 @@ export function ensureScreenshotDir(dir = SCREENSHOTS_DIR) {
   fs.mkdirSync(dir, { recursive: true });
 }
 const SCREENSHOTS_ROOT = path.resolve('tests/screenshots');
+
+const CAPTURE_HASHES = {
+  mobile: {},
+  desktop: {},
+};
 
 const VIEWPORTS = [
   { name: 'mobile', label: 'Mobile (390×844)', width: 390, height: 844, isMobile: true, hasTouch: true },
@@ -89,10 +95,13 @@ async function capturePair(browser, manifest, spec) {
       }
 
       await page.waitForTimeout(350);
+      await preparePageForCapture(page);
 
       const fileName = `${id}__${vp.name}.png`;
       const filePath = path.join(outDir, fileName);
-      await page.screenshot({ path: filePath, fullPage });
+      const buffer = await page.screenshot({ path: filePath, fullPage });
+      CAPTURE_HASHES[vp.name][id] = hashBuffer(buffer);
+      await restorePageAfterCapture(page);
 
       entry.images[vp.name] = `../screenshots/${section}/${fileName}`;
       if (pageErrors.length > 0) {
@@ -873,6 +882,26 @@ export async function captureAllScreenshots() {
   }
 
   await browser.close();
+
+  // Distinct-State Guard: verify that no two declared-different states produce identical screenshots
+  console.log('\n🛡️  Running Distinct-State Guard check across captured states...');
+  let duplicateCount = 0;
+  for (const vp of VIEWPORTS) {
+    const hashes = CAPTURE_HASHES[vp.name] || {};
+    const seenHashes = new Map();
+    for (const [specId, hash] of Object.entries(hashes)) {
+      if (seenHashes.has(hash)) {
+        const earlierId = seenHashes.get(hash);
+        console.warn(`  ⚠️ Distinct-State Guard warning on [${vp.name}]: "${specId}" matches "${earlierId}" (hash: ${hash})`);
+        duplicateCount++;
+      } else {
+        seenHashes.set(hash, specId);
+      }
+    }
+  }
+  if (duplicateCount === 0) {
+    console.log('  ✔ Distinct-State Guard passed: all declared states are visually distinct!');
+  }
 
   const manifestPath = path.join(SCREENSHOTS_ROOT, 'manifest.json');
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
