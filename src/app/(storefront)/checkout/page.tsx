@@ -15,7 +15,12 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { getDeliveryZones, createOrder } from "@/lib/repositories";
-import { CheckoutFormSchema, type CheckoutFormData } from "@/lib/validations";
+import {
+  CheckoutFormSchema,
+  type CheckoutFormData,
+  normalizePalestinianPhone,
+  isValidPalestinianPhone,
+} from "@/lib/validations";
 import { STORAGE_KEYS, getStorageItem, setStorageItem } from "@/lib/storage";
 import type { DeliveryZone, CheckoutCustomerData } from "@/types";
 import { toast } from "@/components/ui/toast";
@@ -48,6 +53,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = React.useState<
     Partial<Record<keyof CheckoutFormData, string>>
   >({});
+  const [missingFieldsCount, setMissingFieldsCount] = React.useState<number | null>(null);
 
   // Submission state
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
@@ -65,8 +71,9 @@ export default function CheckoutPage() {
 
         setZones(fetchedZones);
 
-        // Retrieve draft if available
-        const draft = getStorageItem(STORAGE_KEYS.CHECKOUT_DRAFT);
+        // Retrieve draft or saved customer profile
+        const profile = getStorageItem(STORAGE_KEYS.CUSTOMER_PROFILE);
+        const draft = getStorageItem(STORAGE_KEYS.CHECKOUT_DRAFT) || profile;
 
         if (draft) {
           if (draft.fullName) setFullName(draft.fullName);
@@ -158,10 +165,12 @@ export default function CheckoutPage() {
         }
       });
       setErrors(fieldErrors);
+      setMissingFieldsCount(Object.keys(fieldErrors).length);
       return false;
     }
 
     setErrors({});
+    setMissingFieldsCount(null);
     return true;
   }, [fullName, phone, zoneId, streetAddress, buildingOrApt, notes]);
 
@@ -169,7 +178,7 @@ export default function CheckoutPage() {
   const isFormValid = React.useMemo(() => {
     return (
       fullName.trim().length >= 3 &&
-      /^(059|056)\d{7}$/.test(phone.trim()) &&
+      isValidPalestinianPhone(phone.trim()) &&
       zoneId.trim().length > 0 &&
       streetAddress.trim().length >= 5
     );
@@ -188,12 +197,24 @@ export default function CheckoutPage() {
     // 2. Validate Form with Zod
     const isValid = validateForm();
     if (!isValid) {
-      toast.error(
-        "بيانات غير مكتملة",
-        "يرجى تصحيح الأخطاء الموضحة باللون الأحمر في النموذج"
-      );
-      // Scroll to the top of the form
-      window.scrollTo({ top: 100, behavior: "smooth" });
+      const firstFieldId =
+        !fullName.trim() || fullName.trim().length < 3
+          ? "checkout-fullName"
+          : !isValidPalestinianPhone(phone.trim())
+          ? "checkout-phone"
+          : !zoneId.trim()
+          ? "checkout-zone"
+          : streetAddress.trim().length < 5
+          ? "checkout-streetAddress"
+          : null;
+
+      if (firstFieldId && typeof document !== "undefined") {
+        const el = document.getElementById(firstFieldId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.focus();
+        }
+      }
       return;
     }
 
@@ -212,17 +233,25 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
+      const normalizedPhone = normalizePalestinianPhone(phone.trim());
       const customerData: CheckoutCustomerData = {
         fullName: fullName.trim(),
-        phone: phone.trim(),
+        phone: normalizedPhone,
         zoneId: zoneId.trim(),
         streetAddress: streetAddress.trim(),
         buildingOrApt: buildingOrApt.trim() || undefined,
         notes: notes.trim() || undefined,
       };
 
-      // 4. Save draft data for future convenience
+      // 4. Save draft data and saved profile for future convenience
       setStorageItem(STORAGE_KEYS.CHECKOUT_DRAFT, customerData);
+      setStorageItem(STORAGE_KEYS.CUSTOMER_PROFILE, {
+        fullName: customerData.fullName,
+        phone: customerData.phone,
+        zoneId: customerData.zoneId,
+        streetAddress: customerData.streetAddress,
+        buildingOrApt: customerData.buildingOrApt,
+      });
 
       // 5. Call repository createOrder
       const newOrder = await createOrder({
@@ -407,6 +436,17 @@ export default function CheckoutPage() {
       </section>
 
       {/* 3. Global Error Alert if submission failed */}
+      {missingFieldsCount && missingFieldsCount > 0 && (
+        <div
+          role="alert"
+          id="checkout-validation-alert"
+          className="rounded-2xl bg-rose-50 border border-rose-300 p-4 flex items-center gap-3 text-rose-800 text-sm font-sans font-bold shadow-xs animate-in fade-in"
+        >
+          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+          <span>يرجى استكمال {missingFieldsCount} حقول مطلوبة</span>
+        </div>
+      )}
+
       {submissionError && (
         <div
           role="alert"

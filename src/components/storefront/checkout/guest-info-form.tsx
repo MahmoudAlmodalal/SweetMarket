@@ -5,6 +5,7 @@ import { User, Phone, Sparkles, CheckCircle2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { isValidPalestinianPhone } from "@/lib/validations";
 
 export interface GuestInfoFormProps {
   fullName: string;
@@ -26,14 +27,12 @@ export function GuestInfoForm({
   errors = {},
   className,
 }: GuestInfoFormProps) {
-  // Check if phone matches Palestinian format (059 or 056 + 7 digits)
-  const isPhoneValid = /^(059|056)\d{7}$/.test(phone.trim());
+  // Check if phone matches Palestinian format using shared normalizer
+  const isPhoneValid = isValidPalestinianPhone(phone.trim());
   const isNameValid = fullName.trim().length >= 3;
 
   const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Keep only numbers
-    const cleanDigits = e.target.value.replace(/\D/g, "").slice(0, 10);
-    onPhoneChange(cleanDigits);
+    onPhoneChange(e.target.value.slice(0, 25));
   };
 
   return (
@@ -83,6 +82,9 @@ export function GuestInfoForm({
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               ) : undefined
             }
+            className={cn(
+              !errors.fullName && isNameValid && "border-emerald-500/70 focus:border-emerald-600 focus:ring-emerald-500/20 bg-emerald-50/10"
+            )}
             autoComplete="name"
             required
           />
@@ -111,12 +113,12 @@ export function GuestInfoForm({
               id="checkout-phone"
               name="phone"
               type="tel"
-              inputMode="numeric"
+              inputMode="tel"
               dir="ltr"
               placeholder="0599123456"
               value={phone}
               onChange={handlePhoneInputChange}
-              maxLength={10}
+              maxLength={25}
               autoComplete="tel"
               required
               aria-invalid={Boolean(errors.phone)}
@@ -124,6 +126,7 @@ export function GuestInfoForm({
                 "w-full h-12 pr-28 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
                 "placeholder:text-candy-muted/70",
                 "focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
+                !errors.phone && isPhoneValid && "border-emerald-500/70 focus:border-emerald-600 focus:ring-emerald-500/20 bg-emerald-50/10",
                 errors.phone &&
                   "border-rose-500 focus:border-rose-600 focus:ring-rose-500/20 text-rose-900 bg-rose-50/30"
               )}

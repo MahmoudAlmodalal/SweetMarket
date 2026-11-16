@@ -44,7 +44,7 @@ export function OrderReviewSummary({
   className,
 }: OrderReviewSummaryProps) {
   const isCartEmpty = items.length === 0;
-  const isSubmitDisabled = isCartEmpty || !isFormValid || !isMinOrderMet || isSubmitting;
+  const isSubmitDisabled = isCartEmpty || isSubmitting;
 
   const distinctItemsCount = items.length;
   const totalUnitsCount = items.reduce((acc, item) => acc + item.quantity, 0);

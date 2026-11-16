@@ -195,6 +195,14 @@ export function DeliveryAddressForm({
                 : "يرجى كتابة تفاصيل الشارع وأي معلم مميز يسهل وصول المندوب إليك"
             }
             iconPrefix={<MapPin className="w-4 h-4 text-candy-muted" />}
+            iconSuffix={
+              !errors.streetAddress && streetAddress.trim().length >= 5 ? (
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              ) : undefined
+            }
+            className={cn(
+              !errors.streetAddress && streetAddress.trim().length >= 5 && "border-emerald-500/70 focus:border-emerald-600 focus:ring-emerald-500/20 bg-emerald-50/10"
+            )}
             required
           />
         </div>

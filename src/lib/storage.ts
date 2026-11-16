@@ -20,6 +20,7 @@ export const STORAGE_KEYS = {
   MOCK_CATEGORIES: 'candy_mock_categories_v1',
   MOCK_ZONES: 'candy_mock_zones_v1',
   FAVORITE_PRODUCT_IDS: 'candy_favorite_product_ids_v1',
+  CUSTOMER_PROFILE: 'candy_customer_profile_v1',
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
@@ -36,6 +37,7 @@ export interface StorageSchema {
   [STORAGE_KEYS.MOCK_CATEGORIES]: Category[];
   [STORAGE_KEYS.MOCK_ZONES]: DeliveryZone[];
   [STORAGE_KEYS.FAVORITE_PRODUCT_IDS]: string[];
+  [STORAGE_KEYS.CUSTOMER_PROFILE]: Partial<CheckoutCustomerData>;
 }
 
 /**
