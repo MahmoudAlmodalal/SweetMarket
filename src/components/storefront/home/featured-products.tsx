@@ -41,19 +41,19 @@ export function FeaturedProducts({
     <section
       id="featured-products"
       aria-label="المنتجات الأكثر طلباً والمميزة"
-      className={cn("flex flex-col gap-5 w-full py-2", className)}
+      className={cn("flex flex-col gap-5 sm:gap-6 w-full py-2", className)}
     >
-      {/* Section Header */}
+      {/* Clean Elevated Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-candy-blush text-candy-strawberry flex items-center justify-center shadow-sm">
-            <Flame className="w-4 h-4 fill-candy-strawberry" />
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-primary/10 border border-candy-blush text-primary flex items-center justify-center shadow-xs shrink-0">
+            <Flame className="w-5 h-5 fill-primary text-primary" />
           </div>
           <div>
-            <h2 className="font-display font-bold text-xl sm:text-2xl text-candy-ink">
+            <h2 className="font-display font-extrabold text-xl sm:text-2xl lg:text-3xl text-candy-ink tracking-tight">
               الأكثر طلباً ومختارات الموسم
             </h2>
-            <p className="text-xs sm:text-sm font-sans text-candy-muted">
+            <p className="text-xs sm:text-sm font-sans text-candy-muted font-medium mt-0.5">
               حلويات فاخرة تحظى بأعلى تقييم وإقبال من زبائننا
             </p>
           </div>
@@ -62,26 +62,42 @@ export function FeaturedProducts({
         {/* View All Link */}
         <Link
           href="/category/all"
-          className="inline-flex items-center gap-1.5 self-start sm:self-auto font-sans font-bold text-xs sm:text-sm text-candy-strawberry hover:text-candy-berry px-3 py-1.5 rounded-candy-pill hover:bg-candy-soft transition-colors"
+          className="inline-flex items-center gap-1.5 self-start sm:self-auto font-sans font-bold text-xs sm:text-sm text-primary hover:text-primary-hover px-3.5 py-1.5 rounded-candy-pill bg-candy-soft hover:bg-candy-blush/40 transition-all border border-candy-line/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary shadow-xs"
         >
           <span>تصفح كل التشكيلة</span>
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 transition-transform duration-200 hover:-translate-x-0.5" />
         </Link>
       </div>
 
-      {/* Category Filter Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-1">
+      {/* Luxury Filter Chips with Count Badges */}
+      <div
+        role="tablist"
+        aria-label="تصفية الأصناف المميزة"
+        className="flex items-center gap-2.5 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-1 px-1"
+      >
         <button
           type="button"
+          role="tab"
+          aria-selected={selectedCategory === "all"}
           onClick={() => setSelectedCategory("all")}
           className={cn(
-            "min-h-[38px] px-4 rounded-candy-pill font-sans font-bold text-xs sm:text-sm transition-all duration-200 shrink-0",
+            "min-h-[42px] px-4 py-1.5 rounded-candy-pill font-sans font-bold text-xs sm:text-sm transition-all duration-200 shrink-0 inline-flex items-center gap-2 border",
             selectedCategory === "all"
-              ? "bg-candy-berry text-white shadow-candy-cta scale-102"
-              : "bg-white text-candy-ink border border-candy-line hover:border-candy-blush hover:bg-candy-soft"
+              ? "bg-primary text-white border-primary shadow-candy-cta scale-[1.02]"
+              : "bg-white text-candy-ink border-candy-line hover:border-candy-blush hover:bg-candy-soft"
           )}
         >
-          الكل ({products.filter((p) => p.isFeatured).length || products.length})
+          <span>الكل</span>
+          <span
+            className={cn(
+              "px-1.5 py-0.5 text-[11px] rounded-candy-pill font-mono font-bold leading-none",
+              selectedCategory === "all"
+                ? "bg-white/25 text-white"
+                : "bg-candy-soft text-candy-muted"
+            )}
+          >
+            {products.filter((p) => p.isFeatured).length || products.length}
+          </span>
         </button>
 
         {categories.map((cat) => {
@@ -92,23 +108,35 @@ export function FeaturedProducts({
             <button
               key={cat.id}
               type="button"
+              role="tab"
+              aria-selected={isSelected}
               onClick={() => setSelectedCategory(cat.id)}
               className={cn(
-                "min-h-[38px] px-4 rounded-candy-pill font-sans font-bold text-xs sm:text-sm transition-all duration-200 shrink-0",
+                "min-h-[42px] px-4 py-1.5 rounded-candy-pill font-sans font-bold text-xs sm:text-sm transition-all duration-200 shrink-0 inline-flex items-center gap-2 border",
                 isSelected
-                  ? "bg-candy-berry text-white shadow-candy-cta scale-102"
-                  : "bg-white text-candy-ink border border-candy-line hover:border-candy-blush hover:bg-candy-soft"
+                  ? "bg-primary text-white border-primary shadow-candy-cta scale-[1.02]"
+                  : "bg-white text-candy-ink border-candy-line hover:border-candy-blush hover:bg-candy-soft"
               )}
             >
-              {cat.name} ({count})
+              <span>{cat.name}</span>
+              <span
+                className={cn(
+                  "px-1.5 py-0.5 text-[11px] rounded-candy-pill font-mono font-bold leading-none",
+                  isSelected
+                    ? "bg-white/25 text-white"
+                    : "bg-candy-soft text-candy-muted"
+                )}
+              >
+                {count}
+              </span>
             </button>
           );
         })}
       </div>
 
-      {/* Product Cards Grid */}
+      {/* Seamless Grid Spacing */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 lg:gap-6 w-full items-stretch">
           {filteredProducts.map((product, index) => (
             <ProductCard
               key={product.id}
@@ -121,16 +149,16 @@ export function FeaturedProducts({
         /* Empty State */
         <div className="flex flex-col items-center justify-center p-12 text-center rounded-candy-card bg-candy-soft border border-candy-line gap-3">
           <Cookie className="w-12 h-12 text-candy-rose stroke-1" />
-          <h3 className="font-display font-semibold text-lg text-candy-berry">
+          <h3 className="font-display font-bold text-lg text-primary">
             لا توجد أصناف حالياً في هذا القسم
           </h3>
-          <p className="font-sans text-xs sm:text-sm text-candy-muted max-w-sm">
+          <p className="font-sans text-xs sm:text-sm text-candy-muted max-w-sm font-medium">
             نعمل على تجهيز أصناف طازجة جديدة قريباً، يمكنك استكشاف باقي التصنيفات.
           </p>
           <button
             type="button"
             onClick={() => setSelectedCategory("all")}
-            className="mt-2 px-5 py-2 rounded-candy-pill bg-candy-strawberry text-white font-sans font-bold text-xs shadow-sm hover:bg-candy-berry transition-colors"
+            className="mt-2 px-5 py-2.5 rounded-candy-pill bg-primary text-white font-sans font-bold text-xs shadow-candy-cta hover:bg-primary-hover active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             الرجوع لكافة الحلويات
           </button>

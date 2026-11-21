@@ -75,8 +75,8 @@ export function CategoryList({
   // حالة القائمة الفارغة (Empty State)
   if (categories.length === 0) {
     return (
-      <div className="text-center py-16 px-4 rounded-3xl bg-white border border-candy-line shadow-candy-1">
-        <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4">
+      <div className="text-center py-16 px-4 rounded-3xl bg-white border border-candy-line/80 shadow-candy-1">
+        <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4 shadow-xs">
           <Layers className="w-8 h-8" aria-hidden="true" />
         </div>
         <h3 className="font-display font-bold text-lg text-candy-ink mb-1">
@@ -91,6 +91,7 @@ export function CategoryList({
             variant="primary"
             onClick={onAddNew}
             leftIcon={<Plus className="w-4 h-4" />}
+            className="shadow-sm font-bold"
           >
             إضافة أول تصنيف
           </Button>
@@ -104,6 +105,7 @@ export function CategoryList({
       role="list"
       aria-label="قائمة التصنيفات مرتبة"
       className="space-y-3"
+      dir="rtl"
     >
       {categories.map((cat, index) => {
         const count = productCounts[cat.id] ?? 0;
@@ -116,9 +118,9 @@ export function CategoryList({
             key={cat.id}
             role="listitem"
             className={cn(
-              'group p-3.5 sm:p-4 rounded-2xl bg-white border transition-all duration-200 shadow-candy-1 hover:shadow-candy-2 flex flex-col md:flex-row md:items-center justify-between gap-4',
+              'group p-3.5 sm:p-4 rounded-2xl bg-white border transition-all duration-200 shadow-candy-1 hover:shadow-candy-soft flex flex-col md:flex-row md:items-center justify-between gap-4',
               cat.isActive
-                ? 'border-candy-line hover:border-candy-blush'
+                ? 'border-candy-line/80 hover:border-candy-blush'
                 : 'border-candy-line/60 bg-gray-50/70 opacity-90'
             )}
           >
@@ -133,17 +135,17 @@ export function CategoryList({
                   aria-label={`نقل تصنيف ${cat.name} للأعلى`}
                   title={`نقل تصنيف ${cat.name} للأعلى`}
                   className={cn(
-                    'p-1.5 rounded-lg border text-candy-ink transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30',
+                    'p-1.5 rounded-lg border text-candy-ink transition-all focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 active:scale-95',
                     isFirst || !canManage
-                      ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50'
-                      : 'border-candy-line hover:bg-candy-soft hover:text-candy-berry hover:border-candy-rose'
+                      ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50 active:scale-100'
+                      : 'border-candy-line hover:bg-candy-soft hover:text-candy-berry hover:border-candy-rose shadow-2xs'
                   )}
                 >
                   <ArrowUp className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
 
                 <span
-                  className="font-mono text-[11px] font-bold text-candy-muted/80"
+                  className="font-mono text-[11px] font-bold text-candy-muted/90 select-none"
                   title={`الترتيب: ${cat.displayOrder}`}
                 >
                   #{cat.displayOrder}
@@ -156,10 +158,10 @@ export function CategoryList({
                   aria-label={`نقل تصنيف ${cat.name} للأسفل`}
                   title={`نقل تصنيف ${cat.name} للأسفل`}
                   className={cn(
-                    'p-1.5 rounded-lg border text-candy-ink transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30',
+                    'p-1.5 rounded-lg border text-candy-ink transition-all focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 active:scale-95',
                     isLast || !canManage
-                      ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50'
-                      : 'border-candy-line hover:bg-candy-soft hover:text-candy-berry hover:border-candy-rose'
+                      ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50 active:scale-100'
+                      : 'border-candy-line hover:bg-candy-soft hover:text-candy-berry hover:border-candy-rose shadow-2xs'
                   )}
                 >
                   <ArrowDown className="w-3.5 h-3.5" aria-hidden="true" />
@@ -167,14 +169,13 @@ export function CategoryList({
               </div>
 
               {/* صورة مصغرة للتصنيف */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0 flex items-center justify-center relative">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0 flex items-center justify-center relative shadow-xs">
                 {cat.imageUrl ? (
                   <img
                     src={cat.imageUrl}
                     alt={cat.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
-                      // Fallback icon on broken image
                       (e.currentTarget as HTMLElement).style.display = 'none';
                     }}
                   />
@@ -186,16 +187,16 @@ export function CategoryList({
               {/* اسم التصنيف والمعلومات */}
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="font-display font-bold text-sm sm:text-base text-candy-ink truncate">
+                  <h4 className="font-display font-bold text-sm sm:text-base text-candy-ink truncate group-hover:text-candy-berry transition-colors">
                     {cat.name}
                   </h4>
                   {/* شارة عدد المنتجات */}
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-sans font-medium',
+                      'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-sans font-semibold border',
                       hasProducts
-                        ? 'bg-candy-soft text-candy-berry border border-candy-blush'
-                        : 'bg-amber-50 text-amber-700 border border-amber-200'
+                        ? 'bg-candy-soft text-candy-berry border-candy-blush'
+                        : 'bg-amber-50 text-amber-700 border-amber-200'
                     )}
                   >
                     <Package className="w-3 h-3" />
@@ -225,11 +226,11 @@ export function CategoryList({
                 disabled={!canManage}
                 aria-label={`تبديل حالة تصنيف ${cat.name} (حالياً ${cat.isActive ? 'مفعّل' : 'معطّل'})`}
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans font-semibold transition-all duration-200 border',
+                  'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans font-semibold transition-all duration-200 border active:scale-95 touch-manipulation',
                   cat.isActive
                     ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
                     : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200',
-                  !canManage && 'opacity-60 cursor-not-allowed'
+                  !canManage && 'opacity-60 cursor-not-allowed active:scale-100'
                 )}
               >
                 {cat.isActive ? (

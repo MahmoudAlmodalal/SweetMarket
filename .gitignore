@@ -10,6 +10,7 @@ build/
 *.tsbuildinfo
 
 # Secrets, Keys & Environment
+*.zip
 .env
 .env*.local
 .env.local

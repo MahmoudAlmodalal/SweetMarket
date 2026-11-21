@@ -30,6 +30,29 @@ export function MobileDock({
   const [favoriteCount, setFavoriteCount] = React.useState<number>(
     propFavoritesCount ?? 0
   );
+  const [cartBouncing, setCartBouncing] = React.useState(false);
+  const [favBouncing, setFavBouncing] = React.useState(false);
+
+  const prevCartRef = React.useRef(internalCount);
+  const prevFavRef = React.useRef(favoriteCount);
+
+  React.useEffect(() => {
+    if (prevCartRef.current !== internalCount && internalCount > 0) {
+      setCartBouncing(true);
+      const timer = setTimeout(() => setCartBouncing(false), 600);
+      return () => clearTimeout(timer);
+    }
+    prevCartRef.current = internalCount;
+  }, [internalCount]);
+
+  React.useEffect(() => {
+    if (prevFavRef.current !== favoriteCount && favoriteCount > 0) {
+      setFavBouncing(true);
+      const timer = setTimeout(() => setFavBouncing(false), 600);
+      return () => clearTimeout(timer);
+    }
+    prevFavRef.current = favoriteCount;
+  }, [favoriteCount]);
 
   React.useEffect(() => {
     if (typeof propCartCount === "number") {
@@ -142,13 +165,15 @@ export function MobileDock({
       )}
     >
       <nav
+        role="navigation"
         aria-label="شريط التنقل السفلي للهاتف"
-        className="pointer-events-auto mx-auto max-w-md min-h-16 px-1.5 sm:px-2 pt-1 pb-[calc(0.25rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
+        className="pointer-events-auto mx-auto max-w-md min-h-[58px] px-2 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
       >
         {dockItems.map((item) => {
           const Icon = item.icon;
           const isItemActive = item.isActive;
           const hasBadge = (item.badgeCount ?? 0) > 0;
+          const isBouncing = item.href === "/cart" ? cartBouncing : item.href === "/favorites" ? favBouncing : false;
 
           return (
             <Link
@@ -156,27 +181,30 @@ export function MobileDock({
               href={item.href}
               aria-current={isItemActive ? "page" : undefined}
               className={cn(
-                "relative flex flex-col items-center justify-center min-w-[54px] sm:min-w-[62px] min-h-[48px] px-1 sm:px-2 py-1 rounded-candy-pill transition-all duration-200 select-none",
+                "group relative flex flex-col items-center justify-center min-w-[56px] sm:min-w-[64px] min-h-[48px] px-1 sm:px-2 py-1 rounded-candy-pill transition-all duration-200 select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 isItemActive
-                  ? "bg-primary text-white shadow-candy-cta scale-105"
-                  : "text-candy-muted hover:text-primary active:scale-95"
+                  ? "bg-primary text-white shadow-[0_4px_16px_rgba(163,29,86,0.36)] ring-1 ring-primary/20 scale-[1.04]"
+                  : "text-candy-muted hover:text-primary hover:bg-candy-soft/70 active:scale-95"
               )}
             >
-              <div className="relative">
+              <div className="relative flex items-center justify-center">
                 <Icon
                   className={cn(
-                    "w-5 h-5 transition-transform duration-200",
-                    isItemActive ? "text-white scale-110" : "text-secondary"
+                    "w-5 h-5 transition-transform duration-200 ease-out",
+                    isItemActive
+                      ? "text-white scale-110 drop-shadow-sm"
+                      : "text-secondary group-hover:scale-105"
                   )}
                 />
                 {hasBadge && (
                   <span
                     aria-label={`${item.badgeCount} ${item.badgeLabel || "عناصر"}`}
                     className={cn(
-                      "absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm",
+                      "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
                       isItemActive
                         ? "bg-white text-primary border border-primary/30"
-                        : "bg-candy-strawberry text-white shadow-candy-cta"
+                        : "bg-candy-strawberry text-white shadow-candy-cta",
+                      isBouncing && "scale-125 ring-2 ring-white animate-bounce"
                     )}
                   >
                     {(item.badgeCount ?? 0) > 99 ? "+99" : item.badgeCount}
@@ -185,8 +213,8 @@ export function MobileDock({
               </div>
               <span
                 className={cn(
-                  "font-sans text-[10px] sm:text-[11px] font-bold mt-0.5 leading-none",
-                  isItemActive ? "text-white" : "text-candy-ink/90"
+                  "font-sans text-[10px] sm:text-[11px] font-bold mt-0.5 leading-none transition-colors",
+                  isItemActive ? "text-white" : "text-candy-ink/90 group-hover:text-primary"
                 )}
               >
                 {item.label}

@@ -53,6 +53,29 @@ function StorefrontHeaderUI({
   const [favoriteCount, setFavoriteCount] = React.useState<number>(
     propFavoritesCount ?? 0
   );
+  const [isCartBouncing, setIsCartBouncing] = React.useState<boolean>(false);
+  const [isFavBouncing, setIsFavBouncing] = React.useState<boolean>(false);
+
+  const prevCartCountRef = React.useRef(internalCount);
+  const prevFavCountRef = React.useRef(favoriteCount);
+
+  React.useEffect(() => {
+    if (prevCartCountRef.current !== internalCount && internalCount > 0) {
+      setIsCartBouncing(true);
+      const timer = setTimeout(() => setIsCartBouncing(false), 700);
+      return () => clearTimeout(timer);
+    }
+    prevCartCountRef.current = internalCount;
+  }, [internalCount]);
+
+  React.useEffect(() => {
+    if (prevFavCountRef.current !== favoriteCount && favoriteCount > 0) {
+      setIsFavBouncing(true);
+      const timer = setTimeout(() => setIsFavBouncing(false), 700);
+      return () => clearTimeout(timer);
+    }
+    prevFavCountRef.current = favoriteCount;
+  }, [favoriteCount]);
 
   React.useEffect(() => {
     if (typeof propFavoritesCount === "number") {
@@ -147,13 +170,14 @@ function StorefrontHeaderUI({
 
   return (
     <header
+      role="banner"
       className={cn(
-        "sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-candy-line/60 shadow-card",
+        "sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-candy-line/60 shadow-sm transition-all duration-200 supports-[backdrop-filter]:bg-white/85",
         className
       )}
     >
       {/* Top Announcement Ribbon */}
-      <div className="bg-candy-soft border-b border-candy-line/40 px-4 py-1.5 text-center flex items-center justify-center gap-2 text-xs font-semibold text-primary">
+      <div className="bg-candy-soft/90 backdrop-blur-sm border-b border-candy-line/40 px-4 py-1.5 text-center flex items-center justify-center gap-2 text-xs font-semibold text-primary">
         <Sparkles className="w-3.5 h-3.5 text-secondary shrink-0" />
         <span>توصيل طازج وسريع لجميع المناطق 🍰</span>
       </div>
@@ -163,6 +187,7 @@ function StorefrontHeaderUI({
           {/* Brand Logo & Title */}
           <Link
             href="/"
+            aria-label="الصفحة الرئيسية لمتجر كاندي لوز"
             className="flex items-center gap-2 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1 -m-1"
           >
             <StoreLogo
@@ -185,8 +210,9 @@ function StorefrontHeaderUI({
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-current={link.isActive ? "page" : undefined}
                   className={cn(
-                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-button text-sm font-semibold transition-all duration-200 select-none",
+                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-button text-sm font-semibold transition-all duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                     link.isActive
                       ? "bg-candy-soft text-primary shadow-sm font-bold"
                       : "text-candy-ink/80 hover:text-primary hover:bg-candy-soft/60"
@@ -210,7 +236,10 @@ function StorefrontHeaderUI({
               {favoriteCount > 0 && (
                 <span
                   aria-label={`${favoriteCount} عناصر في المفضلة`}
-                  className="absolute -top-1.5 -right-1.5 min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 sm:px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[10px] sm:text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200"
+                  className={cn(
+                    "absolute -top-1.5 -right-1.5 min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 sm:px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[10px] sm:text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200 transition-transform",
+                    isFavBouncing && "scale-125 ring-2 ring-white animate-bounce"
+                  )}
                 >
                   {favoriteCount > 99 ? "+99" : favoriteCount}
                 </span>
@@ -225,7 +254,7 @@ function StorefrontHeaderUI({
             </Link>
 
             {/* Desktop Search Bar */}
-            <form onSubmit={onSubmitSearch} className="hidden lg:flex items-center relative w-56 xl:w-64">
+            <form role="search" aria-label="بحث المتجر" onSubmit={onSubmitSearch} className="hidden lg:flex items-center relative w-56 xl:w-64">
               <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
               <input
                 type="search"
@@ -240,7 +269,7 @@ function StorefrontHeaderUI({
             {/* Quick Track Pill (Desktop only) */}
             <Link
               href="/track"
-              className="hidden sm:inline-flex md:hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-button bg-candy-soft text-primary hover:bg-candy-blush text-xs font-bold transition-colors shadow-sm"
+              className="hidden sm:inline-flex md:hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-button bg-candy-soft text-primary hover:bg-candy-blush text-xs font-bold transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <Truck className="w-4 h-4 text-secondary" />
               <span>تتبع طلبي</span>
@@ -256,7 +285,10 @@ function StorefrontHeaderUI({
               {internalCount > 0 && (
                 <span
                   aria-label={`${internalCount} أصناف في السلة`}
-                  className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200"
+                  className={cn(
+                    "absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200 transition-transform",
+                    isCartBouncing && "scale-125 ring-2 ring-white animate-bounce"
+                  )}
                 >
                   {internalCount > 99 ? "+99" : internalCount}
                 </span>
@@ -266,7 +298,7 @@ function StorefrontHeaderUI({
         </div>
 
         {/* Mobile Search Bar Row (< 768px) */}
-        <form onSubmit={onSubmitSearch} className="pb-3 md:hidden">
+        <form role="search" aria-label="بحث المتجر للجوال" onSubmit={onSubmitSearch} className="pb-3 md:hidden">
           <div className="relative flex items-center w-full">
             <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
             <input

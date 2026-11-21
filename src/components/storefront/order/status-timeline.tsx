@@ -21,11 +21,17 @@ import {
   ShoppingBag,
   ChevronDown,
   ChevronUp,
+  PackageCheck,
+  ShieldCheck,
+  Bike,
+  Flame,
+  Award,
 } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
 import { buildWhatsAppLink } from "@/lib/store-identity";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
 import { useCart } from "@/context/cart-context";
@@ -36,50 +42,116 @@ export interface StatusTimelineProps {
   className?: string;
 }
 
-interface StepMeta {
-  id: "new" | "in_preparation" | "out_for_delivery" | "delivered";
+export interface StageDefinition {
+  id: string;
+  stepNumber: number;
   title: string;
   subtitle: string;
   icon: React.ComponentType<{ className?: string }>;
+  badgeText: string;
+  badgeType: "kitchen" | "delivery" | "standard" | "success";
+  statusKey?: OrderStatus;
 }
 
-const FOUR_CUSTOMER_STEPS: StepMeta[] = [
+// 7-stage order status visual stepper
+export const SEVEN_ORDER_STAGES: StageDefinition[] = [
   {
-    id: "new",
+    id: "stage-1-received",
+    stepNumber: 1,
     title: "استلام وتأكيد الطلب",
-    subtitle: "تم استلام الطلب ومراجعته وتأكيده بنجاح",
+    subtitle: "تم استلام الطلب وتسجيله ومطابقته آلياً بنظام كاندي لوز",
     icon: Sparkles,
+    badgeText: "طلب جديد 📋",
+    badgeType: "standard",
+    statusKey: "new",
   },
   {
-    id: "in_preparation",
-    title: "تجهيز وتزيين الحلويات",
-    subtitle: "جاري تجهيز وتزيين الحلويات الطازجة في المعمل",
+    id: "stage-2-accepted",
+    stepNumber: 2,
+    title: "مراجعة واعتماد الطلب",
+    subtitle: "تمت مراجعة تفاصيل طلبك وتأكيد جاهزية المكونات الطازجة",
+    icon: CheckCircle2,
+    badgeText: "معتمد رسمياً ✓",
+    badgeType: "standard",
+    statusKey: "accepted",
+  },
+  {
+    id: "stage-3-kitchen",
+    stepNumber: 3,
+    title: "معمل الحلويات والطهي",
+    subtitle: "الخبز والتزيين اليدوي الفاخر بأيدي أمهر حلوانيي كاندي لوز",
     icon: ChefHat,
+    badgeText: "معمل الحلويات 👨‍🍳",
+    badgeType: "kitchen",
+    statusKey: "in_preparation",
   },
   {
-    id: "out_for_delivery",
-    title: "خرج للتوصيل",
-    subtitle: "الطلب بصحبة كابتن التوصيل في طريقه إليك",
-    icon: Truck,
+    id: "stage-4-packaging",
+    stepNumber: 4,
+    title: "فحص الجودة والتغليف الملكي",
+    subtitle: "فحص معايير الجودة وتعبئة الحلويات في صناديق التبريد الملكية",
+    icon: PackageCheck,
+    badgeText: "تغليف مبرد فاخر ❄️",
+    badgeType: "kitchen",
   },
   {
-    id: "delivered",
-    title: "تم التسليم",
-    subtitle: "تم تسليم الطلب بالهناء والعافية",
+    id: "stage-5-dispatched",
+    stepNumber: 5,
+    title: "تسليم الشحنة لأسطول التوصيل",
+    subtitle: "تسليم الصناديق المجهزة والمبردة إلى طاقم الشحن والتسليم",
     icon: Package,
+    badgeText: "جاهز للانطلاق 📦",
+    badgeType: "delivery",
+  },
+  {
+    id: "stage-6-out-for-delivery",
+    stepNumber: 6,
+    title: "خرج للتوصيل في الطريق إليك",
+    subtitle: "كابتن التوصيل في طريقه إلى عنوانك، يرجى الاستعداد للاستلام",
+    icon: Truck,
+    badgeText: "كابتن التوصيل 🛵",
+    badgeType: "delivery",
+    statusKey: "out_for_delivery",
+  },
+  {
+    id: "stage-7-delivered",
+    stepNumber: 7,
+    title: "تم التسليم بالهناء والعافية",
+    subtitle: "تم تسليم الطلب باليد بنجاح، صحة وعافية على قلوبكم",
+    icon: Award,
+    badgeText: "تم التسليم بنجاح ✨",
+    badgeType: "success",
+    statusKey: "delivered",
   },
 ];
 
-// Step index mapper for the 4 customer steps
-const STEP_ORDER_INDEX: Record<OrderStatus, number> = {
-  new: 0,
-  accepted: 0,
-  in_preparation: 1,
-  out_for_delivery: 2,
-  delivered: 4, // all 4 steps complete
-  undelivered: 2,
-  cancelled: -1,
-};
+// Mapping OrderStatus to the 7 stages (0 to 6 index)
+function getStageIndex(status: OrderStatus, timeline?: Order["timeline"]): number {
+  switch (status) {
+    case "new":
+      return 0; // Stage 1 active
+    case "accepted":
+      return 1; // Stage 2 active
+    case "in_preparation": {
+      // If note or later event mentions packaging, advance to stage 4
+      const prepEvent = timeline?.find((e) => e.status === "in_preparation");
+      if (prepEvent?.note && (prepEvent.note.includes("تغليف") || prepEvent.note.includes("جاهز"))) {
+        return 3; // Stage 4 active
+      }
+      return 2; // Stage 3 active (معمل الحلويات)
+    }
+    case "out_for_delivery":
+      return 5; // Stage 6 active (خرج للتوصيل)
+    case "undelivered":
+      return 5; // Stage 6 paused (تعذر التسليم)
+    case "delivered":
+      return 7; // All 7 completed!
+    case "cancelled":
+      return -1;
+    default:
+      return 0;
+  }
+}
 
 function formatArabicDateTime(isoString: string): string {
   try {
@@ -108,7 +180,7 @@ export function StatusTimeline({
 
   const isCancelled = order.status === "cancelled";
   const isUndelivered = order.status === "undelivered";
-  const currentStepIndex = STEP_ORDER_INDEX[order.status] ?? 0;
+  const currentStageIndex = getStageIndex(order.status, order.timeline);
 
   // Timeline events for cancellation or undelivered
   const cancelledEvent = React.useMemo(() => {
@@ -124,6 +196,10 @@ export function StatusTimeline({
       if (typeof navigator !== "undefined" && navigator.clipboard) {
         await navigator.clipboard.writeText(order.orderNumber);
         setCopied(true);
+        toast.success(
+          "تم نسخ رقم التتبع بنجاح",
+          `رقم الطلب ${order.orderNumber} منسوخ في الحافظة 📋`
+        );
         const timer = setTimeout(() => setCopied(false), 2000);
         return () => clearTimeout(timer);
       }
@@ -135,6 +211,7 @@ export function StatusTimeline({
   const handleReorder = React.useCallback(() => {
     if (order.items && order.items.length > 0) {
       restoreCartItems(order.items);
+      toast.success("تمت استعادة الأصناف إلى السلة بنجاح! 🛍️");
       router.push("/cart");
     }
   }, [order.items, restoreCartItems, router]);
@@ -158,7 +235,7 @@ export function StatusTimeline({
     >
       {/* 1. Header Card: Order Metadata & Status Badge */}
       <div className="bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-7 shadow-candy-2 relative overflow-hidden">
-        {/* Decorative soft pastel background glow */}
+        {/* Soft Confectionery Ambient Glow */}
         <div
           aria-hidden="true"
           className="absolute -top-12 -left-12 w-48 h-48 bg-candy-blush/40 rounded-full blur-3xl pointer-events-none -z-10"
@@ -207,7 +284,7 @@ export function StatusTimeline({
             </div>
           </div>
 
-          {/* Current Status Badge with distinctive semantic color */}
+          {/* Current Status Badge with semantic color & kitchen/delivery highlight */}
           <div className="flex items-center sm:justify-end">
             <span
               className={cn(
@@ -215,9 +292,9 @@ export function StatusTimeline({
                 order.status === "new" &&
                   "bg-candy-blush text-candy-berry border border-candy-line ring-2 ring-candy-strawberry/30",
                 order.status === "in_preparation" &&
-                  "bg-amber-100 text-amber-800 border border-amber-300",
+                  "bg-amber-100 text-amber-800 border border-amber-300 ring-2 ring-amber-400/30",
                 order.status === "out_for_delivery" &&
-                  "bg-blue-100 text-blue-800 border border-blue-300",
+                  "bg-blue-100 text-blue-800 border border-blue-300 ring-2 ring-blue-400/30",
                 order.status === "delivered" &&
                   "bg-emerald-100 text-emerald-800 border border-emerald-300",
                 order.status === "cancelled" &&
@@ -298,19 +375,37 @@ export function StatusTimeline({
           </div>
         )}
 
-        {/* 4. Beautiful Visual Step Timeline */}
+        {/* 4. 7-Stage Visual Status Stepper */}
         <div className="mt-8">
-          <h2 className="font-display text-base sm:text-lg font-bold text-candy-ink mb-6">
-            الخط الزمني ومراحل معالجة الطلب
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+            <div>
+              <h2 className="font-display text-base sm:text-lg font-bold text-candy-ink">
+                الخط الزمني ومراحل معالجة الطلب (7 مراحل)
+              </h2>
+              <p className="font-sans text-xs text-candy-muted">
+                متابعة حية من معمل التحضير والخبز وحتى التسليم المباشر
+              </p>
+            </div>
+            {/* Live Progress Pill */}
+            {!isCancelled && (
+              <span className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-soft text-candy-berry font-sans text-xs font-bold border border-candy-line">
+                <span className="w-2 h-2 rounded-full bg-candy-strawberry animate-ping" />
+                <span>
+                  {order.status === "delivered"
+                    ? "مكتمل 7 من 7 مراحل"
+                    : `المرحلة ${Math.min(currentStageIndex + 1, 7)} من 7`}
+                </span>
+              </span>
+            )}
+          </div>
 
           <ol
             aria-label="مراحل معالجة وتوصيل الطلب"
-            className="relative flex flex-col space-y-6 sm:space-y-8 before:absolute before:right-[23px] before:top-4 before:bottom-4 before:w-1 before:bg-candy-line/80"
+            className="relative flex flex-col space-y-6 sm:space-y-7 before:absolute before:right-[23px] before:top-4 before:bottom-4 before:w-1 before:bg-candy-line/80"
           >
             {isCancelled ? (
               <>
-                {/* Step 1 for Cancelled: Completed initial receipt */}
+                {/* Step 1 for Cancelled: Receipt */}
                 <li className="relative flex items-start gap-4 sm:gap-5 pr-2 group">
                   <div className="relative z-10 w-11 h-11 rounded-full flex items-center justify-center shrink-0 bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)]">
                     <Check className="w-5 h-5 text-white" strokeWidth={3} />
@@ -331,7 +426,7 @@ export function StatusTimeline({
                   </div>
                 </li>
 
-                {/* Step 2 for Cancelled: Red Termination Node with Reason */}
+                {/* Step 2 for Cancelled: Termination Node */}
                 <li className="relative flex items-start gap-4 sm:gap-5 pr-2 group">
                   <div className="relative z-10 w-11 h-11 rounded-full flex items-center justify-center shrink-0 bg-rose-600 text-white shadow-[0_4px_14px_rgba(225,29,72,0.35)] ring-4 ring-rose-200">
                     <XCircle className="w-6 h-6 text-white" />
@@ -358,39 +453,51 @@ export function StatusTimeline({
                 </li>
               </>
             ) : (
-              FOUR_CUSTOMER_STEPS.map((step, idx) => {
-                const StepIcon = step.icon;
-                const matchingEvent = order.timeline?.find(
-                  (e) => e.status === step.id
-                );
+              SEVEN_ORDER_STAGES.map((stage, idx) => {
+                const StageIcon = stage.icon;
 
-                // Step status calculation
-                const isPast = currentStepIndex > idx;
-                const isCurrent = currentStepIndex === idx;
-                const isUndeliveredCurrent =
-                  isUndelivered && step.id === "out_for_delivery";
-                const isPending = !isPast && !isCurrent && !isUndeliveredCurrent;
+                // Find matching event from order.timeline
+                const matchingEvent = stage.statusKey
+                  ? order.timeline?.find((e) => e.status === stage.statusKey)
+                  : undefined;
+
+                // Stage state
+                const isPast = currentStageIndex > idx;
+                const isCurrent = currentStageIndex === idx;
+                const isPending = !isPast && !isCurrent;
+                const isUndeliveredCurrent = isUndelivered && stage.statusKey === "out_for_delivery";
+
+                // Fallback timestamp logic
+                let timestampText: string | null = null;
+                if (matchingEvent?.timestamp) {
+                  timestampText = formatArabicDateTime(matchingEvent.timestamp);
+                } else if (idx === 0 && order.createdAt) {
+                  timestampText = formatArabicDateTime(order.createdAt);
+                } else if (isPast && idx <= currentStageIndex && order.createdAt) {
+                  // For intermediate sub-stages without distinct statusKey
+                  timestampText = formatArabicDateTime(order.updatedAt || order.createdAt);
+                }
 
                 return (
                   <li
-                    key={step.id}
+                    key={stage.id}
                     aria-current={isCurrent ? "step" : undefined}
                     className="relative flex items-start gap-4 sm:gap-5 pr-2 group"
                   >
-                    {/* Step Icon Node */}
+                    {/* Stage Node Icon with Pulsing Effect on Active */}
                     <div
                       className={cn(
                         "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0",
-                        // Completed Step
+                        // Completed Stage
                         isPast &&
                           "bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)] scale-100",
-                        // Active Current Step
-                        isCurrent &&
-                          "bg-candy-strawberry text-white ring-4 ring-candy-strawberry/25 shadow-candy-cta scale-110 animate-pulse",
+                        // Active Current Stage (Pulsing)
+                        isCurrent && !isUndeliveredCurrent &&
+                          "bg-candy-strawberry text-white ring-4 ring-candy-strawberry/30 shadow-candy-cta scale-110 animate-pulse",
                         // Undelivered Current
                         isUndeliveredCurrent &&
                           "bg-amber-600 text-white ring-4 ring-amber-300/40 shadow-md scale-105",
-                        // Pending Step
+                        // Pending Stage
                         isPending &&
                           "bg-white border-2 border-candy-line text-candy-muted/70 shadow-xs"
                       )}
@@ -398,54 +505,102 @@ export function StatusTimeline({
                       {isPast ? (
                         <Check className="w-5 h-5 text-white" strokeWidth={3} />
                       ) : (
-                        <StepIcon className="w-5 h-5" />
+                        <StageIcon className="w-5 h-5" />
                       )}
                     </div>
 
-                    {/* Step Description & Timestamp */}
-                    <div className="flex-1 pt-1 text-right">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                        <h4
-                          className={cn(
-                            "font-sans text-sm sm:text-base font-bold",
-                            isCurrent && "text-candy-berry font-extrabold",
-                            isPast && "text-candy-ink",
-                            isPending && "text-candy-muted/80"
+                    {/* Stage Description & Status Badges */}
+                    <div className="flex-1 pt-0.5 text-right">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4
+                            className={cn(
+                              "font-sans text-sm sm:text-base font-bold",
+                              isCurrent && "text-candy-berry font-extrabold",
+                              isPast && "text-candy-ink",
+                              isPending && "text-candy-muted/80"
+                            )}
+                          >
+                            <span>{stage.title}</span>
+                          </h4>
+
+                          {/* Kitchen / Delivery / Status Badges */}
+                          {stage.badgeType === "kitchen" && (
+                            <span
+                              className={cn(
+                                "text-[11px] font-sans font-bold px-2 py-0.5 rounded-candy-pill border shadow-xs inline-flex items-center gap-1",
+                                isCurrent
+                                  ? "bg-amber-100 text-amber-900 border-amber-300 ring-2 ring-amber-300/40 animate-pulse"
+                                  : isPast
+                                  ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                                  : "bg-candy-soft text-candy-muted border-candy-line"
+                              )}
+                            >
+                              <span>{stage.badgeText}</span>
+                            </span>
                           )}
-                        >
-                          {step.title}
+
+                          {stage.badgeType === "delivery" && (
+                            <span
+                              className={cn(
+                                "text-[11px] font-sans font-bold px-2 py-0.5 rounded-candy-pill border shadow-xs inline-flex items-center gap-1",
+                                isCurrent
+                                  ? "bg-blue-100 text-blue-900 border-blue-300 ring-2 ring-blue-300/40 animate-pulse"
+                                  : isPast
+                                  ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                                  : "bg-candy-soft text-candy-muted border-candy-line"
+                              )}
+                            >
+                              <span>{stage.badgeText}</span>
+                            </span>
+                          )}
+
+                          {stage.badgeType === "success" && isPast && (
+                            <span className="text-[11px] font-sans font-bold px-2 py-0.5 rounded-candy-pill bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs inline-flex items-center gap-1">
+                              <span>{stage.badgeText}</span>
+                            </span>
+                          )}
+
                           {isCurrent && (
-                            <span className="mr-2 text-xs font-semibold px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry inline-block">
+                            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry border border-candy-line">
                               المرحلة الحالية
                             </span>
                           )}
-                        </h4>
+                        </div>
 
-                        {/* Timestamp from order.timeline */}
-                        {matchingEvent?.timestamp && (
-                          <span className="font-sans text-xs text-candy-muted flex items-center gap-1">
+                        {/* Timestamp */}
+                        {timestampText && (
+                          <span className="font-sans text-xs text-candy-muted flex items-center gap-1 shrink-0">
                             <Clock className="w-3.5 h-3.5 text-candy-muted/70" />
-                            <span>{formatArabicDateTime(matchingEvent.timestamp)}</span>
+                            <span>{timestampText}</span>
                           </span>
                         )}
                       </div>
 
                       <p
                         className={cn(
-                          "font-sans text-xs sm:text-sm mt-0.5",
+                          "font-sans text-xs sm:text-sm mt-1 leading-relaxed",
                           isCurrent
-                            ? "text-candy-ink/90 font-medium"
+                            ? "text-candy-ink font-medium"
                             : "text-candy-muted"
                         )}
                       >
-                        {step.subtitle}
+                        {stage.subtitle}
                       </p>
 
-                      {/* Remaining time cue for preparation step */}
-                      {isCurrent && step.id === "in_preparation" && (
+                      {/* Special cue for Kitchen Stage */}
+                      {isCurrent && stage.id === "stage-3-kitchen" && (
                         <div className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-amber-50 border border-amber-200 text-amber-900 font-sans text-xs font-bold shadow-xs">
-                          <Clock className="w-4 h-4 text-amber-600 animate-spin-slow" />
-                          <span>الوقت التقديري المتبقي للتجهيز: حوالي 15 - 25 دقيقة ⏱️</span>
+                          <ChefHat className="w-4 h-4 text-amber-600 animate-bounce" />
+                          <span>الحلويات الآن في الفرن والتزيين اليدوي الطازج ⏱️ المتبقي ~ 15 دقيقة</span>
+                        </div>
+                      )}
+
+                      {/* Special cue for Delivery Stage */}
+                      {isCurrent && stage.id === "stage-6-out-for_delivery" && (
+                        <div className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-blue-50 border border-blue-200 text-blue-900 font-sans text-xs font-bold shadow-xs">
+                          <Truck className="w-4 h-4 text-blue-600 animate-pulse" />
+                          <span>الكابتن في طريقه إليك بصناديق التبريد الملكية 🛵 يرجى إبقاء الهاتف متاحاً</span>
                         </div>
                       )}
 

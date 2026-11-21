@@ -15,15 +15,18 @@ import {
   Sparkles,
   Phone,
   MessageCircle,
-  FileCheck2,
   ShieldCheck,
   ChevronDown,
   ChevronUp,
+  PartyPopper,
+  PackageCheck,
+  Heart,
 } from "lucide-react";
 import type { Order, DeliveryZone } from "@/types";
 import { cn } from "@/lib/utils";
 import { buildWhatsAppLink } from "@/lib/store-identity";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
+import { toast } from "@/components/ui/toast";
 
 export interface OrderSuccessCardProps {
   order: Order;
@@ -44,11 +47,16 @@ export function OrderSuccessCard({
       if (typeof navigator !== "undefined" && navigator.clipboard) {
         await navigator.clipboard.writeText(order.orderNumber);
         setCopied(true);
-        const timer = setTimeout(() => setCopied(false), 2000);
+        toast.success(
+          "تم نسخ رقم الطلب بنجاح",
+          `رقم الطلب ${order.orderNumber} تم نسخه إلى الحافظة. احتفظ به لتتبع شحنتك 📋`
+        );
+        const timer = setTimeout(() => setCopied(false), 2500);
         return () => clearTimeout(timer);
       }
     } catch (err) {
       console.error("Failed to copy order number:", err);
+      toast.error("تعذر نسخ رقم الطلب", "يرجى تحديد الرقم ونسخه يدوياً");
     }
   }, [order.orderNumber]);
 
@@ -88,6 +96,10 @@ export function OrderSuccessCard({
   const zoneDisplayName =
     deliveryZone?.name || order.customer.zoneId || "منطقة التوصيل المحددة";
 
+  // Estimated delivery range
+  const estimatedMin = deliveryZone?.estimatedTimeMin ?? 30;
+  const estimatedMax = deliveryZone?.estimatedTimeMax ?? 45;
+
   return (
     <div
       dir="rtl"
@@ -105,8 +117,9 @@ export function OrderSuccessCard({
               تم إكمال الطلب بنجاح • خطوة 3 من 3 🔒
             </span>
           </div>
-          <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-sans font-bold text-xs">
-            مكتمل 100%
+          <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-sans font-bold text-xs flex items-center gap-1">
+            <Check className="w-3 h-3 text-emerald-700" />
+            <span>مكتمل 100%</span>
           </span>
         </div>
 
@@ -147,15 +160,27 @@ export function OrderSuccessCard({
         </div>
       </section>
 
-      {/* 1. Festive Header & Celebratory Checkmark */}
+      {/* 1. Festive Celebration Banner & Order Header */}
       <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 shadow-candy-2 text-center">
-        {/* Ambient Berry Radial Glow */}
+        {/* Soft Ambient Confectionery Glow */}
         <div
           aria-hidden="true"
-          className="absolute -top-12 inset-x-0 mx-auto w-64 h-64 bg-candy-blush/50 rounded-full blur-3xl pointer-events-none -z-10"
+          className="absolute -top-16 inset-x-0 mx-auto w-72 h-72 bg-candy-blush/60 rounded-full blur-3xl pointer-events-none -z-10"
         />
 
-        {/* Animated Success Badge */}
+        {/* Celebration Badges Top Row */}
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-blush border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-candy-strawberry animate-pulse" />
+            <span>صنع يدوي طازج بحب وعناية 💖</span>
+          </span>
+          <span className="inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 shadow-xs">
+            <PackageCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>طلب مؤكد</span>
+          </span>
+        </div>
+
+        {/* Animated Success Badge with Festive Confectionery Micro-Animation */}
         <div className="relative mb-5 inline-flex items-center justify-center">
           <div className="absolute w-24 h-24 rounded-full bg-emerald-100/70 animate-ping opacity-60" />
           <div className="relative w-20 h-20 rounded-full bg-gradient-to-tr from-[#166534] via-[#1B8755] to-[#22c55e] flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
@@ -176,12 +201,22 @@ export function OrderSuccessCard({
         </h1>
 
         <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6">
-          تم استلام وتأكيد طلبك بنجاح. فريق حلويات كاندي لوز يعمل الآن على تجهيز طلبك
-          الفاخر بكل حب وعناية ليصلك طازجاً وشهياً 💖
+          {order.customer.fullName ? (
+            <span>
+              عزيزنا <strong className="text-candy-ink">{order.customer.fullName}</strong>، تم
+              استلام وتأكيد طلبك بنجاح. فريق حلوانيي كاندي لوز يعمل الآن على تجهيز أصنافك بكل حب
+              وعناية لتصلك طازجة وشهية 🍰
+            </span>
+          ) : (
+            <span>
+              تم استلام وتأكيد طلبك بنجاح. فريق حلويات كاندي لوز يعمل الآن على تجهيز طلبك الفاخر
+              بكل حب وعناية ليصلك طازجاً وشهياً 💖
+            </span>
+          )}
         </p>
 
-        {/* Order Reference Badge with One-Click Copy */}
-        <div className="inline-flex items-center gap-2.5 bg-candy-soft border border-candy-line px-4 py-2 rounded-candy-pill shadow-xs transition-colors hover:border-candy-rose/60">
+        {/* Order Reference Badge with One-Tap Copy Button and Visual Feedback */}
+        <div className="inline-flex items-center gap-2.5 bg-candy-soft border border-candy-line px-4 py-2.5 rounded-candy-pill shadow-xs transition-colors hover:border-candy-rose/60">
           <span className="font-sans text-xs text-candy-muted font-medium">
             رقم الطلب:
           </span>
@@ -216,28 +251,26 @@ export function OrderSuccessCard({
           )}
         </div>
 
-        {/* Reassuring Delivery Time Highlight */}
-        {deliveryZone && (
-          <div className="mt-6 w-full bg-gradient-to-r from-candy-soft via-candy-cream to-candy-soft p-4 rounded-2xl border border-candy-line/60 flex items-center justify-between gap-3 text-right">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-white text-candy-strawberry flex items-center justify-center shadow-xs shrink-0 border border-candy-blush">
-                <Clock className="w-5 h-5" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-sans text-[11px] text-candy-muted">
-                  الوقت التقديري للتوصيل المبرد
-                </span>
-                <span className="font-sans text-sm font-bold text-candy-ink">
-                  خلال {deliveryZone.estimatedTimeMin} - {deliveryZone.estimatedTimeMax} دقيقة
-                </span>
-              </div>
+        {/* Estimated Delivery Time Indicator Card */}
+        <div className="mt-6 w-full bg-gradient-to-r from-candy-soft via-candy-cream to-candy-soft p-4 rounded-2xl border border-candy-line/80 flex items-center justify-between gap-3 text-right">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white text-candy-strawberry flex items-center justify-center shadow-xs shrink-0 border border-candy-blush">
+              <Clock className="w-5 h-5 text-candy-strawberry" />
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-sans text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill font-bold shrink-0">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              مباشر
+            <div className="flex flex-col">
+              <span className="font-sans text-[11px] text-candy-muted">
+                الوقت التقديري للتوصيل المبرد
+              </span>
+              <span className="font-sans text-sm font-bold text-candy-ink">
+                خلال {estimatedMin} - {estimatedMax} دقيقة
+              </span>
             </div>
           </div>
-        )}
+          <div className="flex items-center gap-1.5 text-xs font-sans text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill font-bold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>مباشر</span>
+          </div>
+        </div>
       </div>
 
       {/* 2. Order Summary Card (Items, Zone, Payment, Financial Breakdown) */}
@@ -468,7 +501,7 @@ export function OrderSuccessCard({
         </Link>
       </div>
 
-      {/* 5. Customer Concierge WhatsApp Assistance (from Stitch Screen #7) */}
+      {/* 5. Customer Concierge WhatsApp Assistance */}
       <div className="text-center pt-1">
         <a
           href={buildWhatsAppLink(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}

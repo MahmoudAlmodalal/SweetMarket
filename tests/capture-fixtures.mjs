@@ -24,7 +24,10 @@ export async function preparePageForCapture(page) {
   await page.evaluate(async () => {
     // 1. Wait for document fonts
     if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
+      await Promise.race([
+        document.fonts.ready,
+        new Promise((resolve) => setTimeout(resolve, 500)),
+      ]);
     }
 
     // 2. Wait for images to decode
@@ -32,7 +35,10 @@ export async function preparePageForCapture(page) {
     await Promise.all(
       images.map((img) => {
         if (img.complete) return Promise.resolve();
-        return img.decode().catch(() => {});
+        return Promise.race([
+          img.decode().catch(() => {}),
+          new Promise((resolve) => setTimeout(resolve, 400)),
+        ]);
       })
     );
 

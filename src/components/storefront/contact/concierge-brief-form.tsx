@@ -246,13 +246,13 @@ export function ConciergeBriefForm({
           <button
             type="submit"
             className={cn(
-              "w-full inline-flex items-center justify-center gap-2 h-11 px-5 rounded-candy-pill font-sans font-bold text-sm text-white transition-all select-none",
-              "bg-[#25D366] hover:bg-[#20bd5a] shadow-[0_4px_16px_rgba(37,211,102,0.28)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.38)] active:scale-[0.98]",
+              "w-full inline-flex items-center justify-center gap-2.5 min-h-[48px] h-12 px-6 rounded-candy-pill font-sans font-bold text-sm sm:text-base text-white transition-all select-none cursor-pointer",
+              "bg-[#25D366] hover:bg-[#20bd5a] shadow-[0_4px_16px_rgba(37,211,102,0.30)] hover:shadow-[0_8px_24px_rgba(37,211,102,0.45)] hover:scale-[1.01] active:scale-[0.98]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
             )}
           >
-            <MessageCircle className="w-4 h-4 fill-white" />
-            <span>إرسال التفاصيل وفتح واتساب</span>
+            <MessageCircle className="w-5 h-5 fill-white transition-transform group-hover:rotate-12" />
+            <span>إرسال التفاصيل وفتح واتساب الآن</span>
           </button>
         </div>
 

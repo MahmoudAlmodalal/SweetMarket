@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
@@ -42,9 +42,9 @@ export interface ProductImageProps {
  * مكوّن صورة المنتج الموحّد (ProductImage)
  *
  * يعرض صور المنتجات عبر Next/Image مع دعم تلقائي للصور المتجهية SVG،
- * ويوفر عرضاً بديلاً أنيقاً بهوية "كاندي لوز" عند غياب الصورة أو تعذر تحميلها.
- * العرض البديل مصمم ليكون ملائماً لتقنيات الوصول (Accessible) دون عرض النص البديل
- * الخام كنص بصري مشوه للواجهة.
+ * وتأثير لمعان تمهيدي فائق السلاسة (Confectionery Shimmer Placeholder)،
+ * وتلاشٍ ناعم للظهور (Smooth Fade-In)،
+ * مع توفير عرض بديل متقن يحمل هوية "كاندي لوز" عند غياب الصورة أو تعذر تحميلها.
  */
 export function ProductImage({
   src,
@@ -63,10 +63,20 @@ export function ProductImage({
   onError,
 }: ProductImageProps) {
   const [hasError, setHasError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
-  // إعادة ضبط حالة الخطأ عند تغيّر رابط الصورة
+  // إعادة ضبط حالة الخطأ والتحميل عند تغيّر رابط الصورة
   useEffect(() => {
     setHasError(false);
+    setIsLoaded(false);
+  }, [src]);
+
+  // في حال كانت الصورة مخبأة بالفعل في المتصفح أو اكتمل تحميلها فورياً
+  useEffect(() => {
+    if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
+      setIsLoaded(true);
+    }
   }, [src]);
 
   // التحقق من صلاحية مسار الصورة
@@ -84,7 +94,7 @@ export function ProductImage({
         role="img"
         aria-label={alt}
         className={cn(
-          'flex flex-col items-center justify-center select-none overflow-hidden text-candy-berry p-2 text-center',
+          'flex flex-col items-center justify-center select-none overflow-hidden text-candy-berry p-2 text-center transition-all duration-300',
           'bg-gradient-to-br from-[#FFF5F8] via-[#FED7E7]/40 to-[#FDF2F4] border border-candy-line/40',
           isFill ? 'absolute inset-0 w-full h-full' : 'w-full h-full',
           fallbackClassName,
@@ -155,41 +165,83 @@ export function ProductImage({
     );
   }
 
-  // في الحالة الطبيعية: العرض عبر Next/Image مع دعم unoptimized لـ SVG
-  return isFill ? (
-    <Image
-      src={trimmedSrc}
-      alt={alt}
-      fill
-      sizes={sizes ?? '(max-width: 768px) 100vw, 50vw'}
-      priority={priority}
-      unoptimized={shouldUnoptimize}
-      loading={priority ? undefined : loading}
-      quality={quality}
-      className={className}
-      onLoad={onLoad}
-      onError={() => {
-        setHasError(true);
-        onError?.();
+  // في الحالة الطبيعية: دعم fill أو أبعاد ثابتة مع تأثير الوميض والظهور المتدرج
+  const handleLoadSuccess = () => {
+    setIsLoaded(true);
+    onLoad?.();
+  };
+
+  const handleLoadFailure = () => {
+    setHasError(true);
+    onError?.();
+  };
+
+  // وميض التحميل الخفيف (Confectionery Shimmer Skeleton)
+  const shimmerElement = !isLoaded && (
+    <div
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none z-0",
+        "bg-gradient-to-r from-candy-soft via-candy-blush/40 to-candy-soft bg-[length:200%_100%] animate-pulse",
+        isFill ? "absolute inset-0 w-full h-full" : "w-full h-full"
+      )}
+      style={{
+        animation: "shimmer 1.5s linear infinite",
       }}
     />
-  ) : (
-    <Image
-      src={trimmedSrc}
-      alt={alt}
-      width={width ?? 300}
-      height={height ?? 300}
-      sizes={sizes}
-      priority={priority}
-      unoptimized={shouldUnoptimize}
-      loading={priority ? undefined : loading}
-      quality={quality}
-      className={className}
-      onLoad={onLoad}
-      onError={() => {
-        setHasError(true);
-        onError?.();
-      }}
-    />
+  );
+
+  if (isFill) {
+    return (
+      <>
+        {shimmerElement}
+        <Image
+          ref={imgRef}
+          src={trimmedSrc}
+          alt={alt}
+          fill
+          sizes={sizes ?? '(max-width: 768px) 100vw, 50vw'}
+          priority={priority}
+          unoptimized={shouldUnoptimize}
+          loading={priority ? undefined : loading}
+          quality={quality}
+          className={cn(
+            'transition-opacity duration-500 ease-out',
+            isLoaded ? 'opacity-100' : 'opacity-0',
+            className
+          )}
+          onLoad={handleLoadSuccess}
+          onError={handleLoadFailure}
+        />
+      </>
+    );
+  }
+
+  return (
+    <div
+      className={cn("relative inline-block overflow-hidden", fallbackClassName)}
+      style={width && height ? { width, height } : undefined}
+    >
+      {shimmerElement}
+      <Image
+        ref={imgRef}
+        src={trimmedSrc}
+        alt={alt}
+        width={width ?? 300}
+        height={height ?? 300}
+        sizes={sizes}
+        priority={priority}
+        unoptimized={shouldUnoptimize}
+        loading={priority ? undefined : loading}
+        quality={quality}
+        className={cn(
+          'transition-opacity duration-500 ease-out',
+          isLoaded ? 'opacity-100' : 'opacity-0',
+          className
+        )}
+        onLoad={handleLoadSuccess}
+        onError={handleLoadFailure}
+      />
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Heart, Plus, Check, Star, Trash2 } from "lucide-react";
+import { Heart, Plus, Check, Star, Trash2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product, CartItem } from "@/types";
 import { CartContext } from "@/context/cart-context";
@@ -30,13 +30,23 @@ export interface ProductCardProps {
   onRemoveFavorite?: (productId: string) => void;
 }
 
+/**
+ * لوحة الألوان الباستيلية الفاخرة للحلويات (6 تدرجات رقيقة ومميزة)
+ * تمنح حواف البطاقات تأثيراً باستيلياً مع إشراقة متناغمة عند التمرير
+ */
 const PASTEL_TINTS = [
-  "bg-candy-pastel-1/30 border-candy-pastel-1/60",
-  "bg-candy-pastel-2/30 border-candy-pastel-2/60",
-  "bg-candy-pastel-3/30 border-candy-pastel-3/60",
-  "bg-candy-pastel-4/30 border-candy-pastel-4/60",
-  "bg-candy-pastel-5/30 border-candy-pastel-5/60",
-  "bg-candy-pastel-6/30 border-candy-pastel-6/60",
+  // 1. وردي الفراولة الرقيق (Strawberry Rose)
+  "bg-gradient-to-b from-[#FFF5F4] to-white border-[#F2C4C0] hover:border-[#E59A94] hover:shadow-[0_12px_28px_rgba(229,154,148,0.22)]",
+  // 2. فستقي نعناعي ناعم (Pistachio Mint)
+  "bg-gradient-to-b from-[#F4FAF2] to-white border-[#C8E6C4] hover:border-[#A4D59E] hover:shadow-[0_12px_28px_rgba(164,213,158,0.22)]",
+  // 3. توتي زهري فاخر (Berry Pink)
+  "bg-gradient-to-b from-[#FFF3F6] to-white border-[#F8BECD] hover:border-[#EE93A9] hover:shadow-[0_12px_28px_rgba(238,147,169,0.22)]",
+  // 4. عسلي ذهبي دافئ (Honey Amber)
+  "bg-gradient-to-b from-[#FFFDF2] to-white border-[#F5E2B0] hover:border-[#EDCD81] hover:shadow-[0_12px_28px_rgba(237,205,129,0.22)]",
+  // 5. لوزي كريمي ناعم (Almond Cream)
+  "bg-gradient-to-b from-[#FCF7F2] to-white border-[#EBD4C2] hover:border-[#DEC0A7] hover:shadow-[0_12px_28px_rgba(222,192,167,0.22)]",
+  // 6. غيمة سكرية ملكية (Royal Glaze)
+  "bg-gradient-to-b from-[#F4F8FD] to-white border-[#CDE1F7] hover:border-[#ADCFF2] hover:shadow-[0_12px_28px_rgba(173,207,242,0.22)]",
 ];
 
 export function ProductCard({
@@ -47,6 +57,7 @@ export function ProductCard({
   onRemoveFavorite,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = React.useState(false);
+  const [isHeartBursting, setIsHeartBursting] = React.useState(false);
   const [isAdded, setIsAdded] = React.useState(false);
   const cartContext = React.useContext(CartContext);
 
@@ -145,7 +156,7 @@ export function ProductCard({
         window.dispatchEvent(new Event("candy_cart_updated"));
       }
 
-      // Feedback animation & toast
+      // Instant visual checkmark feedback & toast
       setIsAdded(true);
       toast.success(`تمت إضافة "${product.name}" إلى سلتك`);
       setTimeout(() => setIsAdded(false), 1500);
@@ -160,6 +171,13 @@ export function ProductCard({
     e.stopPropagation();
     const nextValue = toggleFavoriteProduct(product.id);
     setIsWishlisted(nextValue);
+
+    // Heart-burst micro-animation trigger
+    if (nextValue) {
+      setIsHeartBursting(true);
+      setTimeout(() => setIsHeartBursting(false), 750);
+    }
+
     toast.success(
       nextValue
         ? `تمت إضافة "${product.name}" إلى المفضلة`
@@ -182,7 +200,7 @@ export function ProductCard({
   return (
     <div
       className={cn(
-        "group relative flex flex-col justify-between rounded-candy-card border p-3 sm:p-4 bg-white/90 backdrop-blur-sm shadow-candy-1 hover:shadow-candy-2 transition-all duration-300 hover:-translate-y-1.5",
+        "group relative flex flex-col justify-between rounded-candy-card border p-3 sm:p-4 backdrop-blur-sm shadow-candy-1 hover:shadow-candy-2 transition-all duration-300 hover:-translate-y-1.5",
         tintClass,
         !isAvailable && "opacity-80 grayscale-[20%]",
         className
@@ -205,18 +223,44 @@ export function ProductCard({
             />
           </Link>
 
-          {/* Floating Wishlist Button */}
+          {/* Floating Wishlist Button with Heart-Burst Micro-Animation */}
           <button
             type="button"
             onClick={toggleWishlist}
             aria-label={isWishlisted ? `إزالة ${product.name} من المفضلة` : `إضافة ${product.name} للمفضلة`}
             title={isWishlisted ? "إزالة من المفضلة" : "إضافة للمفضلة"}
-            className="absolute top-2 right-2 min-w-10 min-h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-candy-rose shadow-sm transition-transform active:scale-90 hover:bg-white hover:text-candy-strawberry touch-manipulation z-10"
+            className={cn(
+              "absolute top-2 right-2 min-w-10 min-h-10 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-sm transition-all duration-300 active:scale-85 hover:bg-white touch-manipulation z-10 border border-candy-line/40",
+              isWishlisted
+                ? "text-candy-strawberry shadow-[0_2px_10px_rgba(215,45,88,0.25)]"
+                : "text-candy-rose hover:text-candy-strawberry"
+            )}
           >
+            {/* Heart-Burst expanding ring & sparkle particles */}
+            {isHeartBursting && (
+              <>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-full bg-rose-400/35 animate-ping pointer-events-none"
+                />
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-candy-strawberry animate-ping pointer-events-none"
+                />
+                <span
+                  aria-hidden="true"
+                  className="absolute -bottom-1 -left-1 w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping pointer-events-none"
+                />
+              </>
+            )}
+
             <Heart
               className={cn(
-                "w-4 h-4 transition-colors",
-                isWishlisted ? "fill-candy-strawberry text-candy-strawberry" : "stroke-current"
+                "w-4 h-4 transition-all duration-300",
+                isWishlisted
+                  ? "fill-candy-strawberry text-candy-strawberry"
+                  : "stroke-current",
+                isHeartBursting && "scale-130"
               )}
             />
           </button>
@@ -229,14 +273,15 @@ export function ProductCard({
             </span>
           </div>
 
-          {/* Availability / Discount Badges */}
+          {/* Availability / Elegant Discount Badge */}
           {!isAvailable ? (
-            <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-candy-pill bg-rose-50 text-rose-700 border border-rose-200 text-[11px] font-sans font-bold shadow-sm">
+            <div className="absolute top-2 left-2 px-2.5 py-1 rounded-candy-pill bg-rose-50/95 backdrop-blur-xs text-rose-700 border border-rose-200 text-[11px] font-sans font-bold shadow-sm">
               نفد من المخزون
             </div>
           ) : hasDiscount ? (
-            <div className="absolute top-2 left-2 px-2.5 py-0.5 rounded-candy-pill bg-candy-strawberry text-white text-[11px] font-sans font-bold shadow-candy-cta">
-              توفير {discountPercent}%
+            <div className="absolute top-2 left-2 px-2.5 py-1 rounded-candy-pill bg-gradient-to-r from-candy-strawberry via-rose-600 to-candy-berry text-white text-[11px] sm:text-xs font-sans font-extrabold shadow-candy-cta border border-white/40 flex items-center gap-1 backdrop-blur-xs">
+              <Sparkles className="w-3 h-3 text-amber-200 fill-amber-200" />
+              <span>توفير {discountPercent}%</span>
             </div>
           ) : null}
         </div>
@@ -292,24 +337,25 @@ export function ProductCard({
             </button>
           )}
 
+          {/* Quick Add Button with Instant Visual Checkmark Feedback */}
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={!isAvailable}
             aria-label={`أضف ${product.name} للسلة`}
             className={cn(
-              "relative min-h-[40px] px-3 sm:px-4 rounded-candy-pill font-sans font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all duration-200 active:scale-95 shadow-sm",
+              "relative min-h-[40px] px-3 sm:px-4 rounded-candy-pill font-sans font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all duration-300 active:scale-95 shadow-sm overflow-hidden",
               isAvailable
                 ? isAdded
-                  ? "bg-candy-berry text-white shadow-candy-cta"
+                  ? "bg-emerald-600 text-white shadow-[0_4px_16px_rgba(16,185,129,0.35)] scale-[1.02] border border-emerald-500"
                   : "bg-white text-candy-berry border border-candy-blush hover:bg-candy-strawberry hover:text-white hover:border-transparent hover:shadow-candy-cta"
                 : "bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed shadow-none"
             )}
           >
             {isAdded ? (
               <>
-                <Check className="w-4 h-4 text-white animate-in zoom-in-75" />
-                <span className="hidden sm:inline">أُضيف</span>
+                <Check className="w-4 h-4 text-white stroke-[2.5] animate-in zoom-in-75 spin-in-12 duration-200" />
+                <span>تمت الإضافة ✓</span>
               </>
             ) : (
               <>

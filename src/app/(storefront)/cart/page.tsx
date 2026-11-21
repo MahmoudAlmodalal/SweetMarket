@@ -11,6 +11,7 @@ import {
   Plus,
   Check,
   AlertTriangle,
+  Gift,
 } from "lucide-react";
 import { useCart, CartProvider, CartContext } from "@/context/cart-context";
 import {
@@ -87,17 +88,17 @@ function CartPageInner() {
     return (
       <div className="py-6 sm:py-8 max-w-6xl mx-auto space-y-6">
         <div className="flex items-center justify-between pb-4 border-b border-candy-line/60">
-          <Skeleton className="h-8 w-48 rounded-candy-pill" />
-          <Skeleton className="h-8 w-24 rounded-candy-pill" />
+          <Skeleton className="h-9 w-52 rounded-candy-pill" />
+          <Skeleton className="h-9 w-28 rounded-candy-pill" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-7 xl:col-span-8 space-y-4">
-            <Skeleton className="h-28 w-full rounded-candy-card" />
-            <Skeleton className="h-28 w-full rounded-candy-card" />
-            <Skeleton className="h-28 w-full rounded-candy-card" />
+            <Skeleton className="h-32 w-full rounded-2xl sm:rounded-3xl" />
+            <Skeleton className="h-32 w-full rounded-2xl sm:rounded-3xl" />
+            <Skeleton className="h-32 w-full rounded-2xl sm:rounded-3xl" />
           </div>
           <div className="lg:col-span-5 xl:col-span-4">
-            <Skeleton className="h-96 w-full rounded-candy-card" />
+            <Skeleton className="h-96 w-full rounded-2xl sm:rounded-3xl" />
           </div>
         </div>
       </div>
@@ -115,31 +116,31 @@ function CartPageInner() {
 
   return (
     <div className="py-4 sm:py-8 max-w-6xl mx-auto space-y-6">
-      {/* 1. Header & Quick Breadcrumb */}
+      {/* 1. Header & Breadcrumb Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-candy-line/60">
         <div className="flex items-center gap-3">
           <Link
             href="/"
             aria-label="الرجوع إلى المتجر"
-            className="w-9 h-9 rounded-full bg-white border border-candy-line text-candy-muted hover:text-candy-berry hover:bg-candy-soft flex items-center justify-center transition-colors shadow-xs"
+            className="w-10 h-10 rounded-full bg-white border border-candy-line text-candy-muted hover:text-candy-berry hover:bg-candy-soft flex items-center justify-center transition-colors shadow-xs"
           >
             <ArrowRight className="w-4 h-4" />
           </Link>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shadow-xs">
-              <ShoppingBag className="w-4 h-4" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shadow-xs">
+              <ShoppingBag className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-display font-bold text-xl sm:text-2xl text-candy-berry">
                   سلة المذاق الفاخر
                 </h1>
-                <span className="font-sans font-bold text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry">
+                <span className="font-sans font-bold text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry border border-candy-line/40">
                   {formatArabicDistinctItems(summary.distinctItemsCount ?? items.length)}
                 </span>
               </div>
               <p className="font-sans text-xs text-candy-muted">
-                كاندي لوز للحلويات الفاخرة
+                كاندي لوز للحلويات الفاخرة • تجربة كرم الضيافة
               </p>
             </div>
           </div>
@@ -147,7 +148,7 @@ function CartPageInner() {
 
         {/* Action Controls & Reservation Notice */}
         <div className="flex items-center justify-between sm:justify-end gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-medium">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-semibold shadow-2xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <Clock className="w-3.5 h-3.5 text-emerald-600" />
             <span>اختياراتك محفوظة لمدة 24 ساعة</span>
@@ -156,7 +157,7 @@ function CartPageInner() {
           <button
             type="button"
             onClick={() => setIsClearDialogOpen(true)}
-            className="inline-flex items-center gap-1.5 min-h-11 text-xs font-medium text-candy-muted hover:text-rose-600 hover:bg-rose-50 px-3 rounded-candy-pill transition-colors touch-manipulation"
+            className="inline-flex items-center gap-1.5 min-h-11 text-xs font-semibold text-candy-muted hover:text-rose-600 hover:bg-rose-50 px-3 rounded-candy-pill transition-colors touch-manipulation"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>تفريغ السلة</span>
@@ -166,13 +167,13 @@ function CartPageInner() {
 
       {/* 2. Main Content Grid (Items + Summary) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-        {/* Left Column: Cart Items List + Upsell Carousel */}
+        {/* Left Column: Cart Items List + Upsell Section */}
         <div className="lg:col-span-7 xl:col-span-8 space-y-4">
           <div className="flex items-center justify-between px-1">
-            <h2 className="font-display font-semibold text-lg text-candy-ink">
+            <h2 className="font-display font-bold text-lg text-candy-ink">
               محتويات السلة
             </h2>
-            <span className="font-sans text-xs text-candy-muted">
+            <span className="font-sans text-xs text-candy-muted font-medium">
               {formatArabicDistinctItems(summary.distinctItemsCount ?? items.length)} ({formatArabicTotalUnits(summary.totalUnitsCount ?? summary.itemsCount)})
             </span>
           </div>
@@ -189,25 +190,25 @@ function CartPageInner() {
             ))}
           </div>
 
-          {/* Complementary Upsell Carousel (قطع مكملة لضيافتك) */}
+          {/* Complementary Upsell Section (قطع مكملة لضيافتك) */}
           {upsellProducts.length > 0 && (
             <div className="pt-6 mt-6 border-t border-candy-line/60 space-y-3">
               <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-candy-strawberry" />
-                  <h3 className="font-display font-semibold text-base sm:text-lg text-candy-ink">
+                  <h3 className="font-display font-bold text-base sm:text-lg text-candy-ink">
                     قطع مكملة لضيافتك الفاخرة
                   </h3>
                 </div>
                 <span className="font-sans text-xs text-candy-berry font-bold">
-                  إضافة سريعة
+                  إضافة سريعة بنقرة واحدة
                 </span>
               </div>
               <p className="font-sans text-xs text-candy-muted px-1">
-                مختارة بعناية لتكتمل بها تجربة كرم الضيافة وأحلى اللحظات
+                مختارة بعناية لتكتمل بها تجربة كرم الضيافة وأحلى لحظات المشاركة
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
                 {upsellProducts.map((product) => {
                   const isAdded = addedUpsellIds[product.id];
                   const defaultWeight = getDefaultWeightOption(product);
@@ -221,7 +222,7 @@ function CartPageInner() {
                   return (
                     <div
                       key={product.id}
-                      className="rounded-2xl bg-white p-3 border border-candy-line/70 shadow-candy-1 flex flex-col justify-between hover:border-candy-line-dark transition-all"
+                      className="rounded-2xl bg-white p-3.5 border border-candy-line/70 shadow-candy-1 flex flex-col justify-between hover:border-candy-strawberry/40 hover:shadow-candy-2 transition-all group"
                     >
                       <div>
                         <div className="relative w-full h-24 rounded-xl overflow-hidden bg-candy-soft mb-2.5">
@@ -230,28 +231,28 @@ function CartPageInner() {
                             alt={product.name}
                             fill
                             sizes="(max-width: 640px) 100vw, 30vw"
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
-                        <h4 className="font-sans font-bold text-xs sm:text-sm text-candy-ink line-clamp-1 leading-snug">
+                        <h4 className="font-display font-bold text-xs sm:text-sm text-candy-ink line-clamp-1 leading-snug">
                           {product.name}
                         </h4>
                         <p className="font-sans text-[11px] text-candy-muted line-clamp-1 mt-0.5">
                           {product.description}
                         </p>
-                        <div className="flex items-center gap-1.5 mt-1.5">
-                          <span className="text-[10px] font-medium text-candy-berry bg-candy-soft px-2 py-0.5 rounded-candy-pill border border-candy-line/40">
+                        <div className="flex items-center gap-1.5 mt-2">
+                          <span className="text-[10px] font-semibold text-candy-berry bg-candy-soft px-2 py-0.5 rounded-candy-pill border border-candy-line/50">
                             {defaultWeight?.label || (product.unit === "kg" ? "1 كغم" : "قطعة")}
                           </span>
-                          <span className="text-[10px] font-medium text-candy-muted bg-candy-soft/60 px-1.5 py-0.5 rounded-candy-pill border border-candy-line/30">
+                          <span className="text-[10px] font-medium text-candy-muted bg-candy-soft/60 px-1.5 py-0.5 rounded-candy-pill border border-candy-line/40">
                             تغليف عادي
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between mt-3 pt-2 border-t border-candy-line/40">
+                      <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-candy-line/40">
                         <div className="flex items-baseline gap-1">
-                          <span className="font-sans font-extrabold text-sm text-candy-berry">
+                          <span className="font-sans font-extrabold text-sm sm:text-base text-candy-berry">
                             {itemPricing.unitPrice.toFixed(2)}
                           </span>
                           <span className="font-sans text-[10px] text-candy-muted">
@@ -263,11 +264,13 @@ function CartPageInner() {
                             </span>
                           )}
                         </div>
+
                         <button
                           type="button"
                           onClick={() => handleAddUpsell(product)}
                           disabled={isAdded}
-                          className={`min-h-11 px-3 rounded-candy-pill text-xs font-bold shadow-xs transition-all flex items-center gap-1 touch-manipulation ${
+                          aria-label={`إضافة ${product.name} إلى السلة`}
+                          className={`min-h-10 px-3.5 rounded-candy-pill text-xs font-bold shadow-xs transition-all flex items-center gap-1 touch-manipulation ${
                             isAdded
                               ? "bg-emerald-600 text-white"
                               : "bg-candy-strawberry text-white hover:bg-candy-berry-dark active:scale-95"
@@ -275,12 +278,12 @@ function CartPageInner() {
                         >
                           {isAdded ? (
                             <>
-                              <Check className="w-3 h-3" />
+                              <Check className="w-3.5 h-3.5" />
                               <span>تمت</span>
                             </>
                           ) : (
                             <>
-                              <Plus className="w-3 h-3" />
+                              <Plus className="w-3.5 h-3.5" />
                               <span>إضافة</span>
                             </>
                           )}
@@ -307,11 +310,11 @@ function CartPageInner() {
             <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-2">
               <AlertTriangle className="w-6 h-6" />
             </div>
-            <DialogTitle className="text-center">
+            <DialogTitle className="text-center font-display text-lg sm:text-xl">
               تفريغ سلة المشتريات؟
             </DialogTitle>
-            <DialogDescription className="text-center text-candy-muted">
-              هل أنت متأكد من رغبتك في تفريغ سلة المشتريات بالكامل؟ سيتم حذف جميع الأصناف والخيارات المحددة.
+            <DialogDescription className="text-center text-candy-muted text-sm">
+              هل أنت متأكد من رغبتك في تفريغ سلة المشتريات بالكامل؟ سيتم إزالة جميع الأصناف وخيارات الأوزان والتغليف المحددة.
             </DialogDescription>
           </DialogHeader>
 
@@ -322,15 +325,16 @@ function CartPageInner() {
               onClick={() => setIsClearDialogOpen(false)}
               className="flex-1"
             >
-              تراجع
+              تراجع والاحتفاظ بالسلة
             </Button>
             <Button
               type="button"
               variant="danger"
               onClick={handleConfirmClear}
-              className="flex-1"
+              className="flex-1 gap-1.5"
             >
-              تأكيد تفريغ السلة
+              <Trash2 className="w-4 h-4" />
+              <span>تأكيد تفريغ السلة</span>
             </Button>
           </DialogFooter>
         </DialogContent>

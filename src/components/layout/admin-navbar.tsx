@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -10,10 +10,13 @@ import {
   ArrowLeftRight,
   ShieldCheck,
   User,
+  Store,
+  Check,
+  X,
+  Sparkles,
 } from 'lucide-react';
 import { useAdminAuth } from '@/context/admin-auth-context';
 import { toast } from '@/components/ui/toast';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export interface AdminNavbarProps {
@@ -55,6 +58,9 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
   const router = useRouter();
   const { user, role, switchRole, logout } = useAdminAuth();
 
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const confirmRef = useRef<HTMLDivElement>(null);
+
   const currentTitle = title || resolvePageTitle(pathname);
 
   const handleRoleToggle = () => {
@@ -67,70 +73,138 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
   };
 
   const handleLogout = () => {
+    setShowLogoutConfirm(false);
     logout();
     toast.info('تم تسجيل الخروج بنجاح');
     router.push('/admin/login');
   };
+
+  // Close logout confirmation popover on click outside or escape key
+  useEffect(() => {
+    if (!showLogoutConfirm) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowLogoutConfirm(false);
+    };
+    const handleClickOutside = (e: MouseEvent) => {
+      if (confirmRef.current && !confirmRef.current.contains(e.target as Node)) {
+        setShowLogoutConfirm(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showLogoutConfirm]);
 
   const isPasswordPage = pathname === '/admin/account/password';
 
   return (
     <header
       className={cn(
-        'h-16 border-b border-candy-line/70 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-4 sm:px-6 flex items-center justify-between shadow-xs',
+        'h-16 border-b border-candy-line/80 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-3 sm:px-6 flex items-center justify-between shadow-xs transition-colors',
         className
       )}
     >
       {/* Right side: Mobile Menu Button & Current Page Title */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
         {onMenuToggle && (
           <button
             type="button"
             onClick={onMenuToggle}
             aria-label="فتح القائمة الجانبية"
-            className="lg:hidden p-2 rounded-xl text-candy-ink hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+            className="lg:hidden p-2 rounded-xl text-candy-ink hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 shrink-0"
           >
             <Menu className="w-5 h-5" aria-hidden="true" />
           </button>
         )}
 
-        <div className="flex flex-col text-right">
-          <h1 className="font-display font-bold text-lg sm:text-xl text-candy-ink leading-tight">
-            {currentTitle}
-          </h1>
-          <span className="font-sans text-[11px] text-candy-muted hidden sm:inline">
+        <div className="flex flex-col text-right min-w-0">
+          <div className="flex items-center gap-2">
+            <h1 className="font-display font-bold text-base sm:text-xl text-candy-ink leading-tight truncate">
+              {currentTitle}
+            </h1>
+            <span
+              className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-candy-soft text-candy-berry border border-candy-blush/60"
+              aria-hidden="true"
+            >
+              <Sparkles className="w-2.5 h-2.5 text-candy-strawberry" />
+              <span>لوحة الإدارة</span>
+            </span>
+          </div>
+          <span className="font-sans text-[11px] text-candy-muted hidden sm:inline truncate">
             متجر حلويات كاندي لوز
           </span>
         </div>
       </div>
 
-      {/* Left side: Role Switcher, Password Link, Logout */}
+      {/* Center/Left: Branch Indicator & Role Pill & Controls */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Quick Role Switcher Toggle ("تبديل موظف/مدير" for testing) */}
+        {/* Clear Branch Indicator */}
+        <div
+          className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-candy-pill bg-candy-soft/60 border border-candy-line/80 text-xs font-sans text-candy-ink shadow-xs"
+          title="الفرع الإداري النشط: خان يونس - المتجر الرئيسي"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <Store className="w-3.5 h-3.5 text-candy-berry shrink-0" aria-hidden="true" />
+          <span className="text-candy-muted font-normal">الفرع:</span>
+          <span className="font-bold text-candy-ink">خان يونس (الرئيسي)</span>
+        </div>
+
+        <div
+          className="hidden md:flex xl:hidden items-center gap-1.5 px-2.5 py-1 rounded-candy-pill bg-candy-soft/60 border border-candy-line/70 text-xs font-sans text-candy-ink"
+          title="فرع خان يونس الرئيسي"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <Store className="w-3 h-3 text-candy-berry shrink-0" aria-hidden="true" />
+          <span className="font-semibold text-candy-ink text-[11px]">خان يونس</span>
+        </div>
+
+        {/* Refined Quick Role Switcher Toggle (Manager vs Staff) */}
         <button
           type="button"
           onClick={handleRoleToggle}
           title="تبديل موظف/مدير للاختبار السريع"
           aria-label="تبديل الدور بين موظف ومدير"
           className={cn(
-            'inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-bold font-sans transition-all duration-200 border shadow-xs active:scale-95',
+            'group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-bold font-sans transition-all duration-200 border shadow-xs active:scale-95',
             role === 'manager'
-              ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100'
-              : 'bg-teal-50 text-teal-900 border-teal-300 hover:bg-teal-100'
+              ? 'bg-gradient-to-r from-amber-50 to-orange-50/80 text-amber-950 border-amber-300 hover:border-amber-400 hover:shadow-sm'
+              : 'bg-gradient-to-r from-teal-50 to-emerald-50/80 text-teal-950 border-teal-300 hover:border-teal-400 hover:shadow-sm'
           )}
         >
-          <ArrowLeftRight className="w-3.5 h-3.5 shrink-0 text-current" aria-hidden="true" />
-          <span className="hidden sm:inline">الدور:</span>
-          <span className="inline-flex items-center gap-1">
+          <ArrowLeftRight
+            className="w-3.5 h-3.5 shrink-0 text-candy-muted group-hover:text-candy-berry transition-transform duration-200 group-hover:rotate-180"
+            aria-hidden="true"
+          />
+          <span className="hidden sm:inline text-candy-muted font-normal">الدور:</span>
+          <span className="inline-flex items-center gap-1.5">
             {role === 'manager' ? (
               <>
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+                </span>
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
-                <span>مدير</span>
+                <span className="font-extrabold text-amber-950">مدير</span>
+                <span className="hidden lg:inline text-[10px] px-1.5 py-0.2 rounded-md bg-amber-200/60 text-amber-900 font-semibold">
+                  كامل الصلاحيات
+                </span>
               </>
             ) : (
               <>
+                <span className="relative flex h-2 w-2" aria-hidden="true">
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500" />
+                </span>
                 <User className="w-3.5 h-3.5 text-teal-600" aria-hidden="true" />
-                <span>موظف</span>
+                <span className="font-extrabold text-teal-950">موظف</span>
+                <span className="hidden lg:inline text-[10px] px-1.5 py-0.2 rounded-md bg-teal-200/60 text-teal-900 font-semibold">
+                  تشغيلي
+                </span>
               </>
             )}
           </span>
@@ -141,26 +215,59 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
           href="/admin/account/password"
           title="تغيير كلمة المرور"
           className={cn(
-            'inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-semibold font-sans transition-colors border',
+            'inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-semibold font-sans transition-all duration-200 border',
             isPasswordPage
               ? 'bg-candy-berry text-white border-candy-berry shadow-candy-1 font-bold'
-              : 'bg-candy-soft text-candy-ink border-candy-line hover:text-candy-berry hover:border-candy-blush'
+              : 'bg-candy-soft text-candy-ink border-candy-line hover:text-candy-berry hover:border-candy-blush hover:shadow-xs'
           )}
         >
           <KeyRound className="w-3.5 h-3.5" aria-hidden="true" />
           <span className="hidden md:inline">تغيير كلمة المرور</span>
         </Link>
 
-        {/* Logout Button */}
-        <button
-          type="button"
-          onClick={handleLogout}
-          title="تسجيل الخروج من النظام"
-          className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-semibold font-sans text-rose-600 bg-rose-50 border border-rose-200/80 hover:bg-rose-100/80 hover:text-rose-700 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500/30"
-        >
-          <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
-          <span className="hidden sm:inline">خروج</span>
-        </button>
+        {/* Logout Trigger with Confirmation Style */}
+        <div className="relative" ref={confirmRef}>
+          {!showLogoutConfirm ? (
+            <button
+              type="button"
+              onClick={() => setShowLogoutConfirm(true)}
+              title="تسجيل الخروج من النظام"
+              aria-label="تسجيل الخروج من النظام"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-semibold font-sans text-rose-600 bg-rose-50 border border-rose-200/80 hover:bg-rose-100 hover:text-rose-700 hover:border-rose-300 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-500/30 shadow-xs"
+            >
+              <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
+              <span className="hidden sm:inline">خروج</span>
+            </button>
+          ) : (
+            <div
+              role="alertdialog"
+              aria-label="تأكيد تسجيل الخروج"
+              className="flex items-center gap-1 bg-white border border-rose-300 rounded-candy-pill p-1 shadow-candy-2 animate-in fade-in zoom-in-95 duration-150"
+            >
+              <span className="text-[11px] font-sans font-bold text-rose-700 px-2 hidden sm:inline">
+                تأكيد الخروج؟
+              </span>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold font-sans bg-rose-600 text-white hover:bg-rose-700 active:scale-95 transition-all shadow-xs"
+                aria-label="تأكيد تسجيل الخروج"
+              >
+                <Check className="w-3 h-3" aria-hidden="true" />
+                <span>تأكيد الخروج</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowLogoutConfirm(false)}
+                className="p-1 rounded-full text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors"
+                aria-label="إلغاء الخروج"
+                title="إلغاء"
+              >
+                <X className="w-3.5 h-3.5" aria-hidden="true" />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

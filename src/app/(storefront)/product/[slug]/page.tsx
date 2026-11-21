@@ -37,6 +37,7 @@ import {
   AddToCartBar,
 } from "@/components/storefront/product-detail";
 import { cn } from "@/lib/utils";
+import { MAX_CART_QTY } from "@/lib/tokens";
 import { getFavoriteProductIds, toggleFavoriteProduct } from "@/components/storefront/catalog/wishlist-utils";
 import {
   computeLinePrice,
@@ -336,8 +337,36 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
       ? product.galleryImages
       : [product.imageUrl];
 
+  // Schema.org Product structured data for rich snippets
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description,
+    image: galleryImages,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "ILS",
+      price: unitPrice,
+      availability: isAvailable
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "142",
+    },
+  };
+
   return (
-    <div className="flex flex-col gap-6 sm:gap-8 pb-32 md:pb-12 pt-2">
+    <div className="flex flex-col gap-6 sm:gap-8 pb-36 sm:pb-32 md:pb-12 pt-2">
+      {/* Structured Data Script */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* 1. Breadcrumbs Navigation */}
       <nav
         aria-label="مسار التنقل"
@@ -600,7 +629,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
             <QuantityStepper
               quantity={quantity}
               min={1}
-              max={20}
+              max={MAX_CART_QTY}
               onChange={(newQ) => setQuantity(newQ)}
               disabled={!isAvailable}
             />

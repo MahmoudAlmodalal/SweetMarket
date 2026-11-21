@@ -11,7 +11,6 @@ import {
   History,
   Printer,
   ChevronLeft,
-  Package,
   Calendar,
   UserCheck,
 } from 'lucide-react';
@@ -133,8 +132,8 @@ export default function OrderDetailPage() {
     try {
       setIsMutating(true);
       const performedBy = user
-        ? { name: user.fullName, role: user.role }
-        : { name: 'مسؤول المتجر', role: userRole };
+        ? { id: user.id, name: user.fullName, role: user.role }
+        : { id: 'staff-fallback', name: 'مسؤول المتجر', role: userRole };
 
       const updatedOrder = await updateOrderStatus(
         order.id,
@@ -170,8 +169,8 @@ export default function OrderDetailPage() {
     try {
       setIsMutating(true);
       const performedBy = user
-        ? { name: user.fullName, role: user.role }
-        : { name: 'مدير المتجر', role: 'manager' as AdminRole };
+        ? { id: user.id, name: user.fullName, role: user.role }
+        : { id: 'manager-fallback', name: 'مدير المتجر', role: 'manager' as AdminRole };
 
       const updatedOrder = await cancelOrder(
         order.id,
@@ -199,8 +198,6 @@ export default function OrderDetailPage() {
       setIsMutating(false);
     }
   };
-
-  const handleConfirmCancel = handleCancelOrder;
 
   // اسم منطقة التوصيل
   const zoneName = React.useMemo(() => {
@@ -337,7 +334,7 @@ export default function OrderDetailPage() {
         </div>
       </div>
 
-      {/* 2. شريط متابعة وترقية الحالة (Status Stepper & Actions) */}
+      {/* 2. شريط متابعة وترقية الحالة بنقرة واحدة (Status Stepper & Actions) */}
       <section aria-label="إجراءات ترقية حالة الطلب">
         <OrderStatusStepper
           currentStatus={order.status}

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ShoppingBag, Check, Loader2, Sparkles, ShieldCheck, Snowflake, Lock } from "lucide-react";
+import { ShoppingBag, Check, Loader2, ShieldCheck, Snowflake, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface AddToCartBarProps {
@@ -60,13 +60,16 @@ export function AddToCartBar({
 
   const isButtonDisabled = !isAvailable || isAdding;
 
+  // Breakdown for instant price calculation
+  const calculatedUnitPrice = unitPrice ?? (quantity > 0 ? Math.round(totalPrice / quantity) : totalPrice);
+
   return (
     <>
       {/* 1. Desktop / Inline Purchasing Section (Shown when layout is "inline" or "both") */}
       {(layout === "inline" || layout === "both") && (
         <div
           className={cn(
-            "hidden md:flex flex-col gap-3 rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-candy-2",
+            "hidden md:flex flex-col gap-3 rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-candy-2 transition-shadow duration-300 hover:shadow-candy-3",
             className
           )}
         >
@@ -95,7 +98,7 @@ export function AddToCartBar({
             )}
           </button>
 
-          {/* Direct Express Apple Pay Option (Mock representation from Stitch Screen) */}
+          {/* Direct Express Apple Pay Option */}
           {isAvailable && (
             <button
               type="button"
@@ -108,7 +111,7 @@ export function AddToCartBar({
           )}
 
           {/* Mini Trust Badges Grid */}
-          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-candy-line/40 text-center">
+          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-candy-line/50 text-center">
             <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
               <Snowflake className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans text-[11px] font-bold text-candy-ink">توصيل مبرد</span>
@@ -128,21 +131,21 @@ export function AddToCartBar({
         </div>
       )}
 
-      {/* 2. Floating Bottom Bar on Mobile (Shown when layout is "floating" or "both") */}
+      {/* 2. Floating Sticky Mobile Bottom Dock (z-50) (Shown when layout is "floating" or "both") */}
       {(layout === "floating" || layout === "both") && (
         <div
           role="region"
           aria-label="الشريط السريع للإضافة إلى السلة"
-          className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] inset-x-3 sm:inset-x-6 z-40 md:hidden"
+          className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] inset-x-3 sm:inset-x-6 z-50 md:hidden animate-in slide-in-from-bottom-4 duration-300"
         >
-          <div className="mx-auto max-w-md p-2.5 sm:p-3 bg-white/95 backdrop-blur-xl rounded-candy-card border border-candy-line/90 shadow-candy-3 flex items-center gap-3">
-            {/* Price Preview Column */}
-            <div className="flex flex-col shrink-0 px-2 min-w-[80px]">
-              <span className="font-sans text-[11px] text-candy-muted font-bold">
-                الإجمالي
+          <div className="mx-auto max-w-md p-2.5 sm:p-3 bg-white/95 backdrop-blur-xl rounded-candy-card border border-candy-line/90 shadow-candy-dock flex items-center justify-between gap-3">
+            {/* Instant Price Calculation Column */}
+            <div className="flex flex-col shrink-0 px-2 min-w-[85px]">
+              <span className="font-sans text-[10px] text-candy-muted font-bold">
+                {quantity > 1 ? `${quantity} × ${calculatedUnitPrice} ₪` : "السعر الإجمالي"}
               </span>
               <div className="flex items-baseline gap-1">
-                <span className="font-sans font-extrabold text-lg text-candy-berry leading-tight">
+                <span className="font-sans font-black text-xl text-candy-berry leading-tight tracking-tight">
                   {totalPrice}
                 </span>
                 <span className="font-sans text-xs text-candy-strawberry font-bold">
@@ -151,7 +154,7 @@ export function AddToCartBar({
               </div>
             </div>
 
-            {/* Floating Action Button */}
+            {/* Direct Add CTA Button */}
             <button
               type="button"
               onClick={onAddToCart}
@@ -161,7 +164,7 @@ export function AddToCartBar({
                 "flex-1 min-h-[48px] px-4 rounded-candy-pill font-sans text-sm font-bold flex items-center justify-center transition-all duration-200 select-none shadow-candy-cta active:scale-95",
                 isAvailable
                   ? isSuccess
-                    ? "bg-candy-berry text-white"
+                    ? "bg-candy-berry text-white shadow-candy-1"
                     : "bg-candy-strawberry text-white hover:bg-candy-berry-dark"
                   : "bg-stone-200 text-stone-500 cursor-not-allowed shadow-none"
               )}
@@ -174,11 +177,11 @@ export function AddToCartBar({
                   </span>
                 ) : isSuccess ? (
                   <span className="flex items-center gap-1.5">
-                    <Check className="w-4 h-4" />
+                    <Check className="w-4 h-4 text-white" />
                     <span>تمت الإضافة ✨</span>
                   </span>
                 ) : (
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center justify-center gap-2 w-full">
                     <ShoppingBag className="w-4 h-4" />
                     <span>أضف للسلة</span>
                   </span>

@@ -10,6 +10,7 @@ import {
   Clock,
   Banknote,
   ArrowLeft,
+  Check,
 } from "lucide-react";
 import { HeroBanner } from "@/components/storefront/home/hero-banner";
 import { CategoryStrip } from "@/components/storefront/home/category-strip";
@@ -29,32 +30,32 @@ export default function StorefrontHomePage() {
       {/* 1. Value Props Strip (Mini Confectionery Badges) */}
       <section
         aria-label="مميزات متجر كاندي لوز"
-        className="w-full overflow-x-auto no-scrollbar py-1"
+        className="w-full overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-1"
       >
         <div className="flex items-center justify-start sm:justify-center gap-2.5 sm:gap-4 min-w-max px-1">
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
-            <Sparkles className="w-4 h-4 text-candy-strawberry" />
+          <div className="flex items-center gap-2 px-4 py-2 rounded-candy-pill bg-white/90 backdrop-blur-sm border border-candy-blush shadow-xs hover:border-primary/40 transition-all">
+            <Sparkles className="w-4 h-4 text-accent fill-accent/20 shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
               صنع يدوي طازج يومياً
             </span>
           </div>
 
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
-            <Gift className="w-4 h-4 text-candy-strawberry" />
+          <div className="flex items-center gap-2 px-4 py-2 rounded-candy-pill bg-white/90 backdrop-blur-sm border border-candy-blush shadow-xs hover:border-primary/40 transition-all">
+            <Gift className="w-4 h-4 text-primary shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
               تغليف هدايا ملكي مجاناً
             </span>
           </div>
 
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
-            <Truck className="w-4 h-4 text-candy-strawberry" />
+          <div className="flex items-center gap-2 px-4 py-2 rounded-candy-pill bg-white/90 backdrop-blur-sm border border-candy-blush shadow-xs hover:border-primary/40 transition-all">
+            <Truck className="w-4 h-4 text-candy-mint-text shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
               شحن مبرد يحافظ على الطراوة
             </span>
           </div>
 
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-candy-soft border border-candy-line shadow-candy-1">
-            <Banknote className="w-4 h-4 text-candy-strawberry" />
+          <div className="flex items-center gap-2 px-4 py-2 rounded-candy-pill bg-white/90 backdrop-blur-sm border border-candy-blush shadow-xs hover:border-primary/40 transition-all">
+            <Banknote className="w-4 h-4 text-accent shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
               دفع نقداً عند الاستلام
             </span>
@@ -77,23 +78,23 @@ export default function StorefrontHomePage() {
       {/* 5. Gifting & Custom Orders Spotlight */}
       <section
         aria-label="خدمة الإهداء والبوكسات الخاصة"
-        className="w-full rounded-candy-section bg-gradient-to-r from-candy-soft via-candy-blush/30 to-candy-pastel-1/40 border border-candy-blush p-6 sm:p-8 lg:p-10 shadow-candy-1 flex flex-col md:flex-row items-center justify-between gap-6"
+        className="w-full rounded-candy-section bg-gradient-to-r from-candy-soft via-candy-blush/25 to-background border border-candy-blush/90 p-6 sm:p-8 lg:p-12 shadow-card flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8"
       >
-        <div className="flex flex-col gap-2.5 text-right max-w-xl">
-          <div className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-candy-pill bg-white text-candy-berry font-sans font-bold text-xs border border-candy-line shadow-sm">
-            <Gift className="w-3.5 h-3.5 text-candy-strawberry" />
+        <div className="flex flex-col gap-3 text-right max-w-xl">
+          <div className="inline-flex items-center gap-1.5 self-start px-3.5 py-1.5 rounded-candy-pill bg-white/95 text-primary font-sans font-extrabold text-xs border border-candy-blush shadow-xs">
+            <Gift className="w-3.5 h-3.5 text-primary" />
             <span>خدمة الإهداء المخصص 🎀</span>
           </div>
-          <h3 className="font-display font-bold text-2xl sm:text-3xl text-candy-ink">
+          <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-candy-ink tracking-tight">
             صمم بوكس حلاك الخاص لمناسبتك المميزة
           </h3>
-          <p className="font-sans text-sm sm:text-base text-candy-muted leading-relaxed">
+          <p className="font-sans text-sm sm:text-base text-candy-ink font-medium leading-relaxed">
             اختر تشكيلتك المفضلة من قطع البقلاوة والماكرون والترافل البلجيكي، مع إضافة كرت إهداء شخصي باسم من تحب وتغليف فاخر يليق بذوقكم.
           </p>
           <div className="pt-2">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-candy-pill bg-candy-berry text-white font-sans font-bold text-sm shadow-sm hover:bg-candy-berry-dark hover:shadow-candy-cta transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-button bg-primary text-white font-sans font-bold text-sm shadow-candy-cta hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <span>طلب بوكس مخصص</span>
               <ArrowLeft className="w-4 h-4" />
@@ -101,10 +102,10 @@ export default function StorefrontHomePage() {
           </div>
         </div>
 
-        <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-white flex items-center justify-center text-candy-strawberry shadow-candy-2 border-4 border-candy-blush shrink-0">
-          <Gift className="w-16 h-16 sm:w-20 sm:h-20 stroke-1" />
-          <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-candy-strawberry text-white flex items-center justify-center font-bold text-xs shadow-sm">
-            ✓
+        <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-white flex items-center justify-center text-primary shadow-candy-2 border-4 border-candy-blush shrink-0 group">
+          <Gift className="w-16 h-16 sm:w-20 sm:h-20 stroke-1 text-primary group-hover:scale-110 transition-transform duration-300" />
+          <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            <Check className="w-4 h-4 stroke-[3]" />
           </div>
         </div>
       </section>
@@ -112,60 +113,60 @@ export default function StorefrontHomePage() {
       {/* 6. Delivery Perks Info Banner */}
       <section
         aria-label="معلومات التوصيل والضمان"
-        className="w-full rounded-candy-card bg-white border border-candy-line p-6 sm:p-8 shadow-candy-1"
+        className="w-full rounded-candy-card bg-white border border-candy-line/80 p-6 sm:p-8 shadow-card"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-right">
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-line flex items-center justify-center text-candy-strawberry shrink-0">
+            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-blush/60 flex items-center justify-center text-primary shrink-0 shadow-xs">
               <Truck className="w-6 h-6" />
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-candy-ink">
                 توصيل طازج وسريع
               </h4>
-              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
+              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed font-medium">
                 سيارات مجهزة لنقل وتوصيل الحلويات مبردة وبحالتها الأصلية.
               </p>
             </div>
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-line flex items-center justify-center text-candy-strawberry shrink-0">
+            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-blush/60 flex items-center justify-center text-primary shrink-0 shadow-xs">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-candy-ink">
                 ضمان الجودة والطراوة
               </h4>
-              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
+              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed font-medium">
                 مكونات طبيعية فاخرة 100% وزبدة وسمن بلدي عالي الجودة.
               </p>
             </div>
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-line flex items-center justify-center text-candy-strawberry shrink-0">
+            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-blush/60 flex items-center justify-center text-primary shrink-0 shadow-xs">
               <Banknote className="w-6 h-6" />
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-candy-ink">
                 الدفع عند الاستلام
               </h4>
-              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
+              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed font-medium">
                 ادفع نقداً (COD) بأمان وراحة تامة بعد معاينة واستلام طلبك.
               </p>
             </div>
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-line flex items-center justify-center text-candy-strawberry shrink-0">
+            <div className="w-12 h-12 rounded-full bg-candy-soft border border-candy-blush/60 flex items-center justify-center text-primary shrink-0 shadow-xs">
               <Clock className="w-6 h-6" />
             </div>
             <div>
               <h4 className="font-display font-bold text-base text-candy-ink">
                 خدمة الزبائن يومياً
               </h4>
-              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed">
+              <p className="text-xs text-candy-muted font-sans mt-0.5 leading-relaxed font-medium">
                 فريقنا جاهز لمساعدتكم وتلبية طلباتكم من 9 صباحاً حتى 11 مساءً.
               </p>
             </div>
@@ -174,13 +175,13 @@ export default function StorefrontHomePage() {
       </section>
 
       {/* 7. Sweet Confectionery Flourish Divider */}
-      <div className="flex items-center justify-center gap-3 py-2 opacity-75">
+      <div className="flex items-center justify-center gap-3 py-2 opacity-80">
         <div className="w-16 sm:w-24 h-[1px] bg-candy-line-dark" />
-        <Heart className="w-4 h-4 text-candy-strawberry fill-candy-strawberry" />
+        <Heart className="w-4 h-4 text-primary fill-primary" />
         <span className="font-sans font-bold text-xs text-candy-muted">
           كاندي لوز • صُنع بحب لأجمل اللحظات
         </span>
-        <Heart className="w-4 h-4 text-candy-strawberry fill-candy-strawberry" />
+        <Heart className="w-4 h-4 text-primary fill-primary" />
         <div className="w-16 sm:w-24 h-[1px] bg-candy-line-dark" />
       </div>
     </div>

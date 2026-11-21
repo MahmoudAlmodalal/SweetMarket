@@ -113,7 +113,13 @@ export function WorkingHoursTable({
             role="status"
             aria-live="polite"
           >
-            {openNow ? "مفتوح الآن 🟢" : "مغلق حالياً 🔴"}
+            <span
+              className={cn(
+                "w-2.5 h-2.5 rounded-full shrink-0",
+                openNow ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
+              )}
+            />
+            <span>{openNow ? "مفتوح الآن 🟢" : "مغلق حالياً 🔴"}</span>
           </span>
         </div>
       </div>

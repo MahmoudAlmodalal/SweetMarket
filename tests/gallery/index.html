@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Candy Loz — Mobile & Desktop Visual Media Gallery</title>
+  <style>
+    :root {
+      --bg: #fdfaf7;
+      --card: #ffffff;
+      --ink: #2b1d14;
+      --muted: #6e5a4f;
+      --accent: #b85d3b;
+      --accent-soft: #f9ebe4;
+      --line: #e7ddd4;
+      --error: #c62828;
+      --ok: #2e7d32;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 24px;
+    }
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stats {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    select, input[type="search"] {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+    input[type="search"] { min-width: 240px; flex: 1; max-width: 360px; }
+    main {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(43, 29, 20, 0.04);
+    }
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+    .badge {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 600;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .badge.route {
+      background: #f2f4f7;
+      color: #344054;
+      direction: ltr;
+      font-family: ui-monospace, monospace;
+    }
+    .badge.role {
+      background: #eef4ff;
+      color: #1d4ed8;
+    }
+    .badge.err {
+      background: #fee2e2;
+      color: var(--error);
+    }
+    .pair-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .pair-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .vp-box {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #faf8f6;
+    }
+    .vp-label {
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: #f3ece6;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      direction: ltr;
+    }
+    .vp-img-wrap {
+      max-height: 540px;
+      overflow-y: auto;
+      cursor: zoom-in;
+      background: #fff;
+    }
+    .vp-img-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .empty-msg {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(15, 10, 7, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      max-width: 95vw;
+      max-height: 92vh;
+      overflow: auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      position: relative;
+    }
+    .lightbox-inner img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 999px;
+      width: 38px;
+      height: 38px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <h1>🍬 معرض شاشات متجر حلويات كاندي لوز (Mobile 390px & Desktop 1440px)</h1>
+      <div class="stats" id="stats">Loading manifest...</div>
+    </div>
+    <div class="controls">
+      <input type="search" id="searchInput" placeholder="ابحث باسم الشاشة أو المسار أو الحالة..." />
+      <select id="sectionFilter">
+        <option value="all">كل الأقسام (All Sections)</option>
+        <option value="storefront">واجهة المتجر (Storefront)</option>
+        <option value="admin">لوحة الإدارة (Admin)</option>
+        <option value="system">النظام والصلاحيات (System & RBAC)</option>
+      </select>
+      <select id="categoryFilter">
+        <option value="all">كل الحالات (All States)</option>
+        <option value="Default">الحالة الافتراضية (Default)</option>
+        <option value="Button Interaction">تفاعل الأزرار (Button Interaction)</option>
+        <option value="Form / Filter">النماذج والفلاتر (Form / Filter)</option>
+        <option value="Validation Error">أخطاء التحقق (Validation Error)</option>
+        <option value="Empty State">حالات الفراغ (Empty State)</option>
+        <option value="Dialog / Drawer">النوافذ والقوائم (Dialog / Drawer)</option>
+        <option value="RBAC">الصلاحيات (RBAC)</option>
+      </select>
+    </div>
+  </header>
+
+  <main id="gallery"></main>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+    <div class="lightbox-inner">
+      <img id="lightboxImg" src="" alt="Preview" />
+    </div>
+  </div>
+
+  <script>
+    let allItems = [];
+
+    const galleryEl = document.getElementById('gallery');
+    const statsEl = document.getElementById('stats');
+    const searchInput = document.getElementById('searchInput');
+    const sectionFilter = document.getElementById('sectionFilter');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('open');
+    }
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.classList.remove('open');
+    });
+
+    function render() {
+      const q = searchInput.value.trim().toLowerCase();
+      const sec = sectionFilter.value;
+      const cat = categoryFilter.value;
+
+      const filtered = allItems.filter((item) => {
+        if (sec !== 'all' && item.section !== sec) return false;
+        if (cat !== 'all' && item.category !== cat) return false;
+        if (q) {
+          const hay = `${item.id} ${item.title} ${item.stateLabel} ${item.route} ${item.category}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      statsEl.textContent = `عرض ${filtered.length} من أصل ${allItems.length} حالة (${filtered.length * 2} لقطة شاشة Mobile + Desktop)`;
+
+      if (filtered.length === 0) {
+        galleryEl.innerHTML = '<div class="empty-msg">لا توجد لقطات مطابقة للبحث أو الفلتر المحدد.</div>';
+        return;
+      }
+
+      galleryEl.innerHTML = filtered.map((item) => `
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">${item.title} — <span style="color:var(--accent)">${item.stateLabel}</span></div>
+            </div>
+            <div class="card-meta">
+              <span class="badge">${item.category}</span>
+              <span class="badge role">${item.role}</span>
+              <span class="badge route">${item.route}</span>
+              ${item.errors && item.errors.length ? `<span class="badge err">Errors: ${item.errors.length}</span>` : ''}
+            </div>
+          </div>
+          <div class="pair-grid">
+            <div class="vp-box">
+              <div class="vp-label"><span>📱 Mobile</span><span>390 × 844</span></div>
+              <div class="vp-img-wrap" onclick="openLightbox('${item.images.mobile || ''}')">
+                ${item.images.mobile ? `<img loading="lazy" src="${item.images.mobile}" alt="${item.id} mobile" />` : '<div class="empty-msg">Missing</div>'}
+              </div>
+            </div>
+            <div class="vp-box">
+              <div class="vp-label"><span>🖥️ Desktop</span><span>1440 × 900</span></div>
+              <div class="vp-img-wrap" onclick="openLightbox('${item.images.desktop || ''}')">
+                ${item.images.desktop ? `<img loading="lazy" src="${item.images.desktop}" alt="${item.id} desktop" />` : '<div class="empty-msg">Missing</div>'}
+              </div>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    searchInput.addEventListener('input', render);
+    sectionFilter.addEventListener('change', render);
+    categoryFilter.addEventListener('change', render);
+
+    fetch('../screenshots/manifest.json')
+      .then((r) => r.json())
+      .then((data) => {
+        allItems = data.items || [];
+        render();
+      })
+      .catch((err) => {
+        statsEl.textContent = 'تعذر تحميل manifest.json';
+        galleryEl.innerHTML = `<div class="empty-msg">Error loading ../screenshots/manifest.json: ${err.message}.<br/>شغّل خادم ملفات محلي (مثل <code>npx serve tests</code>) لعرض المعرض.</div>`;
+      });
+  </script>
+</body>
+</html>

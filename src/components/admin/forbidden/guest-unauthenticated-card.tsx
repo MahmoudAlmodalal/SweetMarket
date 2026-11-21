@@ -25,19 +25,22 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto">
+    <div className="w-full max-w-lg mx-auto" dir="rtl">
       <Card
         elevation="md"
-        className="border-candy-line shadow-candy-2 bg-white overflow-hidden text-center"
+        className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-3xl"
       >
+        {/* شريط الإشعاع العلوي */}
+        <div className="h-1.5 bg-gradient-to-l from-amber-500 via-candy-amber to-candy-berry" aria-hidden="true" />
+
         <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
           {/* Lock Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-3xl bg-amber-50 border-2 border-amber-200/80 text-amber-700 shadow-sm">
+          <div className="inline-flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-3xl bg-amber-50 border-2 border-amber-200/80 text-amber-700 shadow-sm animate-pulse">
             <Lock className="w-8 h-8" aria-hidden="true" />
           </div>
 
           {/* 401 Pill */}
-          <div className="inline-block px-3 py-1 mb-2 rounded-full bg-amber-100/80 text-amber-900 text-xs font-bold tracking-wider font-mono">
+          <div className="inline-block px-3.5 py-1 mb-2.5 rounded-full bg-amber-100/80 text-amber-900 text-xs font-bold tracking-wider font-mono border border-amber-200/60">
             401 • تسجيل الدخول مطلوب
           </div>
 
@@ -47,7 +50,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
           </CardTitle>
 
           {/* Explanation */}
-          <CardDescription className="text-sm text-candy-muted font-sans mt-2 max-w-md mx-auto leading-normal">
+          <CardDescription className="text-sm text-candy-muted font-sans mt-2 max-w-md mx-auto leading-relaxed">
             هذا القسم مخصص لفريق عمل وإدارة متجر كاندي لوز. يرجى تسجيل الدخول بحسابك المعتمد للمتابعة.
           </CardDescription>
         </CardHeader>
@@ -55,12 +58,12 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
         <CardContent className="p-6 sm:p-8 space-y-6">
           {/* Status Box */}
           <div
-            className="p-4 rounded-2xl bg-candy-soft/80 border border-candy-line text-right flex items-center justify-between"
+            className="p-4 rounded-2xl bg-candy-soft/80 border border-candy-line text-right flex items-center justify-between shadow-2xs"
             role="region"
             aria-label="حالة الجلسة"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-candy-blush/60 flex items-center justify-center text-candy-berry shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-candy-blush/60 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
                 <Lock className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
@@ -73,7 +76,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
 
             <div className="text-left">
               <span className="text-xs text-candy-muted block mb-0.5">الدور</span>
-              <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200">
+              <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200 shadow-xs">
                 زائر
               </span>
             </div>
@@ -87,7 +90,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
               size="lg"
               onClick={handleLoginClick}
               leftIcon={<LogIn className="w-5 h-5" />}
-              className="w-full sm:flex-1 font-display min-h-[48px]"
+              className="w-full sm:flex-1 font-display min-h-[48px] shadow-sm font-bold"
             >
               تسجيل الدخول إلى النظام
             </Button>
@@ -97,8 +100,8 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
               variant="secondary"
               size="lg"
               onClick={handleStorefrontClick}
-              leftIcon={<Store className="w-4 h-4" />}
-              className="w-full sm:flex-1 font-display min-h-[48px]"
+              leftIcon={<Store className="w-4 h-4 text-candy-berry" />}
+              className="w-full sm:flex-1 font-display min-h-[48px] border-candy-blush hover:bg-candy-soft font-bold"
             >
               العودة لواجهة المتجر الرئيسية
             </Button>
@@ -108,3 +111,5 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
     </div>
   );
 }
+
+export default GuestUnauthenticatedCard;

@@ -14,7 +14,7 @@ import {
   ArrowLeft,
   Sparkles,
 } from 'lucide-react';
-import { AdminAuthProvider, useAdminAuth, PRE_SEEDED_USERS } from '@/context/admin-auth-context';
+import { AdminAuthProvider, useAdminAuth } from '@/context/admin-auth-context';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { StoreLogo } from '@/components/ui/store-logo';
@@ -59,9 +59,9 @@ function LoginFormContent() {
       if (result.success) {
         router.push(redirectTarget);
       } else {
-        setErrorMessage(result.error || 'البريد الإلكتروني أو كلمة المرور غير صحيحة');
+        setErrorMessage(result.error || 'بيانات الدخول غير صحيحة، يرجى التحقق من البريد أو كلمة المرور');
       }
-    } catch (err) {
+    } catch {
       setErrorMessage('حدث خطأ غير متوقع أثناء تسجيل الدخول، يرجى المحاولة مرة أخرى');
     } finally {
       setIsSubmitting(false);
@@ -92,12 +92,16 @@ function LoginFormContent() {
 
   return (
     <div className="w-full max-w-[390px] sm:max-w-md mx-auto relative px-1 sm:px-0">
-      <div className="absolute -top-16 -right-20 w-40 h-40 rounded-full bg-candy-blush/70 blur-3xl pointer-events-none" aria-hidden="true" />
-      <div className="absolute -bottom-20 -left-16 w-44 h-44 rounded-full bg-candy-pastel-2/60 blur-3xl pointer-events-none" aria-hidden="true" />
-      <Card elevation="md" className="relative border-candy-line/80 shadow-candy-2 bg-white/95 backdrop-blur-sm overflow-hidden">
+      {/* خلفية تدرجات الضوء الحلواني الفاخر */}
+      <div className="absolute -top-16 -right-20 w-44 h-44 rounded-full bg-candy-blush/60 blur-3xl pointer-events-none" aria-hidden="true" />
+      <div className="absolute -bottom-20 -left-16 w-48 h-48 rounded-full bg-candy-pastel-2/50 blur-3xl pointer-events-none" aria-hidden="true" />
+
+      <Card elevation="md" className="relative border-candy-line/80 shadow-candy-2 bg-white/95 backdrop-blur-md overflow-hidden rounded-3xl">
+        {/* شريط الإشعاع العلوي */}
         <div className="h-1.5 bg-gradient-to-l from-candy-berry via-candy-strawberry to-candy-amber" aria-hidden="true" />
-        <CardHeader className="text-center pb-5 pt-6 px-6 sm:px-8 border-b border-candy-line/40">
-          <Link href="/" aria-label="العودة إلى متجر كاندي لوز" className="inline-flex mx-auto mb-4 rounded-xl focus-visible:ring-2 focus-visible:ring-primary">
+
+        <CardHeader className="text-center pb-5 pt-7 px-6 sm:px-8 border-b border-candy-line/40">
+          <Link href="/" aria-label="العودة إلى متجر كاندي لوز" className="inline-flex mx-auto mb-4 rounded-xl focus-visible:ring-2 focus-visible:ring-candy-berry transition-transform hover:scale-[1.02]">
             <StoreLogo variant="main" width={190} height={55} priority className="max-w-[180px]" />
           </Link>
           <div className="inline-flex items-center justify-center w-14 h-14 mx-auto mb-3 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry shadow-candy-1">
@@ -107,7 +111,7 @@ function LoginFormContent() {
             بوابة إدارة كاندي لوز
           </CardTitle>
           <CardDescription className="text-sm text-candy-muted font-sans mt-1.5">
-            أدخل بيانات اعتمادك للوصول إلى لوحة تحكم كاندي لوز
+            أدخل بيانات اعتمادك للوصول إلى لوحة تحكم متجر كاندي لوز
           </CardDescription>
         </CardHeader>
 
@@ -117,7 +121,7 @@ function LoginFormContent() {
             <div
               role="alert"
               aria-live="assertive"
-              className="flex items-start gap-2.5 p-3.5 mb-5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm font-sans animate-in fade-in-50 duration-200"
+              className="flex items-start gap-2.5 p-3.5 mb-5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm font-sans animate-in fade-in-50 duration-200 shadow-2xs"
             >
               <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" aria-hidden="true" />
               <div className="flex-1 text-right leading-relaxed font-medium">
@@ -128,16 +132,16 @@ function LoginFormContent() {
 
           {/* تنبيه في حال كان المستخدم مسجلاً بالفعل */}
           {isAuthenticated && user && !isLoading && (
-            <div className="mb-5 p-3.5 rounded-xl bg-candy-soft border border-candy-blush text-candy-ink text-xs sm:text-sm font-sans flex items-center justify-between">
+            <div className="mb-5 p-3.5 rounded-2xl bg-candy-soft border border-candy-blush text-candy-ink text-xs sm:text-sm font-sans flex items-center justify-between shadow-2xs">
               <div>
-                <span className="font-semibold text-candy-berry">مسجل حالياً: </span>
-                <span>{user.fullName}</span>
+                <span className="font-bold text-candy-berry">مسجل حالياً: </span>
+                <span className="font-semibold">{user.fullName}</span>
                 <span className="text-candy-muted mr-1.5">({user.role === 'manager' ? 'مدير' : 'موظف'})</span>
               </div>
               <button
                 type="button"
                 onClick={() => router.push(redirectTarget)}
-                className="text-candy-berry hover:text-candy-berry-dark font-bold underline mr-2 shrink-0"
+                className="text-candy-berry hover:text-candy-berry-dark font-bold underline mr-2 shrink-0 transition-colors"
               >
                 المتابعة للوحة
               </button>
@@ -172,16 +176,16 @@ function LoginFormContent() {
                   placeholder="staff@candyloz.com"
                   disabled={isSubmitting || quickLoginRole !== null}
                   className={cn(
-                    'w-full h-12 pr-10 pl-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50',
+                    'w-full h-12 pr-10 pl-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50 shadow-2xs',
                     fieldErrors.identifier
-                      ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200'
-                      : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20'
+                      ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200 bg-rose-50/30'
+                      : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 hover:border-candy-blush'
                   )}
                   required
                 />
               </div>
               {fieldErrors.identifier && (
-                <p role="alert" className="mt-1 text-xs text-rose-600 font-sans font-medium">
+                <p role="alert" className="mt-1.5 text-xs text-rose-600 font-sans font-medium">
                   {fieldErrors.identifier}
                 </p>
               )}
@@ -213,10 +217,10 @@ function LoginFormContent() {
                   placeholder="••••••••"
                   disabled={isSubmitting || quickLoginRole !== null}
                   className={cn(
-                    'w-full h-12 pr-10 pl-11 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50',
+                    'w-full h-12 pr-10 pl-11 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50 shadow-2xs',
                     fieldErrors.password
-                      ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200'
-                      : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20'
+                      ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200 bg-rose-50/30'
+                      : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 hover:border-candy-blush'
                   )}
                   required
                 />
@@ -225,7 +229,7 @@ function LoginFormContent() {
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                   tabIndex={0}
-                  className="absolute left-3.5 flex items-center text-candy-muted hover:text-candy-berry transition-colors focus:outline-none"
+                  className="absolute left-3.5 flex items-center text-candy-muted hover:text-candy-berry transition-colors focus:outline-none p-1"
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" aria-hidden="true" />
@@ -235,7 +239,7 @@ function LoginFormContent() {
                 </button>
               </div>
               {fieldErrors.password && (
-                <p role="alert" className="mt-1 text-xs text-rose-600 font-sans font-medium">
+                <p role="alert" className="mt-1.5 text-xs text-rose-600 font-sans font-medium">
                   {fieldErrors.password}
                 </p>
               )}
@@ -247,16 +251,16 @@ function LoginFormContent() {
               variant="primary"
               size="lg"
               isLoading={isSubmitting}
-              className="w-full mt-2 font-display text-base"
+              className="w-full mt-2 font-display text-base font-bold shadow-sm"
             >
               تسجيل الدخول
             </Button>
           </form>
 
-          {/* خط فاصل */}
+          {/* خط فاصل أنيق */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-candy-line" />
+              <span className="w-full border-t border-candy-line/80" />
             </div>
             <div className="relative flex justify-center text-xs uppercase font-medium">
               <span className="bg-white px-3 text-candy-muted font-sans flex items-center gap-1">
@@ -275,7 +279,7 @@ function LoginFormContent() {
               onClick={() => handleQuickLogin('manager')}
               isLoading={quickLoginRole === 'manager'}
               leftIcon={<ShieldCheck className="w-4 h-4 text-candy-berry" />}
-              className="w-full flex-col h-auto py-2.5 px-3 text-xs leading-tight border-candy-blush hover:bg-candy-soft"
+              className="w-full flex-col h-auto py-2.5 px-3 text-xs leading-tight border-candy-blush hover:bg-candy-soft transition-all active:scale-95"
             >
               <span className="font-bold text-candy-ink">دخول كمدير</span>
               <span className="text-[11px] text-candy-muted font-normal mt-0.5">صلاحيات كاملة</span>
@@ -288,7 +292,7 @@ function LoginFormContent() {
               onClick={() => handleQuickLogin('staff')}
               isLoading={quickLoginRole === 'staff'}
               leftIcon={<UserCheck className="w-4 h-4 text-candy-rose" />}
-              className="w-full flex-col h-auto py-2.5 px-3 text-xs leading-tight border-candy-blush hover:bg-candy-soft"
+              className="w-full flex-col h-auto py-2.5 px-3 text-xs leading-tight border-candy-blush hover:bg-candy-soft transition-all active:scale-95"
             >
               <span className="font-bold text-candy-ink">دخول كموظف</span>
               <span className="text-[11px] text-candy-muted font-normal mt-0.5">طلبات وتجهيز</span>
@@ -296,7 +300,7 @@ function LoginFormContent() {
           </div>
 
           {/* تنويه الأمان وسياسة الدخول */}
-          <div className="mt-4 p-3 rounded-xl bg-candy-soft/70 border border-candy-line/60 text-[11px] text-candy-muted font-sans space-y-1">
+          <div className="mt-4 p-3 rounded-2xl bg-candy-soft/70 border border-candy-line/60 text-[11px] text-candy-muted font-sans space-y-1">
             <p className="text-candy-ink font-semibold">بوابة الإدارة المحمية</p>
             <p className="text-candy-muted leading-relaxed">
               يرجى استخدام بيانات الاعتماد المخصصة للمسؤول أو النقر على أحد أزرار الدخول التجريبي السريع المعزول.
@@ -307,10 +311,10 @@ function LoginFormContent() {
           <div className="mt-6 text-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-xs text-candy-muted hover:text-candy-berry transition-colors font-medium"
+              className="inline-flex items-center gap-1.5 text-xs text-candy-muted hover:text-candy-berry transition-colors font-medium group"
             >
-              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-              العودة إلى متجر كاندي لوز
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" aria-hidden="true" />
+              <span>العودة إلى متجر كاندي لوز</span>
             </Link>
           </div>
         </CardContent>

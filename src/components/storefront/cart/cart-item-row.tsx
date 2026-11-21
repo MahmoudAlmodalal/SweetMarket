@@ -2,7 +2,16 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Plus, Minus, Trash2, AlertTriangle, Gift, SlidersHorizontal } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  Trash2,
+  AlertTriangle,
+  Gift,
+  SlidersHorizontal,
+  Package,
+  Scale,
+} from "lucide-react";
 import type { CartItem } from "@/types";
 import { cn } from "@/lib/utils";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
@@ -70,7 +79,9 @@ export function CartItemRow({
   };
 
   const handleIncrement = () => {
-    onUpdateQuantity(item.id, item.quantity + 1);
+    if (item.quantity < MAX_CART_QTY) {
+      onUpdateQuantity(item.id, item.quantity + 1);
+    }
   };
 
   const handleConfirmRemove = () => {
@@ -82,15 +93,15 @@ export function CartItemRow({
     <>
       <div
         className={cn(
-          "relative rounded-candy-card bg-white p-4 sm:p-5 border border-candy-line/70 shadow-candy-1 hover:border-candy-line-dark transition-all duration-200",
+          "relative rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 border border-candy-line/70 shadow-candy-1 hover:border-candy-strawberry/40 hover:shadow-candy-2 transition-all duration-200",
           className
         )}
       >
-        <div className="flex gap-3 sm:gap-4 items-start">
-          {/* Item Image with Fallback */}
+        <div className="flex gap-3.5 sm:gap-4 items-start">
+          {/* Item Image with Freshness Badge */}
           <Link
             href={item.productSlug ? `/product/${item.productSlug}` : "#"}
-            className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-candy-soft border border-candy-line/60 shrink-0 block group focus:outline-none focus:ring-2 focus:ring-candy-berry/30"
+            className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-candy-soft border border-candy-line/60 shrink-0 block group focus:outline-none focus:ring-2 focus:ring-candy-berry/30 shadow-xs"
           >
             <ProductImage
               src={item.imageUrl}
@@ -99,19 +110,19 @@ export function CartItemRow({
               sizes="(max-width: 640px) 80px, 96px"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
-            <span className="absolute bottom-1 right-1 font-sans text-[10px] px-1.5 py-0.5 rounded bg-white/95 text-candy-ink font-semibold shadow-xs backdrop-blur-xs">
-              طازج
+            <span className="absolute bottom-1 right-1 font-sans text-[10px] px-1.5 py-0.5 rounded-candy-pill bg-white/95 text-candy-berry font-bold shadow-xs backdrop-blur-xs border border-candy-line/40">
+              طازج ✨
             </span>
           </Link>
 
-          {/* Product Details & Actions */}
+          {/* Product Details & Stepper Actions */}
           <div className="flex flex-col justify-between flex-1 min-w-0 self-stretch">
-            {/* Header: Title & Delete Button */}
+            {/* Header: Title & Direct Delete Button */}
             <div>
               <div className="flex items-start justify-between gap-2">
                 <Link
                   href={item.productSlug ? `/product/${item.productSlug}` : "#"}
-                  className="font-display font-semibold text-base sm:text-lg text-candy-ink leading-snug hover:text-candy-berry transition-colors line-clamp-1"
+                  className="font-display font-bold text-base sm:text-lg text-candy-ink leading-snug hover:text-candy-berry transition-colors line-clamp-1"
                 >
                   {item.productName}
                 </Link>
@@ -120,50 +131,75 @@ export function CartItemRow({
                   type="button"
                   onClick={() => setIsConfirmOpen(true)}
                   aria-label={`حذف ${item.productName} من السلة`}
+                  title="حذف من السلة"
                   className="min-w-11 min-h-11 rounded-full text-candy-muted hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors shrink-0 -mt-1 -ml-1 focus:outline-none focus:ring-2 focus:ring-rose-300 touch-manipulation"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* Weight & Options Tag */}
+              {/* Weight & Packaging Indicators */}
               <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
-                <span className="inline-flex items-center font-sans text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-soft text-candy-berry font-medium border border-candy-line/50">
-                  الوزن: {weightText}
+                {/* Weight Indicator */}
+                <span className="inline-flex items-center gap-1 font-sans text-xs px-2.5 py-1 rounded-candy-pill bg-candy-soft text-candy-berry font-semibold border border-candy-line/60 shadow-2xs">
+                  <Scale className="w-3 h-3 text-candy-berry/80" />
+                  <span>الوزن: {weightText}</span>
                 </span>
+
+                {/* Packaging Indicator */}
                 {item.packagingLabel && (
-                  <span className="inline-flex items-center font-sans text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-soft text-candy-berry font-medium border border-candy-line/50">
-                    التغليف: {item.packagingLabel}
-                    {item.packagingFee && item.packagingFee > 0 ? ` (+${item.packagingFee} ₪)` : ""}
+                  <span className="inline-flex items-center gap-1 font-sans text-xs px-2.5 py-1 rounded-candy-pill bg-candy-soft text-candy-berry font-semibold border border-candy-line/60 shadow-2xs">
+                    <Package className="w-3 h-3 text-candy-strawberry" />
+                    <span>التغليف: {item.packagingLabel}</span>
+                    {item.packagingFee && item.packagingFee > 0 ? (
+                      <span className="text-candy-strawberry font-bold mr-0.5">
+                        (+{item.packagingFee} ₪)
+                      </span>
+                    ) : null}
                   </span>
                 )}
-                {item.giftMessage && (
-                  <div className="w-full flex items-start gap-1 text-[11px] text-candy-berry/90 bg-candy-blush/30 px-2 py-1 rounded-md border border-candy-line/40 mt-1">
-                    <Gift className="w-3.5 h-3.5 text-candy-strawberry shrink-0 mt-0.5" />
-                    <span className="font-sans">رسالة الإهداء: &ldquo;{item.giftMessage}&rdquo;</span>
-                  </div>
-                )}
+
+                {/* Edit Options Link */}
                 <Link
-                  href={`/product/${item.productSlug}?weight=${encodeURIComponent(item.selectedWeightLabel || "")}&packaging=${item.packagingOptionId || "standard"}${item.giftMessage ? `&gift=${encodeURIComponent(item.giftMessage)}` : ""}`}
-                  className="inline-flex items-center gap-1 text-[11px] font-bold text-candy-strawberry hover:text-candy-berry transition-colors mt-0.5"
+                  href={`/product/${item.productSlug}?weight=${encodeURIComponent(
+                    item.selectedWeightLabel || ""
+                  )}&packaging=${item.packagingOptionId || "standard"}${
+                    item.giftMessage ? `&gift=${encodeURIComponent(item.giftMessage)}` : ""
+                  }`}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-candy-strawberry hover:text-candy-berry transition-colors px-2 py-0.5 rounded-candy-pill hover:bg-candy-soft"
                 >
                   <SlidersHorizontal className="w-3 h-3" />
                   <span>تعديل الخيارات</span>
                 </Link>
               </div>
+
+              {/* Gift Ribbon Message Indicator */}
+              {item.giftMessage && (
+                <div className="w-full flex items-start gap-1.5 text-xs text-candy-berry/95 bg-candy-blush/40 px-2.5 py-1.5 rounded-xl border border-candy-line/50 mt-2">
+                  <Gift className="w-3.5 h-3.5 text-candy-strawberry shrink-0 mt-0.5" />
+                  <span className="font-sans font-medium">
+                    رسالة الإهداء المرفقة: &ldquo;{item.giftMessage}&rdquo;
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Price & Quantity Stepper Row */}
+            {/* Price & Clean Quantity Stepper Row */}
             <div className="flex items-center justify-between pt-3 mt-2 border-t border-candy-line/40">
-              {/* Price Breakdown */}
+              {/* Financial Breakdown for Line */}
               <div className="flex flex-col">
-                <div className="flex items-baseline gap-1">
-                  <span className="font-sans font-extrabold text-base sm:text-lg text-candy-berry">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-sans font-extrabold text-lg sm:text-xl text-candy-berry">
                     {item.lineTotal.toFixed(2)}
                   </span>
                   <span className="font-sans text-xs text-candy-muted font-medium">
                     ₪
                   </span>
+                  {item.listUnitPrice && item.listUnitPrice > item.unitPrice && (
+                    <span className="font-sans text-xs text-candy-muted line-through mr-1">
+                      {(item.listUnitPrice * item.quantity).toFixed(2)} ₪
+                    </span>
+                  )}
                 </div>
                 {item.quantity > 1 && (
                   <span className="font-sans text-[11px] text-candy-muted">
@@ -172,8 +208,9 @@ export function CartItemRow({
                 )}
               </div>
 
-              {/* Tactile Quantity Stepper */}
-              <div className="flex items-center rounded-candy-pill bg-candy-soft p-1 border border-candy-line/60 shadow-inner">
+              {/* Clean Tactile Quantity Stepper */}
+              <div className="flex items-center rounded-candy-pill bg-candy-soft p-1 border border-candy-line/70 shadow-inner">
+                {/* Decrement or Remove Button */}
                 <button
                   type="button"
                   onClick={handleDecrement}
@@ -197,14 +234,16 @@ export function CartItemRow({
                   )}
                 </button>
 
+                {/* Quantity Numeric Value */}
                 <span
-                  className="w-8 sm:w-9 text-center font-sans font-bold text-sm text-candy-ink select-none"
+                  className="w-9 sm:w-10 text-center font-sans font-bold text-sm sm:text-base text-candy-ink tabular-nums select-none"
                   aria-live="polite"
                   aria-label={`الكمية الحالية: ${item.quantity}`}
                 >
                   {item.quantity}
                 </span>
 
+                {/* Increment Button */}
                 <button
                   type="button"
                   onClick={handleIncrement}
@@ -214,7 +253,11 @@ export function CartItemRow({
                       ? `الحد الأقصى ${MAX_CART_QTY} وحدة`
                       : "زيادة الكمية"
                   }
-                  title={item.quantity >= MAX_CART_QTY ? `الحد الأقصى ${MAX_CART_QTY} وحدة` : undefined}
+                  title={
+                    item.quantity >= MAX_CART_QTY
+                      ? `الحد الأقصى ${MAX_CART_QTY} وحدة`
+                      : undefined
+                  }
                   className={cn(
                     "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shadow-xs transition-all touch-manipulation",
                     item.quantity >= MAX_CART_QTY
@@ -230,20 +273,50 @@ export function CartItemRow({
         </div>
       </div>
 
-      {/* Delete Confirmation Dialog */}
+      {/* Confirmation Modal on Remove */}
       <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-2">
               <AlertTriangle className="w-6 h-6" />
             </div>
-            <DialogTitle className="text-center">
-              حذف المنتج من السلة؟
+            <DialogTitle className="text-center font-display text-lg sm:text-xl">
+              حذف الصنف من السلة؟
             </DialogTitle>
-            <DialogDescription className="text-center text-candy-muted">
-              هل أنت متأكد من رغبتك في إزالة &quot;{item.productName}&quot; ({weightText}) من سلة مشترياتك؟
+            <DialogDescription className="text-center text-candy-muted text-sm">
+              هل أنت متأكد من رغبتك في إزالة هذا الصنف من سلة مشترياتك؟ يمكنك دائماً إضافته مجدداً في أي وقت.
             </DialogDescription>
           </DialogHeader>
+
+          {/* Visual Item Preview in Modal */}
+          <div className="rounded-2xl bg-candy-soft p-3 border border-candy-line/60 flex items-center gap-3 my-2">
+            <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-white shrink-0 border border-candy-line/40">
+              <ProductImage
+                src={item.imageUrl}
+                alt={item.productName}
+                fill
+                sizes="56px"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h4 className="font-display font-bold text-sm text-candy-ink line-clamp-1">
+                {item.productName}
+              </h4>
+              <div className="flex items-center gap-2 mt-0.5 text-xs text-candy-muted font-sans">
+                <span>{weightText}</span>
+                {item.packagingLabel && (
+                  <>
+                    <span>•</span>
+                    <span>{item.packagingLabel}</span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="text-left font-sans font-bold text-sm text-candy-berry shrink-0">
+              {item.lineTotal.toFixed(2)} ₪
+            </div>
+          </div>
 
           <DialogFooter className="sm:justify-center gap-3">
             <Button
@@ -252,15 +325,16 @@ export function CartItemRow({
               onClick={() => setIsConfirmOpen(false)}
               className="flex-1"
             >
-              تراجع
+              تراجع والاحتفاظ به
             </Button>
             <Button
               type="button"
               variant="danger"
               onClick={handleConfirmRemove}
-              className="flex-1"
+              className="flex-1 gap-1.5"
             >
-              نعم، حذف الصنف
+              <Trash2 className="w-4 h-4" />
+              <span>نعم، إزالة الصنف</span>
             </Button>
           </DialogFooter>
         </DialogContent>

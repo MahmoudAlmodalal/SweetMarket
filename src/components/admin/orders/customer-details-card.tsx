@@ -12,6 +12,7 @@ import {
   Check,
   Building,
   Navigation,
+  ShieldCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CheckoutCustomerData } from '@/types';
@@ -78,7 +79,7 @@ export function CustomerDetailsCard({
               بيانات الزبون والتوصيل
             </CardTitle>
             <p className="text-[11px] text-candy-muted">
-              معلومات الاتصال وعنوان تسليم الطلب
+              معلومات الاتصال وعنوان تسليم الطلب وخيارات التواصل
             </p>
           </div>
         </div>
@@ -86,27 +87,29 @@ export function CustomerDetailsCard({
 
       <CardContent className="pt-4 space-y-4 text-sm font-sans">
         {/* 1. اسم الزبون ورقم الهاتف مع روابط الاتصال السريع */}
-        <div className="p-3 rounded-2xl bg-candy-soft/60 border border-candy-line/60 space-y-2.5">
+        <div className="p-3.5 rounded-2xl bg-candy-soft/60 border border-candy-line/60 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <User className="w-4 h-4 text-candy-muted" />
+              <div className="w-7 h-7 rounded-full bg-candy-blush/80 flex items-center justify-center text-candy-berry font-bold text-xs">
+                {customer.fullName.charAt(0)}
+              </div>
               <span className="font-bold text-candy-ink text-base">
                 {customer.fullName}
               </span>
             </div>
-            <span className="text-[11px] text-candy-berry font-bold bg-candy-blush px-2 py-0.5 rounded-full">
-              زبون كاش
+            <span className="text-[11px] text-candy-berry font-bold bg-candy-blush px-2.5 py-0.5 rounded-full border border-candy-line">
+              زبون متجر
             </span>
           </div>
 
           {/* رقم الهاتف والإجراءات السريعة */}
-          <div className="flex items-center justify-between pt-1 border-t border-candy-line/40">
-            <div className="flex items-center gap-1.5 font-mono text-candy-ink font-semibold" dir="ltr">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-2 border-t border-candy-line/40">
+            <div className="flex items-center gap-1.5 font-mono text-candy-ink font-bold text-sm" dir="ltr">
               <Phone className="w-3.5 h-3.5 text-candy-muted shrink-0" />
               <span>{cleanPhone}</span>
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 w-full sm:w-auto justify-end">
               {/* زر نسخ الرقم */}
               <button
                 type="button"
@@ -126,9 +129,9 @@ export function CustomerDetailsCard({
               <a
                 href={`tel:${cleanPhone}`}
                 title="اتصال هاتفي مباشر"
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-candy-line text-xs font-bold text-candy-berry hover:bg-candy-blush hover:border-candy-rose transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white border border-candy-line text-xs font-bold text-candy-berry hover:bg-candy-blush hover:border-candy-rose transition-colors"
               >
-                <Phone className="w-3 h-3" />
+                <Phone className="w-3.5 h-3.5" />
                 <span>اتصال</span>
               </a>
 
@@ -138,9 +141,9 @@ export function CustomerDetailsCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="محادثة واتساب مباشرة"
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition-colors"
               >
-                <MessageCircle className="w-3 h-3 text-emerald-600" />
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
                 <span>واتساب</span>
               </a>
             </div>
@@ -151,10 +154,10 @@ export function CustomerDetailsCard({
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold text-candy-ink">
             <MapPin className="w-4 h-4 text-candy-berry" />
-            <span>عنوان التوصيل</span>
+            <span>عنوان وموقع التوصيل</span>
           </div>
 
-          <div className="pr-6 space-y-1.5 text-xs text-candy-ink">
+          <div className="pr-6 space-y-2 text-xs text-candy-ink">
             {/* المنطقة الجغرافية */}
             <div className="flex items-center gap-1.5 text-candy-berry font-bold">
               <Navigation className="w-3.5 h-3.5 text-candy-berry shrink-0" />
@@ -162,14 +165,14 @@ export function CustomerDetailsCard({
             </div>
 
             {/* تفاصيل الشارع */}
-            <div className="text-candy-ink font-medium leading-relaxed">
-              <span className="text-candy-muted">الشارع والمعالم: </span>
-              {customer.streetAddress}
+            <div className="text-candy-ink font-medium leading-relaxed bg-candy-soft/40 p-2.5 rounded-xl border border-candy-line/50">
+              <span className="text-candy-muted block text-[11px] mb-0.5">الشارع والمعالم الرئيسية:</span>
+              <span className="font-semibold text-candy-ink">{customer.streetAddress}</span>
             </div>
 
             {/* تفاصيل العمارة والشقة */}
             {customer.buildingOrApt && (
-              <div className="flex items-center gap-1.5 text-candy-muted">
+              <div className="flex items-center gap-1.5 text-candy-muted text-xs">
                 <Building className="w-3.5 h-3.5 shrink-0" />
                 <span>{customer.buildingOrApt}</span>
               </div>
@@ -177,14 +180,15 @@ export function CustomerDetailsCard({
           </div>
         </div>
 
-        {/* 3. طريقة الدفع */}
+        {/* 3. طريقة الدفع وتأكيد الأمان */}
         <div className="pt-3 border-t border-candy-line/60 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2 text-candy-muted">
             <CreditCard className="w-4 h-4" />
             <span>طريقة الدفع:</span>
           </div>
-          <span className="font-bold text-candy-ink bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full">
-            {paymentMethod === 'cash_on_delivery' ? 'الدفع نقداً عند الاستلام' : paymentMethod}
+          <span className="font-bold text-candy-ink bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full inline-flex items-center gap-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>{paymentMethod === 'cash_on_delivery' ? 'الدفع نقداً عند الاستلام' : paymentMethod}</span>
           </span>
         </div>
 
@@ -196,7 +200,7 @@ export function CustomerDetailsCard({
           </div>
 
           {customer.notes ? (
-            <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200/70 text-xs text-amber-900 leading-relaxed font-sans">
+            <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 leading-relaxed font-sans">
               {customer.notes}
             </div>
           ) : (

@@ -119,11 +119,17 @@ export default function ContactPage() {
               </span>
             </div>
 
-            {/* Stylized Google Maps Visual Canvas Placeholder */}
-            <div className="relative rounded-2xl overflow-hidden border border-candy-line bg-[#fbf6f3] h-60 w-full flex items-center justify-center group shadow-inner">
+            {/* Stylized Interactive Google Maps Visual Canvas */}
+            <a
+              href={mapSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="انقر لفتح موقع المتجر في خرائط Google"
+              className="relative block rounded-2xl overflow-hidden border border-candy-line bg-[#fbf6f3] h-60 w-full group shadow-inner transition-all hover:border-candy-rose focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry"
+            >
               {/* Decorative map streets grid svg */}
               <svg
-                className="absolute inset-0 w-full h-full opacity-40"
+                className="absolute inset-0 w-full h-full opacity-40 transition-transform duration-500 group-hover:scale-105"
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
               >
@@ -171,27 +177,34 @@ export default function ContactPage() {
               </svg>
 
               {/* Landmark Callouts on Map */}
-              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-candy-pill border border-candy-line text-[10px] font-bold text-candy-ink shadow-xs">
+              <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-candy-pill border border-candy-line text-[10px] font-bold text-candy-ink shadow-xs">
                 مفرق الرمال
               </div>
-              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-candy-pill border border-candy-line text-[10px] font-bold text-candy-muted shadow-xs">
+              <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-candy-pill border border-candy-line text-[10px] font-bold text-candy-muted shadow-xs">
                 شارع عمر المختار
               </div>
 
               {/* Center Location Pin with pulsing radar ring */}
-              <div className="relative z-10 flex flex-col items-center">
-                <div className="relative">
-                  <span className="absolute -inset-2.5 rounded-full bg-candy-strawberry/20 animate-ping" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+                <div className="relative group-hover:scale-110 transition-transform duration-300">
+                  <span className="absolute -inset-2.5 rounded-full bg-candy-strawberry/30 animate-ping" />
                   <div className="relative w-12 h-12 rounded-full bg-candy-strawberry text-white flex items-center justify-center shadow-candy-cta border-2 border-white">
                     <Sparkles className="w-6 h-6 fill-white" />
                   </div>
                 </div>
 
-                <div className="mt-2 bg-candy-berry text-white text-xs font-bold px-3 py-1 rounded-candy-pill shadow-md border border-white/20 whitespace-nowrap">
-                  كاندي لوز - غزة
+                <div className="mt-2 bg-candy-berry text-white text-xs font-bold px-3 py-1 rounded-candy-pill shadow-md border border-white/20 whitespace-nowrap group-hover:bg-candy-strawberry transition-colors">
+                  كاندي لوز - غزة 📍
                 </div>
               </div>
-            </div>
+
+              {/* Hover Cue */}
+              <div className="absolute inset-0 bg-candy-berry/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2 pointer-events-none">
+                <span className="text-[11px] font-bold text-candy-berry bg-white/95 px-3 py-1 rounded-candy-pill shadow-xs border border-candy-line">
+                  اضغط لفتح الخريطة والتوجيهات ↗
+                </span>
+              </div>
+            </a>
 
             {/* Directions & Action Footer */}
             <div className="mt-4 pt-3 flex flex-col sm:flex-row items-center gap-3">

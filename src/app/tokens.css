@@ -1,45 +1,62 @@
 /* ==========================================================================
    tokens.css — Design Tokens
    Candy Loz Sweet Store Design Tokens migrated to Next.js
+   Confectionery Luxury Palette (WCAG AA Compliant)
    Fonts loaded natively via next/font in src/app/layout.tsx
    ========================================================================== */
 
 :root {
-  /* ---- Brand & surfaces ---- */
-  --color-primary: #A31D56;
-  --color-primary-hover: #851645;
-  --color-primary-subtle: #FDF2F4;
-  --color-accent: #E8A33D;            /* ONLY with dark text (--color-text), never white text */
-  --color-bg: #FFFAF8;
-  --color-surface: #FFFFFF;
-  --color-soft: #FFF5F8;
-  --color-blush: #FED7E7;
+  /* ---- Brand & Confectionery Luxury Palette ---- */
+  --color-primary: #A31D56;           /* Royal Berry / Dark Raspberry */
+  --color-primary-hover: #851645;     /* Deep Velvet Berry */
+  --color-primary-subtle: #FDF2F4;    /* Subtle Rose Petal */
+  --color-primary-glow: rgba(163, 29, 86, 0.22);
+  --color-accent: #E8A33D;            /* Warm Honey Caramel (ONLY with dark text --color-text) */
+  --color-accent-hover: #D4902F;
+  --color-bg: #FFFAF8;                /* Warm Marshmallow Canvas */
+  --color-surface: #FFFFFF;           /* Crisp Glaze White */
+  --color-cream: #FFFDF9;             /* Confectionery Whipped Cream Surface */
+  --color-cream-subtle: #FFF7F2;      /* Delicate Honey Cream */
+  --color-cream-border: #F3EAE3;      /* Soft Praline Border */
+  --color-soft: #FFF5F8;              /* Soft Strawberry Cream */
+  --color-blush: #FED7E7;             /* Delicate Candy Blush */
+  --color-rose-subtle: #FBEAF1;
+  --color-caramel-gold: #D49B35;      /* Warm Pastry Gold */
 
-  /* ---- Text & borders ---- */
-  --color-text: #2B1A10;
-  --color-text-muted: #6B5D55;
-  --color-border: #E6DED8;            /* decoration only */
-  --color-border-input: #8A7B72;      /* form controls (3:1 on white) */
+  /* ---- Text & Borders (High Contrast WCAG AA / AAA Compliant) ---- */
+  --color-text: #2B1A10;              /* Dark Chocolate (14.8:1 on #FFFAF8 - AAA) */
+  --color-text-muted: #66564E;        /* Warm Cocoa (6.5:1 on #FFFAF8 - AA) */
+  --color-text-subtle: #82726A;       /* Secondary Muted (4.6:1 on White - AA) */
+  --color-border: #E8DFD9;            /* Subtle decoration outline */
+  --color-border-subtle: #F3EAE4;
+  --color-border-input: #7C6C63;      /* Form controls (3.8:1 on White - WCAG 2.1 AA) */
 
   /* ---- Feedback ---- */
-  --color-success: #2E7D4F;
-  --color-warning: #9A5B00;
-  --color-danger: #B3261E;
-  --color-focus: #A31D56;
+  --color-success: #2E7D4F;           /* Mint Green Pistachio */
+  --color-warning: #9A5B00;           /* Amber Butterscotch */
+  --color-danger: #B3261E;            /* Candied Cherry */
+  --color-focus: #A31D56;             /* Berry Focus Indicator */
+  --color-focus-ring: rgba(163, 29, 86, 0.28);
 
-  /* ---- Derived helpers ---- */
-  --color-on-primary: #FFFFFF;        /* text on primary / success / warning / danger fills */
+  /* ---- Derived Helpers ---- */
+  --color-on-primary: #FFFFFF;        /* Text on primary / status fills */
   --color-overlay: rgba(43, 26, 16, 0.55);
 
-  /* ---- Product card pastel tints (rotate by index % 6) ---- */
-  --tint-1: #F9DCD9;
-  --tint-2: #DFF0DC;
-  --tint-3: #FBD3DD;
-  --tint-4: #FBECC8;
-  --tint-5: #F6E0D2;
-  --tint-6: #E2EEFB;
+  /* ---- Product Card Pastel Rotation (Rotate by index % 6) ---- */
+  --tint-1: #F9DCD9;                  /* Rose Strawberry */
+  --tint-1-border: #F0C4C0;
+  --tint-2: #DFF0DC;                  /* Pistachio Meringue */
+  --tint-2-border: #C8E5C4;
+  --tint-3: #FBD3DD;                  /* Berry Marshmallow */
+  --tint-3-border: #F4B8C8;
+  --tint-4: #FBECC8;                  /* Honey Vanilla */
+  --tint-4-border: #F2D99E;
+  --tint-5: #F6E0D2;                  /* Almond Praline */
+  --tint-5-border: #E8C8B2;
+  --tint-6: #E2EEFB;                  /* Sugar Glaze Sky */
+  --tint-6-border: #C5DCF5;
 
-  /* ---- Order status colors (badge ALWAYS carries text, never color alone) ---- */
+  /* ---- Order Status Colors (Badge ALWAYS carries text, never color alone) ---- */
   --status-new: #2F5D8A;              /* جديد */
   --status-accepted: #A31D56;         /* مقبول */
   --status-preparing: #E8A33D;        /* قيد التجهيز (dark text) */
@@ -55,10 +72,15 @@
   --radius-input: 14px;
   --radius-pill: 99px;
 
-  /* ---- Shadows ---- */
+  /* ---- Refined Multi-Layer Shadows ---- */
   --shadow-1: 0 4px 14px rgba(163, 29, 86, 0.08);
   --shadow-2: 0 14px 34px rgba(163, 29, 86, 0.14);
   --shadow-3: 0 26px 60px rgba(124, 29, 67, 0.18);
+  --shadow-candy-soft: 0 4px 20px -2px rgba(163, 29, 86, 0.07), 0 2px 6px -1px rgba(43, 26, 16, 0.04);
+  --shadow-candy-float: 0 16px 36px -6px rgba(163, 29, 86, 0.14), 0 6px 16px -2px rgba(43, 26, 16, 0.05);
+  --shadow-candy-glow: 0 0 24px rgba(163, 29, 86, 0.20);
+  --shadow-candy-cta: 0 12px 26px rgba(163, 29, 86, 0.28);
+  --shadow-candy-dock: 0 14px 34px rgba(124, 29, 67, 0.18);
 
   /* ---- Typography (mapped to next/font variables) ---- */
   --font-heading: var(--font-el-messiri), 'El Messiri', 'IBM Plex Sans Arabic', Tahoma, sans-serif;
@@ -83,13 +105,16 @@
   --space-8: 32px;
   --space-12: 48px;
 
-  /* ---- Layout & interaction ---- */
+  /* ---- Layout & Interaction ---- */
   --container-max: 1200px;
   --gutter: 16px;
   --touch-min: 44px;
   --ease: cubic-bezier(.2, .8, .2, 1);
   --duration-fast: 150ms;
   --duration: 250ms;
+  --duration-float: 3.5s;
+  --duration-shimmer: 2s;
+  --duration-pulse: 2.5s;
   --z-toast: 1100;
   --z-modal: 1000;
   --z-dev: 1200;

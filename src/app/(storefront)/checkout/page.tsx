@@ -7,9 +7,6 @@ import {
   ArrowRight,
   ShieldCheck,
   Check,
-  ShoppingBag,
-  Truck,
-  Lock,
   AlertCircle,
   Sparkles,
 } from "lucide-react";
@@ -25,7 +22,6 @@ import { STORAGE_KEYS, getStorageItem, setStorageItem } from "@/lib/storage";
 import type { DeliveryZone, CheckoutCustomerData } from "@/types";
 import { toast } from "@/components/ui/toast";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
 import { EmptyCart } from "@/components/storefront/cart/empty-cart";
 import {
   GuestInfoForm,
@@ -175,7 +171,7 @@ export default function CheckoutPage() {
     return true;
   }, [fullName, phone, zoneId, streetAddress, buildingOrApt, notes]);
 
-  // Form validity check for the submit button state
+  // Form validity check for real-time submit button readiness
   const isFormValid = React.useMemo(() => {
     return (
       fullName.trim().length >= 3 &&
@@ -310,7 +306,7 @@ export default function CheckoutPage() {
     );
   }
 
-  // Empty cart fallback (offers catalog browsing and tracking/home, never return to cart)
+  // Empty cart fallback
   if (items.length === 0) {
     return <EmptyCart isCheckout className="py-12 sm:py-16" />;
   }
@@ -346,7 +342,7 @@ export default function CheckoutPage() {
 
           <Link
             href="/cart"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-white px-3 py-1.5 rounded-candy-pill border border-candy-line shadow-xs"
           >
             <ArrowRight className="w-4 h-4" />
             <span>العودة لتعديل السلة</span>
@@ -354,7 +350,7 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      {/* 2. Stepper & Security Seal Context (Matching Stitch Screen #6) */}
+      {/* 2. Stepper & Security Seal Context */}
       <section className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2 text-candy-berry">
@@ -411,7 +407,7 @@ export default function CheckoutPage() {
         </div>
       </section>
 
-      {/* 3. Global Error Alert if submission failed */}
+      {/* 3. Global Proactive Validation Alert if submission failed */}
       {missingFieldsCount && missingFieldsCount > 0 && (
         <div
           role="alert"
@@ -419,14 +415,14 @@ export default function CheckoutPage() {
           className="rounded-2xl bg-rose-50 border border-rose-300 p-4 flex items-center gap-3 text-rose-800 text-sm font-sans font-bold shadow-xs animate-in fade-in"
         >
           <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
-          <span>يرجى استكمال {missingFieldsCount} حقول مطلوبة</span>
+          <span>يرجى استكمال {missingFieldsCount} حقول مطلوبة بالبيانات الصحيحة</span>
         </div>
       )}
 
       {submissionError && (
         <div
           role="alert"
-          className="rounded-2xl bg-rose-50 border border-rose-200 p-4 flex items-center gap-3 text-rose-900 text-sm font-sans"
+          className="rounded-2xl bg-rose-50 border border-rose-200 p-4 flex items-center gap-3 text-rose-900 text-sm font-sans shadow-xs animate-in fade-in"
         >
           <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
           <div className="flex-1">
@@ -436,106 +432,114 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      {/* 4. Checkout Layout Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Main Column: Forms */}
-        <div className="lg:col-span-7 xl:col-span-8 space-y-6">
-          {/* Guest Info Form (Full Name & Phone) */}
-          <GuestInfoForm
-            fullName={fullName}
-            phone={phone}
-            onFullNameChange={(val) => {
-              setFullName(val);
-              if (errors.fullName) {
-                setErrors((prev) => {
-                  const next = { ...prev };
-                  delete next.fullName;
-                  return next;
-                });
-              }
-            }}
-            onPhoneChange={(val) => {
-              setPhone(val);
-              if (errors.phone) {
-                setErrors((prev) => {
-                  const next = { ...prev };
-                  delete next.phone;
-                  return next;
-                });
-              }
-            }}
-            errors={{
-              fullName: errors.fullName,
-              phone: errors.phone,
-            }}
-          />
+      {/* 4. Checkout Layout Form & Grid */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmitOrder();
+        }}
+        noValidate
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Main Column: Forms */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-6">
+            {/* Guest Info Form (Full Name & Palestinian Phone) */}
+            <GuestInfoForm
+              fullName={fullName}
+              phone={phone}
+              onFullNameChange={(val) => {
+                setFullName(val);
+                if (errors.fullName) {
+                  setErrors((prev) => {
+                    const next = { ...prev };
+                    delete next.fullName;
+                    return next;
+                  });
+                }
+              }}
+              onPhoneChange={(val) => {
+                setPhone(val);
+                if (errors.phone) {
+                  setErrors((prev) => {
+                    const next = { ...prev };
+                    delete next.phone;
+                    return next;
+                  });
+                }
+              }}
+              errors={{
+                fullName: errors.fullName,
+                phone: errors.phone,
+              }}
+            />
 
-          {/* Delivery Address & Zone Selection Form */}
-          <DeliveryAddressForm
-            zones={zones}
-            selectedZoneId={zoneId}
-            onZoneChange={handleZoneChange}
-            streetAddress={streetAddress}
-            onStreetAddressChange={(val) => {
-              setStreetAddress(val);
-              if (errors.streetAddress) {
-                setErrors((prev) => {
-                  const next = { ...prev };
-                  delete next.streetAddress;
-                  return next;
-                });
-              }
-            }}
-            buildingOrApt={buildingOrApt}
-            onBuildingOrAptChange={(val) => {
-              setBuildingOrApt(val);
-              if (errors.buildingOrApt) {
-                setErrors((prev) => {
-                  const next = { ...prev };
-                  delete next.buildingOrApt;
-                  return next;
-                });
-              }
-            }}
-            notes={notes}
-            onNotesChange={(val) => {
-              setNotes(val);
-              if (errors.notes) {
-                setErrors((prev) => {
-                  const next = { ...prev };
-                  delete next.notes;
-                  return next;
-                });
-              }
-            }}
-            cartSubtotal={summary.subtotal}
-            errors={{
-              zoneId: errors.zoneId,
-              streetAddress: errors.streetAddress,
-              buildingOrApt: errors.buildingOrApt,
-              notes: errors.notes,
-            }}
-          />
+            {/* Delivery Address & Zone Selection Form */}
+            <DeliveryAddressForm
+              zones={zones}
+              selectedZoneId={zoneId}
+              onZoneChange={handleZoneChange}
+              streetAddress={streetAddress}
+              onStreetAddressChange={(val) => {
+                setStreetAddress(val);
+                if (errors.streetAddress) {
+                  setErrors((prev) => {
+                    const next = { ...prev };
+                    delete next.streetAddress;
+                    return next;
+                  });
+                }
+              }}
+              buildingOrApt={buildingOrApt}
+              onBuildingOrAptChange={(val) => {
+                setBuildingOrApt(val);
+                if (errors.buildingOrApt) {
+                  setErrors((prev) => {
+                    const next = { ...prev };
+                    delete next.buildingOrApt;
+                    return next;
+                  });
+                }
+              }}
+              notes={notes}
+              onNotesChange={(val) => {
+                setNotes(val);
+                if (errors.notes) {
+                  setErrors((prev) => {
+                    const next = { ...prev };
+                    delete next.notes;
+                    return next;
+                  });
+                }
+              }}
+              cartSubtotal={summary.subtotal}
+              errors={{
+                zoneId: errors.zoneId,
+                streetAddress: errors.streetAddress,
+                buildingOrApt: errors.buildingOrApt,
+                notes: errors.notes,
+              }}
+            />
 
-          {/* Payment Method Card */}
-          <PaymentMethodCard />
+            {/* Payment Method Card */}
+            <PaymentMethodCard />
+          </div>
+
+          {/* Sidebar Column: Sticky Order Summary & Submit CTA */}
+          <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24">
+            <OrderReviewSummary
+              items={items}
+              subtotal={summary.subtotal}
+              deliveryFee={summary.deliveryFee}
+              total={summary.total}
+              selectedZone={selectedZone}
+              isSubmitting={isSubmitting}
+              onSubmit={handleSubmitOrder}
+              isFormValid={isFormValid}
+              isMinOrderMet={isMinOrderMet}
+            />
+          </div>
         </div>
-
-        {/* Sidebar Column: Sticky Order Summary & Submit CTA */}
-        <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24">
-          <OrderReviewSummary
-            items={items}
-            subtotal={summary.subtotal}
-            deliveryFee={summary.deliveryFee}
-            total={summary.total}
-            selectedZone={selectedZone}
-            isSubmitting={isSubmitting}
-            onSubmit={handleSubmitOrder}
-            isFormValid={isFormValid}
-            isMinOrderMet={isMinOrderMet}
-          />
-        </div>
-      </div>
+      </form>
     </div>
   );
 }

@@ -85,14 +85,27 @@ export function StoreLogo({
   const finalHeight = height ?? logoConfig.defaultHeight;
 
   return (
-    <div className={cn("inline-flex items-center justify-center shrink-0", className)}>
+    <div
+      className={cn(
+        "inline-flex items-center justify-center shrink-0 transition-transform duration-300 ease-out",
+        className
+      )}
+      style={{
+        minHeight: height ? `${height}px` : undefined,
+      }}
+    >
       <Image
         src={logoConfig.src}
         alt={alt || logoConfig.defaultAlt}
         width={finalWidth}
         height={finalHeight}
         priority={priority}
-        className="w-auto h-auto max-w-full"
+        className="w-auto select-none transition-all duration-300 drop-shadow-[0_1px_4px_rgba(43,26,16,0.06)]"
+        style={{
+          width: "auto",
+          height: height ? `${height}px` : `${finalHeight}px`,
+          maxHeight: "100%",
+        }}
       />
     </div>
   );

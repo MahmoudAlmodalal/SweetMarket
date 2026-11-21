@@ -20,11 +20,12 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-card border border-candy-line bg-surface text-candy-ink transition-all duration-300",
-          elevation === "sm" && "shadow-1",
-          elevation === "md" && "shadow-card",
+          "rounded-candy-card border border-candy-line/90 bg-surface text-candy-ink transition-all duration-300 ease-out",
+          elevation === "none" && "shadow-none",
+          elevation === "sm" && "shadow-1 hover:shadow-candy-1",
+          elevation === "md" && "shadow-card hover:shadow-candy-2",
           interactive &&
-            "hover:shadow-card hover:-translate-y-1 hover:border-candy-line-dark cursor-pointer",
+            "hover:shadow-candy-2 hover:-translate-y-1 hover:border-candy-rose/40 cursor-pointer active:translate-y-0 active:scale-[0.99] motion-reduce:hover:translate-y-0 motion-reduce:transition-none",
           className
         )}
         {...props}
@@ -53,7 +54,7 @@ export const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "font-display font-semibold text-lg sm:text-xl text-candy-ink leading-snug",
+      "font-display font-semibold text-lg sm:text-xl text-candy-ink leading-snug tracking-tight",
       className
     )}
     {...props}
@@ -69,7 +70,7 @@ export const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-candy-muted font-sans", className)}
+    className={cn("text-sm text-candy-muted font-sans leading-relaxed", className)}
     {...props}
   />
 ));

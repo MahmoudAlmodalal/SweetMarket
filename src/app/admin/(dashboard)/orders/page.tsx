@@ -8,9 +8,7 @@ import {
   Bell,
   Clock,
   TrendingUp,
-  PackageCheck,
   Truck,
-  Sparkles,
 } from 'lucide-react';
 import { getOrders, getDeliveryZones } from '@/lib/repositories';
 import type { Order, DeliveryZone } from '@/types';
@@ -82,7 +80,6 @@ export default function AdminOrdersPage() {
   const inProgressCount = orders.filter(
     (o) => o.status === 'accepted' || o.status === 'in_preparation' || o.status === 'out_for_delivery'
   ).length;
-  const deliveredCount = orders.filter((o) => o.status === 'delivered').length;
   const grossRevenue = orders.reduce((sum, o) => sum + o.total, 0);
   const netRevenue = orders
     .filter((o) => o.status !== 'cancelled')
@@ -119,7 +116,7 @@ export default function AdminOrdersPage() {
         </div>
       </div>
 
-      {/* 2. مؤشر الطلبات الجديدة */}
+      {/* 2. مؤشر الطلبات الجديدة السريع */}
       {!isLoading && newOrdersCount > 0 && (
         <div
           role="button"

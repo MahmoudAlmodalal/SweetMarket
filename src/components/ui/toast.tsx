@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, AlertCircle, Info, X } from "lucide-react";
+import { CheckCircle2, AlertCircle, Info, AlertTriangle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type ToastVariant = "success" | "error" | "info";
+export type ToastVariant = "success" | "error" | "info" | "warning";
 
 export interface ToastItem {
   id: string;
@@ -25,6 +25,7 @@ interface ToastContextValue {
     success: (title: string, description?: string) => string;
     error: (title: string, description?: string) => string;
     info: (title: string, description?: string) => string;
+    warning: (title: string, description?: string) => string;
   };
 }
 
@@ -70,6 +71,8 @@ toast.error = (title: string, description?: string) =>
   addMemoryToast({ title, description, variant: "error" });
 toast.info = (title: string, description?: string) =>
   addMemoryToast({ title, description, variant: "info" });
+toast.warning = (title: string, description?: string) =>
+  addMemoryToast({ title, description, variant: "warning" });
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = React.useState<ToastItem[]>(memoryToasts);
@@ -120,16 +123,40 @@ const toastVariantStyles: Record<
   }
 > = {
   success: {
-    container: "border-emerald-200 bg-white text-emerald-950",
-    icon: <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />,
+    container:
+      "border-emerald-200/90 border-r-4 border-r-emerald-500 bg-white/95 text-emerald-950",
+    icon: (
+      <div className="shrink-0 p-1.5 rounded-full bg-emerald-50 text-emerald-600 ring-4 ring-emerald-50/50">
+        <CheckCircle2 className="h-4 w-4" />
+      </div>
+    ),
   },
   error: {
-    container: "border-rose-200 bg-white text-rose-950",
-    icon: <AlertCircle className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />,
+    container:
+      "border-rose-200/90 border-r-4 border-r-rose-500 bg-white/95 text-rose-950",
+    icon: (
+      <div className="shrink-0 p-1.5 rounded-full bg-rose-50 text-rose-600 ring-4 ring-rose-50/50">
+        <AlertCircle className="h-4 w-4" />
+      </div>
+    ),
   },
   info: {
-    container: "border-candy-blush bg-white text-candy-ink",
-    icon: <Info className="h-5 w-5 text-candy-berry shrink-0 mt-0.5" />,
+    container:
+      "border-candy-blush border-r-4 border-r-candy-berry bg-white/95 text-candy-ink",
+    icon: (
+      <div className="shrink-0 p-1.5 rounded-full bg-candy-soft text-candy-berry ring-4 ring-candy-soft/60">
+        <Info className="h-4 w-4" />
+      </div>
+    ),
+  },
+  warning: {
+    container:
+      "border-amber-200/90 border-r-4 border-r-amber-500 bg-white/95 text-amber-950",
+    icon: (
+      <div className="shrink-0 p-1.5 rounded-full bg-amber-50 text-amber-600 ring-4 ring-amber-50/50">
+        <AlertTriangle className="h-4 w-4" />
+      </div>
+    ),
   },
 };
 
@@ -143,22 +170,25 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
     const variantConfig =
       toastVariantStyles[item.variant || "info"] || toastVariantStyles.info;
 
+    const isError = item.variant === "error";
+
     return (
       <div
         ref={ref}
-        role="alert"
-        aria-live="polite"
+        role={isError ? "alert" : "status"}
+        aria-live={isError ? "assertive" : "polite"}
+        aria-atomic="true"
         dir="rtl"
         className={cn(
-          "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-candy-card border p-4 shadow-candy-2 transition-all duration-300",
+          "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-candy-card border p-4 shadow-candy-2 backdrop-blur-md transition-all duration-300 hover:shadow-candy-3 animate-[toast-in_0.3s_cubic-bezier(0.16,1,0.3,1)] motion-reduce:animate-none",
           variantConfig.container,
           className
         )}
         {...props}
       >
         {variantConfig.icon}
-        <div className="flex-1 space-y-1 text-right">
-          <p className="font-sans font-bold text-sm leading-tight">
+        <div className="flex-1 min-w-0 space-y-1 text-right">
+          <p className="font-sans font-bold text-sm text-candy-ink leading-tight">
             {item.title}
           </p>
           {item.description && (
@@ -171,10 +201,10 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
           <button
             type="button"
             onClick={() => onDismiss(item.id)}
-            className="rounded-full p-1 text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+            className="shrink-0 rounded-full p-1 text-candy-muted hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry/30"
             aria-label="إغلاق التنبيه"
           >
-            <X className="h-3.5 w-3.5" aria-hidden="true" />
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         )}
       </div>
@@ -192,7 +222,7 @@ export function Toaster({ className }: { className?: string }) {
     <div
       aria-label="الإشعارات"
       className={cn(
-        "fixed bottom-4 left-4 z-50 flex flex-col gap-2.5 max-w-md w-full pointer-events-none p-2 sm:bottom-6 sm:left-6",
+        "fixed bottom-4 left-4 z-[1100] flex flex-col gap-2.5 max-w-sm sm:max-w-md w-full pointer-events-none p-2 sm:bottom-6 sm:left-6",
         className
       )}
     >

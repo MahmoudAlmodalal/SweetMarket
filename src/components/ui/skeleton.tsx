@@ -1,7 +1,14 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export type SkeletonVariant = "default" | "text" | "title" | "block" | "card" | "row";
+export type SkeletonVariant =
+  | "default"
+  | "text"
+  | "title"
+  | "block"
+  | "card"
+  | "row"
+  | "avatar";
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: SkeletonVariant;
@@ -14,11 +21,12 @@ const variantClasses: Record<SkeletonVariant, string> = {
   block: "skeleton--block h-[120px] w-full rounded-2xl",
   card: "skeleton--card h-[280px] w-full rounded-candy-card",
   row: "skeleton--row h-14 w-full mb-2 rounded-xl",
+  avatar: "h-10 w-10 rounded-full",
 };
 
 /**
  * مكون هيكل التحميل المشترك (Skeleton)
- * يدعم الأنواع المعتمدة (text, title, block, card, row) وتأثير التموج اللوني (Shimmer)
+ * يدعم تأثير تموج بريق الحلويات الانسيابي (Confectionery Shimmer Sweep)
  */
 export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
   ({ className, variant = "default", ...props }, ref) => {
@@ -28,12 +36,16 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
         role="status"
         aria-label="جاري التحميل..."
         className={cn(
-          "skeleton select-none",
+          "skeleton relative overflow-hidden select-none bg-gradient-to-r from-soft via-blush/40 to-soft bg-[length:200%_100%]",
+          "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.8s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent",
+          "motion-reduce:before:hidden motion-reduce:animate-none",
           variantClasses[variant],
           className
         )}
         {...props}
-      />
+      >
+        <span className="sr-only">جاري التحميل...</span>
+      </div>
     );
   }
 );

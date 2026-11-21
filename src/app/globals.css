@@ -17,7 +17,8 @@
   body {
     color: var(--color-text);
     background:
-      radial-gradient(circle at 100% 0%, rgba(253, 242, 244, 0.82), transparent 34rem),
+      radial-gradient(circle at 100% 0%, rgba(253, 242, 244, 0.85), transparent 34rem),
+      radial-gradient(circle at 0% 100%, rgba(255, 248, 242, 0.70), transparent 28rem),
       var(--color-bg);
     font-family: var(--font-body);
     font-size: var(--fs-body);
@@ -26,6 +27,7 @@
     min-height: 100vh;
     text-align: start;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
@@ -58,9 +60,11 @@
     outline: none;
   }
 
+  /* Accessible focus indicators with high-contrast berry focus ring (WCAG AA) */
   :focus-visible {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--color-focus-ring);
   }
 }
 
@@ -69,7 +73,16 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius-card);
     background: var(--color-surface);
-    box-shadow: var(--shadow-1);
+    box-shadow: var(--shadow-candy-soft);
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+  }
+
+  .surface-cream {
+    border: 1px solid var(--color-cream-border);
+    border-radius: var(--radius-card);
+    background: var(--color-cream);
+    box-shadow: var(--shadow-candy-soft);
+    transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
   }
 
   .eyebrow {
@@ -146,12 +159,6 @@
   color: var(--color-primary);
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 /* ---- Skeleton Shimmer Primitive ---- */
 .skeleton {
   display: block;
@@ -159,7 +166,7 @@
   border-radius: var(--radius-input);
   background: linear-gradient(90deg, var(--color-soft) 25%, var(--color-blush) 50%, var(--color-soft) 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.4s linear infinite;
+  animation: shimmer 1.8s linear infinite;
 }
 
 .skeleton--text {
@@ -187,12 +194,39 @@
   margin-block-end: var(--space-2);
 }
 
+/* ---- Custom Smooth Keyframe Animations ---- */
+@keyframes candy-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
 @keyframes shimmer {
-  from {
+  0% {
     background-position: 200% 0;
   }
-  to {
+  100% {
     background-position: -200% 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.025);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -228,7 +262,28 @@
   }
 }
 
-/* ---- Reduced Motion Preference ---- */
+/* ---- Utility Classes for Confectionery Animations & Multi-layer Shadows ---- */
+.animate-candy-float {
+  animation: candy-float 3.5s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2.5s ease-in-out infinite;
+}
+
+.shadow-candy-soft {
+  box-shadow: var(--shadow-candy-soft) !important;
+}
+
+.shadow-candy-float {
+  box-shadow: var(--shadow-candy-float) !important;
+}
+
+/* ---- Reduced Motion Preference (Accessibility) ---- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -236,15 +291,21 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .skeleton {
-    animation: none;
+  .skeleton,
+  .spinner,
+  .animate-candy-float,
+  .animate-shimmer,
+  .animate-pulse-soft,
+  [class*="animate-"] {
+    animation: none !important;
+    transform: none !important;
   }
 }
 
 /* ---- Capture Mode for Truthful Full-Page Screenshots (Issue #35 / ADR-0001) ---- */
 [data-capture-mode] [data-mobile-dock],
 [data-capture-mode="true"] [data-mobile-dock],
-html[data-capture-mode] [data-mobile-dock],
+[html-capture-mode] [data-mobile-dock],
 body[data-capture-mode] [data-mobile-dock] {
   position: relative !important;
   bottom: auto !important;

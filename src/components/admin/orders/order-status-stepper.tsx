@@ -9,8 +9,9 @@ import {
   CheckCircle2,
   AlertTriangle,
   XCircle,
-  RotateCcw,
   ShieldAlert,
+  ChefHat,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { OrderStatus, AdminRole } from '@/types';
@@ -92,7 +93,7 @@ export function OrderStatusStepper({
   const isUndelivered = currentStatus === 'undelivered';
   const isManager = userRole === 'manager';
 
-  // تحديد الإجراء الرئيسي التالي المسموح به للتسلسل الطبيعي
+  // تحديد الإجراء الرئيسي التالي المسموح به للتسلسل الطبيعي في مسار عمل المطبخ
   const nextSequentialStatus = React.useMemo<OrderStatus | null>(() => {
     if (allowedTransitions.includes('accepted')) return 'accepted';
     if (allowedTransitions.includes('in_preparation')) return 'in_preparation';
@@ -104,7 +105,7 @@ export function OrderStatusStepper({
   // التحقق من إمكانية تعليم الطلب كـ "تعذر التسليم"
   const canMarkUndelivered = allowedTransitions.includes('undelivered');
 
-  // نص الزر الرئيسي التالي
+  // مسميات أزرار التقدم بنقرة واحدة لدورة عمل المطبخ والتوصيل
   const getNextActionLabel = (nextStatus: OrderStatus): string => {
     switch (nextStatus) {
       case 'accepted':
@@ -112,9 +113,9 @@ export function OrderStatusStepper({
       case 'in_preparation':
         return 'بدء التجهيز';
       case 'out_for_delivery':
-        return isUndelivered ? 'إعادة الإرسال للتوصيل' : 'إرسال للتوصيل';
+        return isUndelivered ? 'إعادة التسليم للمندوب' : 'تسليم للمندوب';
       case 'delivered':
-        return 'تأكيد اكتمال التسليم';
+        return 'تأكيد التسليم';
       default:
         return `نقل إلى: ${ORDER_STATUS_LABELS[nextStatus] || nextStatus}`;
     }
@@ -153,7 +154,7 @@ export function OrderStatusStepper({
           <div className="text-sm">
             <h4 className="font-bold text-amber-800">تعذّر تسليم الطلب للزبون</h4>
             <p className="text-amber-700 mt-0.5">
-              حدث عائق أثناء التوصيل. يمكنك إعادة محاولة إرسال الطلب للتوصيل أو إلغاء الطلب (للمدير).
+              حدث عائق أثناء التوصيل. يمكنك إعادة محاولة تسليم الطلب للمندوب أو إلغاء الطلب (للمدير).
             </p>
           </div>
         </div>
@@ -231,11 +232,12 @@ export function OrderStatusStepper({
         </div>
       )}
 
-      {/* 3. شريط أزرار الإجراءات التفاعلية (Actions Bar) */}
+      {/* 3. شريط أزرار الإجراءات التفاعلية وسير العمل بنقرة واحدة */}
       <div className="pt-4 border-t border-candy-line/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        {/* معلومات الحالة الإضافية */}
+        {/* معلومات مرحلة العمل الحالية */}
         <div className="flex items-center gap-2 text-xs text-candy-muted">
-          <span>الحالة الحالية:</span>
+          <ChefHat className="w-4 h-4 text-candy-berry shrink-0" />
+          <span>مرحلة الطلب:</span>
           <span className="font-bold text-candy-ink">
             {ORDER_STATUS_LABELS[currentStatus] || currentStatus}
           </span>
@@ -246,7 +248,7 @@ export function OrderStatusStepper({
           )}
         </div>
 
-        {/* مجموعة الأزرار */}
+        {/* مجموعة أزرار سير العمل بنقرة واحدة */}
         <div className="flex flex-wrap items-center justify-end gap-2.5">
           {/* زر تعذر التسليم (يظهر في مرحلة خرج للتوصيل) */}
           {canMarkUndelivered && !isTerminal && (
@@ -264,7 +266,7 @@ export function OrderStatusStepper({
             </Button>
           )}
 
-          {/* زر التقدم إلى الخطوة المسموحة التالية */}
+          {/* زر التقدم بنقرة واحدة لدورة العمل (قبول الطلب -> بدء التجهيز -> تسليم للمندوب -> تأكيد التسليم) */}
           {nextSequentialStatus && !isTerminal && (
             <Button
               type="button"
@@ -284,6 +286,7 @@ export function OrderStatusStepper({
                   <CheckCircle className="w-4 h-4" />
                 )
               }
+              className="shadow-sm font-bold"
             >
               {getNextActionLabel(nextSequentialStatus)}
             </Button>

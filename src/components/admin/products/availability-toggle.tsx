@@ -46,7 +46,7 @@ export function AvailabilityToggle({
     const previousState = isAvailable;
     const targetState = !previousState;
 
-    // 1. التحديث التفاؤلي الفوري (Optimistic UI Update)
+    // 1. التحديث التفاؤلي الفوري (Optimistic UI Update) بدون إعادة تحميل الصفحة
     setIsAvailable(targetState);
     setIsUpdating(true);
 
@@ -91,7 +91,7 @@ export function AvailabilityToggle({
   return (
     <div
       className={cn(
-        'inline-flex items-center gap-2 select-none',
+        'inline-flex items-center gap-2 select-none touch-manipulation',
         className
       )}
       dir="rtl"
@@ -107,18 +107,18 @@ export function AvailabilityToggle({
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
         className={cn(
-          'relative inline-flex flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry focus-visible:ring-offset-2',
+          'relative inline-flex flex-shrink-0 cursor-pointer rounded-full transition-all duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry focus-visible:ring-offset-2 active:scale-95',
           isSmall ? 'h-6 w-11' : 'h-7 w-14',
           isAvailable
-            ? 'bg-emerald-500 hover:bg-emerald-600'
+            ? 'bg-emerald-600 hover:bg-emerald-700 shadow-sm shadow-emerald-600/20'
             : 'bg-slate-300 hover:bg-slate-400',
-          (disabled || isUpdating) && 'opacity-70 cursor-not-allowed'
+          (disabled || isUpdating) && 'opacity-70 cursor-not-allowed active:scale-100'
         )}
       >
         {/* Thumb Circle */}
         <span
           className={cn(
-            'pointer-events-none flex items-center justify-center rounded-full bg-white shadow-md transform transition duration-200 ease-in-out',
+            'pointer-events-none flex items-center justify-center rounded-full bg-white shadow-md transform transition-transform duration-200 ease-in-out',
             isSmall
               ? cn(
                   'h-5 w-5 top-0.5',
@@ -141,7 +141,7 @@ export function AvailabilityToggle({
           ) : isAvailable ? (
             <Check
               className={cn(
-                'text-emerald-600 stroke-[2.5]',
+                'text-emerald-700 stroke-[2.5]',
                 isSmall ? 'h-3 w-3' : 'h-3.5 w-3.5'
               )}
               aria-hidden="true"
@@ -162,8 +162,8 @@ export function AvailabilityToggle({
         <span
           onClick={disabled || isUpdating ? undefined : handleToggle}
           className={cn(
-            'font-sans text-xs font-semibold cursor-pointer transition-colors',
-            isAvailable ? 'text-emerald-700' : 'text-slate-500',
+            'font-sans text-xs font-bold cursor-pointer transition-colors select-none',
+            isAvailable ? 'text-emerald-700 hover:text-emerald-800' : 'text-slate-500 hover:text-slate-700',
             (disabled || isUpdating) && 'cursor-not-allowed opacity-70'
           )}
         >

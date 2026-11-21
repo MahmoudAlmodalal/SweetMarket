@@ -10,13 +10,12 @@ import {
   Calendar,
   Clock,
   ArrowUpDown,
-  ExternalLink,
   ChevronLeft,
-  Package,
   MapPin,
   Filter,
   Inbox,
-  User,
+  Sparkles,
+  ShoppingBag,
 } from 'lucide-react';
 import type { Order, OrderStatus, DeliveryZone } from '@/types';
 import { OrderStatusBadge } from './order-status-badge';
@@ -135,13 +134,16 @@ export function OrdersDataTable({
       result = result.filter((order) => order.status === activeTab);
     }
 
-    // 2. البحث الفوري برقم الطلب أو اسم العميل أو رقم الهاتف
+    // 2. البحث الفوري برقم الطلب، اسم العميل، رقم الهاتف، أو المنطقة
     const query = searchQuery.trim().toLowerCase();
+    const cleanQuery = query.replace(/[\s-]/g, '');
+
     if (query) {
       result = result.filter((order) => {
         const orderNumberMatch = order.orderNumber.toLowerCase().includes(query);
         const customerNameMatch = order.customer.fullName.toLowerCase().includes(query);
-        const customerPhoneMatch = order.customer.phone.replace(/\s+/g, '').includes(query);
+        const rawPhone = order.customer.phone.replace(/[\s-]/g, '');
+        const customerPhoneMatch = rawPhone.includes(cleanQuery);
         const zoneName = zonesMap.get(order.customer.zoneId) || '';
         const zoneMatch = zoneName.toLowerCase().includes(query);
 
@@ -168,10 +170,10 @@ export function OrdersDataTable({
 
   return (
     <div className="space-y-4">
-      {/* 1. أشرطة التبويبات الفلترة وأدوات البحث */}
+      {/* 1. أشرطة التبويبات للفلترة السريعة وأدوات البحث */}
       <div className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
-        {/* التبويبات للفلترة السريعة متجاوبة مع الشاشات الصغيرة */}
-        <div className="flex flex-wrap items-center gap-1.5 pb-1">
+        {/* شريط تبويبات الحالات متجاوب وسلس للتمرير الأفقي */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
           {FILTER_TABS.map((tab) => {
             const count = tabCounts[tab.key] || 0;
             const isActive = activeTab === tab.key;
@@ -183,7 +185,7 @@ export function OrdersDataTable({
                 type="button"
                 onClick={() => handleTabChange(tab.key)}
                 className={cn(
-                  'flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-sans font-bold whitespace-nowrap transition-all duration-150',
+                  'flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-sans font-bold whitespace-nowrap transition-all duration-150 shrink-0',
                   isActive
                     ? 'bg-candy-berry text-white shadow-candy-1'
                     : 'bg-candy-soft text-candy-muted hover:text-candy-ink hover:bg-candy-blush/60'
@@ -238,7 +240,7 @@ export function OrdersDataTable({
             <button
               type="button"
               onClick={() => setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-sans font-semibold border border-candy-line bg-candy-cream/50 text-candy-ink hover:bg-candy-soft transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-sans font-semibold border border-candy-line bg-candy-cream/50 text-candy-ink hover:bg-candy-soft transition-colors shrink-0"
               title="تبديل اتجاه الترتيب"
             >
               <ArrowUpDown className="w-3.5 h-3.5 text-candy-berry" />
@@ -298,7 +300,7 @@ export function OrdersDataTable({
         </div>
       ) : (
         <>
-          {/* عرض سطح المكتب والأجهزة اللوحية (Table) */}
+          {/* عرض سطح المكتب والأجهزة اللوحية (Table Layout) */}
           <div className="hidden md:block bg-white rounded-2xl border border-candy-line shadow-candy-1 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
@@ -338,6 +340,10 @@ export function OrdersDataTable({
                       order.customer.streetAddress ||
                       'المنطقة المحددة';
 
+                    const hasRoyalPackaging = order.items.some(
+                      (item) => item.packagingOptionId === 'royal' || (item.packagingFee && item.packagingFee > 0)
+                    );
+
                     return (
                       <tr
                         key={order.id}
@@ -351,9 +357,17 @@ export function OrdersDataTable({
                           >
                             <span>{order.orderNumber}</span>
                           </Link>
-                          <span className="text-[11px] text-candy-muted font-sans block mt-0.5">
-                            {order.items.length} أصناف
-                          </span>
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            <span className="text-[11px] text-candy-muted font-sans block">
+                              {order.items.length} أصناف
+                            </span>
+                            {hasRoyalPackaging && (
+                              <span className="inline-flex items-center gap-0.5 text-[10px] text-amber-700 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md">
+                                <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+                                <span>تغليف ملكي</span>
+                              </span>
+                            )}
+                          </div>
                         </td>
 
                         {/* وقت الطلب */}
@@ -435,7 +449,7 @@ export function OrdersDataTable({
             </div>
           </div>
 
-          {/* عرض الهواتف المحمولة (Mobile Cards View) */}
+          {/* عرض الهواتف المحمولة (Responsive Mobile Cards Layout) */}
           <div className="md:hidden space-y-3">
             {filteredOrders.map((order) => {
               const { date, time } = formatOrderDateTime(order.createdAt);
@@ -443,6 +457,10 @@ export function OrdersDataTable({
                 zonesMap.get(order.customer.zoneId) ||
                 order.customer.streetAddress ||
                 'المنطقة المحددة';
+
+              const hasRoyalPackaging = order.items.some(
+                (item) => item.packagingOptionId === 'royal' || (item.packagingFee && item.packagingFee > 0)
+              );
 
               return (
                 <div
@@ -454,9 +472,15 @@ export function OrdersDataTable({
                     <div>
                       <Link
                         href={`/admin/orders/${order.id}`}
-                        className="font-mono font-bold text-sm text-candy-berry hover:underline"
+                        className="font-mono font-bold text-sm text-candy-berry hover:underline flex items-center gap-1.5"
                       >
-                        {order.orderNumber}
+                        <span>{order.orderNumber}</span>
+                        {hasRoyalPackaging && (
+                          <span className="inline-flex items-center gap-0.5 text-[9px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full">
+                            <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+                            <span>ملكي</span>
+                          </span>
+                        )}
                       </Link>
                       <div className="text-[11px] text-candy-muted flex items-center gap-1 mt-0.5">
                         <Clock className="w-3 h-3 text-candy-muted" />
@@ -495,12 +519,21 @@ export function OrdersDataTable({
                         <span className="truncate">{zoneName}</span>
                       </div>
                     </div>
+
+                    {order.customer.notes && (
+                      <div className="col-span-2 text-[11px] text-amber-800 bg-amber-50/70 border border-amber-200/60 p-2 rounded-xl">
+                        <span className="font-bold">ملاحظة: </span>
+                        <span>{order.customer.notes}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* أسفل البطاقة: الإجمالي وزر الإجراءات */}
                   <div className="flex items-center justify-between pt-2 border-t border-candy-line/60">
                     <div>
-                      <span className="text-[10px] text-candy-muted block">الإجمالي:</span>
+                      <span className="text-[10px] text-candy-muted block">
+                        الإجمالي ({order.items.length} أصناف):
+                      </span>
                       <strong className="text-sm font-bold text-candy-berry font-sans">
                         {order.total.toFixed(2)} ₪
                       </strong>
@@ -508,7 +541,7 @@ export function OrdersDataTable({
 
                     <Link
                       href={`/admin/orders/${order.id}`}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush transition-colors"
+                      className="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush transition-colors"
                     >
                       <span>عرض تفاصيل الطلب</span>
                       <ChevronLeft className="w-3.5 h-3.5" />

@@ -17,17 +17,26 @@ import {
   Save,
   Clock,
   Sparkles,
+  Search,
+  X,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle2,
+  AlertCircle,
+  Filter,
 } from "lucide-react";
 import { STORAGE_KEYS, getStorageItem, setStorageItem } from "@/lib/storage";
-import { getOrders, getDeliveryZones, getProducts } from "@/lib/repositories";
+import { getOrders, getDeliveryZones } from "@/lib/repositories";
 import { useCart } from "@/context/cart-context";
 import { getFavoriteProductIds, FAVORITES_UPDATED_EVENT } from "@/components/storefront/catalog/wishlist-utils";
 import { normalizePalestinianPhone, isValidPalestinianPhone } from "@/lib/validations";
-import { ORDER_STATUS_LABELS, type Order, type CheckoutCustomerData, type DeliveryZone } from "@/types";
+import { ORDER_STATUS_LABELS, type Order, type OrderStatus, type CheckoutCustomerData, type DeliveryZone } from "@/types";
 import { toast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+
+type StatusFilterType = "all" | OrderStatus;
 
 export default function AccountPage() {
   const router = useRouter();
@@ -43,9 +52,12 @@ export default function AccountPage() {
   const [zoneId, setZoneId] = React.useState("");
   const [zones, setZones] = React.useState<DeliveryZone[]>([]);
 
-  // Orders list
-  const [orders, setOrders] = React.useState<Order[]>([]);
+  // Orders list and lookup
+  const [allOrders, setAllOrders] = React.useState<Order[]>([]);
   const [isLoadingOrders, setIsLoadingOrders] = React.useState(true);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [statusFilter, setStatusFilter] = React.useState<StatusFilterType>("all");
+  const [expandedOrderId, setExpandedOrderId] = React.useState<string | null>(null);
 
   // Live Counts
   const [favoritesCount, setFavoritesCount] = React.useState(0);
@@ -86,28 +98,13 @@ export default function AccountPage() {
     };
   }, []);
 
-  // Fetch orders matching profile phone or fallback to mock/recent orders
+  // Fetch all orders
   React.useEffect(() => {
     async function loadAccountOrders() {
       setIsLoadingOrders(true);
       try {
-        const allOrders = await getOrders();
-        const profilePhone = profile.phone?.trim();
-
-        if (profilePhone && isValidPalestinianPhone(profilePhone)) {
-          const normProfilePhone = normalizePalestinianPhone(profilePhone);
-          const matching = allOrders.filter((ord) => {
-            try {
-              return normalizePalestinianPhone(ord.customer.phone) === normProfilePhone;
-            } catch {
-              return ord.customer.phone.trim() === profilePhone;
-            }
-          });
-          // If no matching orders yet, show demo orders so page is never barren
-          setOrders(matching.length > 0 ? matching : allOrders.slice(0, 4));
-        } else {
-          setOrders(allOrders.slice(0, 4));
-        }
+        const ordersFromRepo = await getOrders();
+        setAllOrders(ordersFromRepo);
       } catch (err) {
         console.error("Failed to load account orders:", err);
       } finally {
@@ -116,7 +113,7 @@ export default function AccountPage() {
     }
 
     loadAccountOrders();
-  }, [profile.phone]);
+  }, []);
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,14 +167,82 @@ export default function AccountPage() {
     }
   };
 
+  // Filtered orders based on search query (order # or phone) and status chips
+  const filteredOrders = React.useMemo(() => {
+    let result = allOrders;
+    const query = searchQuery.trim().toLowerCase();
+
+    if (query) {
+      const cleanPhoneDigits = query.replace(/\D/g, "");
+      result = result.filter((ord) => {
+        const orderNumMatch = ord.orderNumber.toLowerCase().includes(query);
+        const nameMatch = ord.customer.fullName.toLowerCase().includes(query);
+        const rawPhone = ord.customer.phone || "";
+        const phoneMatch = rawPhone.includes(query) || (cleanPhoneDigits.length >= 4 && rawPhone.includes(cleanPhoneDigits));
+
+        let normPhoneMatch = false;
+        if (isValidPalestinianPhone(rawPhone) && cleanPhoneDigits.length >= 7) {
+          try {
+            normPhoneMatch = normalizePalestinianPhone(rawPhone).includes(cleanPhoneDigits);
+          } catch {
+            normPhoneMatch = false;
+          }
+        }
+
+        return orderNumMatch || nameMatch || phoneMatch || normPhoneMatch;
+      });
+    } else {
+      // Default: if customer has saved phone, prioritize matching orders
+      const profilePhone = profile.phone?.trim();
+      if (profilePhone && isValidPalestinianPhone(profilePhone)) {
+        try {
+          const normProfilePhone = normalizePalestinianPhone(profilePhone);
+          const matching = result.filter((ord) => {
+            try {
+              return normalizePalestinianPhone(ord.customer.phone) === normProfilePhone;
+            } catch {
+              return ord.customer.phone.trim() === profilePhone;
+            }
+          });
+          if (matching.length > 0) {
+            result = matching;
+          } else {
+            result = allOrders.slice(0, 4);
+          }
+        } catch {
+          result = allOrders.slice(0, 4);
+        }
+      } else {
+        result = allOrders.slice(0, 4);
+      }
+    }
+
+    if (statusFilter !== "all") {
+      result = result.filter((ord) => ord.status === statusFilter);
+    }
+
+    return result;
+  }, [allOrders, searchQuery, statusFilter, profile.phone]);
+
   const displayName = profile.fullName || "زائر كاندي لوز";
   const hasDetails = Boolean(profile.fullName || profile.phone || profile.streetAddress);
+
+  // Status Filter Definitions
+  const statusOptions: { id: StatusFilterType; label: string }[] = [
+    { id: "all", label: "جميع الطلبات" },
+    { id: "new", label: "جديد" },
+    { id: "accepted", label: "مقبول" },
+    { id: "in_preparation", label: "قيد التجهيز" },
+    { id: "out_for_delivery", label: "خرج للتوصيل" },
+    { id: "delivered", label: "تم التسليم" },
+    { id: "cancelled", label: "ملغي" },
+  ];
 
   return (
     <div dir="rtl" className="py-4 sm:py-8 space-y-6 sm:space-y-8 max-w-5xl mx-auto">
       {/* Breadcrumb Navigation */}
       <nav aria-label="مسار التنقل" className="flex items-center gap-2 text-xs sm:text-sm text-candy-muted">
-        <Link href="/" className="hover:text-candy-berry transition-colors">
+        <Link href="/" className="hover:text-candy-berry transition-colors font-medium">
           الرئيسية
         </Link>
         <ArrowRight className="w-3.5 h-3.5" />
@@ -187,8 +252,8 @@ export default function AccountPage() {
       {/* Header Banner */}
       <header className="rounded-candy-section bg-gradient-to-br from-candy-soft via-candy-blush/30 to-candy-pastel-2/30 border border-candy-blush p-5 sm:p-8 shadow-candy-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-white text-candy-berry flex items-center justify-center shadow-sm shrink-0">
-            <UserRound className="w-7 h-7" />
+          <div className="w-14 h-14 rounded-full bg-white text-candy-berry flex items-center justify-center shadow-sm shrink-0 border border-candy-blush">
+            <UserRound className="w-7 h-7 text-candy-strawberry" />
           </div>
           <div>
             <p className="text-xs font-bold text-candy-strawberry mb-1">مساحتك الخاصة (حساب زائر محلي)</p>
@@ -196,7 +261,7 @@ export default function AccountPage() {
               أهلاً بك، {displayName}
             </h1>
             <p className="text-xs sm:text-sm text-candy-muted mt-1">
-              راجع بيانات التوصيل المحفوظة وتتبع طلباتك السابقة وأعد طلب حلوياتك المفضلة بنقرة واحدة.
+              راجع بيانات التوصيل المحفوظة، وتتبع طلباتك السابقة بالبحث الفوري، وأعد طلب حلوياتك المفضلة بنقرة واحدة.
             </p>
           </div>
         </div>
@@ -313,7 +378,7 @@ export default function AccountPage() {
                 )}
               </div>
               <p className="text-xs text-candy-muted font-sans pt-2">
-                تُملأ هذه البيانات تلقائياً في صفحة الشراء لراحتك.
+                تُملأ هذه البيانات تلقائياً في صفحة الشراء لراحتك وسرعة إتمام الطلب.
               </p>
             </div>
           ) : (
@@ -333,13 +398,13 @@ export default function AccountPage() {
           )}
         </section>
 
-        {/* Orders List & Re-Order Section */}
-        <section className="lg:col-span-7 rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-5 sm:p-6">
-          <div className="flex items-center justify-between gap-3 mb-5">
+        {/* Orders List & Interactive Lookup Section */}
+        <section className="lg:col-span-7 rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-5 sm:p-6 space-y-5">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
               <Package className="w-5 h-5 text-candy-strawberry" />
               <h2 className="font-display font-bold text-lg text-candy-ink">
-                سجل الطلبات وإعادة الطلب
+                سجل الطلبات والاستعلام الفوري
               </h2>
             </div>
             <Link
@@ -347,51 +412,174 @@ export default function AccountPage() {
               className="text-xs font-bold font-sans text-candy-strawberry hover:underline flex items-center gap-1"
             >
               <Truck className="w-3.5 h-3.5" />
-              <span>تتبع برقم آخر</span>
+              <span>تتبع مفصل برقم الطلب</span>
             </Link>
           </div>
 
+          {/* Interactive Lookup Search Bar (Phone or Order Number) */}
+          <div className="space-y-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-candy-muted absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ابحث برقم الطلب (مثال: CL-1001) أو برقم الهاتف الخلوي..."
+                className="w-full h-11 pr-10 pl-10 rounded-xl border border-candy-line bg-candy-soft/60 hover:bg-candy-soft text-xs sm:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 focus:border-candy-strawberry/50 transition-all"
+                aria-label="البحث في سجل الطلبات برقم الطلب أو الهاتف"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 p-1 text-candy-muted hover:text-candy-berry transition-colors"
+                  aria-label="مسح نص البحث"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Quick Helper for Saved Phone */}
+            {profile.phone && !searchQuery && (
+              <div className="flex items-center justify-between text-xs text-candy-muted px-1">
+                <span>يتم حالياً عرض الطلبات المقترنة برقم هاتفك المسجل.</span>
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery(profile.phone || "")}
+                  className="text-candy-strawberry font-bold hover:underline"
+                >
+                  تصفية برقم {profile.phone}
+                </button>
+              </div>
+            )}
+
+            {/* Status Filter Chips */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+              <span className="text-xs text-candy-muted font-bold ml-1 shrink-0 flex items-center gap-1">
+                <Filter className="w-3 h-3 text-candy-muted" />
+                الحالة:
+              </span>
+              {statusOptions.map((opt) => {
+                const isActive = statusFilter === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setStatusFilter(opt.id)}
+                    className={cn(
+                      "px-3 py-1 rounded-candy-pill text-xs font-bold whitespace-nowrap transition-all border",
+                      isActive
+                        ? "bg-candy-berry text-white border-candy-berry shadow-xs"
+                        : "bg-candy-soft text-candy-ink border-candy-line hover:bg-candy-blush/60"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Orders Results List */}
           {isLoadingOrders ? (
             <div className="space-y-3">
-              <div className="h-20 bg-candy-soft animate-pulse rounded-2xl" />
-              <div className="h-20 bg-candy-soft animate-pulse rounded-2xl" />
+              <div className="h-24 bg-candy-soft animate-pulse rounded-2xl" />
+              <div className="h-24 bg-candy-soft animate-pulse rounded-2xl" />
             </div>
-          ) : orders.length > 0 ? (
+          ) : filteredOrders.length > 0 ? (
             <div className="space-y-3.5">
-              {orders.map((ord) => {
+              {filteredOrders.map((ord) => {
                 const totalUnits = ord.items.reduce((s, it) => s + it.quantity, 0);
+                const isExpanded = expandedOrderId === ord.id;
+
                 return (
                   <div
                     key={ord.id}
-                    className="p-4 rounded-2xl border border-candy-line/80 bg-candy-soft/30 hover:bg-candy-soft/70 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="p-4 rounded-2xl border border-candy-line/80 bg-candy-soft/30 hover:bg-candy-soft/60 transition-all space-y-3"
                   >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-sm text-candy-berry" dir="ltr">
+                    {/* Header Row: Order Number + Status Chip */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-mono font-bold text-sm sm:text-base text-candy-berry" dir="ltr">
                           {ord.orderNumber}
                         </span>
-                        <span
-                          className={cn(
-                            "px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans",
-                            ord.status === "delivered" && "bg-emerald-100 text-emerald-800",
-                            ord.status === "cancelled" && "bg-rose-100 text-rose-800",
-                            ord.status === "in_preparation" && "bg-amber-100 text-amber-800",
-                            ord.status !== "delivered" &&
-                              ord.status !== "cancelled" &&
-                              ord.status !== "in_preparation" &&
-                              "bg-candy-blush text-candy-berry"
-                          )}
-                        >
-                          {ORDER_STATUS_LABELS[ord.status]}
-                        </span>
+
+                        {/* Status Chip Badge */}
+                        <OrderStatusChip status={ord.status} />
+
+                        {ord.createdAt && (
+                          <span className="text-[11px] text-candy-muted flex items-center gap-1">
+                            <Clock className="w-3 h-3 text-candy-muted" />
+                            {new Date(ord.createdAt).toLocaleDateString("ar-EG", {
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+                        )}
                       </div>
-                      <p className="text-xs text-candy-muted font-sans">
-                        {ord.items.length} أصناف ({totalUnits} قطعة) • الإجمالي:{" "}
-                        <strong className="text-candy-ink font-mono">{ord.total.toFixed(2)} ₪</strong>
-                      </p>
+
+                      {/* Total Price */}
+                      <div className="text-left sm:text-right">
+                        <span className="text-xs text-candy-muted font-sans ml-1.5">الإجمالي:</span>
+                        <strong className="text-candy-ink font-mono font-bold text-sm sm:text-base">
+                          {ord.total.toFixed(2)} ₪
+                        </strong>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-2 self-end sm:self-center">
+                    {/* Customer & Items Brief Summary */}
+                    <div className="flex items-center justify-between text-xs text-candy-muted font-sans flex-wrap gap-2 pt-1 border-t border-candy-line/40">
+                      <span>
+                        {ord.items.length} أصناف ({totalUnits} قطعة) • العميل:{" "}
+                        <strong className="text-candy-ink font-semibold">{ord.customer.fullName}</strong>
+                      </span>
+
+                      {/* Expand / Collapse Details Button */}
+                      <button
+                        type="button"
+                        onClick={() => setExpandedOrderId(isExpanded ? null : ord.id)}
+                        className="inline-flex items-center gap-1 text-candy-strawberry font-bold hover:underline"
+                        aria-expanded={isExpanded}
+                      >
+                        <span>{isExpanded ? "إخفاء التفاصيل" : "عرض الأصناف"}</span>
+                        {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+
+                    {/* Expandable Order Items Breakdown */}
+                    {isExpanded && (
+                      <div className="pt-2 border-t border-candy-line/50 space-y-2 animate-in fade-in-50 duration-150">
+                        <div className="bg-white/80 rounded-xl p-3 border border-candy-line/60 space-y-2">
+                          <p className="text-[11px] font-bold text-candy-berry">محتويات الطلبية:</p>
+                          <ul className="divide-y divide-candy-line/40 text-xs">
+                            {ord.items.map((item, idx) => (
+                              <li key={idx} className="py-1.5 flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-candy-strawberry" />
+                                  <span className="font-bold text-candy-ink">{item.productName}</span>
+                                  {item.selectedWeightLabel && (
+                                    <span className="text-[10px] text-candy-muted bg-candy-soft px-1.5 py-0.5 rounded">
+                                      {item.selectedWeightLabel}
+                                    </span>
+                                  )}
+                                  {item.packagingLabel && (
+                                    <span className="text-[10px] text-candy-berry bg-candy-blush/60 px-1.5 py-0.5 rounded">
+                                      {item.packagingLabel}
+                                    </span>
+                                  )}
+                                  <span className="text-candy-muted font-mono">× {item.quantity}</span>
+                                </div>
+                                <span className="font-mono font-bold text-candy-ink">{item.lineTotal.toFixed(2)} ₪</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Action Buttons: Re-order & Track */}
+                    <div className="flex items-center justify-end gap-2 pt-1">
                       <Button
                         type="button"
                         variant="secondary"
@@ -406,8 +594,8 @@ export default function AccountPage() {
                         href={`/track?order=${encodeURIComponent(ord.orderNumber)}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-white border border-candy-line hover:border-candy-berry text-candy-berry text-xs font-bold shadow-xs transition-colors"
                       >
-                        <Truck className="w-3.5 h-3.5" />
-                        <span>تتبع</span>
+                        <Truck className="w-3.5 h-3.5 text-candy-strawberry" />
+                        <span>تتبع الطلب</span>
                       </Link>
                     </div>
                   </div>
@@ -415,16 +603,30 @@ export default function AccountPage() {
               })}
             </div>
           ) : (
-            <div className="rounded-2xl bg-candy-soft p-5 text-center">
-              <p className="text-sm text-candy-muted mb-4">
-                لا توجد طلبات مسجلة برقم هاتفك الحالي بعد.
+            <div className="rounded-2xl bg-candy-soft p-6 text-center space-y-3">
+              <div className="w-12 h-12 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center mx-auto">
+                <Search className="w-6 h-6 text-candy-berry" />
+              </div>
+              <h3 className="font-display font-bold text-base text-candy-berry">
+                لم يتم العثور على طلبات مطابقة
+              </h3>
+              <p className="text-xs sm:text-sm text-candy-muted max-w-sm mx-auto">
+                {searchQuery
+                  ? "تحقق من صحة رقم الطلب أو رقم الهاتف الخلوي المدخل، أو قم بإعادة ضبط البحث."
+                  : "لا توجد طلبات مسجلة بهذه الحالة بعد."}
               </p>
-              <Link
-                href="/category/all"
-                className="inline-flex min-h-11 items-center justify-center gap-2 px-5 rounded-candy-pill bg-candy-strawberry text-white text-sm font-bold shadow-candy-cta"
-              >
-                تصفح الحلويات واطلب الآن
-              </Link>
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setStatusFilter("all");
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-candy-pill bg-white border border-candy-line hover:border-candy-berry text-candy-berry text-xs font-bold transition-all shadow-xs"
+                >
+                  <span>إعادة ضبط البحث وعرض الكل</span>
+                </button>
+              )}
             </div>
           )}
         </section>
@@ -478,6 +680,64 @@ export default function AccountPage() {
       </div>
     </div>
   );
+}
+
+/**
+ * Status Chip with Distinctive Confectionery Palette & Visual Icons
+ */
+function OrderStatusChip({ status }: { status: OrderStatus }) {
+  switch (status) {
+    case "delivered":
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+          <span>{ORDER_STATUS_LABELS[status]}</span>
+        </span>
+      );
+    case "out_for_delivery":
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-indigo-100 text-indigo-800 border border-indigo-200">
+          <Truck className="w-3 h-3 text-indigo-600" />
+          <span>{ORDER_STATUS_LABELS[status]}</span>
+        </span>
+      );
+    case "in_preparation":
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-amber-100 text-amber-900 border border-amber-200">
+          <Sparkles className="w-3 h-3 text-amber-600" />
+          <span>{ORDER_STATUS_LABELS[status]}</span>
+        </span>
+      );
+    case "accepted":
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-sky-100 text-sky-800 border border-sky-200">
+          <Check className="w-3 h-3 text-sky-600" />
+          <span>{ORDER_STATUS_LABELS[status]}</span>
+        </span>
+      );
+    case "cancelled":
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-rose-100 text-rose-800 border border-rose-200">
+          <AlertCircle className="w-3 h-3 text-rose-600" />
+          <span>{ORDER_STATUS_LABELS[status]}</span>
+        </span>
+      );
+    case "undelivered":
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-orange-100 text-orange-800 border border-orange-200">
+          <AlertCircle className="w-3 h-3 text-orange-600" />
+          <span>{ORDER_STATUS_LABELS[status]}</span>
+        </span>
+      );
+    case "new":
+    default:
+      return (
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-bold font-sans bg-candy-blush text-candy-berry border border-candy-line">
+          <Clock className="w-3 h-3 text-candy-strawberry" />
+          <span>{ORDER_STATUS_LABELS[status] || "جديد"}</span>
+        </span>
+      );
+  }
 }
 
 function InfoItem({

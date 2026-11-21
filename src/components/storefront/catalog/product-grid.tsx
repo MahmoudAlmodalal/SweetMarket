@@ -23,17 +23,18 @@ export interface ProductGridProps {
 
 /**
  * بطاقة هيكل التحميل (Skeleton Card)
- * تطابق أبعاد ونسق ProductCard بنسبة 4/5 للحفاظ على استقرار الواجهة (CLS)
+ * تطابق أبعاد ونسق ProductCard بنسبة 4/5 مع لمعان شيمر فاخر للحفاظ على استقرار الواجهة (CLS)
  */
 function ProductCardSkeleton({ index }: { index: number }) {
   return (
     <div
       aria-hidden="true"
-      className="flex flex-col justify-between rounded-candy-card border border-candy-line/60 p-3 sm:p-4 bg-white/80 shadow-candy-1 animate-pulse"
+      style={{ animationDelay: `${Math.min(index * 60, 480)}ms` }}
+      className="flex flex-col justify-between rounded-candy-card border border-candy-line/60 p-3 sm:p-4 bg-white/85 shadow-candy-1 animate-pulse"
     >
       <div className="flex flex-col gap-2.5">
-        {/* Image Cradle Skeleton */}
-        <div className="relative w-full aspect-[4/5] rounded-[18px] bg-candy-line/60 overflow-hidden" />
+        {/* Image Cradle Skeleton with Shimmer sweep */}
+        <div className="relative w-full aspect-[4/5] rounded-[18px] bg-gradient-to-r from-candy-soft via-candy-blush/40 to-candy-soft bg-[length:200%_100%] overflow-hidden" />
 
         {/* Title & Description Skeleton */}
         <div className="flex flex-col gap-1.5 pt-1">
@@ -51,6 +52,13 @@ function ProductCardSkeleton({ index }: { index: number }) {
   );
 }
 
+/**
+ * شبكة عرض منتجات التصنيف المتجاوبة (Responsive Product Grid)
+ * - عمودين على الهواتف المحمولة (2 columns mobile)
+ * - ثلاثة أعمدة على الأجهزة اللوحية (3 columns tablet)
+ * - أربعة أعمدة على الشاشات الكبيرة (4 columns desktop)
+ * مع تأثير الترتيب المتدرج الانسيابي (Smooth Stagger Layout)
+ */
 export function ProductGrid({
   products = [],
   isLoading = false,
@@ -63,7 +71,7 @@ export function ProductGrid({
   className,
   skeletonCount = 8,
 }: ProductGridProps) {
-  // 1. حالة التحميل (Loading State)
+  // 1. حالة التحميل (Loading State) - 2 cols mobile, 3 cols tablet, 4 cols desktop
   if (isLoading) {
     return (
       <section
@@ -212,7 +220,7 @@ export function ProductGrid({
     );
   }
 
-  // 3. حالة العرض الطبيعي (Responsive Products Grid)
+  // 3. حالة العرض الطبيعي (Balanced Responsive Grid with Smooth Stagger Layout)
   return (
     <section
       aria-label="قائمة منتجات التصنيف"
@@ -222,11 +230,18 @@ export function ProductGrid({
       )}
     >
       {products.map((product, index) => (
-        <ProductCard
+        <div
           key={product.id}
-          product={product}
-          pastelIndex={index}
-        />
+          className="animate-in fade-in-50 slide-in-from-bottom-2 duration-300 fill-mode-both"
+          style={{
+            animationDelay: `${Math.min(index * 40, 400)}ms`,
+          }}
+        >
+          <ProductCard
+            product={product}
+            pastelIndex={index}
+          />
+        </div>
       ))}
     </section>
   );
