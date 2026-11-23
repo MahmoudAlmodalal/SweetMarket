@@ -46,6 +46,7 @@ const FILTER_TABS: TabDefinition[] = [
   { key: 'in_preparation', label: 'قيد التجهيز', statusMatch: 'in_preparation' },
   { key: 'out_for_delivery', label: 'خرج للتوصيل', statusMatch: 'out_for_delivery' },
   { key: 'delivered', label: 'تم التسليم', statusMatch: 'delivered' },
+  { key: 'undelivered', label: 'تعذّر التسليم', statusMatch: 'undelivered' },
   { key: 'cancelled', label: 'ملغي', statusMatch: 'cancelled' },
 ];
 
@@ -194,11 +195,11 @@ export function OrdersDataTable({
                 <span>{tab.label}</span>
                 <span
                   className={cn(
-                    'inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-xs font-bold transition-colors',
+                    'inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-xs font-bold tabular-nums transition-colors',
                     isActive
                       ? 'bg-white/25 text-white'
                       : isNewWithAlert
-                      ? 'bg-blue-100 text-blue-700 font-extrabold animate-pulse'
+                      ? 'bg-blue-100 text-blue-700 font-extrabold'
                       : 'bg-candy-line text-candy-muted'
                   )}
                 >
@@ -306,28 +307,28 @@ export function OrdersDataTable({
               <table className="w-full text-right border-collapse">
                 <thead>
                   <tr className="bg-candy-soft/60 border-b border-candy-line text-xs font-sans font-bold text-candy-muted select-none">
-                    <th scope="col" className="py-3.5 px-4 font-bold">
+                    <th scope="col" className="py-3.5 px-3 font-bold">
                       رقم الطلب
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold">
+                    <th scope="col" className="py-3.5 px-3 font-bold">
                       وقت الطلب
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold">
+                    <th scope="col" className="py-3.5 px-3 font-bold">
                       العميل
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold">
+                    <th scope="col" className="py-3.5 px-3 font-bold">
                       الهاتف
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold">
+                    <th scope="col" className="py-3.5 px-3 font-bold">
                       المنطقة
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold">
+                    <th scope="col" className="py-3.5 px-3 font-bold">
                       الإجمالي
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold text-center">
+                    <th scope="col" className="py-3.5 px-3 font-bold text-center">
                       الحالة
                     </th>
-                    <th scope="col" className="py-3.5 px-4 font-bold text-center">
+                    <th scope="col" className="py-3.5 px-3 font-bold text-center">
                       إجراءات
                     </th>
                   </tr>
@@ -350,19 +351,19 @@ export function OrdersDataTable({
                         className="hover:bg-candy-soft/40 transition-colors group"
                       >
                         {/* رقم الطلب */}
-                        <td className="py-3.5 px-4">
+                        <td className="py-3.5 px-3 whitespace-nowrap">
                           <Link
                             href={`/admin/orders/${order.id}`}
-                            className="font-mono font-bold text-candy-berry hover:text-candy-berry-dark hover:underline flex items-center gap-1"
+                            className="font-mono font-bold text-candy-berry hover:text-candy-berry-dark hover:underline inline-flex items-center gap-1 whitespace-nowrap"
                           >
                             <span>{order.orderNumber}</span>
                           </Link>
-                          <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="text-[11px] text-candy-muted font-sans block">
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <span className="text-[11px] text-candy-muted font-sans tabular-nums">
                               {order.items.length} أصناف
                             </span>
                             {hasRoyalPackaging && (
-                              <span className="inline-flex items-center gap-0.5 text-[10px] text-amber-700 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md">
+                              <span className="inline-flex items-center gap-0.5 text-[10px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-md whitespace-nowrap">
                                 <Sparkles className="w-2.5 h-2.5 text-amber-600" />
                                 <span>تغليف ملكي</span>
                               </span>
@@ -371,7 +372,7 @@ export function OrdersDataTable({
                         </td>
 
                         {/* وقت الطلب */}
-                        <td className="py-3.5 px-4 text-xs text-candy-ink whitespace-nowrap">
+                        <td className="py-3.5 px-3 text-xs text-candy-ink whitespace-nowrap">
                           <div className="flex items-center gap-1.5 font-medium">
                             <Calendar className="w-3.5 h-3.5 text-candy-muted shrink-0" />
                             <span>{date}</span>
@@ -383,13 +384,13 @@ export function OrdersDataTable({
                         </td>
 
                         {/* العميل */}
-                        <td className="py-3.5 px-4">
+                        <td className="py-3.5 px-3">
                           <div className="font-bold text-candy-ink">
                             {order.customer.fullName}
                           </div>
                           {order.customer.notes && (
                             <span
-                              className="text-[11px] text-candy-berry truncate max-w-[180px] block mt-0.5"
+                              className="text-[11px] text-candy-berry truncate max-w-[160px] block mt-0.5"
                               title={order.customer.notes}
                             >
                               ملاحظة: {order.customer.notes}
@@ -398,7 +399,7 @@ export function OrdersDataTable({
                         </td>
 
                         {/* الهاتف */}
-                        <td className="py-3.5 px-4 text-xs font-mono whitespace-nowrap" dir="ltr">
+                        <td className="py-3.5 px-3 text-xs font-mono whitespace-nowrap" dir="ltr">
                           <a
                             href={`tel:${order.customer.phone}`}
                             className="text-candy-ink hover:text-candy-berry inline-flex items-center gap-1.5 transition-colors"
@@ -409,7 +410,7 @@ export function OrdersDataTable({
                         </td>
 
                         {/* المنطقة */}
-                        <td className="py-3.5 px-4 text-xs text-candy-ink max-w-[160px] truncate">
+                        <td className="py-3.5 px-3 text-xs text-candy-ink max-w-[140px] truncate">
                           <div className="flex items-center gap-1.5" title={zoneName}>
                             <MapPin className="w-3.5 h-3.5 text-candy-muted shrink-0" />
                             <span className="truncate">{zoneName}</span>
@@ -417,7 +418,7 @@ export function OrdersDataTable({
                         </td>
 
                         {/* الإجمالي */}
-                        <td className="py-3.5 px-4 whitespace-nowrap">
+                        <td className="py-3.5 px-3 whitespace-nowrap tabular-nums">
                           <div className="font-bold text-candy-berry font-sans">
                             {order.total.toFixed(2)} ₪
                           </div>
@@ -427,15 +428,15 @@ export function OrdersDataTable({
                         </td>
 
                         {/* الحالة */}
-                        <td className="py-3.5 px-4 text-center">
+                        <td className="py-3.5 px-3 text-center whitespace-nowrap">
                           <OrderStatusBadge status={order.status} size="sm" />
                         </td>
 
                         {/* إجراءات */}
-                        <td className="py-3.5 px-4 text-center">
+                        <td className="py-3.5 px-3 text-center whitespace-nowrap">
                           <Link
                             href={`/admin/orders/${order.id}`}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush hover:shadow-sm transition-all"
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush hover:shadow-sm transition-all"
                           >
                             <span>التفاصيل</span>
                             <ChevronLeft className="w-3.5 h-3.5" />

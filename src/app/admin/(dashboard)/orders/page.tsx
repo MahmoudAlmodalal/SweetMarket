@@ -128,19 +128,19 @@ export default function AdminOrdersPage() {
               setActiveTab('new');
             }
           }}
-          className="bg-gradient-to-l from-blue-50 to-indigo-50 border border-blue-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm hover:shadow-md hover:border-blue-300 transition-all cursor-pointer select-none animate-in fade-in slide-in-from-top-2 duration-300"
+          className="bg-white border border-candy-berry/25 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-candy-berry/50 transition-colors cursor-pointer select-none"
           title="انقر لتصفية الطلبات الجديدة"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm animate-pulse">
+            <div className="w-10 h-10 rounded-xl bg-candy-berry text-white flex items-center justify-center shrink-0">
               <Bell className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-sans font-bold text-sm text-blue-900">
-                تنبيه: يوجد {newOrdersCount} {newOrdersCount === 1 ? 'طلب جديد' : 'طلبات جديدة'} بانتظار المراجعة!
+              <h2 className="font-sans font-bold text-sm text-candy-ink tabular-nums">
+                يوجد {newOrdersCount} {newOrdersCount === 1 ? 'طلب جديد' : 'طلبات جديدة'} بانتظار المراجعة
               </h2>
-              <p className="font-sans text-xs text-blue-700 mt-0.5">
-                يرجى قبول الطلبات والبدء بتجهيزها لضمان سرعة التسليم للزبائن.
+              <p className="font-sans text-xs text-candy-muted mt-0.5">
+                راجع الطلبات الجديدة وابدأ التجهيز لضمان سرعة التسليم.
               </p>
             </div>
           </div>
@@ -150,18 +150,17 @@ export default function AdminOrdersPage() {
               e.stopPropagation();
               setActiveTab('new');
             }}
-            className="text-xs font-mono font-bold text-blue-800 bg-white/80 border border-blue-200 px-3 py-1 rounded-full whitespace-nowrap self-end sm:self-auto hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"
+            className="text-xs font-sans font-bold text-candy-berry bg-candy-soft border border-candy-line px-3.5 py-1.5 rounded-full whitespace-nowrap self-end sm:self-auto hover:bg-candy-berry hover:text-white transition-colors cursor-pointer"
           >
-            معالجة عاجلة
+            عرض الطلبات الجديدة
           </button>
         </div>
       )}
 
       {/* 3. بطاقات الإحصاءات السريعة (Stats Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        {/* إجمالي الطلبات */}
-        <div className="bg-white p-4 rounded-2xl border border-candy-line shadow-candy-1 flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-candy-blush text-candy-berry flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-candy-soft text-candy-berry flex items-center justify-center shrink-0">
             <ShoppingBag className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -171,69 +170,69 @@ export default function AdminOrdersPage() {
             {isLoading ? (
               <Skeleton className="h-6 w-14 mt-1" />
             ) : (
-              <strong className="font-sans font-extrabold text-xl text-candy-ink">
+              <strong className="font-sans font-extrabold text-2xl text-candy-ink tabular-nums">
                 {orders.length}
               </strong>
             )}
           </div>
         </div>
 
-        {/* بانتظار المراجعة (جديد) */}
-        <div className="bg-white p-4 rounded-2xl border border-candy-line shadow-candy-1 flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
             <Clock className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-blue-700 font-semibold block truncate">
+            <span className="font-sans text-xs text-candy-muted font-medium block truncate">
               طلبات جديدة
             </span>
             {isLoading ? (
               <Skeleton className="h-6 w-12 mt-1" />
             ) : (
-              <strong className="font-sans font-extrabold text-xl text-blue-700">
+              <strong className="font-sans font-extrabold text-2xl text-blue-700 tabular-nums">
                 {newOrdersCount}
               </strong>
             )}
           </div>
         </div>
 
-        {/* قيد المعالجة والتوصيل */}
-        <div className="bg-white p-4 rounded-2xl border border-candy-line shadow-candy-1 flex items-center gap-3.5">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
             <Truck className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-amber-800 font-semibold block truncate">
-              قيد التجهيز / التوصيل
+            <span className="font-sans text-xs text-candy-muted font-medium block truncate">
+              قيد التجهيز والتوصيل
             </span>
             {isLoading ? (
               <Skeleton className="h-6 w-12 mt-1" />
             ) : (
-              <strong className="font-sans font-extrabold text-xl text-amber-800">
+              <strong className="font-sans font-extrabold text-2xl text-amber-800 tabular-nums">
                 {inProgressCount}
               </strong>
             )}
           </div>
         </div>
 
-        {/* صافي المبيعات غير الملغية ومطابقة الإجمالي */}
-        <div className="bg-white p-4 rounded-2xl border border-candy-line shadow-candy-1 flex items-center gap-3.5">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div className="min-w-0">
+            <span className="font-sans text-xs text-candy-muted block truncate">
+              صافي المبيعات المعتمدة
+            </span>
             {isLoading ? (
-              <div className="space-y-1">
-                <Skeleton className="h-5 w-28" />
-                <Skeleton className="h-4 w-36" />
+              <div className="space-y-1 mt-1">
+                <Skeleton className="h-6 w-24" />
+                <Skeleton className="h-3.5 w-32" />
               </div>
             ) : (
-              <div className="space-y-0.5">
-                <strong className="font-sans font-extrabold text-sm sm:text-base text-emerald-800 block whitespace-nowrap">
-                  صافي المبيعات (المعتمدة): {netRevenue.toFixed(0)} ₪
+              <div className="space-y-0.5 tabular-nums">
+                <strong className="font-sans font-extrabold text-xl text-emerald-800 block whitespace-nowrap">
+                  {netRevenue.toFixed(0)} ₪
                 </strong>
-                <span className="text-[11px] sm:text-xs text-candy-muted block font-sans whitespace-nowrap">
-                  الإجمالي العام: {grossRevenue.toFixed(0)} ₪ (شامل الملغي)
+                <span className="text-[11px] text-candy-muted block font-sans truncate">
+                  الإجمالي: {grossRevenue.toFixed(0)} ₪
                 </span>
               </div>
             )}

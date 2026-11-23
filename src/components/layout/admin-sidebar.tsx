@@ -203,20 +203,20 @@ function SidebarContent({
                   aria-current={isActive ? 'page' : undefined}
                   title={item.name}
                   className={cn(
-                    'group flex items-center justify-between py-2.5 rounded-xl font-sans text-sm font-semibold transition-all duration-200 relative',
+                    'group flex items-center justify-between py-2.5 rounded-xl font-sans text-sm font-semibold transition-colors relative',
                     isCollapsed && !isMobile ? 'px-2 justify-center' : 'px-3.5',
                     isActive
-                      ? 'bg-candy-berry text-white shadow-candy-1 font-bold border-r-4 border-r-candy-strawberry border-l-2 border-l-candy-strawberry/60'
-                      : 'text-candy-ink border-r-4 border-r-transparent border-l-2 border-l-transparent hover:bg-candy-soft hover:text-candy-berry hover:border-r-candy-berry/40 hover:-translate-x-0.5'
+                      ? 'bg-candy-berry text-white font-bold'
+                      : 'text-candy-ink hover:bg-candy-soft hover:text-candy-berry'
                   )}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <Icon
                       className={cn(
-                        'w-5 h-5 shrink-0 transition-transform duration-200',
+                        'w-5 h-5 shrink-0 transition-colors',
                         isActive
-                          ? 'text-white scale-105'
-                          : 'text-candy-muted group-hover:text-candy-berry group-hover:scale-110'
+                          ? 'text-white'
+                          : 'text-candy-muted group-hover:text-candy-berry'
                       )}
                       aria-hidden="true"
                     />
@@ -279,20 +279,20 @@ function SidebarContent({
               aria-current={pathname === '/admin/account/password' ? 'page' : undefined}
               title="تغيير كلمة المرور"
               className={cn(
-                'group flex items-center justify-between py-2.5 rounded-xl font-sans text-sm font-semibold transition-all duration-200 relative',
+                'group flex items-center justify-between py-2.5 rounded-xl font-sans text-sm font-semibold transition-colors relative',
                 isCollapsed && !isMobile ? 'px-2 justify-center' : 'px-3.5',
                 pathname === '/admin/account/password'
-                  ? 'bg-candy-berry text-white shadow-candy-1 font-bold border-r-4 border-r-candy-strawberry border-l-2 border-l-candy-strawberry/60'
-                  : 'text-candy-ink border-r-4 border-r-transparent border-l-2 border-l-transparent hover:bg-candy-soft hover:text-candy-berry hover:border-r-candy-berry/40 hover:-translate-x-0.5'
+                  ? 'bg-candy-berry text-white font-bold'
+                  : 'text-candy-ink hover:bg-candy-soft hover:text-candy-berry'
               )}
             >
               <div className="flex items-center gap-3 min-w-0">
                 <KeyRound
                   className={cn(
-                    'w-5 h-5 shrink-0 transition-transform duration-200',
+                    'w-5 h-5 shrink-0 transition-colors',
                     pathname === '/admin/account/password'
-                      ? 'text-white scale-105'
-                      : 'text-candy-muted group-hover:text-candy-berry group-hover:scale-110'
+                      ? 'text-white'
+                      : 'text-candy-muted group-hover:text-candy-berry'
                   )}
                   aria-hidden="true"
                 />

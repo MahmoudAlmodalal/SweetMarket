@@ -176,18 +176,14 @@ export function ProductImage({
     onError?.();
   };
 
-  // وميض التحميل الخفيف (Confectionery Shimmer Skeleton)
+  // وميض التحميل الخفيف (Warm Ivory Shimmer)
   const shimmerElement = !isLoaded && (
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none z-0",
-        "bg-gradient-to-r from-candy-soft via-candy-blush/40 to-candy-soft bg-[length:200%_100%] animate-pulse",
+        "pointer-events-none z-0 bg-candy-soft",
         isFill ? "absolute inset-0 w-full h-full" : "w-full h-full"
       )}
-      style={{
-        animation: "shimmer 1.5s linear infinite",
-      }}
     />
   );
 
@@ -200,6 +196,7 @@ export function ProductImage({
           src={trimmedSrc}
           alt={alt}
           fill
+          referrerPolicy="no-referrer"
           sizes={sizes ?? '(max-width: 768px) 100vw, 50vw'}
           priority={priority}
           unoptimized={shouldUnoptimize}
@@ -229,6 +226,7 @@ export function ProductImage({
         alt={alt}
         width={width ?? 300}
         height={height ?? 300}
+        referrerPolicy="no-referrer"
         sizes={sizes}
         priority={priority}
         unoptimized={shouldUnoptimize}

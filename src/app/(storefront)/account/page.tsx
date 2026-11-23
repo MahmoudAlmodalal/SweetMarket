@@ -26,7 +26,11 @@ import {
   Filter,
 } from "lucide-react";
 import { STORAGE_KEYS, getStorageItem, setStorageItem } from "@/lib/storage";
-import { getOrders, getDeliveryZones } from "@/lib/repositories";
+import {
+  getCustomerOrderRefs,
+  getOrderReceipt,
+  getDeliveryZones,
+} from "@/lib/repositories";
 import { useCart } from "@/context/cart-context";
 import { getFavoriteProductIds, FAVORITES_UPDATED_EVENT } from "@/components/storefront/catalog/wishlist-utils";
 import { normalizePalestinianPhone, isValidPalestinianPhone } from "@/lib/validations";
@@ -98,21 +102,36 @@ export default function AccountPage() {
     };
   }, []);
 
-  // Fetch all orders
+  // Fetch ONLY this customer's own placed orders via scoped receipt tokens
   React.useEffect(() => {
+    let active = true;
     async function loadAccountOrders() {
       setIsLoadingOrders(true);
       try {
-        const ordersFromRepo = await getOrders();
-        setAllOrders(ordersFromRepo);
+        const savedRefs = getCustomerOrderRefs();
+        if (savedRefs.length === 0) {
+          if (active) setAllOrders([]);
+          return;
+        }
+        const resolved = await Promise.all(
+          savedRefs.map((ref) =>
+            getOrderReceipt(ref.orderNumber, ref.trackingToken).catch(() => null)
+          )
+        );
+        if (active) {
+          setAllOrders(resolved.filter((o): o is Order => Boolean(o)));
+        }
       } catch (err) {
         console.error("Failed to load account orders:", err);
       } finally {
-        setIsLoadingOrders(false);
+        if (active) setIsLoadingOrders(false);
       }
     }
 
-    loadAccountOrders();
+    void loadAccountOrders();
+    return () => {
+      active = false;
+    };
   }, []);
 
   const handleSaveProfile = (e: React.FormEvent) => {

@@ -22,16 +22,16 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from '@/components/ui/toast';
 import {
-  STORAGE_KEYS,
-  getStorageItem,
-  setStorageItem,
-} from '@/lib/storage';
-import { MOCK_DELIVERY_ZONES } from '@/data/mock/zones';
-import { MOCK_ORDERS } from '@/data/mock/orders';
+  getAdminDeliveryZones,
+  createAdminDeliveryZone,
+  updateAdminDeliveryZone,
+  deleteAdminDeliveryZone,
+  getOrders,
+} from '@/lib/repositories';
 import type { DeliveryZone, Order } from '@/types';
 
 export default function AdminZonesPage() {
-  const { user, isManager } = useAdminAuth();
+  const { isManager } = useAdminAuth();
 
   const [zones, setZones] = useState<DeliveryZone[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -45,43 +45,31 @@ export default function AdminZonesPage() {
   // حالة نافذة تأكيد الحذف
   const [deleteTarget, setDeleteTarget] = useState<DeliveryZone | null>(null);
 
-  // استرجاع مناطق التوصيل والطلبات
-  const loadData = useCallback(() => {
+  const loadData = useCallback(async () => {
     setIsLoading(true);
     try {
-      // 1. مناطق التوصيل (جميع المناطق النشطة وغير النشطة)
-      const storedZones = getStorageItem(STORAGE_KEYS.MOCK_ZONES, null);
-      if (storedZones && storedZones.length > 0) {
-        setZones(storedZones);
-      } else {
-        setStorageItem(STORAGE_KEYS.MOCK_ZONES, MOCK_DELIVERY_ZONES);
-        setZones(MOCK_DELIVERY_ZONES);
-      }
-
-      // 2. الطلبات (لحساب الطلبات النشطة في كل منطقة وفحص EC-09)
-      const storedOrders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
-      if (storedOrders && storedOrders.length > 0) {
-        setOrders(storedOrders);
-      } else {
-        setStorageItem(STORAGE_KEYS.MOCK_ORDERS, MOCK_ORDERS);
-        setOrders(MOCK_ORDERS);
-      }
+      const [fetchedZones, fetchedOrders] = await Promise.all([
+        getAdminDeliveryZones(),
+        getOrders(),
+      ]);
+      setZones(fetchedZones);
+      setOrders(fetchedOrders);
     } catch (err) {
       console.error('Failed to load zones or orders:', err);
-      toast.error('حدث خطأ أثناء تحميل بيانات مناطق التوصيل');
+      toast.error('حدث خطأ أثناء تحميل بيانات مناطق التوصيل من الخادم');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [loadData]);
 
-  // حساب الطلبات النشطة (التي لم تُسلَّم ولم تُتلغَ بعد) لكل منطقة توصيل
+  // حساب الطلبات النشطة (التي لم تُسلَّم ولم تُلغَ بعد) لكل منطقة توصيل
   const activeOrdersCountByZone = useMemo(() => {
     const counts: Record<string, number> = {};
-    const activeStatuses = ['new', 'accepted', 'in_preparation', 'out_for_delivery'];
+    const activeStatuses = ['new', 'accepted', 'in_preparation', 'out_for_delivery', 'undelivered'];
 
     for (const order of orders) {
       if (activeStatuses.includes(order.status) && order.customer?.zoneId) {
@@ -90,15 +78,6 @@ export default function AdminZonesPage() {
     }
     return counts;
   }, [orders]);
-
-  // حفظ المناطق في التخزين المحلي وتحديث الحالة فوراً (BR-003, FR-014)
-  const persistZones = (updated: DeliveryZone[]) => {
-    setZones(updated);
-    setStorageItem(STORAGE_KEYS.MOCK_ZONES, updated);
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new Event('storage'));
-    }
-  };
 
   // فلترة المناطق بالبحث
   const filteredZones = useMemo(() => {
@@ -114,62 +93,56 @@ export default function AdminZonesPage() {
       return;
     }
 
-    if (data.id) {
-      // تعديل منطقة حالية
-      const updated = zones.map((z) => {
-        if (z.id === data.id) {
-          return {
-            ...z,
-            name: data.name,
-            deliveryFee: data.deliveryFee,
-            minOrderAmount: data.minOrderAmount,
-            estimatedTimeMin: data.estimatedTimeMin,
-            estimatedTimeMax: data.estimatedTimeMax,
-            isActive: data.isActive,
-          };
-        }
-        return z;
-      });
-
-      persistZones(updated);
-      toast.success(
-        `تم تحديث منطقة "${data.name}" بنجاح`,
-        'تم تطبيق الرسوم الجديدة فوراً على صفحة إتمام الطلب'
-      );
-    } else {
-      // إضافة منطقة جديدة
-      const newZone: DeliveryZone = {
-        id: `zone-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-        name: data.name,
-        deliveryFee: data.deliveryFee,
-        minOrderAmount: data.minOrderAmount,
-        estimatedTimeMin: data.estimatedTimeMin,
-        estimatedTimeMax: data.estimatedTimeMax,
-        isActive: data.isActive,
-      };
-
-      const updated = [...zones, newZone];
-      persistZones(updated);
-      toast.success(`تمت إضافة منطقة التوصيل "${data.name}" بنجاح`);
+    try {
+      if (data.id) {
+        const updated = await updateAdminDeliveryZone(data.id, {
+          name: data.name,
+          deliveryFee: data.deliveryFee,
+          minOrderAmount: data.minOrderAmount,
+          estimatedTimeMin: data.estimatedTimeMin,
+          estimatedTimeMax: data.estimatedTimeMax,
+          isActive: data.isActive,
+        });
+        setZones((prev) => prev.map((z) => (z.id === updated.id ? updated : z)));
+        toast.success(
+          `تم تحديث منطقة "${updated.name}" بنجاح`,
+          'تم تطبيق الرسوم الجديدة فوراً على صفحة إتمام الطلب'
+        );
+      } else {
+        const created = await createAdminDeliveryZone({
+          name: data.name,
+          deliveryFee: data.deliveryFee,
+          minOrderAmount: data.minOrderAmount,
+          estimatedTimeMin: data.estimatedTimeMin,
+          estimatedTimeMax: data.estimatedTimeMax,
+          isActive: data.isActive,
+        });
+        setZones((prev) => [...prev, created]);
+        toast.success(`تمت إضافة منطقة التوصيل "${created.name}" بنجاح`);
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر حفظ بيانات منطقة التوصيل');
     }
   };
 
   // تبديل حالة تفعيل المنطقة
-  const handleToggleActive = (zone: DeliveryZone) => {
+  const handleToggleActive = async (zone: DeliveryZone) => {
     if (!isManager) {
       toast.error('فقط المدير يملك صلاحية تفعيل أو تعطيل مناطق التوصيل');
       return;
     }
 
-    const updated = zones.map((z) =>
-      z.id === zone.id ? { ...z, isActive: !z.isActive } : z
-    );
-    persistZones(updated);
-    toast.info(
-      zone.isActive
-        ? `تم تعطيل منطقة "${zone.name}" وإيقاف استقبال طلبات التوصيل إليها مؤقتاً`
-        : `تم تفعيل منطقة "${zone.name}" وإتاحة التوصيل إليها في المتجر`
-    );
+    try {
+      const updated = await updateAdminDeliveryZone(zone.id, { isActive: !zone.isActive });
+      setZones((prev) => prev.map((z) => (z.id === updated.id ? updated : z)));
+      toast.info(
+        zone.isActive
+          ? `تم تعطيل منطقة "${zone.name}" وإيقاف استقبال طلبات التوصيل إليها مؤقتاً`
+          : `تم تفعيل منطقة "${zone.name}" وإتاحة التوصيل إليها في المتجر`
+      );
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر تحديث حالة المنطقة');
+    }
   };
 
   // طلب حذف منطقة توصيل مع فحص قواعد العمل (EC-09)
@@ -183,7 +156,7 @@ export default function AdminZonesPage() {
     if (activeCount > 0) {
       toast.error(
         'لا يمكن حذف منطقة مرتبطة بطلبات نشطة',
-        `يوجد ${activeCount} طلبات نشطة حالياً في هذه المنطقة (EC-09). يمكنك تعطيل المنطقة بدلاً من حذفها.`
+        `يوجد ${activeCount} طلبات نشطة حالياً في هذه المنطقة. يمكنك تعطيل المنطقة بدلاً من حذفها.`
       );
       return;
     }
@@ -192,14 +165,19 @@ export default function AdminZonesPage() {
   };
 
   // تأكيد الحذف النهائي
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
 
     const targetName = deleteTarget.name;
-    const updated = zones.filter((z) => z.id !== deleteTarget.id);
-    persistZones(updated);
-    setDeleteTarget(null);
-    toast.success(`تم حذف منطقة "${targetName}" بنجاح`);
+    try {
+      await deleteAdminDeliveryZone(deleteTarget.id);
+      setZones((prev) => prev.filter((z) => z.id !== deleteTarget.id));
+      setDeleteTarget(null);
+      toast.success(`تم حذف منطقة "${targetName}" بنجاح`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر حذف منطقة التوصيل');
+      setDeleteTarget(null);
+    }
   };
 
   // إحصائيات سريعة

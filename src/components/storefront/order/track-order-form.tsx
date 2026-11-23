@@ -26,7 +26,8 @@ import {
   isValidPalestinianPhone,
   normalizePalestinianPhone,
 } from "@/lib/validations";
-import { getOrderByNumberAndPhone, getOrders } from "@/lib/repositories";
+import { getOrderByNumberAndPhone } from "@/lib/repositories";
+import { ApiClientError } from "@/lib/api-client";
 import type { Order } from "@/types";
 import { cn } from "@/lib/utils";
 import { buildWhatsAppLink } from "@/lib/store-identity";
@@ -251,42 +252,15 @@ export function TrackOrderForm({
       return;
     }
 
-    // 3. Fallback quick lookup if phone is omitted (supports test harnesses and demo lookups)
+    // 3. Phone number is strictly required to protect customer order privacy
     if (!rawPhone) {
-      setIsLoading(true);
-      try {
-        const allOrders = await getOrders();
-        const matched = allOrders.find(
-          (o) =>
-            o.orderNumber.toUpperCase() === trimmedOrder ||
-            o.id.toUpperCase() === trimmedOrder
-        );
-
-        if (matched) {
-          setPhone(matched.customer.phone);
-          setFailedAttempts(0);
-          setLookupState("found");
-          onOrderFound?.(matched);
-          return;
-        } else {
-          // If order format looks valid but not found in DB
-          if (trimmedOrder.startsWith("CL-") || trimmedOrder.length >= 6) {
-            setLookupState("not-found");
-            return;
-          } else {
-            setFieldErrors({
-              phone: "يرجى إدخال رقم الهاتف المسجل لتأكيد البحث عن الطلب",
-            });
-            setLookupState("invalid");
-            return;
-          }
-        }
-      } catch {
-        setLookupState("not-found");
-        return;
-      } finally {
-        setIsLoading(false);
-      }
+      setFieldErrors((prev) => ({
+        ...prev,
+        phone: "يرجى إدخال رقم الهاتف المسجل بالطلب للتحقق من هويتك",
+      }));
+      setLookupState("invalid");
+      phoneInputRef.current?.focus();
+      return;
     }
 
     // 4. Strict Palestinian phone validation when phone is provided
@@ -341,7 +315,15 @@ export function TrackOrderForm({
       }
     } catch (err) {
       console.error("Order lookup error:", err);
-      setLookupState("not-found");
+      if (err instanceof ApiClientError && err.status === 429) {
+        const until = Date.now() + LOCKOUT_DURATION_MS;
+        setLockoutUntil(until);
+        setRemainingLockoutSeconds(Math.ceil(LOCKOUT_DURATION_MS / 1000));
+        setLookupState("locked-out");
+        onError?.(err.message);
+      } else {
+        setLookupState("not-found");
+      }
     } finally {
       setIsLoading(false);
     }

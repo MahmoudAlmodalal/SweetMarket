@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { getDeliveryZones, createOrder } from "@/lib/repositories";
+import { generateSecureSessionToken } from "@/lib/auth/authentication";
 import {
   CheckoutFormSchema,
   type CheckoutFormData,
@@ -55,6 +56,7 @@ export default function CheckoutPage() {
   // Submission state
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const [submissionError, setSubmissionError] = React.useState<string | null>(null);
+  const idempotencyKeyRef = React.useRef<string>(generateSecureSessionToken());
 
   // Load zones and pre-populate draft data from localStorage
   React.useEffect(() => {
@@ -250,19 +252,36 @@ export default function CheckoutPage() {
         buildingOrApt: customerData.buildingOrApt,
       });
 
-      // 5. Call repository createOrder
-      const newOrder = await createOrder({
-        customer: customerData,
-        items,
-        deliveryFee: selectedZone ? selectedZone.deliveryFee : 0,
-      });
+      // 5. Call repository createOrder with idempotency key for duplicate protection
+      const newOrder = await createOrder(
+        {
+          customer: customerData,
+          items,
+          deliveryFee: selectedZone ? selectedZone.deliveryFee : 0,
+        },
+        idempotencyKeyRef.current
+      );
+
+      // Reset key after successful creation
+      idempotencyKeyRef.current = generateSecureSessionToken();
+
+      // Save tracking handoff for seamless transition if customer clicks track
+      if (typeof window !== "undefined" && window.sessionStorage) {
+        window.sessionStorage.setItem(
+          "candy_tracking_handoff",
+          JSON.stringify({
+            orderNumber: newOrder.orderNumber,
+            phone: normalizedPhone,
+          })
+        );
+      }
 
       // 6. Clear shopping cart
       clearCart();
 
       // 7. Show success feedback
       toast.success(
-        "تم إرسال الطلب بنجاح! 🎉",
+        "تم إرسال الطلب بنجاح",
         `رقم الطلب الخاص بك: ${newOrder.orderNumber}`
       );
 
@@ -335,14 +354,14 @@ export default function CheckoutPage() {
             <h1 className="font-display font-semibold text-2xl sm:text-3xl text-candy-ink leading-tight">
               إتمام الطلب والتوصيل
             </h1>
-            <p className="text-xs sm:text-sm text-candy-muted font-sans mt-0.5">
-              خطوة واحدة لتأكيد طلبك وتجهيز علب الحلويات طازجة في مطبخ كاندي لوز 🍬
+            <p className="text-xs sm:text-sm text-candy-muted font-sans mt-1">
+              خطوة واحدة لتأكيد طلبك وتجهيز علب الحلويات طازجة في مطبخ كاندي لوز
             </p>
           </div>
 
           <Link
             href="/cart"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-white px-3 py-1.5 rounded-candy-pill border border-candy-line shadow-xs"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-white px-3.5 py-2 rounded-xl border border-candy-line"
           >
             <ArrowRight className="w-4 h-4" />
             <span>العودة لتعديل السلة</span>
@@ -351,31 +370,31 @@ export default function CheckoutPage() {
       </div>
 
       {/* 2. Stepper & Security Seal Context */}
-      <section className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
+      <section className="w-full rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
-          <div className="flex items-center gap-2 text-candy-berry">
-            <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-            <span className="font-sans font-bold text-xs sm:text-sm">
-              طلب آمن ومحمي 100% • دفع نقداً عند الاستلام 🔒
+          <div className="flex items-center gap-2 text-candy-ink">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span className="font-sans font-semibold text-xs sm:text-sm">
+              طلب آمن ومحمي · الدفع نقداً عند الاستلام
             </span>
           </div>
-          <span className="bg-candy-blush px-2.5 py-0.5 rounded-full text-candy-berry font-sans font-bold text-xs">
-            خطوة 2 من 3
+          <span className="text-candy-berry font-sans font-bold text-xs tabular-nums">
+            الخطوة 2 من 3
           </span>
         </div>
 
         {/* Stepper Nodes */}
         <div className="relative flex items-center justify-between max-w-xl mx-auto px-4">
           {/* Background Connector Bar */}
-          <div className="absolute top-1/2 left-8 right-8 h-1 bg-candy-line -translate-y-1/2 z-0 rounded-full">
-            <div className="h-full bg-gradient-to-l from-candy-strawberry to-candy-berry w-2/3 rounded-full transition-all duration-300" />
+          <div className="absolute top-1/2 left-8 right-8 h-0.5 bg-candy-line -translate-y-1/2 z-0 rounded-full">
+            <div className="h-full bg-candy-berry w-2/3 rounded-full transition-all duration-300" />
           </div>
 
           {/* Node 1: Cart (Completed) */}
           <div className="relative z-10 flex flex-col items-center gap-1.5">
             <Link
               href="/cart"
-              className="w-8 h-8 rounded-full bg-candy-berry text-white flex items-center justify-center font-sans font-bold text-xs shadow-sm hover:scale-105 transition-transform"
+              className="w-8 h-8 rounded-full bg-candy-berry text-white flex items-center justify-center font-sans font-bold text-xs transition-transform hover:scale-105"
               title="العودة للسلة"
             >
               <Check className="w-4 h-4" />
@@ -387,10 +406,10 @@ export default function CheckoutPage() {
 
           {/* Node 2: Checkout (Active) */}
           <div className="relative z-10 flex flex-col items-center gap-1.5">
-            <div className="w-8 h-8 rounded-full bg-candy-strawberry text-white flex items-center justify-center font-sans font-bold text-xs ring-4 ring-candy-blush shadow-md animate-pulse">
+            <div className="w-8 h-8 rounded-full bg-candy-berry text-white flex items-center justify-center font-sans font-bold text-xs ring-4 ring-candy-blush">
               2
             </div>
-            <span className="font-sans text-[11px] sm:text-xs text-candy-strawberry font-extrabold">
+            <span className="font-sans text-[11px] sm:text-xs text-candy-berry font-bold">
               بيانات التوصيل
             </span>
           </div>

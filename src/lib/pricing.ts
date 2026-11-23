@@ -25,7 +25,7 @@ export interface PackagingOption {
  */
 export const PACKAGING_OPTIONS: readonly PackagingOption[] = [
   { id: 'standard', label: 'تغليف عادي', fee: 0 },
-  { id: 'royal', label: 'صندوق إهداء ملكي', fee: 25 },
+  { id: 'royal', label: 'صندوق إهداء ملكي', fee: 12 },
 ] as const;
 
 /**

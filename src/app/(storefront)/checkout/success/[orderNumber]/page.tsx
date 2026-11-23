@@ -11,7 +11,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
-import { getOrders, getOrderById, getDeliveryZones } from "@/lib/repositories";
+import { getOrderReceipt, getDeliveryZones } from "@/lib/repositories";
 import type { Order, DeliveryZone } from "@/types";
 import { OrderSuccessCard } from "@/components/storefront/order/order-success-card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -69,36 +69,23 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
       setErrorMessage(null);
 
       try {
-        const [ordersList, zonesList] = await Promise.all([
-          getOrders(),
+        const [matchedOrder, zonesList] = await Promise.all([
+          getOrderReceipt(orderNumber),
           getDeliveryZones(),
         ]);
 
         if (!isMounted) return;
 
-        // Try lookup by orderNumber or ID
-        const normalizedTarget = orderNumber.toUpperCase();
-        let matchedOrder = ordersList.find(
-          (o) =>
-            o.orderNumber.trim().toUpperCase() === normalizedTarget ||
-            o.id.trim() === orderNumber
-        );
-
-        // Fallback to getOrderById if not found in list
-        if (!matchedOrder) {
-          matchedOrder = (await getOrderById(orderNumber)) || undefined;
-        }
-
         if (matchedOrder) {
           setOrder(matchedOrder);
-
-          // Find zone info
           const matchedZone = zonesList.find(
             (z) => z.id === matchedOrder.customer.zoneId
           );
           setDeliveryZone(matchedZone || null);
         } else {
-          setErrorMessage(`لم يتم العثور على طلب برقم: ${orderNumber}`);
+          setErrorMessage(
+            `تعذّر عرض تفاصيل الطلب "${orderNumber}" مباشرة. يمكنك تتبعه بأمان عبر إدخال رقم الطلب ورقم الهاتف في صفحة التتبع.`
+          );
         }
       } catch (err) {
         console.error("Failed to fetch order details:", err);

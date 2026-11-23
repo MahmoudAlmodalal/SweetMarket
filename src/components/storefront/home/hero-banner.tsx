@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Sparkles, ShoppingBag, ArrowLeft, Star, Heart, Zap, Award } from "lucide-react";
+import { ArrowLeft, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
 
@@ -15,150 +15,105 @@ export function HeroBanner({ className }: HeroBannerProps) {
     <section
       aria-label="البانر الترويجي الرئيسي"
       className={cn(
-        "relative w-full rounded-candy-section overflow-hidden p-6 sm:p-8 lg:p-12",
-        "bg-gradient-to-br from-candy-soft via-candy-blush/25 to-background",
-        "border border-candy-blush/90 shadow-card transition-shadow duration-300",
+        "relative w-full rounded-[28px] overflow-hidden bg-white border border-candy-line/80 shadow-[0_20px_50px_rgba(43,26,16,0.06)]",
         className
       )}
     >
-      {/* Decorative Soft Animated Confectionery Glow Elements */}
-      <div
-        className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-primary/15 blur-3xl pointer-events-none animate-pulse"
-        style={{ animationDuration: "5s" }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-accent/20 blur-3xl pointer-events-none animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "1s" }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-1/3 right-1/4 w-44 h-44 rounded-full bg-candy-blush/30 blur-2xl pointer-events-none animate-pulse"
-        style={{ animationDuration: "7s", animationDelay: "2s" }}
-        aria-hidden="true"
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+        {/* Editorial Content Column */}
+        <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-between p-5 sm:p-10 lg:p-12 xl:p-14 text-right bg-gradient-to-b from-[#FFFDFB] to-[#FAF3EE]/60">
+          <div className="space-y-3.5 sm:space-y-5">
+            {/* Editorial Eyebrow */}
+            <div className="flex items-center gap-3 text-xs font-sans font-bold tracking-wide text-candy-berry">
+              <span className="w-8 h-[1.5px] bg-[#C8922E]" aria-hidden="true" />
+              <span>دار كاندي لوز للحلويات الفاخرة</span>
+            </div>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-        {/* Text & CTAs Column */}
-        <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-5 text-right">
-          {/* Top Announcement Pill */}
-          <div className="inline-flex items-center gap-2 self-start px-4 py-1.5 rounded-button bg-white/95 backdrop-blur-md shadow-sm border border-candy-blush">
-            <Sparkles className="w-4 h-4 text-accent fill-accent/30 shrink-0" />
-            <span className="font-sans font-extrabold text-xs sm:text-sm text-primary">
-              تشكيلة كاندي لوز للمناسبات الفاخرة
-            </span>
+            {/* Primary Display Headline */}
+            <h1
+              className="font-display font-bold text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3rem] text-candy-ink leading-[1.2] tracking-tight"
+              style={{ textWrap: "balance" }}
+            >
+              حلويات شرقية وغربية بطعم الأصالة وحرفية الإهداء
+            </h1>
+
+            {/* Subtitle */}
+            <p className="font-sans text-xs sm:text-base text-candy-ink/75 leading-[1.7] max-w-lg">
+              نخبز لكم يومياً تشكيلة منتقاة من البقلاوة بالسمن البلدي، الكنافة النابلسية الساخنة،
+              والكيك والشوكولاتة البلجيكية بتغليف فاخر يليق بضيافتكم ومناسباتكم.
+            </p>
+
+            {/* Clean Primary & Secondary CTAs */}
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1 sm:pt-2">
+              <Link
+                href="/category/all"
+                className={cn(
+                  "inline-flex items-center justify-center gap-2 h-11 sm:h-12 px-5 sm:px-7 rounded-xl",
+                  "bg-candy-berry text-white font-sans font-bold text-xs sm:text-sm",
+                  "hover:bg-candy-berry-dark transition-colors shadow-[0_10px_24px_rgba(163,29,86,0.22)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry focus-visible:ring-offset-2"
+                )}
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>تصفح التشكيلة</span>
+                <ArrowLeft className="w-4 h-4" />
+              </Link>
+
+              <Link
+                href="#featured-products"
+                className={cn(
+                  "inline-flex items-center justify-center gap-2 h-11 sm:h-12 px-5 sm:px-6 rounded-xl",
+                  "bg-white border border-candy-line text-candy-ink font-sans font-semibold text-xs sm:text-sm",
+                  "hover:border-candy-berry/40 hover:text-candy-berry transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry focus-visible:ring-offset-2"
+                )}
+              >
+                <span>الأكثر طلباً</span>
+              </Link>
+            </div>
           </div>
 
-          {/* Main Headline with Elevated Contrast */}
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-primary leading-[1.25] tracking-tight drop-shadow-sm">
-            أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة
-          </h1>
-
-          {/* Subtitle Description with High Contrast and Readability */}
-          <p className="font-sans text-sm sm:text-base lg:text-lg text-candy-ink font-medium leading-relaxed max-w-xl">
-            نصنع لكم ألذ اللحظات بشغف وإتقان؛ بقلاوة مورقة بالسمن البلدي الصافي، تارت الفراولة المخملي، وتشكيلات الترافل البلجيكي الفاخرة المحضرة طازجة يومياً.
-          </p>
-
-          {/* Value Highlights */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/85 px-3 py-1.5 rounded-button border border-candy-line shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-accent shrink-0 animate-ping" />
-              صنع يدوي طازج يومياً
-            </span>
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/85 px-3 py-1.5 rounded-button border border-candy-line shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
-              تغليف هدايا ملكي
-            </span>
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-sans font-bold text-primary bg-white/85 px-3 py-1.5 rounded-button border border-candy-line shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-candy-mint-text shrink-0" />
-              شحن مبرد سريع
-            </span>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3.5 pt-2 sm:pt-3">
-            <Link
-              href="#categories"
-              className={cn(
-                "inline-flex items-center justify-center gap-2.5 min-h-[50px] px-7 sm:px-9 rounded-button",
-                "bg-primary text-white font-sans font-bold text-sm sm:text-base",
-                "shadow-candy-cta hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-                "transition-all duration-200"
-              )}
-            >
-              <ShoppingBag className="w-5 h-5" />
-              <span>تصفح المنتجات</span>
-              <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-            </Link>
-
-            <Link
-              href="#featured-products"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 min-h-[50px] px-6 sm:px-8 rounded-button",
-                "bg-white/95 border-2 border-candy-blush text-primary font-sans font-bold text-sm sm:text-base",
-                "hover:bg-candy-soft hover:border-primary/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-                "transition-all duration-200 shadow-sm"
-              )}
-            >
-              <Zap className="w-4 h-4 text-accent fill-accent" />
-              <span>طلب سريع</span>
-            </Link>
+          {/* Quiet Trust Metadata Strip */}
+          <div className="mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-candy-line/70 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-1.5 text-[11px] sm:text-xs font-sans text-candy-muted">
+            <span className="font-medium text-candy-ink/80">تحضير طازج يومياً</span>
+            <span className="text-candy-line-dark" aria-hidden="true">|</span>
+            <span className="font-medium text-candy-ink/80">تغليف إهداء ملكي</span>
+            <span className="text-candy-line-dark" aria-hidden="true">|</span>
+            <span className="font-medium text-candy-ink/80">توصيل مبرد والدفع عند الاستلام</span>
           </div>
         </div>
 
-        {/* Hero Visual Showcase Column */}
-        <div className="lg:col-span-5 relative mt-4 lg:mt-0">
-          <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-square rounded-candy-card overflow-hidden shadow-candy-2 border-2 border-white/90 bg-candy-soft group">
-            <ProductImage
-              src="/products/mixed-baklava-extra-pistachio.svg"
-              alt="تشكيلة حلويات كاندي لوز الملكية"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="w-full h-full object-cover transition-transform duration-700 ease-candy-ease group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-candy-ink/70 via-transparent to-transparent pointer-events-none" />
-
-            {/* Top Badge Overlay */}
-            <div className="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-white/95 backdrop-blur-md shadow-sm border border-candy-line">
-              <Sparkles className="w-3.5 h-3.5 text-candy-strawberry fill-candy-strawberry" />
-              <span className="text-xs font-sans font-bold text-primary">
-                الأكثر مبيعاً
-              </span>
-            </div>
-
-            {/* Bottom Caption Overlay */}
-            <div className="absolute bottom-3.5 right-3.5 left-3.5 z-10 flex items-center justify-between text-white">
-              <div className="flex items-center gap-1.5 bg-candy-ink/90 backdrop-blur-md px-3.5 py-1.5 rounded-candy-pill border border-white/25 shadow-md">
-                <Star className="w-4 h-4 fill-candy-amber text-candy-amber" />
-                <span className="text-xs font-sans font-extrabold text-white">
-                  الأعلى تقييماً في المناسبات
-                </span>
-              </div>
-              <span className="text-xs font-sans font-bold bg-candy-strawberry/90 backdrop-blur-md px-3 py-1 rounded-candy-pill shadow-sm">
-                طازج اليوم
-              </span>
-            </div>
-          </div>
-
-          {/* Floating Delicacy Badge */}
+        {/* Full-Bleed Studio Photography Column */}
+        <div className="lg:col-span-6 xl:col-span-6 relative min-h-[250px] sm:min-h-[380px] lg:min-h-[480px] bg-candy-soft overflow-hidden group">
+          <ProductImage
+            src="/images/catalog/hero-assortment.jpg"
+            alt="تشكيلة حلويات كاندي لوز الملكية بالفستق الحلبي والذهب"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
           <div
-            data-testid="hero-floating-delicacy-badge"
-            className="absolute -bottom-3 sm:-bottom-4 -right-2 sm:-right-4 z-20 flex items-center gap-2.5 px-4 py-2 sm:py-2.5 rounded-candy-pill bg-white/95 backdrop-blur-md shadow-candy-2 border border-candy-blush/90 transition-transform duration-300 hover:scale-105"
-          >
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent shrink-0">
-              <Sparkles className="w-4 h-4 fill-accent" />
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-[#2B1A10]/65 via-[#2B1A10]/10 to-transparent pointer-events-none"
+          />
+
+          {/* Single Quiet Editorial Caption */}
+          <div className="absolute bottom-5 inset-x-5 sm:bottom-6 sm:inset-x-6 flex items-end justify-between gap-4 text-white">
+            <div className="text-right">
+              <p className="text-[11px] font-sans font-medium text-[#F5D699] tracking-wide mb-0.5">
+                مختارات الضيافة الملكية
+              </p>
+              <p className="font-display font-semibold text-base sm:text-lg text-white leading-snug">
+                بقلاوة بالفستق الحلبي وكنافة نابلسية طازجة
+              </p>
             </div>
-            <div className="flex flex-col text-right">
-              <span className="text-[10px] sm:text-[11px] font-sans text-candy-muted font-bold leading-none mb-0.5">
-                علامة الأصالة الملكية
-              </span>
-              <span className="text-xs sm:text-sm font-sans font-extrabold text-primary leading-tight">
-                صنع يدوي طازج يومياً
-              </span>
-            </div>
+            <Link
+              href="/category/baklava-eastern"
+              className="shrink-0 text-xs font-sans font-bold text-white/95 hover:text-white underline underline-offset-4 transition-colors"
+            >
+              اكتشف المزيد
+            </Link>
           </div>
         </div>
       </div>

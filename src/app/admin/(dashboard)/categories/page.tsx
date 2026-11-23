@@ -21,16 +21,16 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from '@/components/ui/toast';
 import {
-  STORAGE_KEYS,
-  getStorageItem,
-  setStorageItem,
-} from '@/lib/storage';
-import { MOCK_CATEGORIES } from '@/data/mock/categories';
-import { MOCK_PRODUCTS } from '@/data/mock/products';
+  getAdminAllCategories,
+  createAdminCategory,
+  updateAdminCategory,
+  deleteAdminCategory,
+} from '@/lib/repositories';
+import { getAdminProducts } from '@/components/admin/products/product-repository';
 import type { Category, Product } from '@/types';
 
 export default function AdminCategoriesPage() {
-  const { user, isManager } = useAdminAuth();
+  const { isManager } = useAdminAuth();
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -44,37 +44,25 @@ export default function AdminCategoriesPage() {
   // حالة نافذة تأكيد الحذف
   const [deleteTarget, setDeleteTarget] = useState<Category | null>(null);
 
-  // استرجاع التصنيفات والمنتجات من التخزين المحلي
-  const loadData = useCallback(() => {
+  const loadData = useCallback(async () => {
     setIsLoading(true);
     try {
-      // 1. التصنيفات
-      const storedCategories = getStorageItem(STORAGE_KEYS.MOCK_CATEGORIES, null);
-      if (storedCategories && storedCategories.length > 0) {
-        setCategories([...storedCategories].sort((a, b) => a.displayOrder - b.displayOrder));
-      } else {
-        setStorageItem(STORAGE_KEYS.MOCK_CATEGORIES, MOCK_CATEGORIES);
-        setCategories([...MOCK_CATEGORIES].sort((a, b) => a.displayOrder - b.displayOrder));
-      }
-
-      // 2. المنتجات (لحساب عدد المنتجات في كل تصنيف)
-      const storedProducts = getStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, null);
-      if (storedProducts && storedProducts.length > 0) {
-        setProducts(storedProducts);
-      } else {
-        setStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, MOCK_PRODUCTS);
-        setProducts(MOCK_PRODUCTS);
-      }
+      const [fetchedCategories, fetchedProducts] = await Promise.all([
+        getAdminAllCategories(),
+        getAdminProducts(),
+      ]);
+      setCategories([...fetchedCategories].sort((a, b) => a.displayOrder - b.displayOrder));
+      setProducts(fetchedProducts);
     } catch (err) {
       console.error('Failed to load categories or products:', err);
-      toast.error('حدث خطأ أثناء تحميل بيانات التصنيفات');
+      toast.error('حدث خطأ أثناء تحميل بيانات التصنيفات من الخادم');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, [loadData]);
 
   // حساب عدد المنتجات لكل تصنيف
@@ -85,17 +73,6 @@ export default function AdminCategoriesPage() {
     }
     return counts;
   }, [products]);
-
-  // حفظ التعديلات في التخزين المحلي فوراً وتحديث الحالة
-  const persistCategories = (updated: Category[]) => {
-    const sorted = [...updated].sort((a, b) => a.displayOrder - b.displayOrder);
-    setCategories(sorted);
-    setStorageItem(STORAGE_KEYS.MOCK_CATEGORIES, sorted);
-    // إشعار النوافذ الأخرى بتحديث التخزين
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new Event('storage'));
-    }
-  };
 
   // فلترة التصنيفات بحسب نص البحث
   const filteredCategories = useMemo(() => {
@@ -116,89 +93,103 @@ export default function AdminCategoriesPage() {
       return;
     }
 
-    if (data.id) {
-      // تعديل تصنيف حالي
-      const updated = categories.map((cat) => {
-        if (cat.id === data.id) {
-          return {
-            ...cat,
-            name: data.name,
-            slug: data.slug,
-            description: data.description,
-            imageUrl: data.imageUrl,
-            displayOrder: data.displayOrder,
-            isActive: data.isActive,
-          };
-        }
-        return cat;
-      });
-
-      persistCategories(updated);
-      toast.success(`تم تحديث تصنيف "${data.name}" بنجاح`);
-    } else {
-      // إنشاء تصنيف جديد
-      const newCat: Category = {
-        id: `cat-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-        name: data.name,
-        slug: data.slug,
-        description: data.description,
-        imageUrl: data.imageUrl,
-        displayOrder: data.displayOrder,
-        isActive: data.isActive,
-      };
-
-      const updated = [...categories, newCat];
-      persistCategories(updated);
-      toast.success(`تمت إضافة تصنيف "${data.name}" بنجاح`);
+    try {
+      if (data.id) {
+        const updated = await updateAdminCategory(data.id, {
+          name: data.name,
+          slug: data.slug,
+          description: data.description,
+          imageUrl: data.imageUrl,
+          displayOrder: data.displayOrder,
+          isActive: data.isActive,
+        });
+        setCategories((prev) =>
+          prev
+            .map((cat) => (cat.id === updated.id ? updated : cat))
+            .sort((a, b) => a.displayOrder - b.displayOrder)
+        );
+        toast.success(`تم تحديث تصنيف "${updated.name}" بنجاح`);
+      } else {
+        const created = await createAdminCategory({
+          name: data.name,
+          slug: data.slug,
+          description: data.description,
+          imageUrl: data.imageUrl,
+          displayOrder: data.displayOrder,
+          isActive: data.isActive,
+        });
+        setCategories((prev) =>
+          [...prev, created].sort((a, b) => a.displayOrder - b.displayOrder)
+        );
+        toast.success(`تمت إضافة تصنيف "${created.name}" بنجاح`);
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر حفظ بيانات التصنيف');
     }
   };
 
   // تبديل حالة التفعيل
-  const handleToggleActive = (cat: Category) => {
+  const handleToggleActive = async (cat: Category) => {
     if (!isManager) {
       toast.error('فقط المدير يمكنه تفعيل أو تعطيل التصنيفات');
       return;
     }
 
-    const updated = categories.map((c) =>
-      c.id === cat.id ? { ...c, isActive: !c.isActive } : c
-    );
-    persistCategories(updated);
-    toast.info(
-      cat.isActive
-        ? `تم تعطيل تصنيف "${cat.name}" وإخفاؤه من المتجر`
-        : `تم تفعيل تصنيف "${cat.name}" وإظهاره في المتجر`
-    );
+    try {
+      const updated = await updateAdminCategory(cat.id, { isActive: !cat.isActive });
+      setCategories((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+      toast.info(
+        cat.isActive
+          ? `تم تعطيل تصنيف "${cat.name}" وإخفاؤه من المتجر`
+          : `تم تفعيل تصنيف "${cat.name}" وإظهاره في المتجر`
+      );
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر تحديث حالة التصنيف');
+    }
   };
 
   // تقديم التصنيف للأعلى
-  const handleMoveUp = (index: number) => {
+  const handleMoveUp = async (index: number) => {
     if (index <= 0 || !isManager) return;
     const current = categories[index];
     const prev = categories[index - 1];
 
-    const updated = [...categories];
-    const tempOrder = current.displayOrder;
-    current.displayOrder = prev.displayOrder;
-    prev.displayOrder = tempOrder;
-
-    persistCategories(updated);
-    toast.success(`تم نقل "${current.name}" للأعلى`);
+    try {
+      const [uCurr, uPrev] = await Promise.all([
+        updateAdminCategory(current.id, { displayOrder: prev.displayOrder }),
+        updateAdminCategory(prev.id, { displayOrder: current.displayOrder }),
+      ]);
+      setCategories((list) =>
+        list
+          .map((c) => (c.id === uCurr.id ? uCurr : c.id === uPrev.id ? uPrev : c))
+          .sort((a, b) => a.displayOrder - b.displayOrder)
+      );
+      toast.success(`تم نقل "${current.name}" للأعلى`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر تحديث ترتيب التصنيفات');
+    }
   };
 
   // تأخير التصنيف للأسفل
-  const handleMoveDown = (index: number) => {
+  const handleMoveDown = async (index: number) => {
     if (index >= categories.length - 1 || !isManager) return;
     const current = categories[index];
     const next = categories[index + 1];
 
-    const updated = [...categories];
-    const tempOrder = current.displayOrder;
-    current.displayOrder = next.displayOrder;
-    next.displayOrder = tempOrder;
-
-    persistCategories(updated);
-    toast.success(`تم نقل "${current.name}" للأسفل`);
+    try {
+      const [uCurr, uNext] = await Promise.all([
+        updateAdminCategory(current.id, { displayOrder: next.displayOrder }),
+        updateAdminCategory(next.id, { displayOrder: current.displayOrder }),
+      ]);
+      setCategories((list) =>
+        list
+          .map((c) => (c.id === uCurr.id ? uCurr : c.id === uNext.id ? uNext : c))
+          .sort((a, b) => a.displayOrder - b.displayOrder)
+      );
+      toast.success(`تم نقل "${current.name}" للأسفل`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر تحديث ترتيب التصنيفات');
+    }
   };
 
   // طلب حذف تصنيف
@@ -221,17 +212,19 @@ export default function AdminCategoriesPage() {
   };
 
   // تأكيد الحذف النهائي
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
 
     const targetName = deleteTarget.name;
-    const updated = categories
-      .filter((c) => c.id !== deleteTarget.id)
-      .map((c, i) => ({ ...c, displayOrder: i + 1 }));
-
-    persistCategories(updated);
-    setDeleteTarget(null);
-    toast.success(`تم حذف تصنيف "${targetName}" بنجاح`);
+    try {
+      await deleteAdminCategory(deleteTarget.id);
+      setCategories((prev) => prev.filter((c) => c.id !== deleteTarget.id));
+      setDeleteTarget(null);
+      toast.success(`تم حذف تصنيف "${targetName}" بنجاح`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'تعذّر حذف التصنيف');
+      setDeleteTarget(null);
+    }
   };
 
   // إحصائيات سريعة

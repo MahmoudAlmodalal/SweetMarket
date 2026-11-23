@@ -20,12 +20,23 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 # Quick-start development settings - unsuitable for production
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY',
-    'django-insecure-candy-loz-dev-secret-key-change-in-production'
-)
-
+_DEV_FALLBACK_SECRET = 'django-insecure-candy-loz-dev-secret-key-change-in-production'
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1', 'yes')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '').strip()
+
+if not SECRET_KEY:
+    if not DEBUG:
+        raise RuntimeError(
+            'DJANGO_SECRET_KEY environment variable is required when DJANGO_DEBUG is False.'
+        )
+    SECRET_KEY = _DEV_FALLBACK_SECRET
+elif not DEBUG and SECRET_KEY == _DEV_FALLBACK_SECRET:
+    raise RuntimeError(
+        'Refusing to start in production with the development fallback DJANGO_SECRET_KEY.'
+    )
+
+# Optional shared secret header checked when Next.js proxies to Django
+BACKEND_INTERNAL_SECRET = os.environ.get('BACKEND_INTERNAL_SECRET', '').strip()
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -61,6 +72,7 @@ AUTH_USER_MODEL = 'accounts.AdminUser'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'apps.common.middleware.InternalProxySecretMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -144,11 +156,28 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS Configuration
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
+# CORS & CSRF Configuration (env-driven for production)
+_raw_cors = os.environ.get('DJANGO_CORS_ALLOWED_ORIGINS', '').strip()
+if _raw_cors:
+    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _raw_cors.split(',') if origin.strip()]
+else:
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000'] if DEBUG else []
+
+_raw_csrf = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').strip()
+if _raw_csrf:
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in _raw_csrf.split(',') if origin.strip()]
+else:
+    CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+
 CORS_ALLOW_CREDENTIALS = True
+
+# Production security hardening
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
 # Cache Configuration
 REDIS_URL = os.environ.get('REDIS_URL', '').strip()
@@ -168,14 +197,15 @@ else:
     }
 
 # Django REST Framework Configuration
+_DRF_RENDERERS = ['apps.common.renderers.UnifiedCamelCaseJSONRenderer']
+if DEBUG:
+    _DRF_RENDERERS.append('rest_framework.renderers.BrowsableAPIRenderer')
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'apps.common.renderers.UnifiedCamelCaseJSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
+    'DEFAULT_RENDERER_CLASSES': tuple(_DRF_RENDERERS),
     'DEFAULT_PARSER_CLASSES': (
         'apps.common.parsers.CamelCaseJSONParser',
         'rest_framework.parsers.FormParser',

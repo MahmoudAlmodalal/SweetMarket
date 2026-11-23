@@ -17,7 +17,7 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import { useAdminAuth } from '@/context/admin-auth-context';
-import { MOCK_ADMIN_CREDENTIALS } from '@/data/mock/users';
+import { apiRequest, ApiClientError } from '@/lib/api-client';
 import { toast } from '@/components/ui/toast';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -102,18 +102,10 @@ export default function ChangePasswordPage() {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    // 1. التحقق من كلمة المرور الحالية
     if (!currentPassword) {
       newErrors.currentPassword = 'يرجى إدخال كلمة المرور الحالية';
-    } else {
-      // مطابقة كلمة المرور مع السجل للمستخدم الحالي إذا كانت محفوظة
-      const storedCred = user?.email ? MOCK_ADMIN_CREDENTIALS[user.email.toLowerCase()] : null;
-      if (storedCred?.password && currentPassword !== storedCred.password) {
-        newErrors.currentPassword = 'كلمة المرور الحالية غير صحيحة';
-      }
     }
 
-    // 2. التحقق من كلمة المرور الجديدة
     if (!newPassword) {
       newErrors.newPassword = 'يرجى إدخال كلمة المرور الجديدة';
     } else if (newPassword.length < 6) {
@@ -122,7 +114,6 @@ export default function ChangePasswordPage() {
       newErrors.newPassword = 'كلمة المرور الجديدة يجب أن تكون مختلفة عن كلمة المرور الحالية';
     }
 
-    // 3. التحقق من تأكيد كلمة المرور
     if (!confirmPassword) {
       newErrors.confirmPassword = 'يرجى تأكيد كلمة المرور الجديدة';
     } else if (newPassword && confirmPassword !== newPassword) {
@@ -144,16 +135,13 @@ export default function ChangePasswordPage() {
     setIsSubmitting(true);
 
     try {
-      // محاكاة تأخير معالجة الخادم الآمنة (350ms)
-      await new Promise((resolve) => setTimeout(resolve, 350));
-
-      // تحديث كلمة المرور في السجل للمستخدم
-      if (user?.email) {
-        const key = user.email.toLowerCase();
-        if (MOCK_ADMIN_CREDENTIALS[key]) {
-          MOCK_ADMIN_CREDENTIALS[key].password = newPassword;
-        }
-      }
+      await apiRequest('/api/v1/admin/auth/change-password', {
+        method: 'POST',
+        body: {
+          currentPassword,
+          newPassword,
+        },
+      });
 
       setIsSuccess(true);
       setCurrentPassword('');
@@ -163,13 +151,20 @@ export default function ChangePasswordPage() {
 
       toast.success(
         'تم تغيير كلمة المرور بنجاح',
-        'تم حفظ كلمة المرور الجديدة لحسابك، يمكنك استخدامها في تسجيل الدخول القادم'
+        'تم حفظ كلمة المرور الجديدة لحسابك على الخادم بأمان'
       );
-    } catch {
-      setErrors({
-        general: 'حدث خطأ أثناء حفظ كلمة المرور، يرجى المحاولة مرة أخرى',
-      });
-      toast.error('فشل حفظ كلمة المرور');
+    } catch (err) {
+      const msg =
+        err instanceof ApiClientError
+          ? err.message
+          : 'حدث خطأ أثناء حفظ كلمة المرور، يرجى المحاولة مرة أخرى';
+
+      if (err instanceof ApiClientError && err.code === 'INVALID_CREDENTIALS') {
+        setErrors({ currentPassword: msg });
+      } else {
+        setErrors({ general: msg });
+      }
+      toast.error('فشل حفظ كلمة المرور', msg);
     } finally {
       setIsSubmitting(false);
     }

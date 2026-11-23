@@ -30,7 +30,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MOCK_PRODUCTS } from "@/data/mock/products";
+import { getProducts } from "@/lib/repositories";
 import type { Product } from "@/types";
 import {
   computeLinePrice,
@@ -53,15 +53,28 @@ function CartPageInner() {
 
   const [isClearDialogOpen, setIsClearDialogOpen] = React.useState(false);
   const [addedUpsellIds, setAddedUpsellIds] = React.useState<Record<string, boolean>>({});
+  const [catalogProducts, setCatalogProducts] = React.useState<Product[]>([]);
 
-  // Complementary upsell products (exclude ones already in cart if possible)
+  React.useEffect(() => {
+    let active = true;
+    getProducts()
+      .then((list) => {
+        if (active) setCatalogProducts(list);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Complementary upsell products from live catalog (exclude ones already in cart)
   const upsellProducts = React.useMemo(() => {
     const itemProductIds = new Set(items.map((i) => i.productId));
-    const available = MOCK_PRODUCTS.filter(
+    const available = catalogProducts.filter(
       (p) => p.isAvailable && !itemProductIds.has(p.id)
     );
     return available.slice(0, 3);
-  }, [items]);
+  }, [items, catalogProducts]);
 
   const handleAddUpsell = (product: Product) => {
     const defaultWeight = getDefaultWeightOption(product);
@@ -146,10 +159,8 @@ function CartPageInner() {
           </div>
         </div>
 
-        {/* Action Controls & Reservation Notice */}
         <div className="flex items-center justify-between sm:justify-end gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-semibold shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50/80 border border-emerald-200/70 text-emerald-800 text-xs font-medium">
             <Clock className="w-3.5 h-3.5 text-emerald-600" />
             <span>اختياراتك محفوظة لمدة 24 ساعة</span>
           </div>

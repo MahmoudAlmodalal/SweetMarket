@@ -91,27 +91,19 @@ function LoginFormContent() {
   };
 
   return (
-    <div className="w-full max-w-[390px] sm:max-w-md mx-auto relative px-1 sm:px-0">
-      {/* خلفية تدرجات الضوء الحلواني الفاخر */}
-      <div className="absolute -top-16 -right-20 w-44 h-44 rounded-full bg-candy-blush/60 blur-3xl pointer-events-none" aria-hidden="true" />
-      <div className="absolute -bottom-20 -left-16 w-48 h-48 rounded-full bg-candy-pastel-2/50 blur-3xl pointer-events-none" aria-hidden="true" />
+    <div className="w-full max-w-[420px] mx-auto relative px-1 sm:px-0">
+      <Card elevation="sm" className="relative border-candy-line bg-white overflow-hidden rounded-3xl">
+        <div className="h-1 bg-candy-berry" aria-hidden="true" />
 
-      <Card elevation="md" className="relative border-candy-line/80 shadow-candy-2 bg-white/95 backdrop-blur-md overflow-hidden rounded-3xl">
-        {/* شريط الإشعاع العلوي */}
-        <div className="h-1.5 bg-gradient-to-l from-candy-berry via-candy-strawberry to-candy-amber" aria-hidden="true" />
-
-        <CardHeader className="text-center pb-5 pt-7 px-6 sm:px-8 border-b border-candy-line/40">
-          <Link href="/" aria-label="العودة إلى متجر كاندي لوز" className="inline-flex mx-auto mb-4 rounded-xl focus-visible:ring-2 focus-visible:ring-candy-berry transition-transform hover:scale-[1.02]">
-            <StoreLogo variant="main" width={190} height={55} priority className="max-w-[180px]" />
+        <CardHeader className="text-center pb-5 pt-8 px-6 sm:px-8 border-b border-candy-line/60">
+          <Link href="/" aria-label="العودة إلى متجر كاندي لوز" className="inline-flex mx-auto mb-4 rounded-xl focus-visible:ring-2 focus-visible:ring-candy-berry">
+            <StoreLogo variant="main" width={180} height={52} priority className="max-w-[175px]" />
           </Link>
-          <div className="inline-flex items-center justify-center w-14 h-14 mx-auto mb-3 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry shadow-candy-1">
-            <Lock className="w-7 h-7" aria-hidden="true" />
-          </div>
           <CardTitle className="text-2xl font-display text-candy-ink font-bold">
             بوابة إدارة كاندي لوز
           </CardTitle>
           <CardDescription className="text-sm text-candy-muted font-sans mt-1.5">
-            أدخل بيانات اعتمادك للوصول إلى لوحة تحكم متجر كاندي لوز
+            سجّل الدخول لإدارة الطلبات والمنتجات ومناطق التوصيل
           </CardDescription>
         </CardHeader>
 

@@ -36,9 +36,35 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   display: "swap",
 });
 
+const appBaseUrl =
+  process.env.NEXT_PUBLIC_APP_URL && /^https?:\/\//i.test(process.env.NEXT_PUBLIC_APP_URL)
+    ? process.env.NEXT_PUBLIC_APP_URL
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "كاندي لوز | Candy Loz",
-  description: "متجر حلويات كاندي لوز - تشكيلة راقية من الحلويات الفاخرة والنكهات الاستثنائية",
+  metadataBase: new URL(appBaseUrl),
+  title: {
+    default: "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+    template: "%s | كاندي لوز",
+  },
+  description:
+    "متجر حلويات كاندي لوز - تشكيلة راقية من البقلاوة والكنافة النابلسية والكيك والشوكولاتة البلجيكية الفاخرة مع توصيل سريع في فلسطين.",
+  openGraph: {
+    title: "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+    description:
+      "متجر حلويات كاندي لوز - تشكيلة راقية من البقلاوة والكنافة النابلسية والكيك والشوكولاتة البلجيكية الفاخرة.",
+    type: "website",
+    locale: "ar_PS",
+    siteName: "كاندي لوز | Candy Loz",
+    images: [{ url: "/images/catalog/hero-assortment.jpg", alt: "تشكيلة حلويات كاندي لوز الفاخرة" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+    description:
+      "متجر حلويات كاندي لوز - تشكيلة راقية من البقلاوة والكنافة النابلسية والكيك والشوكولاتة البلجيكية الفاخرة.",
+    images: ["/images/catalog/hero-assortment.jpg"],
+  },
   icons: {
     icon: "/logo/logo-icon.svg",
     apple: "/logo/logo-icon.svg",

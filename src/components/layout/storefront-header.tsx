@@ -4,12 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  Sparkles,
   ShoppingBag,
-  Home,
-  LayoutGrid,
-  Phone,
-  Truck,
   Search,
   Heart,
   UserRound,
@@ -35,9 +30,6 @@ interface StorefrontHeaderUIProps extends StorefrontHeaderProps {
   onSubmitSearch: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
-/**
- * واجهة ترويسة المتجر المشتركة (Desktop & Mobile)
- */
 function StorefrontHeaderUI({
   cartCount: propCartCount,
   favoritesCount: propFavoritesCount,
@@ -53,29 +45,6 @@ function StorefrontHeaderUI({
   const [favoriteCount, setFavoriteCount] = React.useState<number>(
     propFavoritesCount ?? 0
   );
-  const [isCartBouncing, setIsCartBouncing] = React.useState<boolean>(false);
-  const [isFavBouncing, setIsFavBouncing] = React.useState<boolean>(false);
-
-  const prevCartCountRef = React.useRef(internalCount);
-  const prevFavCountRef = React.useRef(favoriteCount);
-
-  React.useEffect(() => {
-    if (prevCartCountRef.current !== internalCount && internalCount > 0) {
-      setIsCartBouncing(true);
-      const timer = setTimeout(() => setIsCartBouncing(false), 700);
-      return () => clearTimeout(timer);
-    }
-    prevCartCountRef.current = internalCount;
-  }, [internalCount]);
-
-  React.useEffect(() => {
-    if (prevFavCountRef.current !== favoriteCount && favoriteCount > 0) {
-      setIsFavBouncing(true);
-      const timer = setTimeout(() => setIsFavBouncing(false), 700);
-      return () => clearTimeout(timer);
-    }
-    prevFavCountRef.current = favoriteCount;
-  }, [favoriteCount]);
 
   React.useEffect(() => {
     if (typeof propFavoritesCount === "number") {
@@ -93,7 +62,6 @@ function StorefrontHeaderUI({
     };
 
     syncFavorites();
-
     window.addEventListener(FAVORITES_UPDATED_EVENT, syncFavorites);
     window.addEventListener("candy_favorites_updated", syncFavorites);
     window.addEventListener("storage", syncFavorites);
@@ -130,7 +98,6 @@ function StorefrontHeaderUI({
     };
 
     calculateCount();
-
     const handleStorageChange = () => calculateCount();
     window.addEventListener("storage", handleStorageChange);
     window.addEventListener("candy_cart_updated", handleStorageChange);
@@ -142,153 +109,138 @@ function StorefrontHeaderUI({
   }, [propCartCount]);
 
   const navLinks = [
+    { href: "/", label: "الرئيسية", isActive: pathname === "/" },
     {
-      href: "/",
-      label: "الرئيسية",
-      icon: Home,
-      isActive: pathname === "/",
+      href: "/category/all",
+      label: "التشكيلة",
+      isActive: pathname.startsWith("/category") || pathname.startsWith("/product"),
     },
-    {
-      href: "/#categories",
-      label: "الأصناف",
-      icon: LayoutGrid,
-      isActive: pathname.startsWith("/category"),
-    },
-    {
-      href: "/contact",
-      label: "من نحن والتواصل",
-      icon: Phone,
-      isActive: pathname === "/contact",
-    },
-    {
-      href: "/track",
-      label: "تتبع الطلب",
-      icon: Truck,
-      isActive: pathname === "/track",
-    },
+    { href: "/track", label: "تتبع الطلب", isActive: pathname === "/track" },
+    { href: "/contact", label: "من نحن", isActive: pathname === "/contact" },
   ];
 
   return (
     <header
       role="banner"
       className={cn(
-        "sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-candy-line/60 shadow-sm transition-all duration-200 supports-[backdrop-filter]:bg-white/85",
+        "sticky top-0 z-40 w-full bg-[#FFFAF8]/92 backdrop-blur-md border-b border-candy-line/70 transition-colors",
         className
       )}
     >
-      {/* Top Announcement Ribbon */}
-      <div className="bg-candy-soft/90 backdrop-blur-sm border-b border-candy-line/40 px-4 py-1.5 text-center flex items-center justify-center gap-2 text-xs font-semibold text-primary">
-        <Sparkles className="w-3.5 h-3.5 text-secondary shrink-0" />
-        <span>توصيل طازج وسريع لجميع المناطق 🍰</span>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20 gap-4">
-          {/* Brand Logo & Title */}
+        <div className="flex items-center justify-between h-16 md:h-[74px] gap-4">
+          {/* Brand Logo */}
           <Link
             href="/"
             aria-label="الصفحة الرئيسية لمتجر كاندي لوز"
-            className="flex items-center gap-2 group shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl p-1 -m-1"
+            className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry rounded-lg"
           >
             <StoreLogo
               variant="main"
-              width={140}
+              width={142}
               height={40}
               priority
-              className="w-[110px] sm:w-[142px] md:w-[154px] group-hover:scale-[1.02] transition-transform duration-200"
+              className="w-[116px] sm:w-[138px] md:w-[148px] transition-opacity hover:opacity-90"
             />
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Center Editorial Navigation */}
           <nav
             aria-label="التنقل الرئيسي"
-            className="hidden md:flex items-center gap-1.5 lg:gap-2"
+            className="hidden md:flex items-center gap-7 lg:gap-9"
           >
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={link.isActive ? "page" : undefined}
-                  className={cn(
-                    "inline-flex items-center gap-2 px-3.5 py-2 rounded-button text-sm font-semibold transition-all duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                    link.isActive
-                      ? "bg-candy-soft text-primary shadow-sm font-bold"
-                      : "text-candy-ink/80 hover:text-primary hover:bg-candy-soft/60"
-                  )}
-                >
-                  <Icon className="w-4 h-4 text-secondary" />
-                  <span>{link.label}</span>
-                </Link>
-              );
-            })}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={link.isActive ? "page" : undefined}
+                className={cn(
+                  "relative py-2 text-sm font-sans whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry rounded-sm",
+                  link.isActive
+                    ? "text-candy-berry font-bold"
+                    : "text-candy-ink/75 font-medium hover:text-candy-ink"
+                )}
+              >
+                <span>{link.label}</span>
+                {link.isActive && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-0 inset-x-0 h-[2px] rounded-full bg-candy-berry"
+                  />
+                )}
+              </Link>
+            ))}
           </nav>
 
-          {/* Header Action Elements */}
-          <div className="flex items-center gap-1.5 sm:gap-3">
+          {/* Left Actions: Search + Utility Icons */}
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <form
+              role="search"
+              aria-label="بحث المتجر"
+              onSubmit={onSubmitSearch}
+              className="hidden lg:flex items-center relative w-52 xl:w-60 ml-1"
+            >
+              <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
+              <input
+                type="search"
+                placeholder="ابحث عن صنف..."
+                aria-label="البحث عن منتج"
+                value={searchQuery}
+                onChange={(event) => onSearchChange(event.target.value)}
+                className="w-full h-10 pr-10 pl-3.5 bg-white text-candy-ink placeholder:text-candy-muted/80 text-xs rounded-xl border border-candy-line/80 focus:outline-none focus:border-candy-berry/50 focus:ring-2 focus:ring-candy-berry/15 transition-all"
+              />
+            </form>
+
             <Link
               href="/favorites"
               aria-label={favoriteCount > 0 ? `المفضلة (${favoriteCount} عناصر)` : "المفضلة"}
-              className="relative flex w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-candy-rose items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className={cn(
+                "relative flex w-10 h-10 rounded-xl border items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
+                pathname === "/favorites"
+                  ? "bg-candy-soft border-candy-berry/30 text-candy-berry"
+                  : "bg-white border-candy-line/70 text-candy-ink/75 hover:text-candy-berry hover:border-candy-line"
+              )}
             >
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Heart className="w-[18px] h-[18px]" />
               {favoriteCount > 0 && (
                 <span
                   aria-label={`${favoriteCount} عناصر في المفضلة`}
-                  className={cn(
-                    "absolute -top-1.5 -right-1.5 min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 sm:px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[10px] sm:text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200 transition-transform",
-                    isFavBouncing && "scale-125 ring-2 ring-white animate-bounce"
-                  )}
+                  className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-candy-berry text-white font-sans text-[10px] font-bold tabular-nums flex items-center justify-center ring-2 ring-[#FFFAF8]"
                 >
                   {favoriteCount > 99 ? "+99" : favoriteCount}
                 </span>
               )}
             </Link>
+
             <Link
               href="/account"
               aria-label="حسابي"
-              className="flex w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-primary items-center justify-center transition-all active:scale-95 border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className={cn(
+                "flex w-10 h-10 rounded-xl border items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
+                pathname === "/account"
+                  ? "bg-candy-soft border-candy-berry/30 text-candy-berry"
+                  : "bg-white border-candy-line/70 text-candy-ink/75 hover:text-candy-berry hover:border-candy-line"
+              )}
             >
-              <UserRound className="w-4 h-4 sm:w-5 sm:h-5" />
+              <UserRound className="w-[18px] h-[18px]" />
             </Link>
 
-            {/* Desktop Search Bar */}
-            <form role="search" aria-label="بحث المتجر" onSubmit={onSubmitSearch} className="hidden lg:flex items-center relative w-56 xl:w-64">
-              <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
-              <input
-                type="search"
-                placeholder="ابحث عن حلاك..."
-                aria-label="البحث عن منتج"
-                value={searchQuery}
-                onChange={(event) => onSearchChange(event.target.value)}
-                className="w-full h-10 pr-9 pl-4 bg-candy-soft/80 hover:bg-candy-soft focus:bg-white text-candy-ink placeholder:text-candy-muted text-xs rounded-button border border-candy-line/60 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all duration-200"
-              />
-            </form>
-
-            {/* Quick Track Pill (Desktop only) */}
-            <Link
-              href="/track"
-              className="hidden sm:inline-flex md:hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-button bg-candy-soft text-primary hover:bg-candy-blush text-xs font-bold transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              <Truck className="w-4 h-4 text-secondary" />
-              <span>تتبع طلبي</span>
-            </Link>
-
-            {/* Reactive Cart Button */}
             <Link
               href="/cart"
               aria-label={`سلة المشتريات (${internalCount} عناصر)`}
-              className="relative w-11 h-11 rounded-full bg-candy-soft hover:bg-candy-blush text-primary flex items-center justify-center transition-all duration-200 active:scale-95 shadow-sm border border-candy-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className={cn(
+                "relative inline-flex items-center gap-2 h-10 px-3 sm:px-3.5 rounded-xl border font-sans text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
+                internalCount > 0
+                  ? "bg-candy-berry border-candy-berry text-white hover:bg-candy-berry-dark"
+                  : "bg-white border-candy-line/70 text-candy-ink hover:border-candy-berry/40 hover:text-candy-berry"
+              )}
             >
-              <ShoppingBag className="w-5 h-5 text-primary" />
+              <ShoppingBag className="w-[18px] h-[18px]" />
+              <span className="hidden sm:inline">السلة</span>
               {internalCount > 0 && (
                 <span
                   aria-label={`${internalCount} أصناف في السلة`}
-                  className={cn(
-                    "absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1.5 rounded-full bg-candy-strawberry text-white font-sans text-[11px] font-bold flex items-center justify-center shadow-candy-cta animate-in zoom-in-75 duration-200 transition-transform",
-                    isCartBouncing && "scale-125 ring-2 ring-white animate-bounce"
-                  )}
+                  className="min-w-[20px] h-5 px-1.5 rounded-md bg-white/20 text-white text-[11px] font-bold tabular-nums flex items-center justify-center"
                 >
                   {internalCount > 99 ? "+99" : internalCount}
                 </span>
@@ -298,17 +250,22 @@ function StorefrontHeaderUI({
         </div>
 
         {/* Mobile Search Bar Row (< 768px) */}
-        <form role="search" aria-label="بحث المتجر للجوال" onSubmit={onSubmitSearch} className="pb-3 md:hidden">
+        <form
+          role="search"
+          aria-label="بحث المتجر للجوال"
+          onSubmit={onSubmitSearch}
+          className="pb-3 md:hidden"
+        >
           <div className="relative flex items-center w-full">
             <Search className="w-4 h-4 text-candy-muted absolute right-3.5 pointer-events-none" />
             <input
               type="search"
-              placeholder="ابحث عن حلاك المفضل..."
+              placeholder="ابحث عن بقلاوة، كنافة، كيك..."
               aria-label="البحث عن منتج"
               value={searchQuery}
               onChange={(event) => onSearchChange(event.target.value)}
               enterKeyHint="search"
-              className="w-full h-10 pr-9 pl-4 bg-candy-soft text-candy-ink placeholder:text-candy-muted text-xs rounded-candy-pill border border-candy-line/70 focus:outline-none focus:bg-white focus:ring-2 focus:ring-candy-strawberry/30 transition-all duration-200 shadow-sm"
+              className="w-full h-10 pr-10 pl-4 bg-white text-candy-ink placeholder:text-candy-muted/80 text-xs rounded-xl border border-candy-line/80 focus:outline-none focus:border-candy-berry/50 focus:ring-2 focus:ring-candy-berry/15 transition-all"
             />
           </div>
         </form>
@@ -317,9 +274,6 @@ function StorefrontHeaderUI({
   );
 }
 
-/**
- * مكون الترويسة الفعلي المتصل بـ SearchParams
- */
 function StorefrontHeaderConnected(props: StorefrontHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -328,7 +282,6 @@ function StorefrontHeaderConnected(props: StorefrontHeaderProps) {
 
   const [searchQuery, setSearchQuery] = React.useState(activeQ);
 
-  // مزامنة حالة الإدخال فور تغير باراميتر q في الرابط
   React.useEffect(() => {
     setSearchQuery(activeQ);
   }, [activeQ]);
@@ -340,7 +293,6 @@ function StorefrontHeaderConnected(props: StorefrontHeaderProps) {
       pathname === "/category" || pathname.startsWith("/category/");
 
     if (isCategoryRoute) {
-      // في مسار التصنيف: تحديث q في نفس المسار دون مغادرته
       const params = new URLSearchParams(searchParams?.toString() ?? "");
       if (query) {
         params.set("q", query);
@@ -350,7 +302,6 @@ function StorefrontHeaderConnected(props: StorefrontHeaderProps) {
       const qs = params.toString();
       router.push(qs ? `${pathname}?${qs}` : pathname);
     } else {
-      // خارج التصنيف: التوجيه لتصنيف الكل مع الاستعلام
       router.push(
         query ? `/category/all?q=${encodeURIComponent(query)}` : "/category/all"
       );
@@ -367,9 +318,6 @@ function StorefrontHeaderConnected(props: StorefrontHeaderProps) {
   );
 }
 
-/**
- * مكون احتياطي أثناء التحميل الأولي لمنع إخفاق CSR Bailout في صفحات التوليد الساكن
- */
 function StorefrontHeaderFallback(props: StorefrontHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -382,9 +330,7 @@ function StorefrontHeaderFallback(props: StorefrontHeaderProps) {
       pathname === "/category" || pathname.startsWith("/category/");
 
     if (isCategoryRoute) {
-      router.push(
-        query ? `${pathname}?q=${encodeURIComponent(query)}` : pathname
-      );
+      router.push(query ? `${pathname}?q=${encodeURIComponent(query)}` : pathname);
     } else {
       router.push(
         query ? `/category/all?q=${encodeURIComponent(query)}` : "/category/all"

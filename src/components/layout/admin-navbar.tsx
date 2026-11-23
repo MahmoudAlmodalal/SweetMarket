@@ -121,90 +121,61 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
         )}
 
         <div className="flex flex-col text-right min-w-0">
-          <div className="flex items-center gap-2">
-            <h1 className="font-display font-bold text-base sm:text-xl text-candy-ink leading-tight truncate">
-              {currentTitle}
-            </h1>
-            <span
-              className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-sans font-semibold bg-candy-soft text-candy-berry border border-candy-blush/60"
-              aria-hidden="true"
-            >
-              <Sparkles className="w-2.5 h-2.5 text-candy-strawberry" />
-              <span>لوحة الإدارة</span>
-            </span>
-          </div>
+          <h1 className="font-display font-bold text-base sm:text-xl text-candy-ink leading-tight truncate">
+            {currentTitle}
+          </h1>
           <span className="font-sans text-[11px] text-candy-muted hidden sm:inline truncate">
-            متجر حلويات كاندي لوز
+            لوحة إدارة متجر كاندي لوز
           </span>
         </div>
       </div>
 
-      {/* Center/Left: Branch Indicator & Role Pill & Controls */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* Clear Branch Indicator */}
+      {/* Center/Left: Branch Indicator & Role Controls */}
+      <div className="flex items-center gap-2 sm:gap-2.5">
         <div
-          className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-candy-pill bg-candy-soft/60 border border-candy-line/80 text-xs font-sans text-candy-ink shadow-xs"
+          className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-candy-soft/70 border border-candy-line text-xs font-sans text-candy-ink"
           title="الفرع الإداري النشط: خان يونس - المتجر الرئيسي"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
           <Store className="w-3.5 h-3.5 text-candy-berry shrink-0" aria-hidden="true" />
-          <span className="text-candy-muted font-normal">الفرع:</span>
+          <span className="text-candy-muted">الفرع:</span>
           <span className="font-bold text-candy-ink">خان يونس (الرئيسي)</span>
         </div>
 
         <div
-          className="hidden md:flex xl:hidden items-center gap-1.5 px-2.5 py-1 rounded-candy-pill bg-candy-soft/60 border border-candy-line/70 text-xs font-sans text-candy-ink"
+          className="hidden md:flex xl:hidden items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-candy-soft/70 border border-candy-line text-xs font-sans text-candy-ink"
           title="فرع خان يونس الرئيسي"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          <Store className="w-3 h-3 text-candy-berry shrink-0" aria-hidden="true" />
+          <Store className="w-3.5 h-3.5 text-candy-berry shrink-0" aria-hidden="true" />
           <span className="font-semibold text-candy-ink text-[11px]">خان يونس</span>
         </div>
 
-        {/* Refined Quick Role Switcher Toggle (Manager vs Staff) */}
+        {/* Role Switcher Toggle (Manager vs Staff) */}
         <button
           type="button"
           onClick={handleRoleToggle}
-          title="تبديل موظف/مدير للاختبار السريع"
+          title="تبديل الدور بين موظف ومدير للمعاينة"
           aria-label="تبديل الدور بين موظف ومدير"
           className={cn(
-            'group inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-bold font-sans transition-all duration-200 border shadow-xs active:scale-95',
+            'group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold font-sans transition-colors border',
             role === 'manager'
-              ? 'bg-gradient-to-r from-amber-50 to-orange-50/80 text-amber-950 border-amber-300 hover:border-amber-400 hover:shadow-sm'
-              : 'bg-gradient-to-r from-teal-50 to-emerald-50/80 text-teal-950 border-teal-300 hover:border-teal-400 hover:shadow-sm'
+              ? 'bg-amber-50 text-amber-950 border-amber-200 hover:bg-amber-100/70'
+              : 'bg-teal-50 text-teal-950 border-teal-200 hover:bg-teal-100/70'
           )}
         >
           <ArrowLeftRight
-            className="w-3.5 h-3.5 shrink-0 text-candy-muted group-hover:text-candy-berry transition-transform duration-200 group-hover:rotate-180"
+            className="w-3.5 h-3.5 shrink-0 text-candy-muted group-hover:text-candy-berry transition-colors"
             aria-hidden="true"
           />
-          <span className="hidden sm:inline text-candy-muted font-normal">الدور:</span>
           <span className="inline-flex items-center gap-1.5">
             {role === 'manager' ? (
               <>
-                <span className="relative flex h-2 w-2" aria-hidden="true">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
-                </span>
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
-                <span className="font-extrabold text-amber-950">مدير</span>
-                <span className="hidden lg:inline text-[10px] px-1.5 py-0.2 rounded-md bg-amber-200/60 text-amber-900 font-semibold">
-                  كامل الصلاحيات
-                </span>
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-700" aria-hidden="true" />
+                <span className="font-bold text-amber-950">مدير</span>
               </>
             ) : (
               <>
-                <span className="relative flex h-2 w-2" aria-hidden="true">
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500" />
-                </span>
-                <User className="w-3.5 h-3.5 text-teal-600" aria-hidden="true" />
-                <span className="font-extrabold text-teal-950">موظف</span>
-                <span className="hidden lg:inline text-[10px] px-1.5 py-0.2 rounded-md bg-teal-200/60 text-teal-900 font-semibold">
-                  تشغيلي
-                </span>
+                <User className="w-3.5 h-3.5 text-teal-700" aria-hidden="true" />
+                <span className="font-bold text-teal-950">موظف</span>
               </>
             )}
           </span>

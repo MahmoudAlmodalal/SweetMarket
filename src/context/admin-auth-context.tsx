@@ -8,22 +8,16 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import type { AdminUser, AdminRole, AdminSession } from '@/types';
-import {
-  STORAGE_KEYS,
-  getStorageItem,
-  setStorageItem,
-  removeStorageItem,
-  isBrowser,
-} from '@/lib/storage';
+import type { AdminUser, AdminRole } from '@/types';
 import { MOCK_ADMIN_USERS } from '@/data/mock/users';
 import {
   authenticateAdminUser,
   demoLoginAsAdmin,
-  generateSecureSessionToken,
-  getActiveSession,
+  fetchServerSession,
   normalizeAdminUser,
+  terminateSession,
 } from '@/lib/auth/authentication';
+import { STORAGE_KEYS, removeStorageItem, isBrowser } from '@/lib/storage';
 
 export { normalizeAdminUser };
 
@@ -34,18 +28,22 @@ export interface PreSeededAccount {
 }
 
 /**
- * حسابات الإدارة المعتمدة للاختبار التجريبي (بدون كلمات مرور مكشوفة في الكود)
+ * حسابات الإدارة المعروضة للمعاينة السريعة (بدون كلمات مرور)
  */
 export const PRE_SEEDED_USERS: Record<AdminRole, PreSeededAccount> = {
   manager: {
     email: 'manager@candyloz.com',
     role: 'manager',
-    user: normalizeAdminUser(MOCK_ADMIN_USERS.find((u) => u.role === 'manager') || MOCK_ADMIN_USERS[0])!,
+    user: normalizeAdminUser(
+      MOCK_ADMIN_USERS.find((u) => u.role === 'manager') || MOCK_ADMIN_USERS[0]
+    )!,
   },
   staff: {
     email: 'staff@candyloz.com',
     role: 'staff',
-    user: normalizeAdminUser(MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[2])!,
+    user: normalizeAdminUser(
+      MOCK_ADMIN_USERS.find((u) => u.role === 'staff') || MOCK_ADMIN_USERS[2]
+    )!,
   },
 };
 
@@ -59,10 +57,6 @@ export interface AdminAuthContextValue {
   isStaff: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   quickLogin: (role?: AdminRole) => Promise<{ success: boolean; error?: string }>;
-  /**
-   * @deprecated Role self-escalation is disabled on production error surfaces.
-   * Retained for dev/QA environment testing and backwards-compatibility.
-   */
   switchRole: (role: AdminRole) => void;
   logout: () => void;
   hasRole: (role: AdminRole) => boolean;
@@ -74,66 +68,49 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
   const [user, setUser] = useState<AdminUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // استرجاع الجلسة عند التحميل الأولي من التخزين المحلي مع دمج الحقول الافتراضية بأمان (ADR Invariant)
+  // Hydrate authenticated admin session directly from server HttpOnly cookie
   useEffect(() => {
-    try {
-      const activeSession = getActiveSession();
-      if (activeSession && activeSession.user && activeSession.user.isActive) {
-        setUser(activeSession.user);
-      } else {
-        // فحص احتياطي مباشر من التخزين مع المعالجة والدمج
-        const rawSession = getStorageItem(STORAGE_KEYS.ADMIN_SESSION);
-        if (rawSession && rawSession.user) {
-          const normalized = normalizeAdminUser(rawSession.user);
-          if (normalized && normalized.isActive) {
-            setUser(normalized);
-          }
-        }
+    let active = true;
+    if (isBrowser()) {
+      removeStorageItem(STORAGE_KEYS.ADMIN_SESSION);
+      if (window.location.pathname === '/admin/login') {
+        setIsLoading(false);
+        return () => {
+          active = false;
+        };
       }
-    } catch (err) {
-      console.error('[AdminAuth] Error reading initial session:', err);
-    } finally {
-      setIsLoading(false);
     }
-  }, []);
 
-  // المزامنة التلقائية عبر النوافذ والتبويبات مع معالجة البيانات القديمة
-  useEffect(() => {
-    if (!isBrowser()) return;
-
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEYS.ADMIN_SESSION) {
-        if (e.newValue) {
-          try {
-            const parsed = JSON.parse(e.newValue) as AdminSession;
-            if (parsed && parsed.user) {
-              const normalized = normalizeAdminUser(parsed.user);
-              if (normalized && normalized.isActive) {
-                setUser(normalized);
-                return;
-              }
-            }
-          } catch {
-            // تجاهل خطأ التحليل
-          }
+    (async () => {
+      try {
+        const serverUser = await fetchServerSession();
+        if (active) {
+          setUser(serverUser);
         }
-        setUser(null);
+      } catch {
+        if (active) {
+          setUser(null);
+        }
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
       }
-    };
+    })();
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    return () => {
+      active = false;
+    };
   }, []);
 
-  /**
-   * تسجيل الدخول بالبريد الإلكتروني/اسم المستخدم وكلمة المرور عبر وحدة المصادقة الآمنة
-   */
   const login = useCallback(
-    async (identifier: string, secret: string): Promise<{ success: boolean; error?: string }> => {
+    async (
+      identifier: string,
+      secret: string
+    ): Promise<{ success: boolean; error?: string }> => {
       const result = await authenticateAdminUser(identifier, secret);
       if (result.success && result.user) {
-        const normalized = normalizeAdminUser(result.user);
-        setUser(normalized);
+        setUser(result.user);
         return { success: true };
       }
       return {
@@ -144,60 +121,34 @@ function AdminAuthProviderInternal({ children }: { children: React.ReactNode }) 
     []
   );
 
-  /**
-   * تسجيل دخول تجريبي آمن دون تداول كلمات مرور في واجهة المتصفح
-   */
-  const quickLogin = useCallback(async (targetRole: AdminRole = 'manager'): Promise<{ success: boolean; error?: string }> => {
-    const target = PRE_SEEDED_USERS[targetRole] || PRE_SEEDED_USERS.manager;
-    const sessionToken = generateSecureSessionToken();
-    const session: AdminSession = {
-      token: sessionToken,
-      user: target.user,
-    };
-    setStorageItem(STORAGE_KEYS.ADMIN_SESSION, session);
-    setUser(target.user);
-    return { success: true };
-  }, []);
+  const quickLogin = useCallback(
+    async (targetRole: AdminRole = 'manager'): Promise<{ success: boolean; error?: string }> => {
+      const result = await demoLoginAsAdmin(targetRole);
+      if (result.success && result.user) {
+        setUser(result.user);
+        return { success: true };
+      }
+      return {
+        success: false,
+        error: result.error || 'تعذّر تسجيل الدخول السريع',
+      };
+    },
+    []
+  );
 
-  /**
-   * تبديل الدور - معطل في واجهات الأخطاء الإنتاجية لمنع الترقية الذاتية (Self-Escalation)
-   * متاح فقط للاختبار في بيئة التطوير أو مع راية NEXT_PUBLIC_DEMO_MODE
-   */
   const switchRole = useCallback((newRole: AdminRole) => {
-    const isDev = process.env.NODE_ENV !== 'production';
-    const isDemo = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
-
-    if (!isDev && !isDemo) {
-      console.warn(
-        '[AdminAuth] Role self-escalation is blocked on production error surfaces.'
-      );
-      return;
-    }
-
-    const targetAccount = PRE_SEEDED_USERS[newRole];
-    if (!targetAccount) return;
-
-    const targetUser = targetAccount.user;
-    const session: AdminSession = {
-      token: generateSecureSessionToken(),
-      user: targetUser,
-    };
-
-    setStorageItem(STORAGE_KEYS.ADMIN_SESSION, session);
-    setUser(targetUser);
+    void demoLoginAsAdmin(newRole).then((res) => {
+      if (res.success && res.user) {
+        setUser(res.user);
+      }
+    });
   }, []);
 
-  /**
-   * تسجيل الخروج ومسح الجلسة من التخزين المحلي
-   */
   const logout = useCallback(() => {
-    removeStorageItem(STORAGE_KEYS.ADMIN_SESSION);
     setUser(null);
+    void terminateSession();
   }, []);
 
-  /**
-   * التحقق مما إذا كان المستخدم يملك دوراً محدداً
-   */
   const hasRole = useCallback(
     (targetRole: AdminRole): boolean => {
       if (!user) return false;

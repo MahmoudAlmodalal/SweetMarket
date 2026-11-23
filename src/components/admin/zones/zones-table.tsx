@@ -19,7 +19,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/components/ui/toast';
-import { STORAGE_KEYS, getStorageItem, setStorageItem, isBrowser } from '@/lib/storage';
+import { updateAdminDeliveryZone } from '@/lib/repositories';
 import { cn } from '@/lib/utils';
 import type { DeliveryZone } from '@/types';
 
@@ -83,27 +83,14 @@ export function ZonesTable({
 
     setIsSavingInline(true);
     try {
-      const updatedList = localZones.map((z) => {
-        if (z.id === zone.id) {
-          return {
-            ...z,
-            deliveryFee: feeNum,
-            minOrderAmount: minOrderNum,
-          };
-        }
-        return z;
+      const updatedZone = await updateAdminDeliveryZone(zone.id, {
+        deliveryFee: feeNum,
+        minOrderAmount: minOrderNum,
       });
 
-      setLocalZones(updatedList);
-
-      if (isBrowser()) {
-        const stored = getStorageItem(STORAGE_KEYS.MOCK_ZONES, updatedList) || updatedList;
-        const finalStored = (Array.isArray(stored) ? stored : updatedList).map((z) =>
-          z.id === zone.id ? { ...z, deliveryFee: feeNum, minOrderAmount: minOrderNum } : z
-        );
-        setStorageItem(STORAGE_KEYS.MOCK_ZONES, finalStored);
-        window.dispatchEvent(new Event('storage'));
-      }
+      setLocalZones((prev) =>
+        prev.map((z) => (z.id === zone.id ? updatedZone : z))
+      );
 
       toast.success(
         'تم التعديل الفوري بنجاح',
@@ -112,7 +99,10 @@ export function ZonesTable({
       cancelInlineEdit();
     } catch (err) {
       console.error('Failed to save inline zone edits:', err);
-      toast.error('فشل الحفظ', 'تعذر حفظ التعديلات السريعة');
+      toast.error(
+        'فشل الحفظ',
+        err instanceof Error ? err.message : 'تعذر حفظ التعديلات السريعة'
+      );
     } finally {
       setIsSavingInline(false);
     }

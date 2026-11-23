@@ -9,283 +9,237 @@ import type {
   AdminSession,
   CreateOrderData,
 } from '@/types';
-import { ALLOWED_STATUS_TRANSITIONS } from '@/types';
+import { apiRequest, ApiClientError } from '@/lib/api-client';
 import {
-  STORAGE_KEYS,
-  getStorageItem,
-  setStorageItem,
-  removeStorageItem,
-} from './storage';
-import { MOCK_CATEGORIES } from '@/data/mock/categories';
-import { MOCK_DELIVERY_ZONES } from '@/data/mock/zones';
-import { MOCK_PRODUCTS } from '@/data/mock/products';
-import { MOCK_ORDERS } from '@/data/mock/orders';
-import { MOCK_ADMIN_CREDENTIALS } from '@/data/mock/users';
+  adaptCategory,
+  adaptDeliveryZone,
+  adaptOrder,
+  adaptProduct,
+} from '@/lib/api-adapters';
 import {
   authenticateAdminUser,
+  fetchServerSession,
+  generateSecureSessionToken,
   getActiveSession,
   terminateSession,
-  generateSecureSessionToken,
 } from '@/lib/auth/authentication';
-import { normalizePalestinianPhone } from './validations';
+import { isBrowser } from '@/lib/storage';
 
-/**
- * دالة مساعدة لمحاكاة تأخير الشبكة غير المتزامن (150-250ms)
- */
-function simulateLatency(min = 150, max = 250): Promise<void> {
-  const ms = Math.floor(Math.random() * (max - min + 1)) + min;
-  return new Promise((resolve) => setTimeout(resolve, ms));
+// ============================================================================
+// Customer local order receipt history (stores ONLY this customer's own placed orders)
+// ============================================================================
+const CUSTOMER_ORDERS_KEY = 'candy_customer_recent_orders_v1';
+
+export interface SavedCustomerOrderRef {
+  orderNumber: string;
+  trackingToken: string;
+  phone: string;
+  total: number;
+  createdAt: string;
 }
 
-// ذاكرة احتياطية لبيئة SSR ولحالات عدم توفر localStorage
-let memoryProducts: Product[] = [...MOCK_PRODUCTS];
-let memoryCategories: Category[] = [...MOCK_CATEGORIES];
-let memoryZones: DeliveryZone[] = [...MOCK_DELIVERY_ZONES];
-let memoryOrders: Order[] = [...MOCK_ORDERS];
-let memorySession: AdminSession | null = null;
-
-// ============================================================================
-// 1. مستودع التصنيفات ومناطق التوصيل (Categories & Zones)
-// ============================================================================
-
-/**
- * جلب جميع التصنيفات المفعلة ومرتبة بحسب displayOrder
- */
-export async function getCategories(): Promise<Category[]> {
-  await simulateLatency();
-
-  const stored = getStorageItem(STORAGE_KEYS.MOCK_CATEGORIES, null);
-  if (stored && stored.length > 0) {
-    return [...stored].sort((a, b) => a.displayOrder - b.displayOrder);
+export function saveCustomerOrderRef(order: Order): void {
+  if (!isBrowser() || !order.orderNumber || !order.trackingToken) return;
+  try {
+    const existing = getCustomerOrderRefs();
+    const filtered = existing.filter((o) => o.orderNumber !== order.orderNumber);
+    const next: SavedCustomerOrderRef[] = [
+      {
+        orderNumber: order.orderNumber,
+        trackingToken: order.trackingToken,
+        phone: order.customer.phone,
+        total: order.total,
+        createdAt: order.createdAt,
+      },
+      ...filtered,
+    ].slice(0, 15);
+    window.localStorage.setItem(CUSTOMER_ORDERS_KEY, JSON.stringify(next));
+    window.sessionStorage.setItem(
+      `candy_receipt_${order.orderNumber.toUpperCase()}`,
+      order.trackingToken
+    );
+  } catch {
+    // Ignore storage quota errors
   }
-
-  // التخزين لأول مرة في المتصفح
-  setStorageItem(STORAGE_KEYS.MOCK_CATEGORIES, memoryCategories);
-  return [...memoryCategories].sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
-/**
- * جلب تصنيف محدد بواسطة الـ slug
- */
+export function getCustomerOrderRefs(): SavedCustomerOrderRef[] {
+  if (!isBrowser()) return [];
+  try {
+    const raw = window.localStorage.getItem(CUSTOMER_ORDERS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export function getStoredReceiptToken(orderNumber: string): string | null {
+  if (!isBrowser()) return null;
+  const upper = orderNumber.trim().toUpperCase();
+  try {
+    const fromSession = window.sessionStorage.getItem(`candy_receipt_${upper}`);
+    if (fromSession) return fromSession;
+  } catch {
+    // Ignore
+  }
+  const match = getCustomerOrderRefs().find(
+    (o) => o.orderNumber.toUpperCase() === upper
+  );
+  return match?.trackingToken || null;
+}
+
+// ============================================================================
+// 1. Public Storefront Catalog & Delivery Zones (/api/v1/*)
+// ============================================================================
+
+export async function getCategories(): Promise<Category[]> {
+  const data = await apiRequest<Array<Record<string, unknown>>>('/api/v1/categories');
+  return (Array.isArray(data) ? data : [])
+    .map(adaptCategory)
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+}
+
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const categories = await getCategories();
-  const category = categories.find((c) => c.slug === slug);
-  return category || null;
+  return categories.find((c) => c.slug === slug || c.id === slug) || null;
 }
 
-/**
- * جلب مناطق التوصيل المتاحة
- */
 export async function getDeliveryZones(): Promise<DeliveryZone[]> {
-  await simulateLatency();
-
-  const stored = getStorageItem(STORAGE_KEYS.MOCK_ZONES, null);
-  if (stored && stored.length > 0) {
-    return stored.filter((z) => z.isActive);
-  }
-
-  setStorageItem(STORAGE_KEYS.MOCK_ZONES, memoryZones);
-  return memoryZones.filter((z) => z.isActive);
+  const data = await apiRequest<Array<Record<string, unknown>>>('/api/v1/delivery-zones');
+  return (Array.isArray(data) ? data : []).map(adaptDeliveryZone);
 }
 
-/**
- * جلب تفاصيل منطقة توصيل محددة بالمعرف
- */
 export async function getDeliveryZoneById(id: string): Promise<DeliveryZone | null> {
   const zones = await getDeliveryZones();
   return zones.find((z) => z.id === id) || null;
 }
 
-// ============================================================================
-// 2. مستودع المنتجات (Products Repository)
-// ============================================================================
-
-/**
- * استرجاع قائمة المنتجات مع دعم الفلترة بالتصنيف اختارياً
- */
 export async function getProducts(categorySlug?: string): Promise<Product[]> {
-  await simulateLatency();
-
-  let products = getStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, null);
-  if (!products || products.length === 0) {
-    products = memoryProducts;
-    setStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, products);
-  }
-
-  if (!categorySlug) {
-    return products;
-  }
-
-  // البحث عن التصنيف لمعرفة معرّفه
-  const categories = await getCategories();
-  const targetCategory = categories.find((c) => c.slug === categorySlug);
-
-  if (!targetCategory) {
-    return products.filter((p) => p.categoryId === categorySlug);
-  }
-
-  return products.filter((p) => p.categoryId === targetCategory.id);
+  const query = categorySlug
+    ? `?category=${encodeURIComponent(categorySlug)}&limit=100`
+    : '?limit=100';
+  const data = await apiRequest<Array<Record<string, unknown>>>(`/api/v1/products${query}`);
+  return (Array.isArray(data) ? data : []).map(adaptProduct);
 }
 
-/**
- * جلب منتج محدد عبر الـ slug
- */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  await simulateLatency();
-
-  let products = getStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, null);
-  if (!products) {
-    products = memoryProducts;
+  try {
+    const data = await apiRequest<Record<string, unknown>>(
+      `/api/v1/products/${encodeURIComponent(slug)}`
+    );
+    return adaptProduct(data);
+  } catch (err) {
+    if (err instanceof ApiClientError && err.status === 404) {
+      return null;
+    }
+    throw err;
   }
-
-  const product = products.find((p) => p.slug === slug);
-  return product || null;
 }
 
-/**
- * تبديل حالة توفر المنتج الفورية في المخزون
- */
 export async function toggleProductAvailability(id: string): Promise<Product> {
-  await simulateLatency();
+  const data = await apiRequest<Record<string, unknown>>(
+    `/api/v1/admin/products/${encodeURIComponent(id)}/availability`,
+    { method: 'PATCH', body: {} }
+  );
+  return adaptProduct(data);
+}
 
-  let products = getStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, null);
-  if (!products || products.length === 0) {
-    products = [...memoryProducts];
-  } else {
-    products = [...products];
-  }
+// ============================================================================
+// 2. Public Guest Checkout, Receipt & Rate-Limited Order Tracking
+// ============================================================================
 
-  const index = products.findIndex((p) => p.id === id);
-  if (index === -1) {
-    throw new Error(`المنتج بالمعرف "${id}" غير موجود`);
-  }
-
-  const current = products[index];
-  const updatedProduct: Product = {
-    ...current,
-    isAvailable: !current.isAvailable,
-    updatedAt: new Date().toISOString(),
+export async function createOrder(
+  data: CreateOrderData,
+  idempotencyKey?: string
+): Promise<Order> {
+  const key = idempotencyKey || generateSecureSessionToken();
+  const payload = {
+    customer: data.customer,
+    items: data.items.map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      selectedWeightMultiplier: item.selectedWeightMultiplier,
+      selectedWeightLabel: item.selectedWeightLabel,
+      packagingOptionId: item.packagingOptionId || 'standard',
+      giftMessage: item.giftMessage,
+    })),
   };
 
-  products[index] = updatedProduct;
-  memoryProducts = products;
-  setStorageItem(STORAGE_KEYS.MOCK_PRODUCTS, products);
+  const raw = await apiRequest<Record<string, unknown>>('/api/v1/orders', {
+    method: 'POST',
+    body: payload,
+    idempotencyKey: key,
+  });
 
-  return updatedProduct;
+  const created = adaptOrder(raw);
+  saveCustomerOrderRef(created);
+  return created;
 }
 
-// ============================================================================
-// 3. مستودع الطلبات وعملياتها (Orders Repository)
-// ============================================================================
-
-/**
- * جلب جميع الطلبات مرتبة تنازلياً من الأحدث للأقدم
- */
-export async function getOrders(): Promise<Order[]> {
-  await simulateLatency();
-
-  let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
-  if (!orders || orders.length === 0) {
-    orders = memoryOrders;
-    setStorageItem(STORAGE_KEYS.MOCK_ORDERS, orders);
-  }
-
-  return [...orders].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-}
-
-/**
- * جلب تفاصيل طلب محدد بالمعرف
- */
-export async function getOrderById(id: string): Promise<Order | null> {
-  await simulateLatency();
-
-  const orders = await getOrders();
-  return orders.find((o) => o.id === id) || null;
-}
-
-/**
- * استعلام تتبع الطلب برقم الطلب ورقم هاتف الزبون
- */
 export async function getOrderByNumberAndPhone(
   orderNumber: string,
   phone: string
 ): Promise<Order | null> {
-  await simulateLatency();
-
-  const orders = await getOrders();
-  const normalizedNumber = orderNumber.trim().toUpperCase();
-  let normalizedInputPhone = phone.trim();
   try {
-    normalizedInputPhone = normalizePalestinianPhone(phone.trim());
-  } catch {
-    // Keep raw
-  }
-
-  const order = orders.find((o) => {
-    if (o.orderNumber.toUpperCase() !== normalizedNumber) return false;
-    let storedPhone = o.customer.phone.trim();
-    try {
-      storedPhone = normalizePalestinianPhone(o.customer.phone.trim());
-    } catch {
-      // Keep raw
+    const raw = await apiRequest<Record<string, unknown>>('/api/v1/orders/track', {
+      method: 'POST',
+      body: {
+        orderNumber: orderNumber.trim().toUpperCase(),
+        phone: phone.trim(),
+      },
+    });
+    return adaptOrder(raw);
+  } catch (err) {
+    if (err instanceof ApiClientError && err.status === 404) {
+      return null;
     }
-    return storedPhone === normalizedInputPhone || o.customer.phone.trim() === phone.trim();
-  });
-
-  return order || null;
+    throw err;
+  }
 }
 
-/**
- * إنشاء وحفظ طلب جديد كزائر (Guest Checkout)
- */
-export async function createOrder(data: CreateOrderData): Promise<Order> {
-  await simulateLatency();
+export async function getOrderReceipt(
+  orderNumber: string,
+  trackingToken?: string | null
+): Promise<Order | null> {
+  const token = trackingToken || getStoredReceiptToken(orderNumber);
+  if (!token) return null;
 
-  let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
-  if (!orders || orders.length === 0) {
-    orders = [...memoryOrders];
-  } else {
-    orders = [...orders];
+  try {
+    const raw = await apiRequest<Record<string, unknown>>(
+      `/api/v1/orders/receipt?orderNumber=${encodeURIComponent(orderNumber)}&token=${encodeURIComponent(token)}`
+    );
+    return adaptOrder(raw);
+  } catch (err) {
+    if (err instanceof ApiClientError && (err.status === 404 || err.status === 400)) {
+      return null;
+    }
+    throw err;
   }
+}
 
-  const now = new Date().toISOString();
-  const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-  const currentYear = new Date().getFullYear();
-  const orderNumber = `CL-${currentYear}-${randomSuffix}`;
-  const id = `ord-${Date.now()}`;
+// ============================================================================
+// 3. Admin Orders, Categories & Delivery Zones Repositories
+// ============================================================================
 
-  const subtotal = data.items.reduce((sum, item) => sum + item.lineTotal, 0);
-  const total = subtotal + data.deliveryFee;
+export async function getOrders(): Promise<Order[]> {
+  const data = await apiRequest<Array<Record<string, unknown>>>('/api/v1/admin/orders');
+  return (Array.isArray(data) ? data : []).map(adaptOrder);
+}
 
-  const newOrder: Order = {
-    id,
-    orderNumber,
-    status: 'new',
-    createdAt: now,
-    updatedAt: now,
-    customer: data.customer,
-    items: data.items,
-    subtotal,
-    deliveryFee: data.deliveryFee,
-    total,
-    paymentMethod: 'cash_on_delivery',
-    trackingToken: generateSecureSessionToken(),
-    timeline: [
-      {
-        status: 'new',
-        timestamp: now,
-        note: 'تم إنشاء الطلب بنجاح بنظام الدفع عند الاستلام',
-      },
-    ],
-  };
-
-  orders.unshift(newOrder);
-  memoryOrders = orders;
-  setStorageItem(STORAGE_KEYS.MOCK_ORDERS, orders);
-
-  return newOrder;
+export async function getOrderById(id: string): Promise<Order | null> {
+  try {
+    const raw = await apiRequest<Record<string, unknown>>(
+      `/api/v1/admin/orders/${encodeURIComponent(id)}`
+    );
+    return adaptOrder(raw);
+  } catch (err) {
+    if (err instanceof ApiClientError && err.status === 404) {
+      return null;
+    }
+    throw err;
+  }
 }
 
 export interface PerformedByPayload {
@@ -300,204 +254,120 @@ export type PerformedByInput =
   | { performedBy?: PerformedByPayload }
   | undefined;
 
-/**
- * استخلاص بيانات القائم بالإجراء من معطيات الدالة أو الجلسة النشطة
- */
-function resolveActor(
-  input?: PerformedByInput
-): { id: string; name: string; role: AdminRole } | undefined {
-  if (!input) {
-    const session = getActiveSession();
-    if (session?.user) {
-      return {
-        id: session.user.id || 'usr-admin',
-        name: session.user.fullName,
-        role: session.user.role,
-      };
-    }
-    return undefined;
-  }
-
-  if ('performedBy' in input && input.performedBy) {
-    return {
-      id: input.performedBy.id || 'usr-admin',
-      name: input.performedBy.name,
-      role: input.performedBy.role,
-    };
-  }
-
-  if ('fullName' in input && typeof input.fullName === 'string') {
-    return {
-      id: input.id || 'usr-admin',
-      name: input.fullName,
-      role: input.role,
-    };
-  }
-
-  if ('name' in input && 'role' in input && typeof input.name === 'string') {
-    return {
-      id: input.id || 'usr-admin',
-      name: input.name,
-      role: input.role,
-    };
-  }
-
-  const session = getActiveSession();
-  if (session?.user) {
-    return {
-      id: session.user.id || 'usr-admin',
-      name: session.user.fullName,
-      role: session.user.role,
-    };
-  }
-
-  return undefined;
-}
-
-/**
- * ترقية وتحديث حالة الطلب وفق آلة الحالات وقواعد العمل
- */
 export async function updateOrderStatus(
   id: string,
   nextStatus: OrderStatus,
   note?: string | PerformedByInput,
-  user?: PerformedByInput
+  _user?: PerformedByInput
 ): Promise<Order> {
-  await simulateLatency();
-
-  let actualNote: string | undefined = undefined;
-  let actorInput: PerformedByInput = user;
-
-  if (typeof note === 'string') {
-    actualNote = note;
-  } else if (typeof note === 'object' && note !== null) {
-    actorInput = note;
-  }
-
-  let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
-  if (!orders || orders.length === 0) {
-    orders = [...memoryOrders];
-  } else {
-    orders = [...orders];
-  }
-
-  const index = orders.findIndex((o) => o.id === id);
-  if (index === -1) {
-    throw new Error(`الطلب بالمعرف "${id}" غير موجود`);
-  }
-
-  const currentOrder = orders[index];
-  const allowed = ALLOWED_STATUS_TRANSITIONS[currentOrder.status];
-
-  if (!allowed.includes(nextStatus)) {
-    throw new Error(
-      `الانتقال من الحالة "${currentOrder.status}" إلى الحالة "${nextStatus}" غير مسموح به وفق قواعد العمل`
-    );
-  }
-
-  const now = new Date().toISOString();
-  const actor = resolveActor(actorInput) || {
-    id: 'usr-admin',
-    name: 'مسؤول المتجر',
-    role: 'staff',
-  };
-
-  const updatedTimeline = [
-    ...currentOrder.timeline,
+  const actualNote = typeof note === 'string' ? note : undefined;
+  const raw = await apiRequest<Record<string, unknown>>(
+    `/api/v1/admin/orders/${encodeURIComponent(id)}/status`,
     {
-      status: nextStatus,
-      timestamp: now,
-      note: actualNote || undefined,
-      performedBy: actor,
-    },
-  ];
-
-  const updatedOrder: Order = {
-    ...currentOrder,
-    status: nextStatus,
-    updatedAt: now,
-    timeline: updatedTimeline,
-  };
-
-  orders[index] = updatedOrder;
-  memoryOrders = orders;
-  setStorageItem(STORAGE_KEYS.MOCK_ORDERS, orders);
-
-  return updatedOrder;
+      method: 'PATCH',
+      body: {
+        status: nextStatus,
+        ...(actualNote ? { note: actualNote, reason: actualNote } : {}),
+      },
+    }
+  );
+  return adaptOrder(raw);
 }
 
-/**
- * إلغاء الطلب الإلزامي مع تدوين السبب بواسطة الإدارة
- */
 export async function cancelOrder(
   id: string,
   reason: string,
-  user?: PerformedByInput
+  _user?: PerformedByInput
 ): Promise<Order> {
-  await simulateLatency();
-
-  if (!reason || reason.trim().length < 5) {
-    throw new Error('يجب تدوين سبب واضح لإلغاء الطلب لا يقل عن 5 أحرف');
-  }
-
-  let orders = getStorageItem(STORAGE_KEYS.MOCK_ORDERS, null);
-  if (!orders || orders.length === 0) {
-    orders = [...memoryOrders];
-  } else {
-    orders = [...orders];
-  }
-
-  const index = orders.findIndex((o) => o.id === id);
-  if (index === -1) {
-    throw new Error(`الطلب بالمعرف "${id}" غير موجود`);
-  }
-
-  const currentOrder = orders[index];
-  const allowed = ALLOWED_STATUS_TRANSITIONS[currentOrder.status];
-
-  const actor = resolveActor(user) || {
-    id: 'usr-admin',
-    name: 'مدير المتجر',
-    role: 'manager',
-  };
-
-  // إذا كان المستخدم مديراً أو الحالة الحالية تسمح بالإلغاء
-  const isManager = actor.role === 'manager';
-  if (!allowed.includes('cancelled') && !isManager) {
-    throw new Error(
-      `لا يمكن إلغاء الطلب وهو في حالة "${currentOrder.status}" إلا بصلاحية مدير (Admin)`
-    );
-  }
-
-  const now = new Date().toISOString();
-  const cancelNote = `تم إلغاء الطلب: ${reason.trim()}`;
-  const updatedTimeline = [
-    ...currentOrder.timeline,
+  const raw = await apiRequest<Record<string, unknown>>(
+    `/api/v1/admin/orders/${encodeURIComponent(id)}/status`,
     {
-      status: 'cancelled' as OrderStatus,
-      timestamp: now,
-      note: cancelNote,
-      performedBy: actor,
-    },
-  ];
+      method: 'PATCH',
+      body: {
+        status: 'cancelled',
+        reason: reason.trim(),
+      },
+    }
+  );
+  return adaptOrder(raw);
+}
 
-  const updatedOrder: Order = {
-    ...currentOrder,
-    status: 'cancelled',
-    cancelReason: reason.trim(),
-    updatedAt: now,
-    timeline: updatedTimeline,
-  };
+// Admin Categories
+export async function getAdminAllCategories(): Promise<Category[]> {
+  const data = await apiRequest<Array<Record<string, unknown>>>('/api/v1/admin/categories');
+  return (Array.isArray(data) ? data : [])
+    .map(adaptCategory)
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+}
 
-  orders[index] = updatedOrder;
-  memoryOrders = orders;
-  setStorageItem(STORAGE_KEYS.MOCK_ORDERS, orders);
+export async function createAdminCategory(
+  input: Omit<Category, 'id'>
+): Promise<Category> {
+  const raw = await apiRequest<Record<string, unknown>>('/api/v1/admin/categories', {
+    method: 'POST',
+    body: input,
+  });
+  return adaptCategory(raw);
+}
 
-  return updatedOrder;
+export async function updateAdminCategory(
+  id: string,
+  input: Partial<Omit<Category, 'id'>>
+): Promise<Category> {
+  const raw = await apiRequest<Record<string, unknown>>(
+    `/api/v1/admin/categories/${encodeURIComponent(id)}`,
+    {
+      method: 'PUT',
+      body: input,
+    }
+  );
+  return adaptCategory(raw);
+}
+
+export async function deleteAdminCategory(id: string): Promise<void> {
+  await apiRequest(`/api/v1/admin/categories/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  });
+}
+
+// Admin Delivery Zones
+export async function getAdminDeliveryZones(): Promise<DeliveryZone[]> {
+  const data = await apiRequest<Array<Record<string, unknown>>>('/api/v1/admin/delivery-zones');
+  return (Array.isArray(data) ? data : []).map(adaptDeliveryZone);
+}
+
+export async function createAdminDeliveryZone(
+  input: Omit<DeliveryZone, 'id'>
+): Promise<DeliveryZone> {
+  const raw = await apiRequest<Record<string, unknown>>('/api/v1/admin/delivery-zones', {
+    method: 'POST',
+    body: input,
+  });
+  return adaptDeliveryZone(raw);
+}
+
+export async function updateAdminDeliveryZone(
+  id: string,
+  input: Partial<Omit<DeliveryZone, 'id'>>
+): Promise<DeliveryZone> {
+  const raw = await apiRequest<Record<string, unknown>>(
+    `/api/v1/admin/delivery-zones/${encodeURIComponent(id)}`,
+    {
+      method: 'PUT',
+      body: input,
+    }
+  );
+  return adaptDeliveryZone(raw);
+}
+
+export async function deleteAdminDeliveryZone(id: string): Promise<void> {
+  await apiRequest(`/api/v1/admin/delivery-zones/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  });
 }
 
 // ============================================================================
-// 4. مصادقة وجلسات الإدارة (Admin Authentication & Session)
+// 4. Admin Auth Wrappers
 // ============================================================================
 
 export interface AuthResult {
@@ -506,15 +376,10 @@ export interface AuthResult {
   error?: string;
 }
 
-/**
- * مصادقة مستخدم لوحة التحكم ببيانات الاعتماد الوهمية
- */
 export async function authenticateAdmin(
   email: string,
   secret: string
 ): Promise<AuthResult> {
-  await simulateLatency();
-
   const result = await authenticateAdminUser(email, secret);
   if (!result.success || !result.user) {
     return {
@@ -522,38 +387,23 @@ export async function authenticateAdmin(
       error: result.error || 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
     };
   }
-
-  const session = getActiveSession();
-  if (session) {
-    memorySession = session;
-  }
-
   return {
     success: true,
-    session: session || undefined,
+    session: {
+      token: result.token || 'cookie-session',
+      user: result.user,
+    },
   };
 }
 
-/**
- * استرجاع الجلسة الإدارية الحالية
- */
 export async function getAdminSession(): Promise<AdminSession | null> {
-  await simulateLatency(50, 100);
-
-  const active = getActiveSession();
-  if (active) {
-    return active;
-  }
-
-  return memorySession;
+  const cached = getActiveSession();
+  if (cached) return cached;
+  const user = await fetchServerSession();
+  if (!user) return null;
+  return { token: 'cookie-session', user };
 }
 
-/**
- * تسجيل خروج الإدارة ومسح الجلسة
- */
 export async function logoutAdmin(): Promise<void> {
-  await simulateLatency(50, 100);
-
-  memorySession = null;
-  terminateSession();
+  await terminateSession();
 }
