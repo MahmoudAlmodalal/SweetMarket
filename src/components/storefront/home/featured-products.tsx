@@ -40,16 +40,16 @@ export function FeaturedProducts({
     <section
       id="featured-products"
       aria-label="المنتجات الأكثر طلباً والمميزة"
-      className={cn("flex flex-col gap-6 w-full", className)}
+      className={cn("flex flex-col gap-8 w-full", className)}
     >
       {/* Section Header */}
-      <div className="flex items-end justify-between gap-4 pb-3 border-b border-candy-line">
+      <div className="flex items-end justify-between gap-4 pb-4 border-b-2 border-candy-ink">
         <h2 className="font-display font-bold text-3xl sm:text-4xl text-candy-ink">
           الأكثر طلباً
         </h2>
         <Link
           href="/category/all"
-          className="font-bold text-sm text-candy-ink underline decoration-[3px] decoration-[#E8A33D] underline-offset-8 hover:decoration-[#D72D58]"
+          className="font-medium text-sm text-candy-berry hover:text-candy-berry-dark inline-flex items-center gap-1"
         >
           كل التشكيلة
         </Link>
@@ -67,10 +67,10 @@ export function FeaturedProducts({
           aria-selected={selectedCategory === "all"}
           onClick={() => setSelectedCategory("all")}
           className={cn(
-            "h-10 px-4 rounded-full font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border",
+            "h-10 px-4 rounded-full font-sans text-[13px] transition-colors shrink-0 inline-flex items-center gap-2 border",
             selectedCategory === "all"
-              ? "bg-candy-berry text-white border-candy-berry font-bold"
-              : "bg-white text-candy-ink border-candy-line hover:border-candy-berry/40 font-medium"
+              ? "bg-candy-ink text-white border-candy-ink font-medium"
+              : "bg-white text-candy-ink border-candy-line hover:border-candy-ink font-normal"
           )}
         >
           <span>المختارات</span>
@@ -96,10 +96,10 @@ export function FeaturedProducts({
               aria-selected={isSelected}
               onClick={() => setSelectedCategory(cat.id)}
               className={cn(
-                "h-10 px-4 rounded-full font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border",
+                "h-10 px-4 rounded-full font-sans text-[13px] transition-colors shrink-0 inline-flex items-center gap-2 border",
                 isSelected
-                  ? "bg-candy-berry text-white border-candy-berry font-bold"
-                  : "bg-white text-candy-ink border-candy-line hover:border-candy-berry/40 font-medium"
+                  ? "bg-candy-ink text-white border-candy-ink font-medium"
+                  : "bg-white text-candy-ink border-candy-line hover:border-candy-ink font-normal"
               )}
             >
               <span>{cat.name}</span>
@@ -118,7 +118,7 @@ export function FeaturedProducts({
 
       {/* Responsive Product Grid */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6 w-full items-stretch">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 w-full items-stretch">
           {filteredProducts.map((product, index) => (
             <ProductCard
               key={product.id}
@@ -128,7 +128,7 @@ export function FeaturedProducts({
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl bg-candy-cream border border-candy-line/80 gap-3">
+        <div className="flex flex-col items-center justify-center p-12 text-center rounded-card bg-candy-cream border border-candy-line/80 gap-3">
           <Cookie className="w-10 h-10 text-candy-muted stroke-1" />
           <h3 className="font-display font-bold text-lg text-candy-ink">
             لا توجد أصناف حالياً في هذا القسم
@@ -139,7 +139,7 @@ export function FeaturedProducts({
           <button
             type="button"
             onClick={() => setSelectedCategory("all")}
-            className="mt-2 h-10 px-5 rounded-xl bg-candy-berry text-white font-sans font-bold text-xs hover:bg-candy-berry-dark transition-colors"
+            className="mt-2 h-10 px-5 rounded-input bg-candy-berry text-white font-sans font-bold text-xs hover:bg-candy-berry-dark transition-colors"
           >
             الرجوع لكافة الحلويات
           </button>

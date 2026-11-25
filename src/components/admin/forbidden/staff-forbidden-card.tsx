@@ -51,14 +51,14 @@ export function StaffForbiddenCard({
       <div className="w-full max-w-lg mx-auto" dir="rtl">
         <Card
           elevation="md"
-          className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-3xl"
+          className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-card"
         >
           {/* شريط الإشعاع التنبيهي */}
-          <div className="h-1.5 bg-gradient-to-l from-rose-500 via-candy-berry to-amber-500" aria-hidden="true" />
+          <div className="h-1.5 bg-candy-berry" aria-hidden="true" />
 
           <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
             {/* 403 Icon */}
-            <div className="inline-flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-3xl bg-rose-50 border-2 border-rose-200/80 text-rose-600 shadow-sm animate-pulse">
+            <div className="inline-flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-card bg-rose-50 border-2 border-rose-200/80 text-rose-600 shadow-sm animate-pulse">
               <ShieldAlert className="w-8 h-8" aria-hidden="true" />
             </div>
 
@@ -81,13 +81,13 @@ export function StaffForbiddenCard({
           <CardContent className="p-6 sm:p-8 space-y-5">
             {/* Identity Box: separate fullName, separate jobTitle, and Arabic role badge */}
             <div
-              className="p-4 rounded-2xl bg-candy-soft/80 border border-candy-blush text-right shadow-2xs"
+              className="p-4 rounded-card bg-candy-soft/80 border border-candy-blush text-right shadow-2xs"
               role="region"
               aria-label="بيانات المستخدم الحالي"
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-candy-blush/60 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
+                  <div className="w-10 h-10 rounded-input bg-candy-blush/60 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
                     <User className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div className="min-w-0">
@@ -114,7 +114,7 @@ export function StaffForbiddenCard({
 
             {/* Required Scope Row: clearly states required access: "مدير النظام" */}
             <div
-              className="flex items-center justify-between p-3.5 rounded-2xl bg-candy-cream/70 border border-candy-line/70 text-xs shadow-2xs"
+              className="flex items-center justify-between p-3.5 rounded-card bg-candy-cream/70 border border-candy-line/70 text-xs shadow-2xs"
               role="region"
               aria-label="الصلاحية المطلوبة"
             >
@@ -122,7 +122,7 @@ export function StaffForbiddenCard({
                 <Shield className="w-4 h-4 text-candy-berry shrink-0" aria-hidden="true" />
                 <span className="font-medium">الصلاحية المطلوبة للوصول:</span>
               </div>
-              <span className="font-bold text-candy-ink bg-white px-3 py-1 rounded-xl border border-candy-line shadow-xs font-display">
+              <span className="font-bold text-candy-ink bg-white px-3 py-1 rounded-input border border-candy-line shadow-xs font-display">
                 مدير النظام
               </span>
             </div>
@@ -157,7 +157,7 @@ export function StaffForbiddenCard({
               <button
                 type="button"
                 onClick={handleSwitchAccount}
-                className="inline-flex items-center justify-center gap-1.5 min-h-[48px] px-3 py-2 rounded-xl text-candy-muted hover:text-candy-berry hover:bg-candy-soft/60 transition-colors font-medium touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="inline-flex items-center justify-center gap-1.5 min-h-[48px] px-3 py-2 rounded-input text-candy-muted hover:text-candy-berry hover:bg-candy-soft/60 transition-colors font-medium touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <LogIn className="w-4 h-4" aria-hidden="true" />
                 <span>تسجيل الدخول بحساب آخر</span>
@@ -169,7 +169,7 @@ export function StaffForbiddenCard({
 
               <Link
                 href="/"
-                className="inline-flex items-center justify-center gap-1.5 min-h-[48px] px-3 py-2 rounded-xl text-candy-muted hover:text-candy-berry hover:bg-candy-soft/60 transition-colors font-medium touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="inline-flex items-center justify-center gap-1.5 min-h-[48px] px-3 py-2 rounded-input text-candy-muted hover:text-candy-berry hover:bg-candy-soft/60 transition-colors font-medium touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <RotateCcw className="w-4 h-4" aria-hidden="true" />
                 <span>العودة للمتجر</span>

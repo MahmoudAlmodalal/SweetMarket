@@ -217,7 +217,7 @@ export default function OrderDetailPage() {
     return (
       <div className="space-y-6 pb-12 font-sans" dir="rtl">
         <div className="flex items-center justify-between gap-4">
-          <Skeleton className="h-8 w-48 rounded-lg" />
+          <Skeleton className="h-8 w-48 rounded-[4px]" />
           <Skeleton className="h-10 w-28 rounded-candy-pill" />
         </div>
         <Skeleton className="h-36 w-full rounded-candy-card" />
@@ -396,7 +396,7 @@ export default function OrderDetailPage() {
 
                         {/* ملاحظة الحدث */}
                         {event.note && (
-                          <p className="text-xs text-candy-ink leading-relaxed font-medium bg-candy-soft/60 p-2.5 rounded-xl border border-candy-line/60 mt-1.5">
+                          <p className="text-xs text-candy-ink leading-relaxed font-medium bg-candy-soft/60 p-2.5 rounded-input border border-candy-line/60 mt-1.5">
                             {event.note}
                           </p>
                         )}

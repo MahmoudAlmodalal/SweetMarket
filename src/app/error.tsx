@@ -68,7 +68,7 @@ export default function Error({ error, reset }: ErrorProps) {
         {/* Flourish Divider */}
         <div className="flex items-center justify-center gap-3 py-1" aria-hidden="true">
           <span className="h-px w-14 bg-candy-rose/30" />
-          <span className="text-candy-rose text-xs">✨</span>
+          <span className="text-candy-rose text-xs"></span>
           <span className="h-px w-14 bg-candy-rose/30" />
         </div>
 
@@ -78,7 +78,7 @@ export default function Error({ error, reset }: ErrorProps) {
           <button
             type="button"
             onClick={() => reset()}
-            className="inline-flex items-center justify-center gap-2.5 h-13 min-h-[52px] px-8 text-base font-sans font-semibold rounded-candy-pill bg-candy-berry text-white hover:bg-candy-berry-dark shadow-candy-1 hover:shadow-candy-cta active:translate-y-[1px] transition-all duration-200 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2.5 h-13 min-h-[52px] px-8 text-base font-sans font-semibold rounded-button bg-candy-berry text-white hover:bg-candy-berry-dark shadow-candy-1 hover:shadow-candy-cta active:translate-y-[1px] transition-all duration-200 w-full sm:w-auto"
           >
             <RotateCcw className="w-5 h-5" aria-hidden="true" />
             <span>إعادة المحاولة</span>
@@ -87,7 +87,7 @@ export default function Error({ error, reset }: ErrorProps) {
           {/* Return Home Action */}
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2.5 h-13 min-h-[52px] px-8 text-base font-sans font-semibold rounded-candy-pill bg-white border-2 border-candy-blush text-candy-berry hover:bg-candy-soft hover:border-candy-rose active:translate-y-[1px] shadow-sm transition-all duration-200 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2.5 h-13 min-h-[52px] px-8 text-base font-sans font-semibold rounded-button bg-white border-2 border-candy-blush text-candy-berry hover:bg-candy-soft hover:border-candy-rose active:translate-y-[1px] shadow-sm transition-all duration-200 w-full sm:w-auto"
           >
             <Home className="w-5 h-5" aria-hidden="true" />
             <span>العودة للرئيسية</span>

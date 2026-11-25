@@ -88,7 +88,7 @@ export function WorkingHoursTable({
       {/* Header with Title and Dynamic Open/Closed Badge */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-candy-line/70">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-11 h-11 rounded-card bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
             <Clock className="w-5 h-5 text-candy-berry" />
           </div>
           <div>
@@ -125,7 +125,7 @@ export function WorkingHoursTable({
       </div>
 
       {/* Opening Hours Table */}
-      <div className="mt-5 overflow-hidden rounded-2xl border border-candy-line/60 bg-candy-soft/30">
+      <div className="mt-5 overflow-hidden rounded-card border border-candy-line/60 bg-candy-soft/30">
         <table className="w-full text-right border-collapse">
           <thead>
             <tr className="bg-candy-soft/80 border-b border-candy-line/60 text-candy-muted text-xs font-semibold">
@@ -162,7 +162,7 @@ export function WorkingHoursTable({
                   </div>
                 </td>
                 <td className="p-3.5 sm:p-4 align-middle font-sans font-medium text-candy-ink dir-ltr text-right">
-                  <span className="inline-block bg-white/80 px-2.5 py-1 rounded-lg border border-candy-line/60 text-xs sm:text-sm font-bold text-candy-berry">
+                  <span className="inline-block bg-white/80 px-2.5 py-1 rounded-[4px] border border-candy-line/60 text-xs sm:text-sm font-bold text-candy-berry">
                     {row.hours}
                   </span>
                 </td>
@@ -176,8 +176,8 @@ export function WorkingHoursTable({
       </div>
 
       {/* Off-hours / Online orders availability banner */}
-      <div className="mt-5 rounded-xl bg-candy-cream border border-candy-line p-3.5 flex items-start gap-3">
-        <div className="w-7 h-7 rounded-lg bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 mt-0.5">
+      <div className="mt-5 rounded-input bg-candy-cream border border-candy-line p-3.5 flex items-start gap-3">
+        <div className="w-7 h-7 rounded-[4px] bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 mt-0.5">
           <Calendar className="w-3.5 h-3.5" />
         </div>
         <p className="font-sans text-xs text-candy-muted leading-relaxed">

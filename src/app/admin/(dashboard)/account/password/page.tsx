@@ -187,11 +187,11 @@ export default function ChangePasswordPage() {
       </nav>
 
       {/* بطاقة معلومات الحساب الحالي */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="p-4 sm:p-5 rounded-card bg-white border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <div
             className={cn(
-              'w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border shadow-xs',
+              'w-12 h-12 rounded-card flex items-center justify-center shrink-0 border shadow-xs',
               role === 'manager'
                 ? 'bg-candy-berry text-white border-candy-berry-dark'
                 : 'bg-candy-soft text-candy-berry border-candy-blush'
@@ -227,7 +227,7 @@ export default function ChangePasswordPage() {
         </div>
 
         <div className="text-xs text-candy-muted font-sans sm:text-left border-t sm:border-t-0 pt-2 sm:pt-0 border-candy-line/60">
-          <span className="inline-block px-2.5 py-1 rounded-lg bg-candy-soft border border-candy-blush text-candy-berry font-medium">
+          <span className="inline-block px-2.5 py-1 rounded-[4px] bg-candy-soft border border-candy-blush text-candy-berry font-medium">
             حساب إداري نشط
           </span>
         </div>
@@ -239,7 +239,7 @@ export default function ChangePasswordPage() {
           <Card elevation="md" className="border-candy-line bg-white shadow-candy-1 overflow-hidden">
             <CardHeader className="p-6 border-b border-candy-line/50">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-input bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0">
                   <KeyRound className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
@@ -258,7 +258,7 @@ export default function ChangePasswordPage() {
               {isSuccess && (
                 <div
                   role="alert"
-                  className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex items-start gap-3 transition-all duration-300"
+                  className="mb-6 p-4 rounded-input bg-emerald-50 border border-emerald-200 text-emerald-950 flex items-start gap-3 transition-all duration-300"
                 >
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
                   <div className="space-y-1 text-right flex-1">
@@ -274,7 +274,7 @@ export default function ChangePasswordPage() {
               {errors.general && (
                 <div
                   role="alert"
-                  className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-950 flex items-start gap-3"
+                  className="mb-6 p-4 rounded-input bg-rose-50 border border-rose-200 text-rose-950 flex items-start gap-3"
                 >
                   <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" aria-hidden="true" />
                   <p className="text-sm font-semibold font-sans">{errors.general}</p>
@@ -306,7 +306,7 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.currentPassword)}
                       aria-describedby={errors.currentPassword ? 'current-password-error' : undefined}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-card font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
                         'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.currentPassword &&
@@ -317,7 +317,7 @@ export default function ChangePasswordPage() {
                       type="button"
                       onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                       aria-label={showCurrentPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-[4px] text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
                     >
                       {showCurrentPassword ? (
                         <EyeOff className="w-4 h-4" aria-hidden="true" />
@@ -361,7 +361,7 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.newPassword)}
                       aria-describedby={errors.newPassword ? 'new-password-error' : 'new-password-helper'}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-card font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
                         'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.newPassword &&
@@ -372,7 +372,7 @@ export default function ChangePasswordPage() {
                       type="button"
                       onClick={() => setShowNewPassword(!showNewPassword)}
                       aria-label={showNewPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-[4px] text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
                     >
                       {showNewPassword ? (
                         <EyeOff className="w-4 h-4" aria-hidden="true" />
@@ -417,7 +417,7 @@ export default function ChangePasswordPage() {
                         <div
                           key={item.id}
                           className={cn(
-                            'flex items-center gap-1.5 py-1 px-2 rounded-lg border text-xs font-sans transition-all duration-200',
+                            'flex items-center gap-1.5 py-1 px-2 rounded-[4px] border text-xs font-sans transition-all duration-200',
                             item.met
                               ? 'bg-emerald-50/90 border-emerald-200 text-emerald-800 font-semibold'
                               : 'bg-candy-soft/50 border-candy-line/60 text-candy-muted font-normal'
@@ -475,7 +475,7 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.confirmPassword)}
                       aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-card font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
                         'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.confirmPassword &&
@@ -486,7 +486,7 @@ export default function ChangePasswordPage() {
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       aria-label={showConfirmPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 rounded-[4px] text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
                     >
                       {showConfirmPassword ? (
                         <EyeOff className="w-4 h-4" aria-hidden="true" />

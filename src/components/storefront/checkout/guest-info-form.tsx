@@ -172,7 +172,7 @@ export function GuestInfoForm({
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? "checkout-phone-error" : "checkout-phone-helper"}
               className={cn(
-                "w-full h-12 pr-28 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
+                "w-full h-12 pr-28 pl-10 rounded-card font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
                 "placeholder:text-candy-muted/70",
                 "focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
                 !errors.phone &&
@@ -222,7 +222,7 @@ export function GuestInfoForm({
         </div>
 
         {/* Guest Reassurance Strip */}
-        <div className="p-3 rounded-xl bg-candy-soft/50 border border-candy-line/60 flex items-center gap-2.5 text-xs text-candy-muted font-sans">
+        <div className="p-3 rounded-input bg-candy-soft/50 border border-candy-line/60 flex items-center gap-2.5 text-xs text-candy-muted font-sans">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>
             بياناتك مشفرة ومحمية، وتُستخدم فقط للتواصل معك بشأن تحضير وتسليم هذا الطلب.

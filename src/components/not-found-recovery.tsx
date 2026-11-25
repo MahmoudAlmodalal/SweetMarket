@@ -114,7 +114,7 @@ export function NotFoundRecovery() {
           <div className="relative">
             {/* Outer pulsating decorative confectionery halo */}
             <div
-              className="absolute -inset-4 rounded-full bg-gradient-to-tr from-candy-blush/60 via-candy-strawberry/20 to-candy-pastel-2/40 blur-xl animate-pulse"
+              className="absolute -inset-4 rounded-full bg-candy-soft blur-xl animate-pulse"
               aria-hidden="true"
             />
 

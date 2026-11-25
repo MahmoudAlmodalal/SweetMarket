@@ -169,7 +169,7 @@ export function ZoneEditDialog({
         <div className="p-5 sm:p-6 pb-3 border-b border-candy-line/60 shrink-0">
           <DialogHeader className="mb-0 text-right">
             <div className="flex items-center gap-2.5 pl-6 sm:pl-8">
-              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-input bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
                 <MapPin className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
@@ -191,7 +191,7 @@ export function ZoneEditDialog({
             {errors.form && (
               <div
                 role="alert"
-                className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-sans font-medium"
+                className="p-3 rounded-input bg-rose-50 border border-rose-200 text-rose-700 text-xs font-sans font-medium"
               >
                 {errors.form}
               </div>
@@ -219,7 +219,7 @@ export function ZoneEditDialog({
                   <span className="text-[11px] text-candy-muted font-sans font-medium block mb-1">
                     اقتراحات لمحافظات ومناطق فلسطينية:
                   </span>
-                  <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1 bg-candy-soft/60 rounded-xl border border-candy-line">
+                  <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1 bg-candy-soft/60 rounded-input border border-candy-line">
                     {SUGGESTED_PALESTINIAN_ZONES.map((s, idx) => (
                       <button
                         key={idx}
@@ -232,7 +232,7 @@ export function ZoneEditDialog({
                           setEstimatedTimeMax(s.tMax);
                           if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
                         }}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-sans bg-white border border-candy-line hover:border-candy-rose hover:text-candy-berry transition-colors"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-[11px] font-sans bg-white border border-candy-line hover:border-candy-rose hover:text-candy-berry transition-colors"
                       >
                         <Sparkles className="w-2.5 h-2.5 text-candy-strawberry" />
                         <span>{s.name}</span>
@@ -285,7 +285,7 @@ export function ZoneEditDialog({
             </div>
 
             {/* الوقت التقديري للتوصيل (بالدقائق) */}
-            <div className="p-3 rounded-2xl bg-candy-soft/60 border border-candy-line space-y-2">
+            <div className="p-3 rounded-card bg-candy-soft/60 border border-candy-line space-y-2">
               <div className="flex items-center gap-1.5 text-xs font-bold text-candy-ink font-sans">
                 <Clock className="w-3.5 h-3.5 text-candy-berry" />
                 <span>وقت التوصيل التقديري للزبون (بالدقائق) *</span>
@@ -335,7 +335,7 @@ export function ZoneEditDialog({
             <div className="pt-2 border-t border-candy-line/60">
               <label
                 htmlFor="zone-is-active"
-                className="flex items-center gap-2.5 p-3 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 p-3 rounded-input border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
               >
                 <input
                   id="zone-is-active"

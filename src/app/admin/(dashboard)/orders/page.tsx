@@ -128,11 +128,11 @@ export default function AdminOrdersPage() {
               setActiveTab('new');
             }
           }}
-          className="bg-white border border-candy-berry/25 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-candy-berry/50 transition-colors cursor-pointer select-none"
+          className="bg-white border border-candy-berry/25 rounded-card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-candy-berry/50 transition-colors cursor-pointer select-none"
           title="انقر لتصفية الطلبات الجديدة"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-candy-berry text-white flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-input bg-candy-berry text-white flex items-center justify-center shrink-0">
               <Bell className="w-5 h-5" />
             </div>
             <div>
@@ -159,8 +159,8 @@ export default function AdminOrdersPage() {
 
       {/* 3. بطاقات الإحصاءات السريعة (Stats Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-candy-soft text-candy-berry flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 sm:p-5 rounded-card border border-candy-line flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-input bg-candy-soft text-candy-berry flex items-center justify-center shrink-0">
             <ShoppingBag className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -177,8 +177,8 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 sm:p-5 rounded-card border border-candy-line flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-input bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
             <Clock className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -195,8 +195,8 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 sm:p-5 rounded-card border border-candy-line flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-input bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
             <Truck className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -213,8 +213,8 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 sm:p-5 rounded-card border border-candy-line flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-input bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
             <TrendingUp className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -242,7 +242,7 @@ export default function AdminOrdersPage() {
 
       {/* 4. معالجة حالات الخطأ (Error State) */}
       {error && !isLoading && (
-        <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-center space-y-3">
+        <div className="bg-rose-50 border border-rose-200 rounded-card p-6 text-center space-y-3">
           <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
             <AlertCircle className="w-6 h-6" />
           </div>
@@ -267,20 +267,20 @@ export default function AdminOrdersPage() {
       {isLoading ? (
         <div className="space-y-4">
           {/* Skeleton Tabs & Search Bar */}
-          <div className="bg-white rounded-2xl border border-candy-line p-4 space-y-4">
+          <div className="bg-white rounded-card border border-candy-line p-4 space-y-4">
             <div className="flex flex-wrap items-center gap-1.5 pb-2">
               {[...Array(6)].map((_, i) => (
-                <Skeleton key={i} className="h-9 w-24 rounded-xl shrink-0" />
+                <Skeleton key={i} className="h-9 w-24 rounded-input shrink-0" />
               ))}
             </div>
             <div className="flex gap-3 pt-2">
-              <Skeleton className="h-10 flex-1 rounded-xl" />
-              <Skeleton className="h-10 w-32 rounded-xl" />
+              <Skeleton className="h-10 flex-1 rounded-input" />
+              <Skeleton className="h-10 w-32 rounded-input" />
             </div>
           </div>
 
           {/* Skeleton Table Rows */}
-          <div className="bg-white rounded-2xl border border-candy-line p-4 space-y-3">
+          <div className="bg-white rounded-card border border-candy-line p-4 space-y-3">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
@@ -292,7 +292,7 @@ export default function AdminOrdersPage() {
                 </div>
                 <Skeleton className="h-6 w-20 rounded-full" />
                 <Skeleton className="h-4 w-16" />
-                <Skeleton className="h-8 w-20 rounded-lg" />
+                <Skeleton className="h-8 w-20 rounded-[4px]" />
               </div>
             ))}
           </div>

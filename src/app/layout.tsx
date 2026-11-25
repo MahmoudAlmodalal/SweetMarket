@@ -1,40 +1,6 @@
 import type { Metadata } from "next";
-import {
-  Playfair_Display,
-  DM_Sans,
-  Reem_Kufi,
-  Tajawal,
-} from "next/font/google";
 import { SkipLink } from "@/components/ui/skip-link";
 import "./globals.css";
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
-
-const reemKufi = Reem_Kufi({
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-reem-kufi",
-  display: "swap",
-});
-
-const tajawal = Tajawal({
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "700", "800"],
-  variable: "--font-tajawal",
-  display: "swap",
-});
 
 const appBaseUrl =
   process.env.NEXT_PUBLIC_APP_URL && /^https?:\/\//i.test(process.env.NEXT_PUBLIC_APP_URL)
@@ -80,10 +46,10 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={`${playfairDisplay.variable} ${dmSans.variable} ${reemKufi.variable} ${tajawal.variable}`}
+      
     >
       <body
-        className={`${playfairDisplay.variable} ${dmSans.variable} ${reemKufi.variable} ${tajawal.variable} font-sans bg-background text-foreground antialiased min-h-screen`}
+        className="font-sans bg-background text-foreground antialiased min-h-screen"
       >
         <SkipLink />
         {children}

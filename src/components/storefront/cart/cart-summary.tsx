@@ -107,7 +107,7 @@ export function CartSummary({
   return (
     <div
       className={cn(
-        "rounded-3xl bg-white p-5 sm:p-6 border border-candy-line space-y-5",
+        "rounded-card bg-white p-5 sm:p-6 border border-candy-line space-y-5",
         className
       )}
     >
@@ -122,7 +122,7 @@ export function CartSummary({
       </div>
 
       {/* Delivery Zone Estimator */}
-      <div className="rounded-2xl bg-candy-soft/70 p-4 border border-candy-line/80 space-y-2.5">
+      <div className="rounded-card bg-candy-soft/70 p-4 border border-candy-line/80 space-y-2.5">
         <div className="flex items-center justify-between gap-2">
           <label
             htmlFor="cart-zone-select"
@@ -146,7 +146,7 @@ export function CartSummary({
           value={selectedZoneId || ""}
           onChange={(e) => handleZoneChange(e.target.value)}
           aria-label="اختر منطقة التوصيل لحساب الرسوم"
-          className="w-full h-10 px-3 text-xs sm:text-sm font-sans rounded-xl bg-white border border-candy-line text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/20 focus:border-candy-berry transition-colors"
+          className="w-full h-10 px-3 text-xs sm:text-sm font-sans rounded-input bg-white border border-candy-line text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/20 focus:border-candy-berry transition-colors"
         >
           <option value="">-- اختر منطقة التوصيل --</option>
           {zones.map((zone) => (
@@ -165,7 +165,7 @@ export function CartSummary({
               </span>
             </div>
           ) : (
-            <div className="flex items-start gap-1.5 text-[11px] font-sans text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-2.5">
+            <div className="flex items-start gap-1.5 text-[11px] font-sans text-amber-800 bg-amber-50 border border-amber-200 rounded-input p-2.5">
               <AlertCircle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-amber-700" />
               <span className="tabular-nums">
                 الحد الأدنى لمنطقة {selectedZone.name} هو {minOrderAmount} ₪ — أضف بقيمة{" "}
@@ -247,7 +247,7 @@ export function CartSummary({
         <Link
           href="/checkout"
           data-testid="proceed-to-checkout-button"
-          className="w-full min-h-[52px] rounded-full bg-candy-berry hover:bg-candy-berry-dark text-white font-sans font-bold text-sm sm:text-base transition-colors flex items-center justify-between px-6"
+          className="w-full min-h-[52px] rounded-button bg-candy-berry hover:bg-candy-berry-dark text-white font-sans font-bold text-sm sm:text-base transition-colors flex items-center justify-between px-6"
         >
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4" />

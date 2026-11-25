@@ -32,10 +32,9 @@ export default function StorefrontHomePage() {
     .map(({ isArchived: _archived, ...pub }) => pub);
 
   return (
-    <div className="flex flex-col gap-14 sm:gap-20 lg:gap-24 py-6 sm:py-10">
-      <div className="tatreez -mt-6 sm:-mt-10 -mx-4 sm:-mx-6 lg:-mx-8" aria-hidden="true" />
+    <div className="flex flex-col gap-16 sm:gap-24 lg:gap-28 pb-8 sm:pb-12">
       {/* 1. Hero */}
-      <HeroBanner />
+      <HeroBanner className="w-screen ms-[calc(50%-50vw)] -mt-6 sm:-mt-10" />
 
       {/* 2. Category Strip */}
       <CategoryStrip categories={activeCategories} />
@@ -49,12 +48,12 @@ export default function StorefrontHomePage() {
       {/* 4. Luxury Gifting & Custom Boxes Editorial Split */}
       <section
         aria-label="خدمة الإهداء والبوكسات الخاصة"
-        className="w-full overflow-hidden rounded-[24px] bg-[#4A0E23] text-[#FFFAF8] shadow-candy-float"
+        className="w-full overflow-hidden rounded-card bg-candy-plum text-white"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
           <div className="lg:col-span-7 p-7 sm:p-10 lg:p-14 flex flex-col justify-center gap-5 text-right">
-            <div className="flex items-center gap-3 text-sm font-sans font-bold text-[#E8A33D]">
-              <span className="w-8 h-[1.5px] bg-[#E8A33D]" aria-hidden="true" />
+            <div className="flex items-center gap-3 text-sm font-sans font-bold text-[var(--color-accent)]">
+              <span className="w-8 h-[1.5px] bg-[var(--color-accent)]" aria-hidden="true" />
               <span>خدمة الإهداء والمناسبات الخاصة</span>
             </div>
 
@@ -73,14 +72,14 @@ export default function StorefrontHomePage() {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/category/chocolate-gifts"
-                className="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-[#E8A33D] hover:bg-[#D4902F] text-[#2B1A10] font-sans font-bold text-sm transition-colors"
+                className="inline-flex items-center gap-2 h-12 px-7 rounded-input bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-text)] font-sans font-bold text-sm transition-colors"
               >
                 <span>استكشف علب الهدايا</span>
                 <ArrowLeft className="w-4 h-4" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 h-12 px-6 border-2 border-[#FFFAF8] hover:bg-[#FFFAF8] hover:text-[#2B1A10] text-[#FFFAF8] font-sans font-semibold text-sm transition-colors"
+                className="inline-flex items-center gap-2 h-12 px-6 border-2 border-[var(--color-bg)] hover:bg-[var(--color-bg)] hover:text-[var(--color-text)] text-[var(--color-bg)] font-sans font-semibold text-sm transition-colors"
               >
                 <span>تواصل لطلب خاص</span>
               </Link>
@@ -110,7 +109,7 @@ export default function StorefrontHomePage() {
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-right">
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
+            <div className="w-11 h-11 rounded-input bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <Truck className="w-5 h-5" />
             </div>
             <div>
@@ -124,7 +123,7 @@ export default function StorefrontHomePage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
+            <div className="w-11 h-11 rounded-input bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -138,7 +137,7 @@ export default function StorefrontHomePage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
+            <div className="w-11 h-11 rounded-input bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <Banknote className="w-5 h-5" />
             </div>
             <div>
@@ -152,7 +151,7 @@ export default function StorefrontHomePage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
+            <div className="w-11 h-11 rounded-input bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <Clock className="w-5 h-5" />
             </div>
             <div>

@@ -112,11 +112,11 @@ export function AdminUsersTable({
   if (isLoading) {
     return (
       <div className="space-y-4 animate-pulse" aria-busy="true" aria-label="جاري تحميل المستخدمين...">
-        <div className="h-16 bg-white rounded-2xl border border-candy-line" />
-        <div className="hidden md:block h-64 bg-white rounded-2xl border border-candy-line" />
+        <div className="h-16 bg-white rounded-card border border-candy-line" />
+        <div className="hidden md:block h-64 bg-white rounded-card border border-candy-line" />
         <div className="md:hidden space-y-3">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-56 bg-white rounded-2xl border border-candy-line" />
+            <div key={i} className="h-56 bg-white rounded-card border border-candy-line" />
           ))}
         </div>
       </div>
@@ -126,7 +126,7 @@ export function AdminUsersTable({
   return (
     <div className="space-y-4">
       {/* شريط البحث والفلاتر */}
-      <div className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="p-4 rounded-card bg-white border border-candy-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* حقل البحث */}
         <div className="relative flex-1 min-w-[240px]">
           <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-candy-muted pointer-events-none">
@@ -137,19 +137,19 @@ export function AdminUsersTable({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="بحث بالاسم، المسمى الوظيفي، اسم المستخدم، أو البريد..."
-            className="w-full h-10 pr-10 pl-4 rounded-xl text-xs sm:text-sm font-sans bg-candy-soft/60 border border-candy-line text-candy-ink placeholder:text-candy-muted focus:outline-none focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 transition-all"
+            className="w-full h-10 pr-10 pl-4 rounded-input text-xs sm:text-sm font-sans bg-candy-soft/60 border border-candy-line text-candy-ink placeholder:text-candy-muted focus:outline-none focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 transition-all"
           />
         </div>
 
         {/* فلاتر الدور والحالة */}
         <div className="flex flex-wrap items-center gap-2">
           {/* فلتر الدور */}
-          <div className="flex items-center gap-1 p-1 bg-candy-soft/60 rounded-xl border border-candy-line text-xs font-sans">
+          <div className="flex items-center gap-1 p-1 bg-candy-soft/60 rounded-input border border-candy-line text-xs font-sans">
             <button
               type="button"
               onClick={() => setRoleFilter('all')}
               className={cn(
-                'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center',
+                'min-h-[36px] px-3 py-1.5 rounded-[4px] font-semibold transition-colors flex items-center justify-center',
                 roleFilter === 'all'
                   ? 'bg-white text-candy-berry shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
@@ -161,7 +161,7 @@ export function AdminUsersTable({
               type="button"
               onClick={() => setRoleFilter('manager')}
               className={cn(
-                'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-1',
+                'min-h-[36px] px-3 py-1.5 rounded-[4px] font-semibold transition-colors flex items-center justify-center gap-1',
                 roleFilter === 'manager'
                   ? 'bg-white text-candy-berry shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
@@ -173,7 +173,7 @@ export function AdminUsersTable({
               type="button"
               onClick={() => setRoleFilter('staff')}
               className={cn(
-                'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-1',
+                'min-h-[36px] px-3 py-1.5 rounded-[4px] font-semibold transition-colors flex items-center justify-center gap-1',
                 roleFilter === 'staff'
                   ? 'bg-white text-candy-berry shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
@@ -184,12 +184,12 @@ export function AdminUsersTable({
           </div>
 
           {/* فلتر الحالة */}
-          <div className="flex items-center gap-1 p-1 bg-candy-soft/60 rounded-xl border border-candy-line text-xs font-sans">
+          <div className="flex items-center gap-1 p-1 bg-candy-soft/60 rounded-input border border-candy-line text-xs font-sans">
             <button
               type="button"
               onClick={() => setStatusFilter('all')}
               className={cn(
-                'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center',
+                'min-h-[36px] px-3 py-1.5 rounded-[4px] font-semibold transition-colors flex items-center justify-center',
                 statusFilter === 'all'
                   ? 'bg-white text-candy-ink shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
@@ -201,7 +201,7 @@ export function AdminUsersTable({
               type="button"
               onClick={() => setStatusFilter('active')}
               className={cn(
-                'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-1',
+                'min-h-[36px] px-3 py-1.5 rounded-[4px] font-semibold transition-colors flex items-center justify-center gap-1',
                 statusFilter === 'active'
                   ? 'bg-emerald-50 text-emerald-800 shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
@@ -213,7 +213,7 @@ export function AdminUsersTable({
               type="button"
               onClick={() => setStatusFilter('inactive')}
               className={cn(
-                'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-1',
+                'min-h-[36px] px-3 py-1.5 rounded-[4px] font-semibold transition-colors flex items-center justify-center gap-1',
                 statusFilter === 'inactive'
                   ? 'bg-rose-50 text-rose-800 shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
@@ -227,8 +227,8 @@ export function AdminUsersTable({
 
       {/* المحتوى الرئيسي: جدول لسطح المكتب وبطاقات للجوال */}
       {filteredUsers.length === 0 ? (
-        <div className="p-12 text-center bg-white rounded-3xl border border-candy-line shadow-sm space-y-3">
-          <div className="w-14 h-14 mx-auto rounded-2xl bg-candy-soft text-candy-berry flex items-center justify-center">
+        <div className="p-12 text-center bg-white rounded-card border border-candy-line shadow-sm space-y-3">
+          <div className="w-14 h-14 mx-auto rounded-card bg-candy-soft text-candy-berry flex items-center justify-center">
             <Users className="w-7 h-7" aria-hidden="true" />
           </div>
           <h3 className="font-display font-bold text-base text-candy-ink">
@@ -256,7 +256,7 @@ export function AdminUsersTable({
       ) : (
         <>
           {/* جدول سطح المكتب (Desktop Table: شاشات md وما فوق) */}
-          <div className="hidden md:block overflow-hidden rounded-2xl bg-white border border-candy-line shadow-sm">
+          <div className="hidden md:block overflow-hidden rounded-card bg-white border border-candy-line shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 <thead>
@@ -306,7 +306,7 @@ export function AdminUsersTable({
                           <div className="flex items-center gap-3">
                             <div
                               className={cn(
-                                'w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 border shadow-xs select-none',
+                                'w-10 h-10 rounded-input flex items-center justify-center font-bold text-xs shrink-0 border shadow-xs select-none',
                                 member.role === 'manager'
                                   ? 'bg-candy-berry text-white border-candy-berry-dark'
                                   : 'bg-candy-blush text-candy-berry border-candy-line-dark'
@@ -426,7 +426,7 @@ export function AdminUsersTable({
                               onClick={() => onEditUser(member)}
                               disabled={isSelf}
                               className={cn(
-                                'p-1.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30',
+                                'p-1.5 rounded-[4px] transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30',
                                 isSelf
                                   ? 'opacity-30 cursor-not-allowed text-candy-muted'
                                   : 'text-candy-ink hover:text-candy-berry hover:bg-candy-soft'
@@ -445,7 +445,7 @@ export function AdminUsersTable({
                             <button
                               type="button"
                               onClick={() => onResetPassword(member)}
-                              className="p-1.5 rounded-lg text-amber-700 hover:text-amber-800 hover:bg-amber-50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                              className="p-1.5 rounded-[4px] text-amber-700 hover:text-amber-800 hover:bg-amber-50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                               title="إعادة تعيين كلمة المرور وتوليد مؤقتة"
                               aria-label={`إعادة تعيين كلمة مرور ${member.fullName}`}
                             >
@@ -458,7 +458,7 @@ export function AdminUsersTable({
                               onClick={() => onToggleStatus(member)}
                               disabled={isSelf || (isLast && member.isActive)}
                               className={cn(
-                                'p-1.5 rounded-lg transition-colors focus:outline-none focus:ring-2',
+                                'p-1.5 rounded-[4px] transition-colors focus:outline-none focus:ring-2',
                                 isSelf || (isLast && member.isActive)
                                   ? 'opacity-30 cursor-not-allowed text-candy-muted'
                                   : member.isActive
@@ -503,7 +503,7 @@ export function AdminUsersTable({
                 <div
                   key={member.id}
                   className={cn(
-                    'p-4 rounded-2xl bg-white border border-candy-line shadow-sm space-y-3 font-sans transition-all',
+                    'p-4 rounded-card bg-white border border-candy-line shadow-sm space-y-3 font-sans transition-all',
                     !member.isActive && 'bg-gray-50/70 border-gray-200 opacity-85'
                   )}
                 >
@@ -512,7 +512,7 @@ export function AdminUsersTable({
                     <div className="flex items-center gap-3 min-w-0">
                       <div
                         className={cn(
-                          'w-12 h-12 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 border shadow-xs select-none',
+                          'w-12 h-12 rounded-input flex items-center justify-center font-bold text-xs shrink-0 border shadow-xs select-none',
                           member.role === 'manager'
                             ? 'bg-candy-berry text-white border-candy-berry-dark'
                             : 'bg-candy-blush text-candy-berry border-candy-line-dark'

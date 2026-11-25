@@ -69,8 +69,8 @@ export function PaymentMethodCard({
             }
           }}
           className={cn(
-            "relative p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 cursor-pointer select-none",
-            "border-candy-berry bg-gradient-to-br from-candy-blush/25 via-candy-soft/50 to-white shadow-xs ring-2 ring-candy-berry/10",
+            "relative p-4 sm:p-5 rounded-card border-2 transition-all duration-200 cursor-pointer select-none",
+            "border-candy-berry bg-candy-soft shadow-xs ring-2 ring-candy-berry/10",
             "hover:shadow-candy-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry"
           )}
         >
@@ -96,24 +96,24 @@ export function PaymentMethodCard({
               </div>
             </div>
 
-            <div className="w-11 h-11 rounded-2xl bg-candy-berry/10 text-candy-berry flex items-center justify-center shrink-0 border border-candy-berry/15">
+            <div className="w-11 h-11 rounded-card bg-candy-berry/10 text-candy-berry flex items-center justify-center shrink-0 border border-candy-berry/15">
               <Banknote className="w-6 h-6" />
             </div>
           </div>
 
           {/* Three Luxury Reassurance Badges */}
           <div className="mt-4 pt-3.5 border-t border-candy-line/60 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs font-sans">
-            <div className="flex items-center gap-2 text-candy-ink bg-white/90 p-2.5 rounded-xl border border-candy-line/50 shadow-xs">
+            <div className="flex items-center gap-2 text-candy-ink bg-white/90 p-2.5 rounded-input border border-candy-line/50 shadow-xs">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span className="font-medium text-[11px] sm:text-xs">لا يتطلب بطاقة ائتمانية</span>
             </div>
 
-            <div className="flex items-center gap-2 text-candy-ink bg-white/90 p-2.5 rounded-xl border border-candy-line/50 shadow-xs">
+            <div className="flex items-center gap-2 text-candy-ink bg-white/90 p-2.5 rounded-input border border-candy-line/50 shadow-xs">
               <ThumbsUp className="w-4 h-4 text-candy-strawberry shrink-0" />
               <span className="font-medium text-[11px] sm:text-xs">معاينة الطلب عند الاستلام</span>
             </div>
 
-            <div className="flex items-center gap-2 text-candy-ink bg-white/90 p-2.5 rounded-xl border border-candy-line/50 shadow-xs">
+            <div className="flex items-center gap-2 text-candy-ink bg-white/90 p-2.5 rounded-input border border-candy-line/50 shadow-xs">
               <Receipt className="w-4 h-4 text-candy-berry shrink-0" />
               <span className="font-medium text-[11px] sm:text-xs">فاتورة ورقية رسمية</span>
             </div>
@@ -121,7 +121,7 @@ export function PaymentMethodCard({
         </div>
 
         {/* Note on upcoming electronic wallets (PalPay & Jawwal Pay) */}
-        <div className="p-3.5 rounded-2xl bg-candy-soft/60 border border-candy-line/60 flex items-center justify-between gap-3 text-xs font-sans text-candy-muted">
+        <div className="p-3.5 rounded-card bg-candy-soft/60 border border-candy-line/60 flex items-center justify-between gap-3 text-xs font-sans text-candy-muted">
           <div className="flex items-center gap-2.5">
             <Wallet className="w-4 h-4 text-candy-berry shrink-0" />
             <span>
@@ -129,7 +129,7 @@ export function PaymentMethodCard({
             </span>
           </div>
           <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-candy-line text-candy-berry font-bold shrink-0 shadow-xs">
-            قريباً ⚡
+            قريباً
           </span>
         </div>
       </CardContent>

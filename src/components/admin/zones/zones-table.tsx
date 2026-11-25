@@ -112,7 +112,7 @@ export function ZonesTable({
   if (isLoading) {
     return (
       <div className="space-y-3" aria-busy="true" aria-label="جاري تحميل مناطق التوصيل">
-        <div className="hidden md:block rounded-2xl bg-white border border-candy-line p-4">
+        <div className="hidden md:block rounded-card bg-white border border-candy-line p-4">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-center justify-between py-3 border-b border-candy-line/40 last:border-0 animate-pulse">
               <Skeleton className="w-48 h-5 rounded-md" />
@@ -126,13 +126,13 @@ export function ZonesTable({
         </div>
         <div className="md:hidden space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="p-4 rounded-2xl bg-white border border-candy-line space-y-3 animate-pulse">
+            <div key={i} className="p-4 rounded-card bg-white border border-candy-line space-y-3 animate-pulse">
               <Skeleton className="w-3/4 h-5 rounded-md" />
               <div className="grid grid-cols-2 gap-2">
                 <Skeleton className="h-4 rounded-md" />
                 <Skeleton className="h-4 rounded-md" />
               </div>
-              <Skeleton className="w-full h-8 rounded-xl" />
+              <Skeleton className="w-full h-8 rounded-input" />
             </div>
           ))}
         </div>
@@ -143,8 +143,8 @@ export function ZonesTable({
   // حالة الفراغ (Empty State)
   if (localZones.length === 0) {
     return (
-      <div className="text-center py-16 px-4 rounded-3xl bg-white border border-candy-line shadow-candy-1">
-        <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4">
+      <div className="text-center py-16 px-4 rounded-card bg-white border border-candy-line shadow-candy-1">
+        <div className="w-16 h-16 rounded-card bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4">
           <MapPin className="w-8 h-8" aria-hidden="true" />
         </div>
         <h3 className="font-display font-bold text-lg text-candy-ink mb-1">
@@ -170,7 +170,7 @@ export function ZonesTable({
   return (
     <div className="space-y-4" dir="rtl">
       {/* 1. جدول الشاشات المتوسطة والكبيرة (Desktop View: >= 768px) */}
-      <div className="hidden md:block overflow-hidden rounded-2xl bg-white border border-candy-line shadow-candy-1">
+      <div className="hidden md:block overflow-hidden rounded-card bg-white border border-candy-line shadow-candy-1">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse" aria-label="جدول مناطق التوصيل والرسوم">
             <thead>
@@ -201,7 +201,7 @@ export function ZonesTable({
                     {/* اسم المنطقة */}
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-[4px] bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
                           <MapPin className="w-4 h-4" aria-hidden="true" />
                         </div>
                         <div className="min-w-0">
@@ -228,7 +228,7 @@ export function ZonesTable({
                             step="0.5"
                             value={inlineFee}
                             onChange={(e) => setInlineFee(e.target.value)}
-                            className="w-20 px-2 py-1 text-xs font-mono font-bold rounded-lg border border-candy-berry bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+                            className="w-20 px-2 py-1 text-xs font-mono font-bold rounded-[4px] border border-candy-berry bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
                             placeholder="0"
                             autoFocus
                           />
@@ -279,7 +279,7 @@ export function ZonesTable({
                             step="1"
                             value={inlineMinOrder}
                             onChange={(e) => setInlineMinOrder(e.target.value)}
-                            className="w-20 px-2 py-1 text-xs font-mono font-bold rounded-lg border border-candy-berry bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+                            className="w-20 px-2 py-1 text-xs font-mono font-bold rounded-[4px] border border-candy-berry bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
                             placeholder="0"
                           />
                           <span className="text-xs text-candy-muted font-bold font-sans">₪</span>
@@ -312,7 +312,7 @@ export function ZonesTable({
                         disabled={!canManage || isInlineEditing}
                         aria-label={`تبديل حالة منطقة ${zone.name} (حالياً ${zone.isActive ? 'مفعّلة' : 'معطّلة'})`}
                         className={cn(
-                          'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-sans font-semibold transition-all duration-200 border',
+                          'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-input text-xs font-sans font-semibold transition-all duration-200 border',
                           zone.isActive
                             ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
                             : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200',
@@ -425,7 +425,7 @@ export function ZonesTable({
               key={zone.id}
               role="listitem"
               className={cn(
-                'p-4 rounded-2xl bg-white border transition-all duration-200 shadow-candy-1 space-y-3',
+                'p-4 rounded-card bg-white border transition-all duration-200 shadow-candy-1 space-y-3',
                 zone.isActive ? 'border-candy-line' : 'border-candy-line/60 bg-gray-50/70 opacity-90',
                 isInlineEditing && 'ring-2 ring-candy-berry/30 bg-candy-cream/40'
               )}
@@ -433,7 +433,7 @@ export function ZonesTable({
               {/* ترويسة البطاقة: الاسم والحالة */}
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-9 h-9 rounded-input bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0 mt-0.5">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
@@ -455,7 +455,7 @@ export function ZonesTable({
                   disabled={!canManage || isInlineEditing}
                   aria-label={`تبديل حالة منطقة ${zone.name}`}
                   className={cn(
-                    'inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-sans font-semibold border shrink-0',
+                    'inline-flex items-center gap-1 px-2 py-1 rounded-[4px] text-xs font-sans font-semibold border shrink-0',
                     zone.isActive
                       ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                       : 'bg-gray-100 text-gray-600 border-gray-200'
@@ -477,7 +477,7 @@ export function ZonesTable({
 
               {/* تفاصيل الرسوم والحد الأدنى والوقت: عادية أو تعديل فوري */}
               {isInlineEditing ? (
-                <div className="p-3 bg-white rounded-xl border border-candy-line space-y-2.5">
+                <div className="p-3 bg-white rounded-input border border-candy-line space-y-2.5">
                   <div className="text-xs font-bold text-candy-berry flex items-center gap-1.5">
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span>تعديل سريع للرسوم والحد الأدنى:</span>
@@ -491,7 +491,7 @@ export function ZonesTable({
                         step="0.5"
                         value={inlineFee}
                         onChange={(e) => setInlineFee(e.target.value)}
-                        className="w-full px-2.5 py-1.5 text-xs font-mono font-bold rounded-lg border border-candy-berry bg-white"
+                        className="w-full px-2.5 py-1.5 text-xs font-mono font-bold rounded-[4px] border border-candy-berry bg-white"
                       />
                     </div>
                     <div>
@@ -502,7 +502,7 @@ export function ZonesTable({
                         step="1"
                         value={inlineMinOrder}
                         onChange={(e) => setInlineMinOrder(e.target.value)}
-                        className="w-full px-2.5 py-1.5 text-xs font-mono font-bold rounded-lg border border-candy-berry bg-white"
+                        className="w-full px-2.5 py-1.5 text-xs font-mono font-bold rounded-[4px] border border-candy-berry bg-white"
                       />
                     </div>
                   </div>
@@ -531,7 +531,7 @@ export function ZonesTable({
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-candy-soft/60 border border-candy-line text-center text-xs">
+                <div className="grid grid-cols-3 gap-2 p-2.5 rounded-input bg-candy-soft/60 border border-candy-line text-center text-xs">
                   <div>
                     <span className="text-[10px] text-candy-muted block mb-0.5">رسوم التوصيل</span>
                     <span className="font-bold text-candy-ink font-mono">

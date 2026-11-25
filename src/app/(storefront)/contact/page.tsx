@@ -49,7 +49,7 @@ export default function ContactPage() {
       </nav>
 
       {/* Hero Header Section */}
-      <section className="relative rounded-candy-section bg-gradient-to-br from-candy-soft via-white to-candy-blush/30 border border-candy-line p-6 sm:p-10 lg:p-12 overflow-hidden shadow-candy-1">
+      <section className="relative rounded-candy-section bg-candy-soft border border-candy-line p-6 sm:p-10 lg:p-12 overflow-hidden shadow-candy-1">
         {/* Soft decorative background circles */}
         <div
           className="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-candy-blush/40 blur-2xl pointer-events-none"
@@ -98,7 +98,7 @@ export default function ContactPage() {
           >
             <div className="flex items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-input bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
                   <MapPin className="w-4 h-4 text-candy-berry" />
                 </div>
                 <div>
@@ -125,7 +125,7 @@ export default function ContactPage() {
               target="_blank"
               rel="noopener noreferrer"
               title="انقر لفتح موقع المتجر في خرائط Google"
-              className="relative block rounded-2xl overflow-hidden border border-candy-line bg-[#fbf6f3] h-60 w-full group shadow-inner transition-all hover:border-candy-rose focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry"
+              className="relative block rounded-card overflow-hidden border border-candy-line bg-[#fbf6f3] h-60 w-full group shadow-inner transition-all hover:border-candy-rose focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry"
             >
               {/* Decorative map streets grid svg */}
               <svg
@@ -194,7 +194,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-2 bg-candy-berry text-white text-xs font-bold px-3 py-1 rounded-candy-pill shadow-md border border-white/20 whitespace-nowrap group-hover:bg-candy-strawberry transition-colors">
-                  كاندي لوز - غزة 📍
+                  كاندي لوز - غزة
                 </div>
               </div>
 
@@ -212,7 +212,7 @@ export default function ContactPage() {
                 href={mapSearchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 h-11 px-4 rounded-candy-pill bg-candy-soft text-candy-berry hover:bg-candy-blush/60 hover:text-candy-berry-dark border border-candy-blush text-xs sm:text-sm font-bold transition-all shadow-xs"
+                className="w-full inline-flex items-center justify-center gap-2 h-11 px-4 rounded-button bg-candy-soft text-candy-berry hover:bg-candy-blush/60 hover:text-candy-berry-dark border border-candy-blush text-xs sm:text-sm font-bold transition-all shadow-xs"
               >
                 <Navigation className="w-4 h-4" />
                 <span>فتح في خرائط Google</span>
@@ -224,10 +224,10 @@ export default function ContactPage() {
           {/* Delivery Coverage Note Card */}
           <section
             aria-labelledby="delivery-coverage-title"
-            className="rounded-candy-card bg-gradient-to-br from-white to-candy-soft/60 border border-candy-line shadow-candy-1 p-6 relative overflow-hidden"
+            className="rounded-candy-card bg-candy-soft border border-candy-line shadow-candy-1 p-6 relative overflow-hidden"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-2xl bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+              <div className="w-10 h-10 rounded-card bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
                 <Truck className="w-5 h-5 text-candy-berry" />
               </div>
               <div>
@@ -278,7 +278,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="mt-5 p-3 rounded-xl bg-candy-blush/40 border border-candy-line flex items-center justify-between gap-3 text-xs">
+            <div className="mt-5 p-3 rounded-input bg-candy-blush/40 border border-candy-line flex items-center justify-between gap-3 text-xs">
               <span className="font-medium text-candy-berry">
                 هل تحتاج توصيل لمناسبة أو كميات كبيرة؟
               </span>

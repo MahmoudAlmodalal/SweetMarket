@@ -49,7 +49,7 @@ export function OrderSuccessCard({
         setCopied(true);
         toast.success(
           "تم نسخ رقم الطلب بنجاح",
-          `رقم الطلب ${order.orderNumber} تم نسخه إلى الحافظة. احتفظ به لتتبع شحنتك 📋`
+          `رقم الطلب ${order.orderNumber} تم نسخه إلى الحافظة. احتفظ به لتتبع شحنتك`
         );
         const timer = setTimeout(() => setCopied(false), 2500);
         return () => clearTimeout(timer);
@@ -114,7 +114,7 @@ export function OrderSuccessCard({
           <div className="flex items-center gap-2 text-emerald-800">
             <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm">
-              تم إكمال الطلب بنجاح • خطوة 3 من 3 🔒
+              تم إكمال الطلب بنجاح • خطوة 3 من 3
             </span>
           </div>
           <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-sans font-bold text-xs flex items-center gap-1">
@@ -172,7 +172,7 @@ export function OrderSuccessCard({
         <div className="flex items-center justify-center gap-2 mb-4">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-blush border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-candy-strawberry animate-pulse" />
-            <span>صنع يدوي طازج بحب وعناية 💖</span>
+            <span>صنع يدوي طازج بحب وعناية</span>
           </span>
           <span className="inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 shadow-xs">
             <PackageCheck className="w-3.5 h-3.5 text-emerald-600" />
@@ -183,21 +183,14 @@ export function OrderSuccessCard({
         {/* Animated Success Badge with Festive Confectionery Micro-Animation */}
         <div className="relative mb-5 inline-flex items-center justify-center">
           <div className="absolute w-24 h-24 rounded-full bg-emerald-100/70 animate-ping opacity-60" />
-          <div className="relative w-20 h-20 rounded-full bg-gradient-to-tr from-[#166534] via-[#1B8755] to-[#22c55e] flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
+          <div className="relative w-20 h-20 rounded-full bg-candy-soft flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
             <CheckCircle2 className="w-10 h-10 text-white" strokeWidth={2.5} />
           </div>
-          <span
-            role="img"
-            aria-label="احتفال"
-            className="absolute -bottom-1 -right-1 text-2xl select-none animate-bounce"
-          >
-            🎉
-          </span>
         </div>
 
         {/* Warm Arabic Thank You Heading */}
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry tracking-tight mb-2">
-          شكراً لطلبك من كاندي لوز! 🎉
+          شكراً لطلبك من كاندي لوز!
         </h1>
 
         <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6">
@@ -205,12 +198,12 @@ export function OrderSuccessCard({
             <span>
               عزيزنا <strong className="text-candy-ink">{order.customer.fullName}</strong>، تم
               استلام وتأكيد طلبك بنجاح. فريق حلوانيي كاندي لوز يعمل الآن على تجهيز أصنافك بكل حب
-              وعناية لتصلك طازجة وشهية 🍰
+              وعناية لتصلك طازجة وشهية
             </span>
           ) : (
             <span>
               تم استلام وتأكيد طلبك بنجاح. فريق حلويات كاندي لوز يعمل الآن على تجهيز طلبك الفاخر
-              بكل حب وعناية ليصلك طازجاً وشهياً 💖
+              بكل حب وعناية ليصلك طازجاً وشهياً
             </span>
           )}
         </p>
@@ -252,7 +245,7 @@ export function OrderSuccessCard({
         </div>
 
         {/* Estimated Delivery Time Indicator Card */}
-        <div className="mt-6 w-full bg-gradient-to-r from-candy-soft via-candy-cream to-candy-soft p-4 rounded-2xl border border-candy-line/80 flex items-center justify-between gap-3 text-right">
+        <div className="mt-6 w-full bg-candy-soft p-4 rounded-card border border-candy-line/80 flex items-center justify-between gap-3 text-right">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-full bg-white text-candy-strawberry flex items-center justify-center shadow-xs shrink-0 border border-candy-blush">
               <Clock className="w-5 h-5 text-candy-strawberry" />
@@ -315,7 +308,7 @@ export function OrderSuccessCard({
                   className="pt-4 first:pt-0 flex items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-candy-soft shrink-0 border border-candy-line/80 flex items-center justify-center">
+                    <div className="relative w-14 h-14 rounded-card overflow-hidden bg-candy-soft shrink-0 border border-candy-line/80 flex items-center justify-center">
                       <ProductImage
                         src={item.imageUrl}
                         alt={item.productName}
@@ -394,7 +387,7 @@ export function OrderSuccessCard({
                 </span>
               </div>
               {order.customer.notes && (
-                <div className="mt-2 text-xs bg-white p-2.5 rounded-xl border border-candy-line text-candy-ink font-sans">
+                <div className="mt-2 text-xs bg-white p-2.5 rounded-input border border-candy-line text-candy-ink font-sans">
                   <span className="font-bold text-candy-berry">ملاحظات التوصيل: </span>
                   {order.customer.notes}
                 </div>
@@ -403,7 +396,7 @@ export function OrderSuccessCard({
           </div>
 
           {/* Payment Method Badge */}
-          <div className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-candy-line">
+          <div className="flex items-center justify-between p-3.5 bg-white rounded-card border border-candy-line">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                 <Banknote className="w-4 h-4" />
@@ -418,7 +411,7 @@ export function OrderSuccessCard({
               </div>
             </div>
             <span className="text-xs font-sans font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill shrink-0">
-              جاهز للتسليم 💵
+              جاهز للتسليم
             </span>
           </div>
         </div>
@@ -435,7 +428,7 @@ export function OrderSuccessCard({
             <span>رسوم التوصيل المبرد:</span>
             <span className="font-mono font-semibold text-candy-ink">
               {order.deliveryFee === 0 ? (
-                <span className="text-emerald-600 font-bold">مجاني 🎉</span>
+                <span className="text-emerald-600 font-bold">مجاني</span>
               ) : (
                 `${order.deliveryFee.toFixed(2)} ₪`
               )}
@@ -464,13 +457,13 @@ export function OrderSuccessCard({
       </div>
 
       {/* 3. Reassuring Cold-Chain Guarantee Banner */}
-      <div className="bg-candy-soft border border-candy-line rounded-2xl p-4 flex items-start gap-3 shadow-xs">
+      <div className="bg-candy-soft border border-candy-line rounded-card p-4 flex items-start gap-3 shadow-xs">
         <div className="w-9 h-9 rounded-full bg-white text-candy-berry flex items-center justify-center shrink-0 border border-candy-blush shadow-xs mt-0.5">
           <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
         </div>
         <div className="flex-1">
           <h4 className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
-            تغليف ملكي ونقل مبرد معتمد ❄️
+            تغليف ملكي ونقل مبرد معتمد
           </h4>
           <p className="font-sans text-xs text-candy-muted mt-0.5 leading-relaxed">
             يتم نقل طلبيتك في صناديق مبردة خاصة لحماية نضارة الكريمة وقرمشة البقلاوة
@@ -510,7 +503,7 @@ export function OrderSuccessCard({
           className="inline-flex items-center justify-center gap-2 text-xs font-sans font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-4 py-2.5 rounded-candy-pill transition-colors"
         >
           <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
-          <span>واجهتك أي رغبة إضافية؟ تواصل مع الشيف وخدمة العملاء 💬</span>
+          <span>واجهتك أي رغبة إضافية؟ تواصل مع الشيف وخدمة العملاء</span>
         </a>
       </div>
     </div>

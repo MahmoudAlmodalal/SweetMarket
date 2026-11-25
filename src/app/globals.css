@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "./tokens.css";
 
 @tailwind base;
@@ -16,15 +17,13 @@
 
   body {
     color: var(--color-text);
-    background:
-      radial-gradient(circle at 100% 0%, rgba(253, 242, 244, 0.85), transparent 34rem),
-      radial-gradient(circle at 0% 100%, rgba(255, 248, 242, 0.70), transparent 28rem),
-      var(--color-bg);
+    background: var(--color-bg);
     font-family: var(--font-body);
     font-size: var(--fs-body);
     font-weight: var(--fw-regular);
     line-height: var(--lh-body);
     min-height: 100vh;
+    overflow-x: clip;
     text-align: start;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -48,6 +47,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
     font-weight: var(--fw-bold);
+    letter-spacing: 0;
     line-height: var(--lh-heading);
     color: var(--color-text);
   }
@@ -87,10 +87,23 @@
   }
 
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     color: var(--color-primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+  }
+  .rule-double {
+    border: 0;
+    height: 5px;
+    border-block: 1px solid var(--color-border);
   }
 }
 
@@ -317,12 +330,9 @@ body[data-capture-mode] [data-mobile-dock] {
   pointer-events: auto !important;
 }
 
-/* ---- Embroidery-inspired band (brand palette) ---- */
+/* ---- Thin berry/honey band (replaces the old embroidery strip) ---- */
 .tatreez {
-  height: 10px;
-  background-color: var(--color-primary-subtle);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10' viewBox='0 0 24 10'%3E%3Cpath d='M12 1l4 4-4 4-4-4z' fill='%23A31D56'/%3E%3Cpath d='M12 3.5l1.5 1.5-1.5 1.5-1.5-1.5z' fill='%23E8A33D'/%3E%3Cpath d='M0 5h5M19 5h5' stroke='%23FED7E7' stroke-width='2'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-size: 24px 10px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-primary) 0 70%, var(--color-accent) 70% 100%);
 }
-.stamp { transform: rotate(-6deg); }
+.stamp { transform: none; }

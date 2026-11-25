@@ -227,11 +227,9 @@ async function runAssertions() {
           await demoPill.click();
           await page.waitForTimeout(300);
 
-          const submitQuery = page.locator('button:has-text("استعلام عن حالة الطلب")').first();
-          if (await submitQuery.isVisible()) {
-            await submitQuery.click();
-            await page.waitForTimeout(600);
-          }
+          // The demo pill runs the lookup itself and replaces the form with the
+          // result, so wait for the timeline instead of racing the submit button.
+          await page.locator('ol[aria-label*="مراحل"]').first().waitFor({ state: 'visible', timeout: 10000 });
 
           // Timeline check
           const timeline = page.locator('ol[aria-label*="مراحل"], div:has-text("الخط الزمني")');

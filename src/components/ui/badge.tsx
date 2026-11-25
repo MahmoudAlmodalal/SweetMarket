@@ -26,24 +26,24 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 const badgeVariants: Record<BadgeVariant, string> = {
   // Order statuses (strictly bound to design tokens with subtle luxury borders)
-  new: "bg-status-new text-white border-white/25 shadow-xs",
-  accepted: "bg-status-accepted text-white border-white/25 shadow-xs",
-  in_preparation: "bg-status-preparing text-status-preparing-text border-candy-ink/15 shadow-xs",
-  out_for_delivery: "bg-status-out text-white border-white/25 shadow-xs",
-  delivered: "bg-status-delivered text-white border-white/25 shadow-xs",
-  undelivered: "bg-status-failed text-white border-white/25 shadow-xs",
-  cancelled: "bg-status-cancelled text-white border-white/25 shadow-xs",
+  new: "bg-status-new text-white border-white/25",
+  accepted: "bg-status-accepted text-white border-white/25",
+  in_preparation: "bg-status-preparing text-status-preparing-text border-candy-ink/15",
+  out_for_delivery: "bg-status-out text-white border-white/25",
+  delivered: "bg-status-delivered text-white border-white/25",
+  undelivered: "bg-status-failed text-white border-white/25",
+  cancelled: "bg-status-cancelled text-white border-white/25",
 
   // Feedback states
-  success: "bg-emerald-700 text-white border-emerald-600/30 shadow-xs",
-  warning: "bg-amber-700 text-white border-amber-600/30 shadow-xs",
-  danger: "bg-rose-700 text-white border-rose-600/30 shadow-xs",
-  muted: "bg-candy-soft text-candy-muted border-candy-line/80 shadow-xs",
+  success: "bg-emerald-700 text-white border-emerald-600/30",
+  warning: "bg-amber-700 text-white border-amber-600/30",
+  danger: "bg-rose-700 text-white border-rose-600/30",
+  muted: "bg-candy-soft text-candy-muted border-candy-line/80",
 
   // Marketing & Tags
-  bestseller: "bg-amber-100 text-amber-900 border-accent/40 shadow-xs",
-  discount: "bg-secondary text-white border-white/25 shadow-xs",
-  tag: "bg-blush text-primary border-candy-line-dark/40 shadow-xs",
+  bestseller: "bg-amber-100 text-amber-900 border-accent/40",
+  discount: "bg-secondary text-white border-white/25",
+  tag: "bg-blush text-primary border-candy-line-dark/40",
 };
 
 const badgeDots: Record<BadgeVariant, string> = {
@@ -112,7 +112,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
             )}
             <span
               className={cn(
-                "relative w-1.5 h-1.5 rounded-full shrink-0 shadow-xs",
+                "relative w-1.5 h-1.5 rounded-full shrink-0",
                 badgeDots[variant],
                 isPulsing && "animate-pulse motion-reduce:animate-none"
               )}

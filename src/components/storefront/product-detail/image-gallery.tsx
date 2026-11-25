@@ -157,7 +157,7 @@ export function ImageGallery({
         {/* Freshly Handmade Badge */}
         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-white/95 backdrop-blur-md text-candy-berry font-sans font-bold text-xs shadow-candy-1 border border-candy-line/80 animate-in fade-in duration-300">
           <Sparkles className="w-3.5 h-3.5 text-candy-strawberry animate-pulse" />
-          <span>صنع يدوي طازج ✨</span>
+          <span>صنع يدوي طازج</span>
         </div>
 
         {/* Discount Badge if available */}
@@ -186,7 +186,7 @@ export function ImageGallery({
 
       {/* Main Hero Visual Cradle with Swipeable Mobile Support */}
       <div
-        className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-sm flex items-center justify-center group cursor-pointer"
+        className="relative w-full aspect-[4/3] rounded-card overflow-hidden bg-white shadow-sm flex items-center justify-center group cursor-pointer"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -293,7 +293,7 @@ export function ImageGallery({
                 aria-label={`عرض الصورة رقم ${idx + 1}`}
                 onClick={() => setActiveIndex(idx)}
                 className={cn(
-                  "relative aspect-square w-16 sm:w-20 rounded-xl overflow-hidden bg-white shrink-0 snap-start transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry",
+                  "relative aspect-square w-16 sm:w-20 rounded-input overflow-hidden bg-white shrink-0 snap-start transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry",
                   isActive
                     ? "ring-2 ring-candy-strawberry ring-offset-2 ring-offset-candy-soft shadow-candy-1 opacity-100 scale-105"
                     : "opacity-60 hover:opacity-100 border border-candy-line hover:border-candy-rose/60 hover:scale-[1.02]"
@@ -424,7 +424,7 @@ export function ImageGallery({
                 width={900}
                 height={675}
                 sizes="(max-width: 1024px) 95vw, 900px"
-                className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl select-none"
+                className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-card shadow-2xl select-none"
               />
             </div>
           </div>

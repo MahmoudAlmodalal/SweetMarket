@@ -159,7 +159,7 @@ export function MobileDock({
     <div
       data-mobile-dock
       className={cn(
-        "fixed bottom-3 inset-x-2 sm:inset-x-6 z-50 md:hidden pointer-events-none transition-all duration-200",
+        "fixed bottom-0 inset-x-0 z-50 md:hidden pointer-events-none transition-all duration-200",
         "[[data-capture-mode=true]_&]:relative [[data-capture-mode=true]_&]:bottom-auto [[data-capture-mode=true]_&]:inset-x-auto [[data-capture-mode=true]_&]:mt-auto [[data-capture-mode=true]_&]:mb-4",
         className
       )}
@@ -167,7 +167,7 @@ export function MobileDock({
       <nav
         role="navigation"
         aria-label="شريط التنقل السفلي للهاتف"
-        className="pointer-events-auto mx-auto max-w-md min-h-[58px] px-2 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
+        className="pointer-events-auto w-full min-h-[60px] px-1 pb-[env(safe-area-inset-bottom)] bg-white border-t border-candy-line flex items-stretch justify-around"
       >
         {dockItems.map((item) => {
           const Icon = item.icon;
@@ -181,19 +181,17 @@ export function MobileDock({
               href={item.href}
               aria-current={isItemActive ? "page" : undefined}
               className={cn(
-                "group relative flex flex-col items-center justify-center min-w-[56px] sm:min-w-[64px] min-h-[48px] px-1 sm:px-2 py-1 rounded-candy-pill transition-all duration-200 select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                "group relative flex flex-1 flex-col items-center justify-center min-h-[56px] px-1 py-1 transition-colors duration-200 select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 isItemActive
-                  ? "bg-primary text-white shadow-[0_4px_16px_rgba(163,29,86,0.36)] ring-1 ring-primary/20 scale-[1.04]"
-                  : "text-candy-muted hover:text-primary hover:bg-candy-soft/70 active:scale-95"
+                  ? "text-primary before:absolute before:top-0 before:inset-x-3 before:h-[3px] before:bg-primary"
+                  : "text-candy-muted hover:text-primary"
               )}
             >
               <div className="relative flex items-center justify-center">
                 <Icon
                   className={cn(
                     "w-5 h-5 transition-transform duration-200 ease-out",
-                    isItemActive
-                      ? "text-white scale-110 drop-shadow-sm"
-                      : "text-secondary group-hover:scale-105"
+                    isItemActive ? "text-primary" : "text-candy-ink"
                   )}
                 />
                 {hasBadge && (
@@ -202,8 +200,8 @@ export function MobileDock({
                     className={cn(
                       "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
                       isItemActive
-                        ? "bg-white text-primary border border-primary/30"
-                        : "bg-candy-strawberry text-white shadow-candy-cta",
+                        ? "bg-primary text-white"
+                        : "bg-primary text-white",
                       isBouncing && "scale-125 ring-2 ring-white animate-bounce"
                     )}
                   >
@@ -213,8 +211,8 @@ export function MobileDock({
               </div>
               <span
                 className={cn(
-                  "font-sans text-[10px] sm:text-[11px] font-bold mt-0.5 leading-none transition-colors",
-                  isItemActive ? "text-white" : "text-candy-ink/90 group-hover:text-primary"
+                  "font-sans text-[10.5px] mt-1 leading-none transition-colors",
+                  isItemActive ? "text-primary font-semibold" : "text-candy-ink font-normal group-hover:text-primary"
                 )}
               >
                 {item.label}

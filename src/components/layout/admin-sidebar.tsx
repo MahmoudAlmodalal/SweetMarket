@@ -101,18 +101,18 @@ function SidebarContent({
     });
 
   return (
-    <div className="flex flex-col h-full bg-white select-none relative">
+    <div className="flex flex-col h-full bg-candy-plum select-none relative">
       {/* Brand Header */}
       <div
         className={cn(
-          'h-16 px-4 border-b border-candy-line/60 flex items-center justify-between shrink-0 bg-white transition-all',
+          'h-16 px-4 border-b border-white/15 flex items-center justify-between shrink-0 bg-candy-plum transition-all',
           isCollapsed && !isMobile ? 'justify-center px-2' : 'justify-between px-4 sm:px-5'
         )}
       >
         <Link
           href="/admin/orders"
           onClick={() => isMobile && onClose?.()}
-          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry rounded-xl p-1 transition-transform"
+          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry rounded-input p-1 transition-transform"
           title="كاندي لوز - لوحة الإدارة"
         >
           <StoreLogo
@@ -123,10 +123,10 @@ function SidebarContent({
           />
           {(!isCollapsed || isMobile) && (
             <div className="flex flex-col text-right min-w-0">
-              <span className="font-display font-bold text-sm sm:text-base text-candy-ink leading-tight group-hover:text-candy-berry transition-colors truncate">
+              <span className="font-display font-bold text-sm sm:text-base text-white leading-tight group-hover:text-candy-gold transition-colors truncate">
                 كاندي لوز - لوحة الإدارة
               </span>
-              <span className="font-sans text-[11px] text-candy-muted font-medium truncate">
+              <span className="font-sans text-[11px] text-white/70 font-medium truncate">
                 نظام إدارة متجر الحلويات
               </span>
             </div>
@@ -138,7 +138,7 @@ function SidebarContent({
             type="button"
             onClick={onClose}
             aria-label="إغلاق القائمة الجانبية"
-            className="p-1.5 rounded-lg text-candy-muted hover:text-candy-ink hover:bg-candy-soft transition-colors lg:hidden focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+            className="p-1.5 rounded-[4px] text-white/70 hover:text-white hover:bg-white/10 transition-colors lg:hidden focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
           >
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -150,7 +150,7 @@ function SidebarContent({
             onClick={onToggleCollapse}
             aria-label={isCollapsed ? 'توسيع القائمة الجانبية' : 'طي القائمة الجانبية'}
             title={isCollapsed ? 'توسيع القائمة الجانبية' : 'طي القائمة الجانبية'}
-            className="hidden lg:flex p-1.5 rounded-lg text-candy-muted hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+            className="hidden lg:flex p-1.5 rounded-[4px] text-white/70 hover:text-candy-gold hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
           >
             {isCollapsed ? (
               <ChevronsLeft className="w-4 h-4 rtl:rotate-180" aria-hidden="true" />
@@ -174,7 +174,7 @@ function SidebarContent({
           <button
             type="button"
             onClick={() => setMainNavOpen((prev) => !prev)}
-            className="w-full flex items-center justify-between px-3 py-1 text-[11px] font-bold text-candy-muted/80 font-sans uppercase tracking-wider hover:text-candy-berry transition-colors"
+            className="w-full flex items-center justify-between px-3 py-1 text-[11px] font-bold text-white/60 font-sans uppercase tracking-wider hover:text-candy-gold transition-colors"
           >
             <span>القائمة الرئيسية</span>
             <ChevronDown
@@ -203,11 +203,11 @@ function SidebarContent({
                   aria-current={isActive ? 'page' : undefined}
                   title={item.name}
                   className={cn(
-                    'group flex items-center justify-between py-2.5 rounded-xl font-sans text-sm font-semibold transition-colors relative',
+                    'group flex items-center justify-between py-2.5 rounded-input font-sans text-sm font-semibold transition-colors relative',
                     isCollapsed && !isMobile ? 'px-2 justify-center' : 'px-3.5',
                     isActive
-                      ? 'bg-candy-berry text-white font-bold'
-                      : 'text-candy-ink hover:bg-candy-soft hover:text-candy-berry'
+                      ? 'bg-white text-candy-plum font-bold'
+                      : 'text-white hover:bg-white/10 hover:text-candy-gold'
                   )}
                 >
                   <div className="flex items-center gap-3 min-w-0">
@@ -215,8 +215,8 @@ function SidebarContent({
                       className={cn(
                         'w-5 h-5 shrink-0 transition-colors',
                         isActive
-                          ? 'text-white'
-                          : 'text-candy-muted group-hover:text-candy-berry'
+                          ? 'text-candy-plum'
+                          : 'text-white/70 group-hover:text-candy-gold'
                       )}
                       aria-hidden="true"
                     />
@@ -232,8 +232,8 @@ function SidebarContent({
                           className={cn(
                             'text-[10px] px-2 py-0.5 rounded-full font-bold',
                             isActive
-                              ? 'bg-white/20 text-white'
-                              : 'bg-candy-soft text-candy-berry border border-candy-blush'
+                              ? 'bg-candy-plum/20 text-white'
+                              : 'bg-white/15 text-white'
                           )}
                         >
                           مدير
@@ -257,7 +257,7 @@ function SidebarContent({
             <button
               type="button"
               onClick={() => setAccountNavOpen((prev) => !prev)}
-              className="w-full flex items-center justify-between px-3 py-1 text-[11px] font-bold text-candy-muted/80 font-sans uppercase tracking-wider hover:text-candy-berry transition-colors"
+              className="w-full flex items-center justify-between px-3 py-1 text-[11px] font-bold text-white/60 font-sans uppercase tracking-wider hover:text-candy-gold transition-colors"
             >
               <span>إعدادات الحساب</span>
               <ChevronDown
@@ -279,11 +279,11 @@ function SidebarContent({
               aria-current={pathname === '/admin/account/password' ? 'page' : undefined}
               title="تغيير كلمة المرور"
               className={cn(
-                'group flex items-center justify-between py-2.5 rounded-xl font-sans text-sm font-semibold transition-colors relative',
+                'group flex items-center justify-between py-2.5 rounded-input font-sans text-sm font-semibold transition-colors relative',
                 isCollapsed && !isMobile ? 'px-2 justify-center' : 'px-3.5',
                 pathname === '/admin/account/password'
-                  ? 'bg-candy-berry text-white font-bold'
-                  : 'text-candy-ink hover:bg-candy-soft hover:text-candy-berry'
+                  ? 'bg-white text-candy-plum font-bold'
+                  : 'text-white hover:bg-white/10 hover:text-candy-gold'
               )}
             >
               <div className="flex items-center gap-3 min-w-0">
@@ -292,7 +292,7 @@ function SidebarContent({
                     'w-5 h-5 shrink-0 transition-colors',
                     pathname === '/admin/account/password'
                       ? 'text-white'
-                      : 'text-candy-muted group-hover:text-candy-berry'
+                      : 'text-white/70 group-hover:text-candy-gold'
                   )}
                   aria-hidden="true"
                 />
@@ -312,13 +312,13 @@ function SidebarContent({
       {/* User Info Card with Role Badge */}
       <div
         className={cn(
-          'border-t border-candy-line/60 bg-candy-cream/60 shrink-0 transition-all',
+          'border-t border-candy-line/60 bg-black/20 shrink-0 transition-all',
           isCollapsed && !isMobile ? 'p-2' : 'p-3'
         )}
       >
         <div
           className={cn(
-            'rounded-2xl bg-white border border-candy-line/80 shadow-sm transition-all',
+            'rounded-card bg-white border border-candy-line/80 shadow-sm transition-all',
             isCollapsed && !isMobile ? 'p-2 flex flex-col items-center gap-2' : 'p-3 space-y-2.5'
           )}
         >
@@ -331,7 +331,7 @@ function SidebarContent({
             <div className="flex items-center gap-2.5 min-w-0">
               <div
                 className={cn(
-                  'w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border transition-colors',
+                  'w-9 h-9 rounded-input flex items-center justify-center shrink-0 border transition-colors',
                   role === 'manager'
                     ? 'bg-amber-500 text-white border-amber-600 shadow-xs'
                     : 'bg-teal-500 text-white border-teal-600 shadow-xs'
@@ -364,8 +364,8 @@ function SidebarContent({
                 className={cn(
                   'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold font-sans shrink-0 border shadow-xs',
                   role === 'manager'
-                    ? 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-950 border-amber-300'
-                    : 'bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-950 border-teal-300'
+                    ? 'bg-candy-soft text-amber-950 border-amber-300'
+                    : 'bg-candy-soft text-teal-950 border-teal-300'
                 )}
               >
                 {role === 'manager' ? 'مدير' : 'موظف'}
@@ -413,7 +413,7 @@ export function AdminSidebar({ isOpen = false, onClose, className }: AdminSideba
       <aside
         aria-label="القائمة الجانبية لإدارة المتجر"
         className={cn(
-          'hidden lg:flex flex-col bg-white border-l border-candy-line h-screen sticky top-0 shrink-0 z-20 transition-all duration-300 ease-candy-ease',
+          'hidden lg:flex flex-col bg-candy-plum border-l border-white/15 h-screen sticky top-0 shrink-0 z-20 transition-all duration-300 ease-candy-ease',
           isCollapsed ? 'w-20' : 'w-64 xl:w-72',
           className
         )}
@@ -439,7 +439,7 @@ export function AdminSidebar({ isOpen = false, onClose, className }: AdminSideba
           {/* Off-canvas sidebar */}
           <aside
             aria-label="القائمة الجانبية المتنقلة"
-            className="fixed inset-y-0 right-0 z-50 w-72 bg-white shadow-candy-3 flex flex-col transition-transform duration-300 ease-candy-ease"
+            className="fixed inset-y-0 right-0 z-50 w-72 bg-candy-plum shadow-candy-3 flex flex-col transition-transform duration-300 ease-candy-ease"
           >
             <SidebarContent isMobile onClose={onClose} />
           </aside>

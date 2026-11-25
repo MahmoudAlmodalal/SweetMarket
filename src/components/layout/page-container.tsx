@@ -184,7 +184,7 @@ export function PageContainer({
   return (
     <Component
       className={cn(
-        'w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6',
+        'w-full px-5 sm:px-8 lg:px-10 py-6 sm:py-10',
         !fluid && 'max-w-7xl mx-auto',
         'pb-40 md:pb-12',
         className

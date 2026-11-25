@@ -114,7 +114,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
             type="button"
             onClick={onMenuToggle}
             aria-label="فتح القائمة الجانبية"
-            className="lg:hidden p-2 rounded-xl text-candy-ink hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 shrink-0"
+            className="lg:hidden p-2 rounded-input text-candy-ink hover:text-candy-berry hover:bg-candy-soft transition-colors focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 shrink-0"
           >
             <Menu className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -133,7 +133,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
       {/* Center/Left: Branch Indicator & Role Controls */}
       <div className="flex items-center gap-2 sm:gap-2.5">
         <div
-          className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-candy-soft/70 border border-candy-line text-xs font-sans text-candy-ink"
+          className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-input bg-candy-soft/70 border border-candy-line text-xs font-sans text-candy-ink"
           title="الفرع الإداري النشط: خان يونس - المتجر الرئيسي"
         >
           <Store className="w-3.5 h-3.5 text-candy-berry shrink-0" aria-hidden="true" />
@@ -142,7 +142,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
         </div>
 
         <div
-          className="hidden md:flex xl:hidden items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-candy-soft/70 border border-candy-line text-xs font-sans text-candy-ink"
+          className="hidden md:flex xl:hidden items-center gap-1.5 px-2.5 py-1.5 rounded-input bg-candy-soft/70 border border-candy-line text-xs font-sans text-candy-ink"
           title="فرع خان يونس الرئيسي"
         >
           <Store className="w-3.5 h-3.5 text-candy-berry shrink-0" aria-hidden="true" />
@@ -156,7 +156,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
           title="تبديل الدور بين موظف ومدير للمعاينة"
           aria-label="تبديل الدور بين موظف ومدير"
           className={cn(
-            'group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold font-sans transition-colors border',
+            'group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-input text-xs font-bold font-sans transition-colors border',
             role === 'manager'
               ? 'bg-amber-50 text-amber-950 border-amber-200 hover:bg-amber-100/70'
               : 'bg-teal-50 text-teal-950 border-teal-200 hover:bg-teal-100/70'

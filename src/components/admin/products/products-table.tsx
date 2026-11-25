@@ -184,7 +184,7 @@ export function ProductsTable() {
             <p className="text-xs font-sans text-candy-muted font-medium">إجمالي المنتجات</p>
             <p className="text-2xl font-bold font-display text-candy-ink mt-0.5">{stats.total}</p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-candy-blush/40 border border-candy-line-dark flex items-center justify-center text-candy-berry shadow-xs">
+          <div className="w-11 h-11 rounded-card bg-candy-blush/40 border border-candy-line-dark flex items-center justify-center text-candy-berry shadow-xs">
             <Package className="w-5 h-5" />
           </div>
         </div>
@@ -194,7 +194,7 @@ export function ProductsTable() {
             <p className="text-xs font-sans text-emerald-700 font-medium">متاح للطلب الفوري</p>
             <p className="text-2xl font-bold font-display text-emerald-700 mt-0.5">{stats.available}</p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs">
+          <div className="w-11 h-11 rounded-card bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs">
             <CheckCircle2 className="w-5 h-5" />
           </div>
         </div>
@@ -204,7 +204,7 @@ export function ProductsTable() {
             <p className="text-xs font-sans text-rose-700 font-medium">غير متاح (نفد المخزون)</p>
             <p className="text-2xl font-bold font-display text-rose-700 mt-0.5">{stats.unavailable}</p>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-700 shadow-xs">
+          <div className="w-11 h-11 rounded-card bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-700 shadow-xs">
             <XCircle className="w-5 h-5" />
           </div>
         </div>
@@ -254,7 +254,7 @@ export function ProductsTable() {
               variant="ghost"
               size="md"
               onClick={loadData}
-              className="text-candy-muted hover:text-candy-ink p-2.5 rounded-xl border border-candy-line hover:bg-candy-soft transition-colors"
+              className="text-candy-muted hover:text-candy-ink p-2.5 rounded-input border border-candy-line hover:bg-candy-soft transition-colors"
               title="تحديث البيانات"
             >
               <RefreshCw className={cn('w-4 h-4', isLoading && 'animate-spin')} />
@@ -331,7 +331,7 @@ export function ProductsTable() {
 
       {/* تنبيه حالة الدور للموظف */}
       {isStaff && (
-        <div className="p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-2xl flex items-center gap-3 text-amber-900 text-xs font-sans shadow-xs">
+        <div className="p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-card flex items-center gap-3 text-amber-900 text-xs font-sans shadow-xs">
           <AlertCircle className="w-4 h-4 flex-shrink-0 text-amber-700" />
           <span>
             أنت مسجل حالياً بصلاحية <strong>موظف تشغيل</strong>. يمكنك تبديل حالة توفر المنتجات فورياً لمطبخ الحلويات، بينما تعديل الأسعار والمواصفات متاح لمدير المتجر فقط.
@@ -345,7 +345,7 @@ export function ProductsTable() {
           <div className="bg-white p-6 rounded-candy-card border border-candy-line space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="flex items-center gap-4 py-3 border-b border-candy-line/40 last:border-0">
-                <Skeleton className="w-14 h-14 rounded-2xl" />
+                <Skeleton className="w-14 h-14 rounded-card" />
                 <div className="flex-1 space-y-2">
                   <Skeleton className="h-4 w-1/3" />
                   <Skeleton className="h-3 w-1/4" />
@@ -366,7 +366,7 @@ export function ProductsTable() {
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="bg-white p-12 rounded-candy-card border border-candy-line text-center space-y-4 shadow-candy-1">
-          <div className="w-16 h-16 rounded-3xl bg-candy-blush/40 border border-candy-line-dark flex items-center justify-center text-candy-berry mx-auto shadow-xs">
+          <div className="w-16 h-16 rounded-card bg-candy-blush/40 border border-candy-line-dark flex items-center justify-center text-candy-berry mx-auto shadow-xs">
             <Package className="w-8 h-8" />
           </div>
           <div>
@@ -423,7 +423,7 @@ export function ProductsTable() {
                       >
                         {/* الصورة المصغرة */}
                         <td className="py-3 px-4">
-                          <div className="relative w-14 h-14 rounded-2xl overflow-hidden border border-candy-line bg-candy-soft flex-shrink-0 shadow-xs">
+                          <div className="relative w-14 h-14 rounded-card overflow-hidden border border-candy-line bg-candy-soft flex-shrink-0 shadow-xs">
                             {product.imageUrl ? (
                               <img
                                 src={product.imageUrl}
@@ -562,7 +562,7 @@ export function ProductsTable() {
                 >
                   <div className="flex items-start gap-3">
                     {/* الصورة */}
-                    <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-candy-line bg-candy-soft flex-shrink-0 shadow-xs">
+                    <div className="relative w-16 h-16 rounded-card overflow-hidden border border-candy-line bg-candy-soft flex-shrink-0 shadow-xs">
                       <img
                         src={product.imageUrl}
                         alt={product.name}
@@ -635,7 +635,7 @@ export function ProductsTable() {
                         </Button>
                       </Link>
                     ) : (
-                      <span className="text-[11px] text-candy-muted flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-lg">
+                      <span className="text-[11px] text-candy-muted flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-[4px]">
                         <Lock className="w-3 h-3 text-slate-400" />
                         تعديل للمدير فقط
                       </span>

@@ -269,7 +269,7 @@ export default function AccountPage() {
       </nav>
 
       {/* Header Banner */}
-      <header className="rounded-candy-section bg-gradient-to-br from-candy-soft via-candy-blush/30 to-candy-pastel-2/30 border border-candy-blush p-5 sm:p-8 shadow-candy-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <header className="rounded-candy-section bg-candy-soft border border-candy-blush p-5 sm:p-8 shadow-candy-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-white text-candy-berry flex items-center justify-center shadow-sm shrink-0 border border-candy-blush">
             <UserRound className="w-7 h-7 text-candy-strawberry" />
@@ -337,7 +337,7 @@ export default function AccountPage() {
                 <select
                   value={zoneId}
                   onChange={(e) => setZoneId(e.target.value)}
-                  className="w-full h-11 px-3.5 rounded-xl border border-candy-line bg-candy-soft text-sm font-sans focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
+                  className="w-full h-11 px-3.5 rounded-input border border-candy-line bg-candy-soft text-sm font-sans focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30"
                 >
                   <option value="">اختر المنطقة...</option>
                   {zones.map((z) => (
@@ -401,7 +401,7 @@ export default function AccountPage() {
               </p>
             </div>
           ) : (
-            <div className="rounded-2xl bg-candy-soft p-5 text-center">
+            <div className="rounded-card bg-candy-soft p-5 text-center">
               <p className="text-sm text-candy-muted mb-4">
                 لم تقم بحفظ بيانات توصيل بعد. احفظ بياناتك الآن لتسريع عملية الشراء.
               </p>
@@ -444,7 +444,7 @@ export default function AccountPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="ابحث برقم الطلب (مثال: CL-1001) أو برقم الهاتف الخلوي..."
-                className="w-full h-11 pr-10 pl-10 rounded-xl border border-candy-line bg-candy-soft/60 hover:bg-candy-soft text-xs sm:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 focus:border-candy-strawberry/50 transition-all"
+                className="w-full h-11 pr-10 pl-10 rounded-input border border-candy-line bg-candy-soft/60 hover:bg-candy-soft text-xs sm:text-sm font-sans focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 focus:border-candy-strawberry/50 transition-all"
                 aria-label="البحث في سجل الطلبات برقم الطلب أو الهاتف"
               />
               {searchQuery && (
@@ -503,8 +503,8 @@ export default function AccountPage() {
           {/* Orders Results List */}
           {isLoadingOrders ? (
             <div className="space-y-3">
-              <div className="h-24 bg-candy-soft animate-pulse rounded-2xl" />
-              <div className="h-24 bg-candy-soft animate-pulse rounded-2xl" />
+              <div className="h-24 bg-candy-soft animate-pulse rounded-card" />
+              <div className="h-24 bg-candy-soft animate-pulse rounded-card" />
             </div>
           ) : filteredOrders.length > 0 ? (
             <div className="space-y-3.5">
@@ -515,7 +515,7 @@ export default function AccountPage() {
                 return (
                   <div
                     key={ord.id}
-                    className="p-4 rounded-2xl border border-candy-line/80 bg-candy-soft/30 hover:bg-candy-soft/60 transition-all space-y-3"
+                    className="p-4 rounded-card border border-candy-line/80 bg-candy-soft/30 hover:bg-candy-soft/60 transition-all space-y-3"
                   >
                     {/* Header Row: Order Number + Status Chip */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -569,7 +569,7 @@ export default function AccountPage() {
                     {/* Expandable Order Items Breakdown */}
                     {isExpanded && (
                       <div className="pt-2 border-t border-candy-line/50 space-y-2 animate-in fade-in-50 duration-150">
-                        <div className="bg-white/80 rounded-xl p-3 border border-candy-line/60 space-y-2">
+                        <div className="bg-white/80 rounded-input p-3 border border-candy-line/60 space-y-2">
                           <p className="text-[11px] font-bold text-candy-berry">محتويات الطلبية:</p>
                           <ul className="divide-y divide-candy-line/40 text-xs">
                             {ord.items.map((item, idx) => (
@@ -622,7 +622,7 @@ export default function AccountPage() {
               })}
             </div>
           ) : (
-            <div className="rounded-2xl bg-candy-soft p-6 text-center space-y-3">
+            <div className="rounded-card bg-candy-soft p-6 text-center space-y-3">
               <div className="w-12 h-12 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center mx-auto">
                 <Search className="w-6 h-6 text-candy-berry" />
               </div>
@@ -655,7 +655,7 @@ export default function AccountPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Link
           href="/favorites"
-          className="rounded-2xl bg-white border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
+          className="rounded-card bg-white border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-blush text-candy-strawberry flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -677,7 +677,7 @@ export default function AccountPage() {
 
         <Link
           href="/cart"
-          className="rounded-2xl bg-white border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
+          className="rounded-card bg-white border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-soft text-candy-berry flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -773,7 +773,7 @@ function InfoItem({
   className?: string;
 }) {
   return (
-    <div className={`rounded-2xl bg-candy-soft/70 border border-candy-line/60 p-3 ${className}`}>
+    <div className={`rounded-card bg-candy-soft/70 border border-candy-line/60 p-3 ${className}`}>
       <div className="flex items-center gap-1.5 text-xs text-candy-muted mb-1">
         {React.cloneElement(icon as React.ReactElement<{ className?: string }>, {
           className: "w-3.5 h-3.5 text-candy-strawberry",

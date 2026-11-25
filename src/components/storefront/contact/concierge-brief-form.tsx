@@ -76,13 +76,13 @@ export function ConciergeBriefForm({
     >
       {/* Decorative top ambient bar */}
       <div
-        className="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-l from-candy-berry via-[#25D366] to-candy-rose opacity-90"
+        className="absolute top-0 right-0 left-0 h-1.5 bg-candy-berry opacity-90"
         aria-hidden="true"
       />
 
       {/* Header */}
       <div className="flex items-start gap-3.5 mb-5">
-        <div className="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-200 text-[#25D366] flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+        <div className="w-10 h-10 rounded-card bg-emerald-50 border border-emerald-200 text-[#25D366] flex items-center justify-center shrink-0 shadow-xs mt-0.5">
           <Sparkles className="w-5 h-5 text-emerald-600" />
         </div>
         <div>
@@ -123,7 +123,7 @@ export function ConciergeBriefForm({
               }}
               placeholder="مثال: حفل زفاف، تخرج، عيد ميلاد، ضيافة شركات"
               className={cn(
-                "w-full rounded-xl border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all",
+                "w-full rounded-input border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all",
                 "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-white",
                 errors.occasion
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200"
@@ -165,7 +165,7 @@ export function ConciergeBriefForm({
               }}
               placeholder="مثال: 50 شخص، 20 بوكس إهداء، أو ميزانية 400 شيكل"
               className={cn(
-                "w-full rounded-xl border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all",
+                "w-full rounded-input border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all",
                 "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-white",
                 errors.quantityOrBudget
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200"
@@ -213,7 +213,7 @@ export function ConciergeBriefForm({
               }}
               placeholder="0599000000"
               className={cn(
-                "w-full rounded-xl border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all text-left",
+                "w-full rounded-input border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all text-left",
                 "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-white",
                 errors.phone
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200"
@@ -246,7 +246,7 @@ export function ConciergeBriefForm({
           <button
             type="submit"
             className={cn(
-              "w-full inline-flex items-center justify-center gap-2.5 min-h-[48px] h-12 px-6 rounded-candy-pill font-sans font-bold text-sm sm:text-base text-white transition-all select-none cursor-pointer",
+              "w-full inline-flex items-center justify-center gap-2.5 min-h-[48px] h-12 px-6 rounded-button font-sans font-bold text-sm sm:text-base text-white transition-all select-none cursor-pointer",
               "bg-[#25D366] hover:bg-[#20bd5a] shadow-[0_4px_16px_rgba(37,211,102,0.30)] hover:shadow-[0_8px_24px_rgba(37,211,102,0.45)] hover:scale-[1.01] active:scale-[0.98]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
             )}
@@ -257,7 +257,7 @@ export function ConciergeBriefForm({
         </div>
 
         {hasSubmitted && (
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3 flex items-center gap-2.5 text-xs text-emerald-800 font-sans mt-3">
+          <div className="rounded-input bg-emerald-50 border border-emerald-200 p-3 flex items-center gap-2.5 text-xs text-emerald-800 font-sans mt-3">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>تم تجهيز تفاصيل المناسبة وفتح محادثة واتساب المباشرة.</span>
           </div>

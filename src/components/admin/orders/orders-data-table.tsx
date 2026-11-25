@@ -172,7 +172,7 @@ export function OrdersDataTable({
   return (
     <div className="space-y-4">
       {/* 1. أشرطة التبويبات للفلترة السريعة وأدوات البحث */}
-      <div className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
+      <div className="bg-white rounded-card border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
         {/* شريط تبويبات الحالات متجاوب وسلس للتمرير الأفقي */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
           {FILTER_TABS.map((tab) => {
@@ -186,7 +186,7 @@ export function OrdersDataTable({
                 type="button"
                 onClick={() => handleTabChange(tab.key)}
                 className={cn(
-                  'flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-sans font-bold whitespace-nowrap transition-all duration-150 shrink-0',
+                  'flex items-center gap-2 px-3.5 py-2 rounded-input text-xs sm:text-sm font-sans font-bold whitespace-nowrap transition-all duration-150 shrink-0',
                   isActive
                     ? 'bg-candy-berry text-white shadow-candy-1'
                     : 'bg-candy-soft text-candy-muted hover:text-candy-ink hover:bg-candy-blush/60'
@@ -221,7 +221,7 @@ export function OrdersDataTable({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="ابحث برقم الطلب، اسم العميل، أو رقم الهاتف..."
-              className="w-full h-10 pr-10 pl-10 rounded-xl bg-candy-cream/70 border border-candy-line text-candy-ink text-sm font-sans placeholder:text-candy-muted focus:outline-none focus:ring-2 focus:ring-candy-strawberry/40 focus:border-candy-strawberry transition-all"
+              className="w-full h-10 pr-10 pl-10 rounded-input bg-candy-cream/70 border border-candy-line text-candy-ink text-sm font-sans placeholder:text-candy-muted focus:outline-none focus:ring-2 focus:ring-candy-strawberry/40 focus:border-candy-strawberry transition-all"
             />
             {searchQuery && (
               <button
@@ -241,7 +241,7 @@ export function OrdersDataTable({
             <button
               type="button"
               onClick={() => setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-sans font-semibold border border-candy-line bg-candy-cream/50 text-candy-ink hover:bg-candy-soft transition-colors shrink-0"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-input text-xs font-sans font-semibold border border-candy-line bg-candy-cream/50 text-candy-ink hover:bg-candy-soft transition-colors shrink-0"
               title="تبديل اتجاه الترتيب"
             >
               <ArrowUpDown className="w-3.5 h-3.5 text-candy-berry" />
@@ -276,8 +276,8 @@ export function OrdersDataTable({
       {/* 3. الجدول الرئيسي (Desktop/Tablet) وشبكة البطاقات (Mobile) */}
       {filteredOrders.length === 0 ? (
         // حالة الفراغ: لا توجد طلبات تطابق المعايير
-        <div className="bg-white rounded-2xl border border-dashed border-candy-line-dark p-8 sm:p-12 text-center shadow-candy-1">
-          <div className="w-16 h-16 rounded-2xl bg-candy-blush/60 border border-candy-line flex items-center justify-center mx-auto mb-4 text-candy-berry">
+        <div className="bg-white rounded-card border border-dashed border-candy-line-dark p-8 sm:p-12 text-center shadow-candy-1">
+          <div className="w-16 h-16 rounded-card bg-candy-blush/60 border border-candy-line flex items-center justify-center mx-auto mb-4 text-candy-berry">
             <Inbox className="w-8 h-8" />
           </div>
           <h3 className="font-serif font-bold text-lg text-candy-ink mb-1">
@@ -302,7 +302,7 @@ export function OrdersDataTable({
       ) : (
         <>
           {/* عرض سطح المكتب والأجهزة اللوحية (Table Layout) */}
-          <div className="hidden md:block bg-white rounded-2xl border border-candy-line shadow-candy-1 overflow-hidden">
+          <div className="hidden md:block bg-white rounded-card border border-candy-line shadow-candy-1 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 <thead>
@@ -436,7 +436,7 @@ export function OrdersDataTable({
                         <td className="py-3.5 px-3 text-center whitespace-nowrap">
                           <Link
                             href={`/admin/orders/${order.id}`}
-                            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush hover:shadow-sm transition-all"
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[4px] text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush hover:shadow-sm transition-all"
                           >
                             <span>التفاصيل</span>
                             <ChevronLeft className="w-3.5 h-3.5" />
@@ -466,7 +466,7 @@ export function OrdersDataTable({
               return (
                 <div
                   key={order.id}
-                  className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-4 space-y-3"
+                  className="bg-white rounded-card border border-candy-line shadow-candy-1 p-4 space-y-3"
                 >
                   {/* رأس البطاقة: رقم الطلب والحالة */}
                   <div className="flex items-center justify-between pb-2 border-b border-candy-line/60">
@@ -522,7 +522,7 @@ export function OrdersDataTable({
                     </div>
 
                     {order.customer.notes && (
-                      <div className="col-span-2 text-[11px] text-amber-800 bg-amber-50/70 border border-amber-200/60 p-2 rounded-xl">
+                      <div className="col-span-2 text-[11px] text-amber-800 bg-amber-50/70 border border-amber-200/60 p-2 rounded-input">
                         <span className="font-bold">ملاحظة: </span>
                         <span>{order.customer.notes}</span>
                       </div>
@@ -542,7 +542,7 @@ export function OrdersDataTable({
 
                     <Link
                       href={`/admin/orders/${order.id}`}
-                      className="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush transition-colors"
+                      className="inline-flex items-center gap-1 px-3.5 py-2 rounded-input text-xs font-bold text-candy-berry bg-candy-blush/60 hover:bg-candy-blush transition-colors"
                     >
                       <span>عرض تفاصيل الطلب</span>
                       <ChevronLeft className="w-3.5 h-3.5" />

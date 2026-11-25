@@ -83,7 +83,7 @@ export function OrderItemsList({
                         {/* بيانات المنتج والصورة والتمييزات */}
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0">
+                            <div className="relative w-12 h-12 rounded-input overflow-hidden bg-candy-soft border border-candy-line shrink-0">
                               <Image
                                 src={item.imageUrl || DEFAULT_FALLBACK_IMAGE}
                                 alt={item.productName}
@@ -123,7 +123,7 @@ export function OrderItemsList({
 
                         {/* الوزن المختار */}
                         <td className="py-3 px-4 text-center">
-                          <span className="inline-block bg-candy-soft text-candy-ink font-medium px-2.5 py-1 rounded-lg text-xs border border-candy-line/60">
+                          <span className="inline-block bg-candy-soft text-candy-ink font-medium px-2.5 py-1 rounded-[4px] text-xs border border-candy-line/60">
                             {item.selectedWeightLabel || item.unit}
                           </span>
                         </td>
@@ -162,7 +162,7 @@ export function OrderItemsList({
                 return (
                   <div key={item.id} className="p-4 space-y-2">
                     <div className="flex gap-3 items-center">
-                      <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0">
+                      <div className="relative w-14 h-14 rounded-input overflow-hidden bg-candy-soft border border-candy-line shrink-0">
                         <Image
                           src={item.imageUrl || DEFAULT_FALLBACK_IMAGE}
                           alt={item.productName}

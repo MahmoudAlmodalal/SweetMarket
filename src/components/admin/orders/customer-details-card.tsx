@@ -87,7 +87,7 @@ export function CustomerDetailsCard({
 
       <CardContent className="pt-4 space-y-4 text-sm font-sans">
         {/* 1. اسم الزبون ورقم الهاتف مع روابط الاتصال السريع */}
-        <div className="p-3.5 rounded-2xl bg-candy-soft/60 border border-candy-line/60 space-y-3">
+        <div className="p-3.5 rounded-card bg-candy-soft/60 border border-candy-line/60 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-full bg-candy-blush/80 flex items-center justify-center text-candy-berry font-bold text-xs">
@@ -115,7 +115,7 @@ export function CustomerDetailsCard({
                 type="button"
                 onClick={handleCopyPhone}
                 title="نسخ رقم الهاتف"
-                className="p-1.5 rounded-lg border border-candy-line bg-white hover:bg-candy-soft text-candy-muted hover:text-candy-ink transition-colors"
+                className="p-1.5 rounded-[4px] border border-candy-line bg-white hover:bg-candy-soft text-candy-muted hover:text-candy-ink transition-colors"
                 aria-label="نسخ رقم الهاتف"
               >
                 {copied ? (
@@ -129,7 +129,7 @@ export function CustomerDetailsCard({
               <a
                 href={`tel:${cleanPhone}`}
                 title="اتصال هاتفي مباشر"
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white border border-candy-line text-xs font-bold text-candy-berry hover:bg-candy-blush hover:border-candy-rose transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-[4px] bg-white border border-candy-line text-xs font-bold text-candy-berry hover:bg-candy-blush hover:border-candy-rose transition-colors"
               >
                 <Phone className="w-3.5 h-3.5" />
                 <span>اتصال</span>
@@ -141,7 +141,7 @@ export function CustomerDetailsCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="محادثة واتساب مباشرة"
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-[4px] bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition-colors"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
                 <span>واتساب</span>
@@ -165,7 +165,7 @@ export function CustomerDetailsCard({
             </div>
 
             {/* تفاصيل الشارع */}
-            <div className="text-candy-ink font-medium leading-relaxed bg-candy-soft/40 p-2.5 rounded-xl border border-candy-line/50">
+            <div className="text-candy-ink font-medium leading-relaxed bg-candy-soft/40 p-2.5 rounded-input border border-candy-line/50">
               <span className="text-candy-muted block text-[11px] mb-0.5">الشارع والمعالم الرئيسية:</span>
               <span className="font-semibold text-candy-ink">{customer.streetAddress}</span>
             </div>
@@ -200,7 +200,7 @@ export function CustomerDetailsCard({
           </div>
 
           {customer.notes ? (
-            <div className="p-3 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 leading-relaxed font-sans">
+            <div className="p-3 rounded-input bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 leading-relaxed font-sans">
               {customer.notes}
             </div>
           ) : (

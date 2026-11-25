@@ -174,7 +174,7 @@ export function UserRoleDialog({
       <DialogContent className="max-w-md sm:max-w-xl p-6 sm:p-7 text-right">
         <DialogHeader className="mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-12 h-12 rounded-card bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0 shadow-xs">
               {isEdit ? (
                 <ShieldCheck className="w-6 h-6" aria-hidden="true" />
               ) : (
@@ -197,7 +197,7 @@ export function UserRoleDialog({
         {errors.general && (
           <div
             role="alert"
-            className="mb-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-950 flex items-start gap-2.5 text-xs font-sans"
+            className="mb-4 p-3.5 rounded-input bg-rose-50 border border-rose-200 text-rose-950 flex items-start gap-2.5 text-xs font-sans"
           >
             <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" aria-hidden="true" />
             <p className="font-medium leading-relaxed">{errors.general}</p>
@@ -287,7 +287,7 @@ export function UserRoleDialog({
                   if (errors.role) setErrors((prev) => ({ ...prev, role: undefined }));
                 }}
                 className={cn(
-                  'p-3.5 rounded-2xl border text-right transition-all flex flex-col justify-between relative',
+                  'p-3.5 rounded-card border text-right transition-all flex flex-col justify-between relative',
                   isLastManager && user?.role === 'manager'
                     ? 'opacity-40 cursor-not-allowed bg-gray-50 border-gray-200'
                     : 'cursor-pointer',
@@ -330,7 +330,7 @@ export function UserRoleDialog({
                   if (errors.role) setErrors((prev) => ({ ...prev, role: undefined }));
                 }}
                 className={cn(
-                  'p-3.5 rounded-2xl border text-right transition-all flex flex-col justify-between relative cursor-pointer',
+                  'p-3.5 rounded-card border text-right transition-all flex flex-col justify-between relative cursor-pointer',
                   role === 'manager'
                     ? 'border-candy-berry bg-candy-soft/60 shadow-candy-1 ring-2 ring-candy-strawberry/20'
                     : 'border-candy-line bg-white hover:bg-candy-soft/30 hover:border-candy-blush'
@@ -365,7 +365,7 @@ export function UserRoleDialog({
             )}
 
             {isLastManager && user?.role === 'manager' && (
-              <p className="text-[11px] text-amber-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200/80 flex items-center gap-1.5 mt-2">
+              <p className="text-[11px] text-amber-700 bg-amber-50 p-2.5 rounded-input border border-amber-200/80 flex items-center gap-1.5 mt-2">
                 <Info className="w-4 h-4 shrink-0 text-amber-600" aria-hidden="true" />
                 <span>هذا الحساب هو المدير النشط الوحيد حالياً، لا يمكن خفض صلاحياته لموظف.</span>
               </p>
@@ -375,7 +375,7 @@ export function UserRoleDialog({
           {/* حالة تفعيل الحساب (في وضع التعديل) */}
           {isEdit && (
             <div className="pt-2 border-t border-candy-line/60">
-              <label className="flex items-center justify-between p-3 rounded-2xl bg-candy-soft/40 border border-candy-line cursor-pointer select-none">
+              <label className="flex items-center justify-between p-3 rounded-card bg-candy-soft/40 border border-candy-line cursor-pointer select-none">
                 <div>
                   <span className="text-xs font-bold text-candy-ink block">حالة الحساب</span>
                   <span className="text-[11px] text-candy-muted block mt-0.5">
@@ -395,7 +395,7 @@ export function UserRoleDialog({
 
           {/* تلميح توليد كلمة المرور المؤقتة عند الإضافة */}
           {!isEdit && (
-            <div className="p-3 rounded-xl bg-candy-cream border border-candy-line text-xs text-candy-muted flex items-start gap-2">
+            <div className="p-3 rounded-input bg-candy-cream border border-candy-line text-xs text-candy-muted flex items-start gap-2">
               <Info className="w-4 h-4 text-candy-berry shrink-0 mt-0.5" aria-hidden="true" />
               <span>
                 سيتم توليد كلمة مرور مؤقتة وعرضها لك في نافذة منبثقة فور الضغط على حفظ.

@@ -182,14 +182,14 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-7">
-            <Skeleton className="w-full aspect-[4/3] rounded-3xl" />
+            <Skeleton className="w-full aspect-[4/3] rounded-card" />
           </div>
           <div className="lg:col-span-5 space-y-4">
-            <Skeleton className="h-8 w-3/4 rounded-lg" />
+            <Skeleton className="h-8 w-3/4 rounded-[4px]" />
             <Skeleton className="h-4 w-full rounded" />
-            <Skeleton className="h-16 w-full rounded-2xl mt-4" />
-            <Skeleton className="h-32 w-full rounded-2xl mt-4" />
-            <Skeleton className="h-14 w-full rounded-full mt-4" />
+            <Skeleton className="h-16 w-full rounded-card mt-4" />
+            <Skeleton className="h-32 w-full rounded-card mt-4" />
+            <Skeleton className="h-14 w-full rounded-button mt-4" />
           </div>
         </div>
       </div>
@@ -382,7 +382,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Price Card */}
-          <div className="rounded-2xl bg-white p-5 border border-candy-line flex flex-col gap-3">
+          <div className="rounded-card bg-white p-5 border border-candy-line flex flex-col gap-3">
             <div className="flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-2 tabular-nums">
                 <span className="font-sans font-extrabold text-3xl text-candy-ink tracking-tight">
@@ -446,7 +446,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                     aria-checked={isSelected}
                     onClick={() => setPackagingOptionId(opt.id)}
                     className={cn(
-                      "w-full text-right p-3.5 rounded-xl flex items-center justify-between transition-colors select-none border",
+                      "w-full text-right p-3.5 rounded-input flex items-center justify-between transition-colors select-none border",
                       isSelected
                         ? "bg-candy-soft border-candy-berry"
                         : "bg-white border-candy-line hover:border-candy-berry/40"
@@ -483,7 +483,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Gift Card */}
-          <div className="rounded-2xl bg-white p-4 border border-candy-line flex flex-col gap-2.5">
+          <div className="rounded-card bg-white p-4 border border-candy-line flex flex-col gap-2.5">
             <label className="flex items-center gap-2.5 cursor-pointer select-none">
               <input
                 type="checkbox"
@@ -507,7 +507,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                   }}
                   placeholder="اكتب رسالتك الخاصة لمتلقي الهدية..."
                   rows={3}
-                  className="w-full p-3 rounded-xl bg-candy-soft text-candy-ink font-sans text-sm placeholder:text-candy-muted focus:outline-none focus:bg-white focus:ring-2 focus:ring-candy-berry/25 border border-candy-line transition-colors resize-none"
+                  className="w-full p-3 rounded-input bg-candy-soft text-candy-ink font-sans text-sm placeholder:text-candy-muted focus:outline-none focus:bg-white focus:ring-2 focus:ring-candy-berry/25 border border-candy-line transition-colors resize-none"
                 />
                 <span className="font-sans text-[11px] text-candy-muted text-left tabular-nums">
                   المتبقي: {120 - giftMessage.length} حرف
@@ -517,7 +517,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Quantity Row */}
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-white border border-candy-line">
+          <div className="flex items-center justify-between p-4 rounded-card bg-white border border-candy-line">
             <div className="flex flex-col">
               <span className="font-sans text-xs text-candy-muted font-medium">
                 الكمية المطلوبة
@@ -553,7 +553,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
       {/* Product Details Accordion */}
       <section
         aria-label="تفاصيل الصنف"
-        className="flex flex-col gap-3 rounded-3xl bg-white p-5 sm:p-8 border border-candy-line"
+        className="flex flex-col gap-3 rounded-card bg-white p-5 sm:p-8 border border-candy-line"
       >
         <h2 className="font-display text-xl sm:text-2xl font-bold text-candy-ink flex items-center gap-2 mb-1">
           <BookOpen className="w-5 h-5 text-candy-berry" />
@@ -561,7 +561,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
         </h2>
 
         <details
-          className="group rounded-2xl bg-candy-soft/50 p-4 border border-candy-line/70"
+          className="group rounded-card bg-candy-soft/50 p-4 border border-candy-line/70"
           open
         >
           <summary className="flex items-center justify-between cursor-pointer list-none select-none font-sans font-bold text-candy-ink text-sm sm:text-base">
@@ -573,7 +573,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </p>
         </details>
 
-        <details className="group rounded-2xl bg-candy-soft/50 p-4 border border-candy-line/70">
+        <details className="group rounded-card bg-candy-soft/50 p-4 border border-candy-line/70">
           <summary className="flex items-center justify-between cursor-pointer list-none select-none font-sans font-bold text-candy-ink text-sm sm:text-base">
             <span className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-candy-berry" />
@@ -586,7 +586,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </p>
         </details>
 
-        <details className="group rounded-2xl bg-candy-soft/50 p-4 border border-candy-line/70">
+        <details className="group rounded-card bg-candy-soft/50 p-4 border border-candy-line/70">
           <summary className="flex items-center justify-between cursor-pointer list-none select-none font-sans font-bold text-candy-ink text-sm sm:text-base">
             <span className="flex items-center gap-2">
               <Truck className="w-4 h-4 text-candy-berry" />
@@ -628,10 +628,10 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
               return (
                 <div
                   key={item.id}
-                  className="rounded-2xl bg-white p-3.5 border border-candy-line flex flex-col justify-between hover:border-candy-berry/40 transition-colors group"
+                  className="rounded-card bg-white p-3.5 border border-candy-line flex flex-col justify-between hover:border-candy-berry/40 transition-colors group"
                 >
                   <Link href={`/product/${item.slug}`} className="block">
-                    <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-candy-soft mb-3 relative">
+                    <div className="w-full aspect-[4/3] rounded-input overflow-hidden bg-candy-soft mb-3 relative">
                       <ProductImage
                         src={item.imageUrl}
                         alt={item.name}

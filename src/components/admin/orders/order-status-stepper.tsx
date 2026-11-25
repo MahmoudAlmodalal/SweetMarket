@@ -133,7 +133,7 @@ export function OrderStatusStepper({
       {isCancelled && (
         <div
           role="alert"
-          className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200/80 text-rose-900 flex items-start gap-3"
+          className="mb-6 p-4 rounded-card bg-rose-50 border border-rose-200/80 text-rose-900 flex items-start gap-3"
         >
           <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
           <div className="text-sm">
@@ -148,7 +148,7 @@ export function OrderStatusStepper({
       {isUndelivered && (
         <div
           role="alert"
-          className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-amber-900 flex items-start gap-3"
+          className="mb-6 p-4 rounded-card bg-amber-50 border border-amber-200/80 text-amber-900 flex items-start gap-3"
         >
           <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
           <div className="text-sm">

@@ -59,7 +59,7 @@ export function AccessRequestDialog({
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <div className="w-12 h-12 rounded-2xl bg-candy-blush/60 text-candy-berry flex items-center justify-center mb-2 mx-auto">
+          <div className="w-12 h-12 rounded-card bg-candy-blush/60 text-candy-berry flex items-center justify-center mb-2 mx-auto">
             <KeyRound className="w-6 h-6" aria-hidden="true" />
           </div>
           <DialogTitle className="text-center font-display text-lg text-candy-ink font-bold">
@@ -73,7 +73,7 @@ export function AccessRequestDialog({
         {isSubmitted ? (
           <div
             role="alert"
-            className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-center space-y-2 animate-in fade-in zoom-in-95"
+            className="p-4 rounded-card bg-emerald-50 border border-emerald-200 text-emerald-800 text-center space-y-2 animate-in fade-in zoom-in-95"
           >
             <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto" aria-hidden="true" />
             <p className="text-sm font-bold">تم إرسال طلب الصلاحية بنجاح</p>
@@ -83,7 +83,7 @@ export function AccessRequestDialog({
           </div>
         ) : (
           <div className="space-y-4 py-2">
-            <div className="p-4 rounded-xl bg-candy-soft/80 border border-candy-line/60 text-xs space-y-2">
+            <div className="p-4 rounded-input bg-candy-soft/80 border border-candy-line/60 text-xs space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-candy-muted">الموظف:</span>
                 <span className="font-bold text-candy-ink">{user.fullName}</span>
