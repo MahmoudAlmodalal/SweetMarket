@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { SkipLink } from "@/components/ui/skip-link";
+import { getStoreJsonLd } from "@/lib/store-identity";
+import { getBaseUrl, jsonLdScriptContent } from "@/lib/structured-data";
 import "./globals.css";
 
-const appBaseUrl =
-  process.env.NEXT_PUBLIC_APP_URL && /^https?:\/\//i.test(process.env.NEXT_PUBLIC_APP_URL)
-    ? process.env.NEXT_PUBLIC_APP_URL
-    : "http://localhost:3000";
+const appBaseUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(appBaseUrl),
@@ -51,6 +50,15 @@ export default function RootLayout({
       <body
         className="font-sans bg-background text-foreground antialiased min-h-screen"
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLdScriptContent({
+              ...getStoreJsonLd(),
+              url: getBaseUrl(),
+            }),
+          }}
+        />
         <SkipLink />
         {children}
       </body>

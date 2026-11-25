@@ -1,13 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { getDb } from '@/server/db';
+import { getBaseUrl } from '@/lib/structured-data';
 
 export const dynamic = 'force-dynamic';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL && /^https?:\/\//i.test(process.env.NEXT_PUBLIC_APP_URL)
-      ? process.env.NEXT_PUBLIC_APP_URL.replace(/\/+$/, '')
-      : 'http://localhost:3000';
+  const baseUrl = getBaseUrl();
 
   const now = new Date();
   const db = getDb();

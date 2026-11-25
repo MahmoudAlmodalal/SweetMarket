@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { Metadata } from "next";
 import { getDb } from "@/server/db";
+import { getProductJsonLd, jsonLdScriptContent } from "@/lib/structured-data";
 import { ProductPageClient } from "@/components/storefront/product-detail/product-page-client";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function ProductDetailPage() {
-  return <ProductPageClient />;
+export default async function ProductDetailPage({ params }: PageProps) {
+  const slug = decodeSlug(params.slug);
+  const db = getDb();
+  const product = db.products.find((p) => p.slug === slug && !p.isArchived);
+  const category = product
+    ? db.categories.find((c) => c.id === product.categoryId) ?? null
+    : null;
+
+  return (
+    <>
+      {product ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLdScriptContent(getProductJsonLd(product, category)),
+          }}
+        />
+      ) : null}
+      <ProductPageClient />
+    </>
+  );
 }
