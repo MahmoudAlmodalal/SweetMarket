@@ -347,6 +347,7 @@ body[data-capture-mode] [data-mobile-dock] {
   /* إخفاء هيكل التنقل والأزرار وعناصر التفاعل */
   aside,
   header,
+  footer,
   nav,
   button,
   [role="dialog"],

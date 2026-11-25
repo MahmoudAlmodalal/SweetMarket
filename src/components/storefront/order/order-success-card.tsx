@@ -21,6 +21,7 @@ import {
   PartyPopper,
   PackageCheck,
   Heart,
+  Printer,
 } from "lucide-react";
 import type { Order, DeliveryZone } from "@/types";
 import { cn } from "@/lib/utils";
@@ -108,8 +109,8 @@ export function OrderSuccessCard({
         className
       )}
     >
-      {/* 0. Three-Step Completed Checkout Stepper */}
-      <section className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
+      {/* 0. Three-Step Completed Checkout Stepper (screen-only checkout chrome, hidden on printed receipt) */}
+      <section data-print-hidden className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2 text-emerald-800">
             <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
@@ -473,7 +474,7 @@ export function OrderSuccessCard({
       </div>
 
       {/* 4. Action Buttons (Direct tracking & Back to shopping) */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2" data-print-hidden>
         {/* Direct button: Track Order */}
         <Link
           href={`/track?order=${encodeURIComponent(order.orderNumber)}`}
@@ -494,8 +495,20 @@ export function OrderSuccessCard({
         </Link>
       </div>
 
+      {/* 4ب. طباعة الإيصال */}
+      <div className="text-center" data-print-hidden>
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="inline-flex items-center justify-center gap-2 text-xs font-sans font-bold text-candy-berry hover:text-candy-plum bg-candy-soft hover:bg-candy-blush border border-candy-line px-4 py-2.5 rounded-candy-pill transition-colors"
+        >
+          <Printer className="w-4 h-4" />
+          <span>طباعة الإيصال أو حفظه PDF</span>
+        </button>
+      </div>
+
       {/* 5. Customer Concierge WhatsApp Assistance */}
-      <div className="text-center pt-1">
+      <div className="text-center pt-1" data-print-hidden>
         <a
           href={buildWhatsAppLink(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}
           target="_blank"
