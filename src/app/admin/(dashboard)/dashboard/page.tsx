@@ -279,6 +279,63 @@ export default function AdminDashboardPage() {
           </ul>
         )}
       </section>
+
+      {/* الأصناف غير المتاحة - تظهر فقط عند وجود أصناف موقوفة */}
+      {!isLoading && unavailableProducts.length > 0 && (
+        <section
+          aria-label="الأصناف غير المتاحة"
+          className="rounded-card bg-white border border-candy-line p-4 sm:p-5"
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <PackageX className="w-4 h-4 text-candy-berry" />
+              <h2 className="font-display text-lg font-bold text-candy-ink">
+                أصناف غير متاحة للزبائن
+              </h2>
+              <span className="text-xs font-bold text-candy-muted tabular-nums">
+                ({unavailableProducts.length})
+              </span>
+            </div>
+            <Link
+              href="/admin/products"
+              className="inline-flex items-center gap-1 text-xs font-bold text-candy-berry hover:underline"
+            >
+              كل المنتجات
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <p className="text-xs text-candy-muted mb-3">
+            هذه الأصناف مخفية عن واجهة المتجر حتى إعادة تفعيل توفرها.
+          </p>
+          <ul className="divide-y divide-candy-line/60">
+            {unavailableProducts.slice(0, 6).map((product) => (
+              <li key={product.id}>
+                <Link
+                  href={`/admin/products/${product.id}/edit`}
+                  className="flex items-center justify-between gap-2 py-2.5 px-1 hover:bg-candy-cream/40 rounded-input transition-colors"
+                >
+                  <span className="font-bold text-sm text-candy-ink truncate">
+                    {product.name}
+                  </span>
+                  <span className="flex items-center gap-2 shrink-0">
+                    <span className="text-xs text-candy-muted tabular-nums">
+                      {formatPrice(product.salePrice ?? product.price)}
+                    </span>
+                    <span className="text-[11px] font-bold text-candy-berry">
+                      تعديل
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {unavailableProducts.length > 6 && (
+            <p className="text-[11px] text-candy-muted mt-2">
+              و{unavailableProducts.length - 6} صنف آخر في صفحة المنتجات.
+            </p>
+          )}
+        </section>
+      )}
     </div>
   );
 }
