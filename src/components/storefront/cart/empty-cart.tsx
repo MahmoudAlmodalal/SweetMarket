@@ -185,9 +185,9 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
       </div>
 
       {/* Main Cheerful Heading */}
-      <h2 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry mb-3">
+      <h1 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry mb-3">
         {isCheckout ? "سلة المشتريات فارغة" : "سلتك فارغة وتنتظر أشهى الحلويات!"}
-      </h2>
+      </h1>
 
       {/* Warm Friendly Sensory Arabic Description */}
       <p className="font-sans text-candy-muted text-sm sm:text-base leading-relaxed mb-8 max-w-md">

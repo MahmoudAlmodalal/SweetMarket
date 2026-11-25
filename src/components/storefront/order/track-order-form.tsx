@@ -441,7 +441,7 @@ export function TrackOrderForm({
               <Search className="w-5 h-5 text-candy-berry" />
             </div>
             <div>
-              <CardTitle className="text-lg sm:text-xl text-candy-ink font-display">
+              <CardTitle as="h2" className="text-lg sm:text-xl text-candy-ink font-display">
                 استعلام وتتبع مسار الطلب
               </CardTitle>
               <CardDescription className="text-xs sm:text-sm text-candy-muted font-sans mt-0.5">

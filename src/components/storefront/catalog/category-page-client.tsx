@@ -413,6 +413,7 @@ export function CategoryPageClient() {
       </div>
 
       {/* Product Grid */}
+      <h2 className="sr-only">قائمة المنتجات</h2>
       <ProductGrid
         products={filteredAndSortedProducts}
         isLoading={isLoading}

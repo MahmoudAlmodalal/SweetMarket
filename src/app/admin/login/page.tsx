@@ -99,7 +99,7 @@ function LoginFormContent() {
           <Link href="/" aria-label="العودة إلى متجر كاندي لوز" className="inline-flex mx-auto mb-4 rounded-input focus-visible:ring-2 focus-visible:ring-candy-berry">
             <StoreLogo variant="main" width={180} height={52} priority className="max-w-[175px]" />
           </Link>
-          <CardTitle className="text-2xl font-display text-candy-ink font-bold">
+          <CardTitle as="h1" className="text-2xl font-display text-candy-ink font-bold">
             بوابة إدارة كاندي لوز
           </CardTitle>
           <CardDescription className="text-sm text-candy-muted font-sans mt-1.5">

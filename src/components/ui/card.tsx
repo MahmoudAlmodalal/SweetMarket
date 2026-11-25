@@ -48,10 +48,10 @@ export const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader";
 
 export const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, children, ...props }, ref) => (
-  <h3
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement> & { as?: "h1" | "h2" | "h3" }
+>(({ className, children, as: HeadingTag = "h3", ...props }, ref) => (
+  <HeadingTag
     ref={ref}
     className={cn(
       "font-display font-semibold text-lg sm:text-xl text-candy-ink leading-snug tracking-tight",
@@ -60,7 +60,7 @@ export const CardTitle = React.forwardRef<
     {...props}
   >
     {children}
-  </h3>
+  </HeadingTag>
 ));
 CardTitle.displayName = "CardTitle";
 
