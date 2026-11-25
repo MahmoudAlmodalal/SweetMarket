@@ -11,6 +11,7 @@ import {
   Truck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { StoreStatusBadge } from "@/components/storefront/home/store-status-badge";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import {
   getFavoriteProductIds,
@@ -136,6 +137,8 @@ function StorefrontHeaderUI({
           <span className="hidden sm:inline">توصيل مبرد لكافة المناطق المعتمدة</span>
           <span className="text-candy-berry/60" aria-hidden="true">|</span>
           <span>الدفع نقداً عند الاستلام</span>
+          <span className="text-candy-berry/60 hidden sm:inline" aria-hidden="true">|</span>
+          <StoreStatusBadge className="hidden sm:inline-flex" />
         </p>
       </div>
 
