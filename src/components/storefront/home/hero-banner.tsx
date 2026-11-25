@@ -95,11 +95,11 @@ export function HeroBanner({ className }: HeroBannerProps) {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-t from-[#2B1A10]/65 via-[#2B1A10]/10 to-transparent pointer-events-none"
+            className="absolute inset-0 bg-gradient-to-t from-[#2B1A10]/78 via-[#2B1A10]/28 to-transparent pointer-events-none"
           />
 
           {/* Single Quiet Editorial Caption */}
-          <div className="absolute bottom-5 inset-x-5 sm:bottom-6 sm:inset-x-6 flex items-end justify-between gap-4 text-white">
+          <div className="absolute bottom-8 inset-x-5 sm:bottom-6 sm:inset-x-6 flex items-end justify-between gap-4 text-white [text-shadow:0_1px_10px_rgba(0,0,0,0.55)]">
             <div className="text-right">
               <p className="text-[11px] font-sans font-medium text-[#F5D699] tracking-wide mb-0.5">
                 مختارات الضيافة الملكية

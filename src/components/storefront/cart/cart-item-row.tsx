@@ -196,7 +196,7 @@ export function CartItemRow({
                     ₪
                   </span>
                   {item.listUnitPrice && item.listUnitPrice > item.unitPrice && (
-                    <span className="font-sans text-xs text-candy-muted line-through mr-1">
+                    <span className="font-sans text-xs text-candy-muted line-through mr-1 whitespace-nowrap">
                       {(item.listUnitPrice * item.quantity).toFixed(2)} ₪
                     </span>
                   )}

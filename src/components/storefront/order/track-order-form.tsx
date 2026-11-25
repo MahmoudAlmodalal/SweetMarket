@@ -456,8 +456,8 @@ export function TrackOrderForm({
         </div>
       </CardHeader>
 
-      <CardContent className="p-5 sm:p-7 space-y-6">
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <CardContent className="p-4 sm:p-7 space-y-5 sm:space-y-6">
+        <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
           {/* Lockout Security Warning */}
           {isLockedOut && (
             <div

@@ -148,7 +148,7 @@ function CartPageInner() {
                 <h1 className="font-display font-bold text-xl sm:text-2xl text-candy-berry">
                   سلة المذاق الفاخر
                 </h1>
-                <span className="font-sans font-bold text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry border border-candy-line/40">
+                <span className="font-sans font-bold text-xs px-2.5 py-0.5 rounded-candy-pill bg-candy-blush text-candy-berry border border-candy-line/40 whitespace-nowrap shrink-0">
                   {formatArabicDistinctItems(summary.distinctItemsCount ?? items.length)}
                 </span>
               </div>
