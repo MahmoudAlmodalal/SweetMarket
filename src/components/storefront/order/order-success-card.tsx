@@ -183,7 +183,7 @@ export function OrderSuccessCard({
         {/* Animated Success Badge with Festive Confectionery Micro-Animation */}
         <div className="relative mb-5 inline-flex items-center justify-center">
           <div className="absolute w-24 h-24 rounded-full bg-emerald-100/70 animate-ping opacity-60" />
-          <div className="relative w-20 h-20 rounded-full bg-candy-soft flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
+          <div className="relative w-20 h-20 rounded-full bg-emerald-600 flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
             <CheckCircle2 className="w-10 h-10 text-white" strokeWidth={2.5} />
           </div>
         </div>
