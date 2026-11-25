@@ -20,26 +20,24 @@ export function HeroBanner({ className }: HeroBannerProps) {
         <div className="lg:col-span-6 flex flex-col gap-6 text-right order-2 lg:order-1">
           <p className="inline-flex self-start items-center gap-2 border-2 border-candy-ink px-3 py-1 text-xs font-bold bg-candy-cream">
             <span className="w-2 h-2 bg-[#C2431F]" aria-hidden="true" />
-            نابلس · فلسطين · فرن يومي
+            دار كاندي لوز للحلويات الفاخرة
           </p>
 
           <h1
-            className="font-display font-bold text-candy-ink leading-[1.08] text-[2.6rem] sm:text-[4rem] lg:text-[5rem] xl:text-[5.6rem] tracking-normal"
+            className="font-display font-bold text-candy-ink leading-[1.08] text-[2.3rem] sm:text-[3.4rem] lg:text-[4.2rem] xl:text-[4.8rem] tracking-normal"
             style={{ textWrap: "balance" }}
           >
-            حلوى
-            <span className="relative mx-3 inline-block px-3 bg-[#F2B632] -rotate-1">
-              نابلسية
+            حلويات شرقية وغربية بطعم
+            <span className="relative mx-2 inline-block px-3 bg-[#F2B632] -rotate-1">
+              الأصالة
             </span>
             <br />
-            من الفرن
-            <br />
-            للصينية.
+            وحرفية الإهداء
           </h1>
 
           <p className="text-base sm:text-lg text-candy-ink/80 leading-[1.8] max-w-md border-r-4 border-[#C2431F] pr-4">
-            بقلاوة بالسمن البلدي، كنافة ساخنة بالجبنة، وشوكولاتة تُغلّف بيد صانعها.
-            نطلب منك الاسم والعنوان فقط، والدفع عند الباب.
+            نخبز لكم يومياً تشكيلة منتقاة من البقلاوة بالسمن البلدي، الكنافة النابلسية الساخنة،
+            والكيك والشوكولاتة البلجيكية بتغليف فاخر يليق بضيافتكم ومناسباتكم.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -47,13 +45,13 @@ export function HeroBanner({ className }: HeroBannerProps) {
               href="/category/all"
               className="inline-flex items-center justify-center h-14 px-8 bg-candy-ink text-[#F3EBDD] font-bold text-base border-2 border-candy-ink shadow-[4px_4px_0_#C2431F] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#C2431F] transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#F2B632]"
             >
-              اطلب الآن
+              تصفح التشكيلة
             </Link>
             <Link
               href="#featured-products"
               className="inline-flex items-center justify-center h-14 px-2 font-bold text-base text-candy-ink underline decoration-[3px] decoration-[#F2B632] underline-offset-[10px] hover:decoration-[#C2431F] transition-colors"
             >
-              شوف الأكثر طلباً
+              الأكثر طلباً
             </Link>
           </div>
         </div>
@@ -72,7 +70,7 @@ export function HeroBanner({ className }: HeroBannerProps) {
               />
             </div>
             <p className="mt-2 flex items-center justify-between text-[11px] sm:text-xs font-bold text-candy-ink">
-              <span>صينية اليوم</span>
+              <span>مختارات الضيافة الملكية</span>
               <span className="tabular-nums">No. 01</span>
               <span>بقلاوة · فستق حلبي</span>
             </p>
@@ -93,9 +91,9 @@ export function HeroBanner({ className }: HeroBannerProps) {
 
           {/* Sticker */}
           <div className="stamp absolute -top-5 left-2 lg:-left-3 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#F2B632] border-2 border-candy-ink flex items-center justify-center text-center font-display font-bold text-candy-ink text-sm sm:text-base leading-tight shadow-[3px_3px_0_#1B1A17]">
-            طازج
+            تحضير
             <br />
-            كل يوم
+            طازج يومياً
           </div>
         </div>
       </div>

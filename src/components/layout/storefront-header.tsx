@@ -135,13 +135,13 @@ function StorefrontHeaderUI({
             aria-label="الصفحة الرئيسية لمتجر كاندي لوز"
             className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry rounded-lg"
           >
-            <StoreLogo
-              variant="main"
-              width={142}
-              height={40}
-              priority
-              className="w-[116px] sm:w-[138px] md:w-[148px] transition-opacity hover:opacity-90"
-            />
+            <span className="flex items-center gap-2.5">
+              <span className="w-10 h-10 bg-[#1B1A17] text-[#F2B632] font-display font-bold text-2xl flex items-center justify-center border-2 border-candy-ink shadow-[2px_2px_0_#C2431F]" aria-hidden="true">ك</span>
+              <span className="flex flex-col leading-none">
+                <span className="font-display font-bold text-xl text-candy-ink">كاندي لوز</span>
+                <span className="text-[10px] font-bold tracking-[0.2em] text-[#C2431F] mt-1">CANDY LOZ</span>
+              </span>
+            </span>
           </Link>
 
           {/* Center Editorial Navigation */}

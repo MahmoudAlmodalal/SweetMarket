@@ -48,7 +48,7 @@ export function CategoryStrip({
         {list.map((cat, i) => {
           const isActive = activeSlug === cat.slug;
           return (
-            <li key={cat.id} className="border-b-2 border-candy-ink sm:border-s-2 first:sm:border-s-0 [&:nth-child(2n+1)]:sm:border-s-0 lg:[&:nth-child(2n+1)]:border-s-2 lg:[&:nth-child(3n+1)]:border-s-0">
+            <li key={cat.id} className={cn(i === list.length - 1 && list.length % 2 === 1 && "sm:col-span-2", i === list.length - 1 && list.length % 3 === 1 && "lg:col-span-3", i === list.length - 1 && list.length % 3 === 2 && "lg:col-span-2", "border-b-2 border-candy-ink sm:border-s-2 first:sm:border-s-0 [&:nth-child(2n+1)]:sm:border-s-0 lg:[&:nth-child(2n+1)]:border-s-2 lg:[&:nth-child(3n+1)]:border-s-0")}>
               <Link
                 href={`/category/${cat.slug}`}
                 className={cn(
