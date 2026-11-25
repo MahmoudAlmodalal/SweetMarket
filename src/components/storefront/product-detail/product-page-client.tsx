@@ -27,6 +27,8 @@ import {
   QuantityStepper,
   AddToCartBar,
 } from "@/components/storefront/product-detail";
+import { RecentlyViewed } from "@/components/storefront/product-detail/recently-viewed";
+import { recordRecentlyViewed } from "@/components/storefront/catalog/recently-viewed-utils";
 import { cn } from "@/lib/utils";
 import { MAX_CART_QTY } from "@/lib/tokens";
 import {
@@ -57,6 +59,7 @@ export function ProductPageClient() {
   const [product, setProduct] = React.useState<Product | null>(null);
   const [category, setCategory] = React.useState<Category | null>(null);
   const [relatedProducts, setRelatedProducts] = React.useState<Product[]>([]);
+  const [allProducts, setAllProducts] = React.useState<Product[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [hasChecked, setHasChecked] = React.useState<boolean>(false);
 
@@ -114,6 +117,7 @@ export function ProductPageClient() {
 
         if (foundProduct) {
           setProduct(foundProduct);
+          recordRecentlyViewed(foundProduct.id);
           setSelectedWeight((prev) => {
             if (
               prev &&
@@ -143,6 +147,7 @@ export function ProductPageClient() {
               (p) => p.id !== foundProduct.id && p.categoryId !== foundProduct.categoryId
             );
             setRelatedProducts([...sameCat, ...others].slice(0, 4));
+            setAllProducts(allProducts);
           }
         } else {
           setProduct(null);
@@ -673,6 +678,11 @@ export function ProductPageClient() {
             })}
           </div>
         </section>
+      )}
+
+      {/* Recently Viewed */}
+      {product && (
+        <RecentlyViewed products={allProducts} currentProductId={product.id} />
       )}
     </div>
   );
