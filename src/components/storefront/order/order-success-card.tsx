@@ -27,6 +27,7 @@ import type { Order, DeliveryZone } from "@/types";
 import { cn } from "@/lib/utils";
 import { buildWhatsAppLink } from "@/lib/store-identity";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
+import { OrderStatusBadge } from "@/components/admin/orders/order-status-badge";
 import { toast } from "@/components/ui/toast";
 
 export interface OrderSuccessCardProps {
@@ -181,8 +182,8 @@ export function OrderSuccessCard({
           </span>
         </div>
 
-        {/* Animated Success Badge with Festive Confectionery Micro-Animation */}
-        <div className="relative mb-5 inline-flex items-center justify-center">
+        {/* Animated Success Badge (decorative, hidden on printed receipt) */}
+        <div data-print-hidden className="relative mb-5 inline-flex items-center justify-center">
           <div className="absolute w-24 h-24 rounded-full bg-emerald-100/70 animate-ping opacity-60" />
           <div className="relative w-20 h-20 rounded-full bg-emerald-600 flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
             <CheckCircle2 className="w-10 h-10 text-white" strokeWidth={2.5} />
@@ -411,14 +412,12 @@ export function OrderSuccessCard({
                 </span>
               </div>
             </div>
-            <span className="text-xs font-sans font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill shrink-0">
-              جاهز للتسليم
-            </span>
+            <OrderStatusBadge status={order.status} size="md" className="shrink-0" />
           </div>
         </div>
 
         {/* Financial Bill Breakdown */}
-        <div className="border-t border-candy-line/60 p-5 sm:p-6 bg-candy-soft/60 space-y-2.5">
+        <div data-print-keep className="border-t border-candy-line/60 p-5 sm:p-6 bg-candy-soft/60 space-y-2.5">
           <div className="flex justify-between items-center text-sm font-sans text-candy-muted">
             <span>مجموع المشتريات:</span>
             <span className="font-mono font-semibold text-candy-ink">
@@ -457,8 +456,8 @@ export function OrderSuccessCard({
         </div>
       </div>
 
-      {/* 3. Reassuring Cold-Chain Guarantee Banner */}
-      <div className="bg-candy-soft border border-candy-line rounded-card p-4 flex items-start gap-3 shadow-xs">
+      {/* 3. Reassuring Cold-Chain Guarantee Banner (marketing copy, hidden on printed receipt) */}
+      <div data-print-hidden className="bg-candy-soft border border-candy-line rounded-card p-4 flex items-start gap-3 shadow-xs">
         <div className="w-9 h-9 rounded-full bg-white text-candy-berry flex items-center justify-center shrink-0 border border-candy-blush shadow-xs mt-0.5">
           <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
         </div>

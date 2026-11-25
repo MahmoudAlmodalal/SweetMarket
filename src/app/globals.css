@@ -376,7 +376,8 @@ body[data-capture-mode] [data-mobile-dock] {
 
   /* إبقاء البطاقات والمقاطع دون انقسام بين الصفحات قدر الإمكان */
   .rounded-card,
-  section {
-    break-inside: avoid;
+  section,
+  [data-print-keep] {
+    break-inside: avoid !important;
   }
 }
