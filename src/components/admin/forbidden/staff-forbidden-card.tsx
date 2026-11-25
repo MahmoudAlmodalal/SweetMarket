@@ -63,7 +63,7 @@ export function StaffForbiddenCard({
             </div>
 
             {/* 403 Pill */}
-            <div className="inline-block px-3.5 py-1 mb-2.5 rounded-full bg-rose-100/80 text-rose-800 text-xs font-bold tracking-wider font-mono border border-rose-200/60">
+            <div className="inline-block px-3.5 py-1 mb-2.5 rounded-none bg-rose-100/80 text-rose-800 text-xs font-bold tracking-wider font-mono border border-rose-200/60">
               403 • صلاحية غير كافية
             </div>
 
@@ -105,7 +105,7 @@ export function StaffForbiddenCard({
 
                 <div className="text-left shrink-0">
                   <span className="text-xs text-candy-muted block mb-0.5">الدور الفعلي</span>
-                  <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-candy-blush text-candy-berry border border-candy-line/60 shadow-xs">
+                  <span className="inline-block px-2.5 py-0.5 rounded-none text-xs font-bold bg-candy-blush text-candy-berry border border-candy-line/60 shadow-xs">
                     {getArabicRoleLabel(user.role)}
                   </span>
                 </div>

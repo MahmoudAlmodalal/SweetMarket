@@ -133,7 +133,7 @@ export function DeliveryAddressForm({
                     type="button"
                     onClick={() => onZoneChange(zone.id)}
                     className={cn(
-                      "text-xs font-sans px-2.5 py-1 rounded-full transition-all border",
+                      "text-xs font-sans px-2.5 py-1 rounded-none transition-all border",
                       isSelected
                         ? "bg-candy-berry text-white border-candy-berry font-bold shadow-xs scale-105"
                         : "bg-candy-soft text-candy-ink border-candy-line/70 hover:border-candy-ink hover:bg-candy-cream"
@@ -312,7 +312,7 @@ export function DeliveryAddressForm({
                 key={idx}
                 type="button"
                 onClick={() => handleQuickNoteClick(preset)}
-                className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-candy-soft text-candy-ink border border-candy-line/60 hover:bg-candy-blush/40 hover:text-candy-berry transition-colors"
+                className="text-[11px] font-sans px-2.5 py-0.5 rounded-none bg-candy-soft text-candy-ink border border-candy-line/60 hover:bg-candy-blush/40 hover:text-candy-berry transition-colors"
               >
                 {preset}
               </button>

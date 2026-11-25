@@ -117,7 +117,7 @@ export function OrderSuccessCard({
               تم إكمال الطلب بنجاح • خطوة 3 من 3 🔒
             </span>
           </div>
-          <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-sans font-bold text-xs flex items-center gap-1">
+          <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-none font-sans font-bold text-xs flex items-center gap-1">
             <Check className="w-3 h-3 text-emerald-700" />
             <span>مكتمل 100%</span>
           </span>

@@ -195,7 +195,7 @@ export function OrdersDataTable({
                 <span>{tab.label}</span>
                 <span
                   className={cn(
-                    'inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-xs font-bold tabular-nums transition-colors',
+                    'inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-none text-xs font-bold tabular-nums transition-colors',
                     isActive
                       ? 'bg-white/25 text-white'
                       : isNewWithAlert
@@ -477,7 +477,7 @@ export function OrdersDataTable({
                       >
                         <span>{order.orderNumber}</span>
                         {hasRoyalPackaging && (
-                          <span className="inline-flex items-center gap-0.5 text-[9px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-0.5 text-[9px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-none">
                             <Sparkles className="w-2.5 h-2.5 text-amber-600" />
                             <span>ملكي</span>
                           </span>

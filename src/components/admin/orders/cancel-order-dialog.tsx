@@ -147,7 +147,7 @@ export function CancelOrderDialog({
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => handlePresetSelect(preset)}
-                    className="text-[11px] font-sans px-2.5 py-1 rounded-full border border-candy-line bg-candy-soft/70 hover:bg-candy-blush/60 hover:border-candy-rose text-candy-ink transition-colors flex items-center gap-1"
+                    className="text-[11px] font-sans px-2.5 py-1 rounded-none border border-candy-line bg-candy-soft/70 hover:bg-candy-blush/60 hover:border-candy-rose text-candy-ink transition-colors flex items-center gap-1"
                   >
                     {reason === preset && <Check className="w-3 h-3 text-candy-berry" />}
                     <span>{preset}</span>

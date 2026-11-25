@@ -67,7 +67,7 @@ export function GuestInfoForm({
                 <CardTitle className="text-base sm:text-lg text-candy-ink font-display font-bold">
                   1. بيانات الزبون والمستلم
                 </CardTitle>
-                <span className="sm:hidden px-2 py-0.5 rounded-full bg-candy-blush text-candy-berry text-[10px] font-bold">
+                <span className="sm:hidden px-2 py-0.5 rounded-none bg-candy-blush text-candy-berry text-[10px] font-bold">
                   طلب كزائر
                 </span>
               </div>
@@ -131,12 +131,12 @@ export function GuestInfoForm({
             {/* Carrier recognition pill */}
             <div className="flex items-center gap-1.5 text-xs font-sans">
               {isJawwal ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-200 animate-in fade-in duration-200">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-200 animate-in fade-in duration-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping" />
                   شبكة جوال (Jawwal 059)
                 </span>
               ) : isOoredoo ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold border border-rose-200 animate-in fade-in duration-200">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-rose-100 text-rose-800 text-[11px] font-bold border border-rose-200 animate-in fade-in duration-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-ping" />
                   شبكة أوريدو (Ooredoo 056)
                 </span>

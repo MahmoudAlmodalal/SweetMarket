@@ -236,7 +236,7 @@ export function ZonesTable({
                         </div>
                       ) : zone.deliveryFee === 0 ? (
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-none text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                             مجاني
                           </span>
                           {canManage && (

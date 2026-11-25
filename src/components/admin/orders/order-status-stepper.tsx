@@ -242,7 +242,7 @@ export function OrderStatusStepper({
             {ORDER_STATUS_LABELS[currentStatus] || currentStatus}
           </span>
           {isTerminal && (
-            <span className="text-[11px] bg-candy-soft px-2 py-0.5 rounded-full border border-candy-line">
+            <span className="text-[11px] bg-candy-soft px-2 py-0.5 rounded-none border border-candy-line">
               حالة نهائية
             </span>
           )}

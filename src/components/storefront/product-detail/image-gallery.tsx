@@ -243,7 +243,7 @@ export function ImageGallery({
         {/* Mobile Swipe Navigation Dots Indicator */}
         {galleryList.length > 1 && (
           <div className="absolute bottom-3 inset-x-0 flex justify-center items-center gap-1.5 z-10 pointer-events-none md:hidden">
-            <div className="px-2 py-1 rounded-full bg-black/35  flex items-center gap-1.5">
+            <div className="px-2 py-1 rounded-none bg-black/35  flex items-center gap-1.5">
               {galleryList.map((_, idx) => (
                 <span
                   key={`dot-${idx}`}

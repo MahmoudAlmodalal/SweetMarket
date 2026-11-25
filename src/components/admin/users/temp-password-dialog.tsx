@@ -115,7 +115,7 @@ export function TempPasswordDialog({
               {/* شارة الدور الإداري */}
               <span
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border shrink-0 select-none shadow-xs',
+                  'inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-xs font-bold border shrink-0 select-none shadow-xs',
                   user.role === 'manager'
                     ? 'bg-candy-berry text-white border-candy-berry-dark'
                     : 'bg-candy-blush text-candy-berry border-candy-rose/30'

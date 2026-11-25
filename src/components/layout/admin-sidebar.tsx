@@ -230,7 +230,7 @@ function SidebarContent({
                       {item.managerOnly && (
                         <span
                           className={cn(
-                            'text-[10px] px-2 py-0.5 rounded-full font-bold',
+                            'text-[10px] px-2 py-0.5 rounded-none font-bold',
                             isActive
                               ? 'bg-white/20 text-white'
                               : 'bg-candy-soft text-candy-berry border border-candy-ink'
@@ -362,7 +362,7 @@ function SidebarContent({
             {(!isCollapsed || isMobile) ? (
               <span
                 className={cn(
-                  'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold font-sans shrink-0 border shadow-xs',
+                  'inline-flex items-center px-2 py-0.5 rounded-none text-[11px] font-bold font-sans shrink-0 border shadow-xs',
                   role === 'manager'
                     ? 'bg-candy-cream text-amber-950 border-amber-300'
                     : 'bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-950 border-teal-300'

@@ -221,7 +221,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
               <button
                 type="button"
                 onClick={handleLogout}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold font-sans bg-rose-600 text-white hover:bg-rose-700 active:scale-95 transition-all shadow-xs"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-none text-xs font-bold font-sans bg-rose-600 text-white hover:bg-rose-700 active:scale-95 transition-all shadow-xs"
                 aria-label="تأكيد تسجيل الخروج"
               >
                 <Check className="w-3 h-3" aria-hidden="true" />

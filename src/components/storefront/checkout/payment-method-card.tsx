@@ -86,7 +86,7 @@ export function PaymentMethodCard({
                   <h4 className="font-sans font-bold text-sm sm:text-base text-candy-ink">
                     الدفع نقداً عند الاستلام <span dir="ltr" className="whitespace-nowrap">(Cash on Delivery)</span>
                   </h4>
-                  <span className="px-2.5 py-0.5 rounded-full bg-candy-berry text-white font-sans font-bold text-[11px] shadow-xs">
+                  <span className="px-2.5 py-0.5 rounded-none bg-candy-berry text-white font-sans font-bold text-[11px] shadow-xs">
                     الخيار المعتمد
                   </span>
                 </div>
@@ -128,7 +128,7 @@ export function PaymentMethodCard({
               قريباً: إمكانية الدفع المباشر عبر المحافظ الإلكترونية الفلسطينية (Jawwal Pay & PalPay)
             </span>
           </div>
-          <span className="text-[10px] bg-candy-cream px-2 py-0.5 rounded-full border border-candy-line text-candy-berry font-bold shrink-0 shadow-xs">
+          <span className="text-[10px] bg-candy-cream px-2 py-0.5 rounded-none border border-candy-line text-candy-berry font-bold shrink-0 shadow-xs">
             قريباً ⚡
           </span>
         </div>

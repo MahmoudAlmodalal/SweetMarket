@@ -40,7 +40,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
           </div>
 
           {/* 401 Pill */}
-          <div className="inline-block px-3.5 py-1 mb-2.5 rounded-full bg-amber-100/80 text-amber-900 text-xs font-bold tracking-wider font-mono border border-amber-200/60">
+          <div className="inline-block px-3.5 py-1 mb-2.5 rounded-none bg-amber-100/80 text-amber-900 text-xs font-bold tracking-wider font-mono border border-amber-200/60">
             401 • تسجيل الدخول مطلوب
           </div>
 
@@ -76,7 +76,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
 
             <div className="text-left">
               <span className="text-xs text-candy-muted block mb-0.5">الدور</span>
-              <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200 shadow-xs">
+              <span className="inline-block px-2.5 py-0.5 rounded-none text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200 shadow-xs">
                 زائر
               </span>
             </div>

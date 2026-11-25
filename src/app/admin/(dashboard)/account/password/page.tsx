@@ -211,7 +211,7 @@ export default function ChangePasswordPage() {
               </h2>
               <span
                 className={cn(
-                  'px-2.5 py-0.5 rounded-full text-xs font-bold font-sans border',
+                  'px-2.5 py-0.5 rounded-none text-xs font-bold font-sans border',
                   role === 'manager'
                     ? 'bg-candy-berry text-white border-candy-berry-dark'
                     : 'bg-candy-blush text-candy-berry border-candy-rose/30'

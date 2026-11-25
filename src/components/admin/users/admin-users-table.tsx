@@ -354,7 +354,7 @@ export function AdminUsersTable({
                         <td className="py-3.5 px-4">
                           <span
                             className={cn(
-                              'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border select-none',
+                              'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none text-xs font-bold border select-none',
                               member.role === 'manager'
                                 ? 'bg-candy-berry text-white border-candy-berry-dark shadow-xs'
                                 : 'bg-candy-blush text-candy-berry border-candy-rose/30'
@@ -395,7 +395,7 @@ export function AdminUsersTable({
                         <td className="py-3.5 px-4">
                           <span
                             className={cn(
-                              'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold select-none',
+                              'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-none text-xs font-semibold select-none',
                               member.isActive
                                 ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                                 : 'bg-rose-50 text-rose-800 border border-rose-200'
@@ -540,7 +540,7 @@ export function AdminUsersTable({
 
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border shrink-0',
+                        'inline-flex items-center gap-1 px-2.5 py-1 rounded-none text-xs font-bold border shrink-0',
                         member.role === 'manager'
                           ? 'bg-candy-berry text-white border-candy-berry-dark'
                           : 'bg-candy-blush text-candy-berry border-candy-rose/30'
@@ -609,7 +609,7 @@ export function AdminUsersTable({
 
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold shrink-0',
+                        'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none text-[11px] font-semibold shrink-0',
                         member.isActive
                           ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                           : 'bg-rose-50 text-rose-800 border border-rose-200'

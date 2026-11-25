@@ -97,7 +97,7 @@ export function CustomerDetailsCard({
                 {customer.fullName}
               </span>
             </div>
-            <span className="text-[11px] text-candy-berry font-bold bg-candy-blush px-2.5 py-0.5 rounded-full border border-candy-line">
+            <span className="text-[11px] text-candy-berry font-bold bg-candy-blush px-2.5 py-0.5 rounded-none border border-candy-line">
               زبون متجر
             </span>
           </div>
@@ -186,7 +186,7 @@ export function CustomerDetailsCard({
             <CreditCard className="w-4 h-4" />
             <span>طريقة الدفع:</span>
           </div>
-          <span className="font-bold text-candy-ink bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full inline-flex items-center gap-1">
+          <span className="font-bold text-candy-ink bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-none inline-flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             <span>{paymentMethod === 'cash_on_delivery' ? 'الدفع نقداً عند الاستلام' : paymentMethod}</span>
           </span>

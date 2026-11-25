@@ -150,7 +150,7 @@ export default function AdminOrdersPage() {
               e.stopPropagation();
               setActiveTab('new');
             }}
-            className="text-xs font-sans font-bold text-candy-berry bg-candy-soft border border-candy-line px-3.5 py-1.5 rounded-full whitespace-nowrap self-end sm:self-auto hover:bg-candy-berry hover:text-white transition-colors cursor-pointer"
+            className="text-xs font-sans font-bold text-candy-berry bg-candy-soft border border-candy-line px-3.5 py-1.5 rounded-none whitespace-nowrap self-end sm:self-auto hover:bg-candy-berry hover:text-white transition-colors cursor-pointer"
           >
             عرض الطلبات الجديدة
           </button>

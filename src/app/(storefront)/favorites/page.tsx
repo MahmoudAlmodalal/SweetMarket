@@ -162,7 +162,7 @@ export default function FavoritesPage() {
                 onClick={handleAddAllToCart}
                 disabled={isAddingAll}
                 className={cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-candy-berry hover:bg-candy-berry-dark text-white text-xs sm:text-sm font-bold transition-colors",
+                  "inline-flex items-center gap-2 px-4 py-2 rounded-none bg-candy-berry hover:bg-candy-berry-dark text-white text-xs sm:text-sm font-bold transition-colors",
                   isAddingAll && "opacity-75"
                 )}
               >
@@ -173,7 +173,7 @@ export default function FavoritesPage() {
               <button
                 type="button"
                 onClick={() => setIsClearDialogOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-candy-cream hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs sm:text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-none bg-candy-cream hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs sm:text-sm font-bold transition-colors"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>مسح الكل</span>
@@ -200,14 +200,14 @@ export default function FavoritesPage() {
           <DialogFooter className="flex-row justify-end gap-2 pt-3">
             <DialogClose
               type="button"
-              className="px-4 py-2 rounded-full bg-candy-soft text-candy-ink font-bold text-xs sm:text-sm hover:bg-candy-line transition-colors"
+              className="px-4 py-2 rounded-none bg-candy-soft text-candy-ink font-bold text-xs sm:text-sm hover:bg-candy-line transition-colors"
             >
               إلغاء
             </DialogClose>
             <button
               type="button"
               onClick={handleConfirmClearAll}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-rose-600 text-white font-bold text-xs sm:text-sm hover:bg-rose-700 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-none bg-rose-600 text-white font-bold text-xs sm:text-sm hover:bg-rose-700 transition-colors"
             >
               <Trash2 className="w-4 h-4" />
               <span>تأكيد المسح</span>
@@ -282,7 +282,7 @@ export default function FavoritesPage() {
 
           <Link
             href="/category/all"
-            className="inline-flex items-center justify-center gap-2 min-h-[46px] px-7 rounded-full bg-candy-berry text-white font-bold text-sm hover:bg-candy-berry-dark transition-colors"
+            className="inline-flex items-center justify-center gap-2 min-h-[46px] px-7 rounded-none bg-candy-berry text-white font-bold text-sm hover:bg-candy-berry-dark transition-colors"
           >
             <ShoppingBag className="w-4 h-4" />
             <span>استكشف كل الحلويات</span>

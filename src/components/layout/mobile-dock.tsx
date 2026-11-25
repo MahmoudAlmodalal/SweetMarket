@@ -200,7 +200,7 @@ export function MobileDock({
                   <span
                     aria-label={`${item.badgeCount} ${item.badgeLabel || "عناصر"}`}
                     className={cn(
-                      "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
+                      "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-none font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
                       isItemActive
                         ? "bg-candy-cream text-primary border border-primary/30"
                         : "bg-[#C2431F] text-white",

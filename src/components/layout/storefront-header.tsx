@@ -205,7 +205,7 @@ function StorefrontHeaderUI({
               {favoriteCount > 0 && (
                 <span
                   aria-label={`${favoriteCount} عناصر في المفضلة`}
-                  className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-candy-berry text-white font-sans text-[10px] font-bold tabular-nums flex items-center justify-center ring-2 ring-[#F3EBDD]"
+                  className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-none bg-candy-berry text-white font-sans text-[10px] font-bold tabular-nums flex items-center justify-center ring-2 ring-[#F3EBDD]"
                 >
                   {favoriteCount > 99 ? "+99" : favoriteCount}
                 </span>

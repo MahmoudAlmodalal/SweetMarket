@@ -259,7 +259,7 @@ export function ProductCard({
             href={`/product/${product.slug}`}
             className="block group/title focus:outline-none"
           >
-            <h3 className="font-display font-bold text-base sm:text-lg text-candy-ink line-clamp-2 leading-snug group-hover/title:underline decoration-[3px] decoration-[#F2B632] underline-offset-4">
+            <h3 className="font-display font-bold text-base sm:text-lg text-candy-ink line-clamp-2 min-h-[2.6em] leading-snug group-hover/title:underline decoration-[3px] decoration-[#F2B632] underline-offset-4">
               {product.name}
             </h3>
           </Link>
@@ -270,7 +270,7 @@ export function ProductCard({
       </div>
 
       {/* Price & Add to Cart Footer */}
-      <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-2.5 mt-1 border-t-2 border-dashed border-candy-ink/60 flex items-center justify-between gap-2">
+      <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-2.5 mt-1 border-t-2 border-dashed border-candy-ink/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="flex flex-col min-w-0">
           <div className="flex items-baseline gap-1 tabular-nums whitespace-nowrap">
             <span className="font-display font-bold text-xl sm:text-2xl text-candy-ink">
@@ -285,7 +285,7 @@ export function ProductCard({
           )}
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 w-full sm:w-auto">
           {showRemoveButton && (
             <button
               type="button"
@@ -305,7 +305,7 @@ export function ProductCard({
             disabled={!isAvailable}
             aria-label={`أضف ${product.name} للسلة`}
             className={cn(
-              "h-10 px-3 sm:px-4 font-sans font-bold text-xs sm:text-sm flex items-center justify-center gap-1 sm:gap-1.5 transition-all whitespace-nowrap shrink-0",
+              "h-11 sm:h-10 px-3 sm:px-4 flex-1 sm:flex-none font-sans font-bold text-sm flex items-center justify-center gap-1 sm:gap-1.5 transition-all whitespace-nowrap shrink-0",
               isAvailable
                 ? isAdded
                   ? "bg-[#1F5C45] text-white border-2 border-candy-ink"

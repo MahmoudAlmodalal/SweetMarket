@@ -247,7 +247,7 @@ export function CartSummary({
         <Link
           href="/checkout"
           data-testid="proceed-to-checkout-button"
-          className="w-full min-h-[52px] rounded-full bg-candy-berry hover:bg-candy-berry-dark text-white font-sans font-bold text-sm sm:text-base transition-colors flex items-center justify-between px-6"
+          className="w-full min-h-[52px] rounded-none bg-candy-berry hover:bg-candy-berry-dark text-white font-sans font-bold text-sm sm:text-base transition-colors flex items-center justify-between px-6"
         >
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4" />

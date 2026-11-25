@@ -669,7 +669,7 @@ export default function AccountPage() {
             </div>
           </div>
           {favoritesCount > 0 && (
-            <span className="px-2.5 py-0.5 rounded-full bg-candy-strawberry text-white text-xs font-bold font-sans">
+            <span className="px-2.5 py-0.5 rounded-none bg-candy-strawberry text-white text-xs font-bold font-sans">
               {favoritesCount}
             </span>
           )}
@@ -691,7 +691,7 @@ export default function AccountPage() {
             </div>
           </div>
           {totalUnitsCount > 0 && (
-            <span className="px-2.5 py-0.5 rounded-full bg-candy-berry text-white text-xs font-bold font-sans">
+            <span className="px-2.5 py-0.5 rounded-none bg-candy-berry text-white text-xs font-bold font-sans">
               {totalUnitsCount}
             </span>
           )}

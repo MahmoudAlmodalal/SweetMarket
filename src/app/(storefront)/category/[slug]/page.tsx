@@ -279,7 +279,7 @@ export default function CategoryListingPage() {
 
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-candy-berry text-white font-sans font-bold text-sm hover:bg-candy-berry-dark transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-none bg-candy-berry text-white font-sans font-bold text-sm hover:bg-candy-berry-dark transition-colors"
         >
           <Home className="w-4 h-4" />
           <span>العودة للرئيسية</span>
@@ -338,11 +338,11 @@ export default function CategoryListingPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-sans border-t lg:border-t-0 pt-4 lg:pt-0 border-candy-line/70">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-candy-soft/80 border border-candy-ink tabular-nums font-bold text-candy-berry">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-candy-soft/80 border border-candy-ink tabular-nums font-bold text-candy-berry">
               {isLoading ? "جاري التحميل..." : `${availableCount} صنف متاح اليوم`}
             </span>
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-candy-cream border border-candy-line/80 font-medium text-candy-muted">سمن بلدي نقي 100%</span>
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-candy-cream border border-candy-line/80 font-medium text-candy-muted">توصيل مبرد</span>
+            <span className="inline-flex items-center px-3 py-1.5 rounded-none bg-candy-cream border border-candy-line/80 font-medium text-candy-muted">سمن بلدي نقي 100%</span>
+            <span className="inline-flex items-center px-3 py-1.5 rounded-none bg-candy-cream border border-candy-line/80 font-medium text-candy-muted">توصيل مبرد</span>
           </div>
         </div>
       </header>
@@ -350,7 +350,7 @@ export default function CategoryListingPage() {
       {/* Filter & Search Bar */}
       <section
         aria-label="تصفية وفرز الأصناف"
-        className="sticky top-16 sm:top-20 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[#F3EBDD]/95  border-b border-candy-line/70 flex flex-col gap-3"
+        className="sm:sticky sm:top-20 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[#F3EBDD] border-b-2 border-candy-ink flex flex-col gap-3"
       >
         <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
           <Search className="absolute right-3.5 w-4 h-4 text-candy-muted pointer-events-none" />
@@ -452,7 +452,7 @@ export default function CategoryListingPage() {
           href={buildWhatsAppLink("مرحباً كاندي لوز، أرغب بطلب خاص لمناسبة")}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-candy-cream text-[#1B1A17] font-sans font-bold text-sm hover:bg-[#F5E6D8] transition-colors shrink-0"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-none bg-candy-cream text-[#1B1A17] font-sans font-bold text-sm hover:bg-[#F5E6D8] transition-colors shrink-0"
         >
           <MessageCircle className="w-4 h-4 text-candy-berry" />
           <span>تواصل عبر واتساب</span>

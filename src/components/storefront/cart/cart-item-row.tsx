@@ -122,7 +122,7 @@ export function CartItemRow({
               <div className="flex items-start justify-between gap-2">
                 <Link
                   href={item.productSlug ? `/product/${item.productSlug}` : "#"}
-                  className="font-display font-bold text-base sm:text-lg text-candy-ink leading-snug hover:text-candy-berry transition-colors line-clamp-1"
+                  className="font-display font-bold text-base sm:text-lg text-candy-ink leading-snug hover:text-candy-berry transition-colors line-clamp-2"
                 >
                   {item.productName}
                 </Link>
@@ -132,7 +132,7 @@ export function CartItemRow({
                   onClick={() => setIsConfirmOpen(true)}
                   aria-label={`حذف ${item.productName} من السلة`}
                   title="حذف من السلة"
-                  className="min-w-11 min-h-11 rounded-full text-candy-muted hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors shrink-0 -mt-1 -ml-1 focus:outline-none focus:ring-2 focus:ring-rose-300 touch-manipulation"
+                  className="min-w-11 min-h-11 rounded-none text-candy-muted hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors shrink-0 -mt-1 -ml-1 focus:outline-none focus:ring-2 focus:ring-rose-300 touch-manipulation"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -221,7 +221,7 @@ export function CartItemRow({
                   }
                   title={item.quantity <= 1 ? "حذف من السلة" : "تقليل الكمية"}
                   className={cn(
-                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full bg-candy-cream flex items-center justify-center shadow-xs transition-all touch-manipulation active:scale-95",
+                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-none bg-candy-cream flex items-center justify-center shadow-xs transition-all touch-manipulation active:scale-95",
                     item.quantity <= 1
                       ? "text-rose-500 hover:bg-rose-50 hover:text-rose-600"
                       : "text-candy-ink hover:bg-candy-blush/40 hover:text-candy-berry"
@@ -259,7 +259,7 @@ export function CartItemRow({
                       : undefined
                   }
                   className={cn(
-                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shadow-xs transition-all touch-manipulation",
+                    "min-w-10 min-h-10 sm:w-11 sm:h-11 rounded-none flex items-center justify-center shadow-xs transition-all touch-manipulation",
                     item.quantity >= MAX_CART_QTY
                       ? "bg-candy-line text-candy-muted cursor-not-allowed"
                       : "bg-candy-berry text-white hover:bg-candy-berry-dark active:scale-95"
