@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils';
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTarget = searchParams.get('redirect') || '/admin/orders';
+  const redirectTarget = searchParams.get('redirect') || '/admin/dashboard';
 
   const { login, quickLogin, user, isAuthenticated, isLoading } = useAdminAuth();
 

@@ -64,7 +64,7 @@ async function quickLoginAs(page, baseUrl, role) {
   const btn = page.locator(`button:has-text("${label}")`).first();
   await btn.waitFor({ state: 'visible', timeout: 10000 });
   await btn.click();
-  await page.waitForURL((url) => url.pathname.startsWith('/admin/orders'), {
+  await page.waitForURL((url) => url.pathname.startsWith('/admin/dashboard'), {
     timeout: 15000,
   });
 }
@@ -147,15 +147,15 @@ async function runSuite() {
           await authBanner.waitFor({ state: 'visible', timeout: 5000 });
           assert.equal(await authBanner.isVisible(), true, 'Invalid credentials error banner should be visible');
 
-          // Valid credentials -> redirect to /admin/orders
+          // Valid credentials -> redirect to /admin/dashboard
           await page.fill('#admin-identifier', 'manager@candyloz.com');
           await page.fill('#admin-password', (process.env.INITIAL_ADMIN_PASSWORD || 'CandyLoz2026!'));
           await submitBtn.click();
 
-          await page.waitForURL((url) => url.pathname.startsWith('/admin/orders'), {
+          await page.waitForURL((url) => url.pathname.startsWith('/admin/dashboard'), {
             timeout: 15000,
           });
-          assert.ok(page.url().includes('/admin/orders'), 'Should redirect to /admin/orders on valid login');
+          assert.ok(page.url().includes('/admin/dashboard'), 'Should redirect to /admin/dashboard on valid login');
           return 'Empty field alerts, invalid auth banner, and valid redirect verified';
         }
       );

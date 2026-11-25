@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
+  LayoutDashboard,
   ShoppingBag,
   Package,
   Layers,
@@ -39,6 +40,11 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
+  {
+    name: 'نظرة عامة',
+    href: '/admin/dashboard',
+    icon: LayoutDashboard,
+  },
   {
     name: 'الطلبات',
     href: '/admin/orders',
@@ -110,7 +116,7 @@ function SidebarContent({
         )}
       >
         <Link
-          href="/admin/orders"
+          href="/admin/dashboard"
           onClick={() => isMobile && onClose?.()}
           className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry rounded-input p-1 transition-transform"
           title="كاندي لوز - لوحة الإدارة"
