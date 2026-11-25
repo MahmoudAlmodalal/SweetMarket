@@ -44,16 +44,12 @@ export function AlmondMark({
       viewBox="0 0 48 48"
       className="shrink-0"
     >
-      <circle cx="24" cy="24" r="22" fill={fill} />
-      <circle cx="24" cy="24" r="19.5" fill="none" stroke="var(--color-accent)" strokeWidth="1" />
-      {/* baklava: three layered pastry slices topped with an almond and honey */}
-      <path d="M8 30 L24 36 L40 30 L40 33 L24 39.5 L8 33 Z" fill="var(--color-accent)" />
-      <path d="M8 25 L24 31 L40 25 L40 28.5 L24 34.5 L8 28.5 Z" fill="#F3D9A8" />
-      <path d="M8 20 L24 26 L40 20 L24 14 Z" fill="#FFF3DD" />
-      <path d="M8 20 L24 26 L40 20 L40 23.5 L24 29.5 L8 23.5 Z" fill="#E8B96A" />
-      <path d="M24 14 L40 20 M24 14 L8 20" stroke="var(--color-accent)" strokeWidth="0.8" fill="none" />
-      <path d="M24 5.5 C28.5 9 29.5 13 27.8 16.2 C26.8 18 25.4 18.8 24 18.8 C22.6 18.8 21.2 18 20.2 16.2 C18.5 13 19.5 9 24 5.5 Z" fill="#C98A3C" stroke="#FFF3DD" strokeWidth="1" />
-      <path d="M24 8 C25.2 10.5 25.4 13 24.6 15.2" stroke="#FFF3DD" strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      <rect x="2" y="2" width="44" height="44" rx="6" fill={fill} />
+      <rect x="5.5" y="5.5" width="37" height="37" rx="3" fill="none" stroke="var(--color-accent)" strokeWidth="0.8" />
+      {/* eight-point geometric star with an almond at its centre: monoline, gold on berry */}
+      <path d="M24 8 L28.2 15.4 L36.6 15.4 L32.6 24 L36.6 32.6 L28.2 32.6 L24 40 L19.8 32.6 L11.4 32.6 L15.4 24 L11.4 15.4 L19.8 15.4 Z" fill="none" stroke="var(--color-accent)" strokeWidth="1.1" strokeLinejoin="round" />
+      <path d="M24 14.5 C28.6 19 29 25.5 24 33.5 C19 25.5 19.4 19 24 14.5 Z" fill="#F6E2B8" />
+      <path d="M24 17.5 L24 30" stroke={fill} strokeWidth="0.9" strokeLinecap="round" />
     </svg>
   );
 }
