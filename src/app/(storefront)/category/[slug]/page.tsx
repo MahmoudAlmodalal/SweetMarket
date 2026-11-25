@@ -254,7 +254,7 @@ export default function CategoryListingPage() {
           لم نتمكن من العثور على هذا القسم. يمكنك الانتقال مباشرة إلى أحد أقسامنا الرئيسية:
         </p>
 
-        <div className="w-full bg-white border border-candy-line rounded-2xl p-5 mb-6">
+        <div className="w-full bg-candy-cream border border-candy-line rounded-2xl p-5 mb-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <Link
               href="/category/all"
@@ -268,7 +268,7 @@ export default function CategoryListingPage() {
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className="flex items-center justify-between p-3 rounded-xl bg-white hover:bg-candy-soft border border-candy-line text-right font-sans text-xs font-bold text-candy-ink hover:text-candy-berry transition-colors"
+                className="flex items-center justify-between p-3 rounded-xl bg-candy-cream hover:bg-candy-soft border border-candy-line text-right font-sans text-xs font-bold text-candy-ink hover:text-candy-berry transition-colors"
               >
                 <span className="line-clamp-1">{cat.name}</span>
                 <ChevronLeft className="w-4 h-4 text-candy-muted shrink-0" />
@@ -323,7 +323,7 @@ export default function CategoryListingPage() {
       </nav>
 
       {/* Editorial Category Header */}
-      <header className="rounded-3xl bg-white border border-candy-line p-6 sm:p-8 lg:p-10">
+      <header className="bg-[#F2B632] border-2 border-candy-ink shadow-[6px_6px_0_#1B1A17] rounded-none p-6 sm:p-8 lg:p-10">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <p className="font-sans text-xs font-semibold tracking-wide text-candy-berry">
@@ -338,11 +338,11 @@ export default function CategoryListingPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-sans border-t lg:border-t-0 pt-4 lg:pt-0 border-candy-line/70">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-candy-soft/80 border border-candy-berry/15 tabular-nums font-bold text-candy-berry">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-candy-soft/80 border border-candy-ink tabular-nums font-bold text-candy-berry">
               {isLoading ? "جاري التحميل..." : `${availableCount} صنف متاح اليوم`}
             </span>
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white border border-candy-line/80 font-medium text-candy-muted">سمن بلدي نقي 100%</span>
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white border border-candy-line/80 font-medium text-candy-muted">توصيل مبرد</span>
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-candy-cream border border-candy-line/80 font-medium text-candy-muted">سمن بلدي نقي 100%</span>
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-candy-cream border border-candy-line/80 font-medium text-candy-muted">توصيل مبرد</span>
           </div>
         </div>
       </header>
@@ -350,7 +350,7 @@ export default function CategoryListingPage() {
       {/* Filter & Search Bar */}
       <section
         aria-label="تصفية وفرز الأصناف"
-        className="sticky top-16 sm:top-20 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[#F3EBDD]/95 backdrop-blur-md border-b border-candy-line/70 flex flex-col gap-3"
+        className="sticky top-16 sm:top-20 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[#F3EBDD]/95  border-b border-candy-line/70 flex flex-col gap-3"
       >
         <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
           <Search className="absolute right-3.5 w-4 h-4 text-candy-muted pointer-events-none" />
@@ -360,7 +360,7 @@ export default function CategoryListingPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={`ابحث داخل ${categoryName}...`}
             aria-label={`البحث داخل ${categoryName}`}
-            className="w-full h-11 pr-10 pl-10 rounded-xl bg-white border border-candy-line font-sans text-sm text-candy-ink placeholder:text-candy-muted/80 focus:outline-none focus:border-candy-berry focus:ring-2 focus:ring-candy-berry/15 transition-colors"
+            className="w-full h-11 pr-10 pl-10 rounded-xl bg-candy-cream border border-candy-line font-sans text-sm text-candy-ink placeholder:text-candy-muted/80 focus:outline-none focus:border-candy-berry focus:ring-2 focus:ring-candy-berry/15 transition-colors"
           />
           {searchQuery && (
             <button
@@ -452,7 +452,7 @@ export default function CategoryListingPage() {
           href={buildWhatsAppLink("مرحباً كاندي لوز، أرغب بطلب خاص لمناسبة")}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#1B1A17] font-sans font-bold text-sm hover:bg-[#F5E6D8] transition-colors shrink-0"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-candy-cream text-[#1B1A17] font-sans font-bold text-sm hover:bg-[#F5E6D8] transition-colors shrink-0"
         >
           <MessageCircle className="w-4 h-4 text-candy-berry" />
           <span>تواصل عبر واتساب</span>

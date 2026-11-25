@@ -37,8 +37,8 @@ export const StateBox = React.forwardRef<HTMLDivElement, StateBoxProps>(
         className={cn(
           "state-box flex flex-col items-center gap-3.5 p-8 sm:p-12 text-center rounded-candy-section transition-all duration-300",
           isError
-            ? "state-box--error border-[1.5px] border-solid border-rose-300 bg-gradient-to-b from-white via-white to-rose-50/40 shadow-candy-1"
-            : "border-[1.5px] border-dashed border-candy-line-dark/70 bg-gradient-to-b from-white via-white to-candy-soft/30 shadow-candy-1",
+            ? "state-box--error border-[1.5px] border-solid border-rose-300 bg-candy-cream shadow-candy-1"
+            : "border-[1.5px] border-dashed border-candy-line-dark/70 bg-candy-cream shadow-candy-1",
           className
         )}
         {...props}

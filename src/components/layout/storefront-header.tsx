@@ -187,7 +187,7 @@ function StorefrontHeaderUI({
                 aria-label="البحث عن منتج"
                 value={searchQuery}
                 onChange={(event) => onSearchChange(event.target.value)}
-                className="w-full h-10 pr-10 pl-3.5 bg-white text-candy-ink placeholder:text-candy-muted/80 text-xs rounded-xl border border-candy-line/80 focus:outline-none focus:border-candy-berry/50 focus:ring-2 focus:ring-candy-berry/15 transition-all"
+                className="w-full h-10 pr-10 pl-3.5 bg-candy-cream text-candy-ink placeholder:text-candy-muted/80 text-xs rounded-xl border border-candy-line/80 focus:outline-none focus:border-candy-ink focus:ring-2 focus:ring-candy-berry/15 transition-all"
               />
             </form>
 
@@ -197,8 +197,8 @@ function StorefrontHeaderUI({
               className={cn(
                 "relative flex w-10 h-10 rounded-xl border items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
                 pathname === "/favorites"
-                  ? "bg-candy-soft border-candy-berry/30 text-candy-berry"
-                  : "bg-white border-candy-line/70 text-candy-ink/75 hover:text-candy-berry hover:border-candy-line"
+                  ? "bg-candy-soft border-candy-ink text-candy-berry"
+                  : "bg-candy-cream border-candy-line/70 text-candy-ink/75 hover:text-candy-berry hover:border-candy-line"
               )}
             >
               <Heart className="w-[18px] h-[18px]" />
@@ -218,8 +218,8 @@ function StorefrontHeaderUI({
               className={cn(
                 "flex w-10 h-10 rounded-xl border items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
                 pathname === "/account"
-                  ? "bg-candy-soft border-candy-berry/30 text-candy-berry"
-                  : "bg-white border-candy-line/70 text-candy-ink/75 hover:text-candy-berry hover:border-candy-line"
+                  ? "bg-candy-soft border-candy-ink text-candy-berry"
+                  : "bg-candy-cream border-candy-line/70 text-candy-ink/75 hover:text-candy-berry hover:border-candy-line"
               )}
             >
               <UserRound className="w-[18px] h-[18px]" />
@@ -232,7 +232,7 @@ function StorefrontHeaderUI({
                 "relative inline-flex items-center gap-2 h-10 px-3 sm:px-3.5 rounded-xl border font-sans text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
                 internalCount > 0
                   ? "bg-candy-berry border-candy-berry text-white hover:bg-candy-berry-dark"
-                  : "bg-white border-candy-line/70 text-candy-ink hover:border-candy-berry/40 hover:text-candy-berry"
+                  : "bg-candy-cream border-candy-line/70 text-candy-ink hover:border-candy-ink hover:text-candy-berry"
               )}
             >
               <ShoppingBag className="w-[18px] h-[18px]" />
@@ -265,7 +265,7 @@ function StorefrontHeaderUI({
               value={searchQuery}
               onChange={(event) => onSearchChange(event.target.value)}
               enterKeyHint="search"
-              className="w-full h-10 pr-10 pl-4 bg-white text-candy-ink placeholder:text-candy-muted/80 text-xs rounded-xl border border-candy-line/80 focus:outline-none focus:border-candy-berry/50 focus:ring-2 focus:ring-candy-berry/15 transition-all"
+              className="w-full h-10 pr-10 pl-4 bg-candy-cream text-candy-ink placeholder:text-candy-muted/80 text-xs rounded-xl border border-candy-line/80 focus:outline-none focus:border-candy-ink focus:ring-2 focus:ring-candy-berry/15 transition-all"
             />
           </div>
         </form>

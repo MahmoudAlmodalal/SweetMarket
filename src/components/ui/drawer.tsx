@@ -223,7 +223,7 @@ export const DrawerContent = React.forwardRef<
       <div className="fixed inset-0 z-50 flex" dir="rtl">
         {/* Backdrop with blur-md and confectionery fade */}
         <div
-          className="fixed inset-0 bg-candy-ink/50 backdrop-blur-md transition-opacity duration-300 animate-[fade-in_0.2s_ease-out] motion-reduce:transition-none"
+          className="fixed inset-0 bg-candy-ink/50  transition-opacity duration-300 animate-[fade-in_0.2s_ease-out] motion-reduce:transition-none"
           aria-hidden="true"
           onClick={() => setOpen(false)}
         />
@@ -244,7 +244,7 @@ export const DrawerContent = React.forwardRef<
           aria-describedby={descriptionId}
           tabIndex={-1}
           className={cn(
-            "fixed z-10 flex flex-col bg-white shadow-candy-3 outline-none transition-transform duration-300 ease-candy-ease overflow-hidden",
+            "fixed z-10 flex flex-col bg-candy-cream shadow-candy-3 outline-none transition-transform duration-300 ease-candy-ease overflow-hidden",
             sideStyles[side],
             className
           )}

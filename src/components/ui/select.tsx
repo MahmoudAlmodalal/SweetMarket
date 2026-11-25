@@ -68,7 +68,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             className={cn(
               "w-full h-12 pr-4 pl-10 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none appearance-none cursor-pointer shadow-xs",
               "hover:border-candy-line-dark/60 hover:bg-candy-soft/80",
-              "focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20",
+              "focus:bg-candy-cream focus:border-primary focus:ring-2 focus:ring-primary/20",
               "focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20",
               error &&
                 "border-rose-500 bg-rose-50/40 text-candy-ink focus:border-rose-600 focus:ring-rose-500/20 focus-visible:border-rose-600 focus-visible:ring-rose-500/20 shadow-[0_0_0_1px_rgba(244,63,94,0.1)]",
@@ -79,7 +79,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {...props}
           >
             {placeholder && (
-              <option value="" disabled className="text-candy-muted bg-white font-sans">
+              <option value="" disabled className="text-candy-muted bg-candy-cream font-sans">
                 {placeholder}
               </option>
             )}
@@ -89,7 +89,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
                     key={opt.value}
                     value={opt.value}
                     disabled={opt.disabled}
-                    className="py-2 text-candy-ink bg-white font-sans"
+                    className="py-2 text-candy-ink bg-candy-cream font-sans"
                   >
                     {opt.label}
                   </option>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export type StoreLogoVariant =
@@ -70,54 +69,42 @@ const LOGO_PATHS: Record<
 export function StoreLogo({
   variant = "main",
   className,
-  width,
   height,
-  priority = false,
   alt,
 }: StoreLogoProps) {
   const logoConfig = LOGO_PATHS[variant] || LOGO_PATHS.main;
-  const iconSize = Math.min(height ?? logoConfig.defaultSize, 56);
+  const size = Math.min(variant === "main" ? height ?? 40 : logoConfig.defaultSize, 56);
 
-  if (variant === "main") {
+  const mark = (
+    <span
+      role="img"
+      aria-label={alt || logoConfig.defaultAlt}
+      style={{ width: size, height: size, fontSize: size * 0.6 }}
+      className="shrink-0 bg-[#1B1A17] text-[#F2B632] font-display font-bold flex items-center justify-center border-2 border-candy-ink shadow-[2px_2px_0_#C2431F] leading-none"
+    >
+      ك
+    </span>
+  );
+
+  if (variant !== "main") {
     return (
-      <div
-        className={cn(
-          "inline-flex items-center gap-2.5 shrink-0 select-none",
-          className
-        )}
-      >
-        <Image
-          src={logoConfig.src}
-          alt={alt || logoConfig.defaultAlt}
-          width={iconSize}
-          height={iconSize}
-          priority={priority}
-          className="rounded-full shrink-0 border border-candy-line/80 bg-white"
-        />
-        <div className="flex flex-col text-right leading-none">
-          <span className="font-display font-bold text-lg sm:text-xl text-candy-ink tracking-tight whitespace-nowrap">
-            كاندي لوز
-          </span>
-          <span className="font-sans text-[9px] font-semibold tracking-[0.2em] text-candy-berry uppercase mt-1 whitespace-nowrap">
-            CANDY LOZ
-          </span>
-        </div>
+      <div className={cn("inline-flex items-center justify-center shrink-0", className)}>
+        {mark}
       </div>
     );
   }
 
-  const size = Math.min(width ?? height ?? logoConfig.defaultSize, 80);
-
   return (
-    <div className={cn("inline-flex items-center justify-center shrink-0", className)}>
-      <Image
-        src={logoConfig.src}
-        alt={alt || logoConfig.defaultAlt}
-        width={size}
-        height={size}
-        priority={priority}
-        className="select-none rounded-full"
-      />
+    <div className={cn("inline-flex items-center gap-2.5 shrink-0 select-none", className)}>
+      {mark}
+      <div className="flex flex-col text-right leading-none">
+        <span className="font-display font-bold text-xl text-candy-ink whitespace-nowrap">
+          كاندي لوز
+        </span>
+        <span className="font-sans text-[10px] font-bold tracking-[0.2em] text-[#C2431F] uppercase mt-1 whitespace-nowrap">
+          CANDY LOZ
+        </span>
+      </div>
     </div>
   );
 }

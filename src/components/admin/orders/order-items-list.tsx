@@ -34,7 +34,7 @@ export function OrderItemsList({
   );
 
   return (
-    <Card className={cn('bg-white border border-candy-line shadow-candy-1', className)}>
+    <Card className={cn('bg-candy-cream border border-candy-line shadow-candy-1', className)}>
       <CardHeader className="pb-3 border-b border-candy-line/60 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center">

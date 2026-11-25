@@ -114,7 +114,7 @@ export function NotFoundRecovery() {
           <div className="relative">
             {/* Outer pulsating decorative confectionery halo */}
             <div
-              className="absolute -inset-4 rounded-full bg-gradient-to-tr from-candy-blush/60 via-candy-strawberry/20 to-candy-pastel-2/40 blur-xl animate-pulse"
+              className="absolute -inset-4 rounded-full bg-candy-cream blur-xl animate-pulse"
               aria-hidden="true"
             />
 
@@ -127,14 +127,14 @@ export function NotFoundRecovery() {
             </div>
 
             <div
-              className="absolute -bottom-2 -left-3 w-8 h-8 rounded-full bg-white border border-candy-line shadow-xs flex items-center justify-center text-amber-500 animate-pulse"
+              className="absolute -bottom-2 -left-3 w-8 h-8 rounded-full bg-candy-cream border border-candy-line shadow-xs flex items-center justify-center text-amber-500 animate-pulse"
               aria-hidden="true"
             >
               <Cookie className="w-4 h-4 text-amber-600" />
             </div>
 
             {/* Center confectionery icon badge with sweet styling */}
-            <div className="relative w-32 h-32 rounded-full bg-white border-2 border-candy-blush shadow-candy-2 flex items-center justify-center text-candy-berry group transition-all duration-300 hover:scale-105 hover:shadow-candy-cta">
+            <div className="relative w-32 h-32 rounded-full bg-candy-cream border-2 border-candy-ink shadow-candy-2 flex items-center justify-center text-candy-berry group transition-all duration-300 hover:scale-105 hover:shadow-candy-cta">
               {/* Sweet cake & candy centerpiece */}
               <div className="relative flex items-center justify-center">
                 <Candy className="w-16 h-16 text-candy-berry transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
@@ -149,7 +149,7 @@ export function NotFoundRecovery() {
           </div>
 
           {/* 404 Status Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-candy-pill bg-white border border-candy-line shadow-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-candy-pill bg-candy-cream border border-candy-line shadow-xs">
             <span className="font-display font-bold text-sm sm:text-base text-candy-berry tracking-wider">
               404
             </span>
@@ -209,7 +209,7 @@ export function NotFoundRecovery() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="ابحث عن حلوى، تصنيف، أو طلب..."
                 aria-label="ابحث عن حلوى، تصنيف، أو طلب..."
-                className="w-full min-h-[48px] rounded-candy-pill border border-candy-line bg-white pr-11 pl-4 text-sm text-candy-ink placeholder:text-candy-muted/80 shadow-xs transition-all focus:border-candy-strawberry focus:outline-none focus:ring-2 focus:ring-candy-strawberry/20"
+                className="w-full min-h-[48px] rounded-candy-pill border border-candy-line bg-candy-cream pr-11 pl-4 text-sm text-candy-ink placeholder:text-candy-muted/80 shadow-xs transition-all focus:border-candy-strawberry focus:outline-none focus:ring-2 focus:ring-candy-strawberry/20"
               />
             </div>
             <button
@@ -234,7 +234,7 @@ export function NotFoundRecovery() {
                 <Link
                   key={pick.query}
                   href={`/category/all?q=${encodeURIComponent(pick.query)}`}
-                  className="inline-flex items-center justify-center gap-1 min-h-[48px] px-4 py-2.5 rounded-candy-pill bg-white text-candy-berry border border-candy-line/80 hover:border-candy-blush hover:bg-candy-soft text-xs sm:text-sm font-medium shadow-xs transition-all active:scale-95"
+                  className="inline-flex items-center justify-center gap-1 min-h-[48px] px-4 py-2.5 rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line/80 hover:border-candy-ink hover:bg-candy-soft text-xs sm:text-sm font-medium shadow-xs transition-all active:scale-95"
                 >
                   <span>{pick.label}</span>
                 </Link>
@@ -264,7 +264,7 @@ export function NotFoundRecovery() {
           <button
             type="button"
             onClick={handleGoBack}
-            className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 text-sm font-sans font-semibold rounded-candy-pill bg-white text-candy-berry border border-candy-line/80 hover:border-candy-blush hover:bg-candy-soft shadow-xs active:scale-95 transition-all duration-200 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 text-sm font-sans font-semibold rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line/80 hover:border-candy-ink hover:bg-candy-soft shadow-xs active:scale-95 transition-all duration-200 w-full sm:w-auto"
           >
             <ArrowRight
               className="w-4 h-4 text-candy-rose shrink-0"
@@ -282,7 +282,7 @@ export function NotFoundRecovery() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full max-w-lg mx-auto">
             <Link
               href="/category/all"
-              className="inline-flex items-center justify-between sm:justify-center gap-2.5 min-h-[48px] px-5 py-3 rounded-candy-pill bg-white text-candy-berry border border-candy-line/80 hover:border-candy-blush hover:bg-candy-soft text-sm font-semibold transition-all shadow-xs active:scale-95"
+              className="inline-flex items-center justify-between sm:justify-center gap-2.5 min-h-[48px] px-5 py-3 rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line/80 hover:border-candy-ink hover:bg-candy-soft text-sm font-semibold transition-all shadow-xs active:scale-95"
             >
               <span>تشكيلة الحلويات</span>
               <ArrowLeft
@@ -292,7 +292,7 @@ export function NotFoundRecovery() {
             </Link>
             <Link
               href="/track"
-              className="inline-flex items-center justify-between sm:justify-center gap-2.5 min-h-[48px] px-5 py-3 rounded-candy-pill bg-white text-candy-berry border border-candy-line/80 hover:border-candy-blush hover:bg-candy-soft text-sm font-semibold transition-all shadow-xs active:scale-95"
+              className="inline-flex items-center justify-between sm:justify-center gap-2.5 min-h-[48px] px-5 py-3 rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line/80 hover:border-candy-ink hover:bg-candy-soft text-sm font-semibold transition-all shadow-xs active:scale-95"
             >
               <span>تتبع طلبك</span>
               <ArrowLeft
@@ -302,7 +302,7 @@ export function NotFoundRecovery() {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-between sm:justify-center gap-2.5 min-h-[48px] px-5 py-3 rounded-candy-pill bg-white text-candy-berry border border-candy-line/80 hover:border-candy-blush hover:bg-candy-soft text-sm font-semibold transition-all shadow-xs active:scale-95"
+              className="inline-flex items-center justify-between sm:justify-center gap-2.5 min-h-[48px] px-5 py-3 rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line/80 hover:border-candy-ink hover:bg-candy-soft text-sm font-semibold transition-all shadow-xs active:scale-95"
             >
               <span>تواصل معنا</span>
               <ArrowLeft

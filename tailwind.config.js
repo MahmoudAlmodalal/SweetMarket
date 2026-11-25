@@ -8,6 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        rose: {50: '#FBEDE7', 100: '#F6D9CD', 200: '#EDB8A3', 300: '#E0937A', 400: '#D06C4C', 500: '#C2431F', 600: '#A93718', 700: '#8A2D14', 800: '#6E2410', 900: '#4F190B'},
+        emerald: {50: '#E8F0E6', 100: '#D3E3D0', 200: '#B1CDAB', 300: '#86AF7F', 400: '#4F8A5E', 500: '#2F7050', 600: '#1F5C45', 700: '#174A37', 800: '#12382A', 900: '#0E2C21'},
+        stone: {50: '#F6F0E4', 100: '#EFE5D2', 200: '#D9CBB0', 300: '#BFB093', 400: '#8F8571', 500: '#6C6455', 600: '#544D40', 700: '#3E382E', 800: '#2B2721', 900: '#1B1A17'},
+        amber: {50: '#FDF4DA', 100: '#FBE6A8', 200: '#F8D575', 300: '#F5C651', 400: '#F2B632', 500: '#DCA21F', 600: '#B8820F', 700: '#8F650B', 800: '#6F4E0A', 900: '#4F3708'},
         background: 'var(--color-bg)',
         foreground: 'var(--color-text)',
         primary: {
@@ -118,6 +122,7 @@ module.exports = {
         pill: 'var(--radius-pill)',
       },
       boxShadow: {
+        sm: '1px 1px 0 #1B1A17', DEFAULT: '2px 2px 0 #1B1A17', md: '3px 3px 0 #1B1A17', lg: '4px 4px 0 #1B1A17', xl: '5px 5px 0 #1B1A17', '2xl': '6px 6px 0 #1B1A17',
         'candy-1': 'var(--shadow-1)',
         'candy-2': 'var(--shadow-2)',
         'candy-3': 'var(--shadow-3)',

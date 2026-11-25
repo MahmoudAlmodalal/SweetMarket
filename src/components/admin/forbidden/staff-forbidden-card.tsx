@@ -51,10 +51,10 @@ export function StaffForbiddenCard({
       <div className="w-full max-w-lg mx-auto" dir="rtl">
         <Card
           elevation="md"
-          className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-3xl"
+          className="border-candy-line/80 shadow-candy-2 bg-candy-cream overflow-hidden text-center rounded-3xl"
         >
           {/* شريط الإشعاع التنبيهي */}
-          <div className="h-1.5 bg-gradient-to-l from-rose-500 via-candy-berry to-amber-500" aria-hidden="true" />
+          <div className="h-1.5 bg-candy-cream" aria-hidden="true" />
 
           <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
             {/* 403 Icon */}
@@ -81,7 +81,7 @@ export function StaffForbiddenCard({
           <CardContent className="p-6 sm:p-8 space-y-5">
             {/* Identity Box: separate fullName, separate jobTitle, and Arabic role badge */}
             <div
-              className="p-4 rounded-2xl bg-candy-soft/80 border border-candy-blush text-right shadow-2xs"
+              className="p-4 rounded-2xl bg-candy-soft/80 border border-candy-ink text-right shadow-2xs"
               role="region"
               aria-label="بيانات المستخدم الحالي"
             >
@@ -122,7 +122,7 @@ export function StaffForbiddenCard({
                 <Shield className="w-4 h-4 text-candy-berry shrink-0" aria-hidden="true" />
                 <span className="font-medium">الصلاحية المطلوبة للوصول:</span>
               </div>
-              <span className="font-bold text-candy-ink bg-white px-3 py-1 rounded-xl border border-candy-line shadow-xs font-display">
+              <span className="font-bold text-candy-ink bg-candy-cream px-3 py-1 rounded-xl border border-candy-line shadow-xs font-display">
                 مدير النظام
               </span>
             </div>
@@ -146,7 +146,7 @@ export function StaffForbiddenCard({
                 size="lg"
                 onClick={() => setIsRequestDialogOpen(true)}
                 leftIcon={<KeyRound className="w-4 h-4 text-candy-berry" />}
-                className="w-full sm:flex-1 font-display min-h-[48px] border-candy-blush hover:bg-candy-soft font-bold"
+                className="w-full sm:flex-1 font-display min-h-[48px] border-candy-ink hover:bg-candy-soft font-bold"
               >
                 طلب صلاحية الوصول
               </Button>

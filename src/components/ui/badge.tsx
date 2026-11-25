@@ -47,19 +47,19 @@ const badgeVariants: Record<BadgeVariant, string> = {
 };
 
 const badgeDots: Record<BadgeVariant, string> = {
-  new: "bg-white",
-  accepted: "bg-white",
+  new: "bg-candy-cream",
+  accepted: "bg-candy-cream",
   in_preparation: "bg-status-preparing-text",
-  out_for_delivery: "bg-white",
-  delivered: "bg-white",
-  undelivered: "bg-white",
-  cancelled: "bg-white",
-  success: "bg-white",
-  warning: "bg-white",
-  danger: "bg-white",
+  out_for_delivery: "bg-candy-cream",
+  delivered: "bg-candy-cream",
+  undelivered: "bg-candy-cream",
+  cancelled: "bg-candy-cream",
+  success: "bg-candy-cream",
+  warning: "bg-candy-cream",
+  danger: "bg-candy-cream",
   muted: "bg-candy-muted",
   bestseller: "bg-amber-500",
-  discount: "bg-white",
+  discount: "bg-candy-cream",
   tag: "bg-primary",
 };
 

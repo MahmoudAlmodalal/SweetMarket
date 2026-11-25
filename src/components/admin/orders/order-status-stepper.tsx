@@ -124,7 +124,7 @@ export function OrderStatusStepper({
   return (
     <div
       className={cn(
-        'bg-white border border-candy-line rounded-candy-card p-4 sm:p-6 shadow-candy-1',
+        'bg-candy-cream border border-candy-line rounded-candy-card p-4 sm:p-6 shadow-candy-1',
         className
       )}
       aria-label="مسار معالجة حالة الطلب"

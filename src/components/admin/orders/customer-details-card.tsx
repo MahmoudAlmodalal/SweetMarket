@@ -68,7 +68,7 @@ export function CustomerDetailsCard({
   };
 
   return (
-    <Card className={cn('bg-white border border-candy-line shadow-candy-1', className)}>
+    <Card className={cn('bg-candy-cream border border-candy-line shadow-candy-1', className)}>
       <CardHeader className="pb-3 border-b border-candy-line/60">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center">
@@ -115,7 +115,7 @@ export function CustomerDetailsCard({
                 type="button"
                 onClick={handleCopyPhone}
                 title="نسخ رقم الهاتف"
-                className="p-1.5 rounded-lg border border-candy-line bg-white hover:bg-candy-soft text-candy-muted hover:text-candy-ink transition-colors"
+                className="p-1.5 rounded-lg border border-candy-line bg-candy-cream hover:bg-candy-soft text-candy-muted hover:text-candy-ink transition-colors"
                 aria-label="نسخ رقم الهاتف"
               >
                 {copied ? (
@@ -129,7 +129,7 @@ export function CustomerDetailsCard({
               <a
                 href={`tel:${cleanPhone}`}
                 title="اتصال هاتفي مباشر"
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white border border-candy-line text-xs font-bold text-candy-berry hover:bg-candy-blush hover:border-candy-rose transition-colors"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-candy-cream border border-candy-line text-xs font-bold text-candy-berry hover:bg-candy-blush hover:border-candy-rose transition-colors"
               >
                 <Phone className="w-3.5 h-3.5" />
                 <span>اتصال</span>

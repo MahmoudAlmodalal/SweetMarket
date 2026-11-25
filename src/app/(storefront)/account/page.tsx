@@ -269,9 +269,9 @@ export default function AccountPage() {
       </nav>
 
       {/* Header Banner */}
-      <header className="rounded-candy-section bg-gradient-to-br from-candy-soft via-candy-blush/30 to-candy-pastel-2/30 border border-candy-blush p-5 sm:p-8 shadow-candy-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <header className="bg-[#F2B632] border-2 border-candy-ink shadow-[6px_6px_0_#1B1A17] rounded-none p-5 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-white text-candy-berry flex items-center justify-center shadow-sm shrink-0 border border-candy-blush">
+          <div className="w-14 h-14 rounded-full bg-candy-cream text-candy-berry flex items-center justify-center shadow-sm shrink-0 border border-candy-ink">
             <UserRound className="w-7 h-7 text-candy-strawberry" />
           </div>
           <div>
@@ -296,7 +296,7 @@ export default function AccountPage() {
       {/* Main Grid: Profile & Orders */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
         {/* Saved Delivery Profile Section */}
-        <section className="lg:col-span-5 rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-5 sm:p-6">
+        <section className="lg:col-span-5 rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3 mb-5">
             <div className="flex items-center gap-2">
               <UserRound className="w-5 h-5 text-candy-strawberry" />
@@ -418,7 +418,7 @@ export default function AccountPage() {
         </section>
 
         {/* Orders List & Interactive Lookup Section */}
-        <section className="lg:col-span-7 rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-5 sm:p-6 space-y-5">
+        <section className="lg:col-span-7 rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-5 sm:p-6 space-y-5">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
               <Package className="w-5 h-5 text-candy-strawberry" />
@@ -611,7 +611,7 @@ export default function AccountPage() {
                       </Button>
                       <Link
                         href={`/track?order=${encodeURIComponent(ord.orderNumber)}`}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-white border border-candy-line hover:border-candy-berry text-candy-berry text-xs font-bold shadow-xs transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-candy-cream border border-candy-line hover:border-candy-berry text-candy-berry text-xs font-bold shadow-xs transition-colors"
                       >
                         <Truck className="w-3.5 h-3.5 text-candy-strawberry" />
                         <span>تتبع الطلب</span>
@@ -641,7 +641,7 @@ export default function AccountPage() {
                     setSearchQuery("");
                     setStatusFilter("all");
                   }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-candy-pill bg-white border border-candy-line hover:border-candy-berry text-candy-berry text-xs font-bold transition-all shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-candy-pill bg-candy-cream border border-candy-line hover:border-candy-berry text-candy-berry text-xs font-bold transition-all shadow-xs"
                 >
                   <span>إعادة ضبط البحث وعرض الكل</span>
                 </button>
@@ -655,7 +655,7 @@ export default function AccountPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Link
           href="/favorites"
-          className="rounded-2xl bg-white border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
+          className="rounded-2xl bg-candy-cream border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-blush text-candy-strawberry flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -677,7 +677,7 @@ export default function AccountPage() {
 
         <Link
           href="/cart"
-          className="rounded-2xl bg-white border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
+          className="rounded-2xl bg-candy-cream border border-candy-line p-4 flex items-center justify-between hover:border-candy-rose hover:shadow-candy-1 transition-all group"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-soft text-candy-berry flex items-center justify-center group-hover:scale-110 transition-transform">

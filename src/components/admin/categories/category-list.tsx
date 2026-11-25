@@ -52,7 +52,7 @@ export function CategoryList({
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="p-4 rounded-2xl bg-white border border-candy-line shadow-candy-1 flex items-center justify-between gap-4 animate-pulse"
+            className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-candy-1 flex items-center justify-between gap-4 animate-pulse"
           >
             <div className="flex items-center gap-3.5">
               <Skeleton className="w-10 h-10 rounded-xl" />
@@ -75,8 +75,8 @@ export function CategoryList({
   // حالة القائمة الفارغة (Empty State)
   if (categories.length === 0) {
     return (
-      <div className="text-center py-16 px-4 rounded-3xl bg-white border border-candy-line/80 shadow-candy-1">
-        <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4 shadow-xs">
+      <div className="text-center py-16 px-4 rounded-3xl bg-candy-cream border border-candy-line/80 shadow-candy-1">
+        <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center mx-auto mb-4 shadow-xs">
           <Layers className="w-8 h-8" aria-hidden="true" />
         </div>
         <h3 className="font-display font-bold text-lg text-candy-ink mb-1">
@@ -118,9 +118,9 @@ export function CategoryList({
             key={cat.id}
             role="listitem"
             className={cn(
-              'group p-3.5 sm:p-4 rounded-2xl bg-white border transition-all duration-200 shadow-candy-1 hover:shadow-candy-soft flex flex-col md:flex-row md:items-center justify-between gap-4',
+              'group p-3.5 sm:p-4 rounded-2xl bg-candy-cream border transition-all duration-200 shadow-candy-1 hover:shadow-candy-soft flex flex-col md:flex-row md:items-center justify-between gap-4',
               cat.isActive
-                ? 'border-candy-line/80 hover:border-candy-blush'
+                ? 'border-candy-line/80 hover:border-candy-ink'
                 : 'border-candy-line/60 bg-gray-50/70 opacity-90'
             )}
           >
@@ -195,7 +195,7 @@ export function CategoryList({
                     className={cn(
                       'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-candy-pill text-[11px] font-sans font-semibold border',
                       hasProducts
-                        ? 'bg-candy-soft text-candy-berry border-candy-blush'
+                        ? 'bg-candy-soft text-candy-berry border-candy-ink'
                         : 'bg-amber-50 text-amber-700 border-amber-200'
                     )}
                   >

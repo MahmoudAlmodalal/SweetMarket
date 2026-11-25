@@ -102,7 +102,7 @@ export function AccessRequestDialog({
               </div>
               <div className="flex justify-between items-center pt-2 border-t border-candy-line/40">
                 <span className="text-candy-muted">الصلاحية المطلوبة:</span>
-                <span className="font-bold text-candy-ink bg-white px-2 py-0.5 rounded border border-candy-line">
+                <span className="font-bold text-candy-ink bg-candy-cream px-2 py-0.5 rounded border border-candy-line">
                   مدير النظام
                 </span>
               </div>

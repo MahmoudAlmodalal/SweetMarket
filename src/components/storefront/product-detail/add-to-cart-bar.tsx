@@ -69,7 +69,7 @@ export function AddToCartBar({
       {(layout === "inline" || layout === "both") && (
         <div
           className={cn(
-            "hidden md:flex flex-col gap-3 rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-candy-2 transition-shadow duration-300 hover:shadow-candy-3",
+            "hidden md:flex flex-col gap-3 rounded-2xl bg-candy-cream p-4 sm:p-5 border border-candy-line/80 shadow-candy-2 transition-shadow duration-300 hover:shadow-candy-3",
             className
           )}
         >
@@ -138,7 +138,7 @@ export function AddToCartBar({
           aria-label="الشريط السريع للإضافة إلى السلة"
           className="fixed bottom-[calc(5.6rem+env(safe-area-inset-bottom))] inset-x-3 sm:inset-x-6 z-50 md:hidden animate-in slide-in-from-bottom-4 duration-300"
         >
-          <div className="mx-auto max-w-md p-2.5 sm:p-3 bg-white/95 backdrop-blur-xl rounded-candy-card border border-candy-line/90 shadow-candy-dock flex items-center justify-between gap-3">
+          <div className="mx-auto max-w-md p-2.5 sm:p-3 bg-white/95  rounded-candy-card border border-candy-line/90 shadow-candy-dock flex items-center justify-between gap-3">
             {/* Instant Price Calculation Column */}
             <div className="flex flex-col shrink-0 px-2 min-w-[85px]">
               <span className="font-sans text-[10px] text-candy-muted font-bold">

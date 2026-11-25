@@ -52,7 +52,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="واتساب"
-                  className="w-9 h-9 rounded-xl bg-white border border-candy-line/80 text-candy-ink/75 hover:text-[#1E9E52] hover:border-[#1E9E52]/40 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-xl bg-candy-cream border border-candy-line/80 text-candy-ink/75 hover:text-[#1E9E52] hover:border-[#1E9E52]/40 flex items-center justify-center transition-colors"
                 >
                   <MessageCircle className="w-4 h-4" />
                 </a>
@@ -61,7 +61,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="إنستغرام"
-                  className="w-9 h-9 rounded-xl bg-white border border-candy-line/80 text-candy-ink/75 hover:text-candy-berry hover:border-candy-berry/40 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-xl bg-candy-cream border border-candy-line/80 text-candy-ink/75 hover:text-candy-berry hover:border-candy-ink flex items-center justify-center transition-colors"
                 >
                   <Instagram className="w-4 h-4" />
                 </a>
@@ -70,14 +70,14 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="فيسبوك"
-                  className="w-9 h-9 rounded-xl bg-white border border-candy-line/80 text-candy-ink/75 hover:text-candy-berry hover:border-candy-berry/40 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-xl bg-candy-cream border border-candy-line/80 text-candy-ink/75 hover:text-candy-berry hover:border-candy-ink flex items-center justify-center transition-colors"
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
                 <a
                   href={`tel:${STORE_PHONE_INTL}`}
                   aria-label={`اتصال هاتفي: ${STORE_PHONE_INTL}`}
-                  className="w-9 h-9 rounded-xl bg-white border border-candy-line/80 text-candy-ink/75 hover:text-candy-berry hover:border-candy-berry/40 flex items-center justify-center transition-colors"
+                  className="w-9 h-9 rounded-xl bg-candy-cream border border-candy-line/80 text-candy-ink/75 hover:text-candy-berry hover:border-candy-ink flex items-center justify-center transition-colors"
                 >
                   <Phone className="w-4 h-4" />
                 </a>

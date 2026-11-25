@@ -361,7 +361,7 @@ export default function CheckoutPage() {
 
           <Link
             href="/cart"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-white px-3.5 py-2 rounded-xl border border-candy-line"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-candy-cream px-3.5 py-2 rounded-xl border border-candy-line"
           >
             <ArrowRight className="w-4 h-4" />
             <span>العودة لتعديل السلة</span>
@@ -370,7 +370,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* 2. Stepper & Security Seal Context */}
-      <section className="w-full rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-xs">
+      <section className="w-full rounded-2xl bg-candy-cream p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2 text-candy-ink">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />

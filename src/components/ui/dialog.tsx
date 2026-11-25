@@ -199,7 +199,7 @@ export const DialogContent = React.forwardRef<
     >
       {/* Backdrop with blur-md and confectionery fade */}
       <div
-        className="fixed inset-0 bg-candy-ink/50 backdrop-blur-md transition-opacity duration-300 animate-[fade-in_0.2s_ease-out] motion-reduce:transition-none"
+        className="fixed inset-0 bg-candy-ink/50  transition-opacity duration-300 animate-[fade-in_0.2s_ease-out] motion-reduce:transition-none"
         aria-hidden="true"
         onClick={() => setOpen(false)}
       />
@@ -220,7 +220,7 @@ export const DialogContent = React.forwardRef<
         aria-describedby={descriptionId}
         tabIndex={-1}
         className={cn(
-          "relative z-10 w-full max-w-lg rounded-candy-card bg-white p-6 shadow-candy-3 border border-candy-line/80 outline-none transition-all duration-300 ease-out transform animate-[modal-in_0.25s_cubic-bezier(0.16,1,0.3,1)] motion-reduce:animate-none",
+          "relative z-10 w-full max-w-lg rounded-candy-card bg-candy-cream p-6 shadow-candy-3 border border-candy-line/80 outline-none transition-all duration-300 ease-out transform animate-[modal-in_0.25s_cubic-bezier(0.16,1,0.3,1)] motion-reduce:animate-none",
           className
         )}
         {...props}

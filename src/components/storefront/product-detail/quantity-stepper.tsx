@@ -80,7 +80,7 @@ export function QuantityStepper({
         disabled={isMin}
         onClick={handleDecrement}
         className={cn(
-          "rounded-full bg-white text-candy-berry flex items-center justify-center font-bold shadow-sm transition-all duration-150 ease-out",
+          "rounded-full bg-candy-cream text-candy-berry flex items-center justify-center font-bold shadow-sm transition-all duration-150 ease-out",
           "hover:bg-candy-soft/80 active:scale-85 active:shadow-inner focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry",
           "disabled:opacity-35 disabled:cursor-not-allowed disabled:active:scale-100 disabled:shadow-none",
           sizeClasses.btn

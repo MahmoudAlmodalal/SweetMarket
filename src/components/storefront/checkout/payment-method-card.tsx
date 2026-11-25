@@ -29,7 +29,7 @@ export function PaymentMethodCard({
   return (
     <Card
       className={cn(
-        "overflow-hidden border-candy-line/80 shadow-candy-1 rounded-candy-card bg-white transition-all duration-200",
+        "overflow-hidden border-candy-line/80 shadow-candy-1 rounded-candy-card bg-candy-cream transition-all duration-200",
         className
       )}
     >
@@ -49,7 +49,7 @@ export function PaymentMethodCard({
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-white border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-cream border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             <span>دفع آمن 100%</span>
           </span>
@@ -70,14 +70,14 @@ export function PaymentMethodCard({
           }}
           className={cn(
             "relative p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 cursor-pointer select-none",
-            "border-candy-berry bg-gradient-to-br from-candy-blush/25 via-candy-soft/50 to-white shadow-xs ring-2 ring-candy-berry/10",
+            "border-candy-berry bg-candy-cream shadow-xs ring-2 ring-candy-berry/10",
             "hover:shadow-candy-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry"
           )}
         >
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-3.5">
               {/* Radio Indicator */}
-              <div className="w-5 h-5 rounded-full border-2 border-candy-berry flex items-center justify-center mt-0.5 bg-white shrink-0 shadow-xs">
+              <div className="w-5 h-5 rounded-full border-2 border-candy-berry flex items-center justify-center mt-0.5 bg-candy-cream shrink-0 shadow-xs">
                 <div className="w-2.5 h-2.5 rounded-full bg-candy-berry animate-in zoom-in duration-200" />
               </div>
 
@@ -96,7 +96,7 @@ export function PaymentMethodCard({
               </div>
             </div>
 
-            <div className="w-11 h-11 rounded-2xl bg-candy-berry/10 text-candy-berry flex items-center justify-center shrink-0 border border-candy-berry/15">
+            <div className="w-11 h-11 rounded-2xl bg-candy-berry/10 text-candy-berry flex items-center justify-center shrink-0 border border-candy-ink">
               <Banknote className="w-6 h-6" />
             </div>
           </div>
@@ -128,7 +128,7 @@ export function PaymentMethodCard({
               قريباً: إمكانية الدفع المباشر عبر المحافظ الإلكترونية الفلسطينية (Jawwal Pay & PalPay)
             </span>
           </div>
-          <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-candy-line text-candy-berry font-bold shrink-0 shadow-xs">
+          <span className="text-[10px] bg-candy-cream px-2 py-0.5 rounded-full border border-candy-line text-candy-berry font-bold shrink-0 shadow-xs">
             قريباً ⚡
           </span>
         </div>

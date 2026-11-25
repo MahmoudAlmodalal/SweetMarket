@@ -28,10 +28,10 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
     <div className="w-full max-w-lg mx-auto" dir="rtl">
       <Card
         elevation="md"
-        className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-3xl"
+        className="border-candy-line/80 shadow-candy-2 bg-candy-cream overflow-hidden text-center rounded-3xl"
       >
         {/* شريط الإشعاع العلوي */}
-        <div className="h-1.5 bg-gradient-to-l from-amber-500 via-candy-amber to-candy-berry" aria-hidden="true" />
+        <div className="h-1.5 bg-candy-cream" aria-hidden="true" />
 
         <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
           {/* Lock Icon */}
@@ -101,7 +101,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
               size="lg"
               onClick={handleStorefrontClick}
               leftIcon={<Store className="w-4 h-4 text-candy-berry" />}
-              className="w-full sm:flex-1 font-display min-h-[48px] border-candy-blush hover:bg-candy-soft font-bold"
+              className="w-full sm:flex-1 font-display min-h-[48px] border-candy-ink hover:bg-candy-soft font-bold"
             >
               العودة لواجهة المتجر الرئيسية
             </Button>

@@ -101,11 +101,11 @@ function SidebarContent({
     });
 
   return (
-    <div className="flex flex-col h-full bg-white select-none relative">
+    <div className="flex flex-col h-full bg-candy-cream select-none relative">
       {/* Brand Header */}
       <div
         className={cn(
-          'h-16 px-4 border-b border-candy-line/60 flex items-center justify-between shrink-0 bg-white transition-all',
+          'h-16 px-4 border-b border-candy-line/60 flex items-center justify-between shrink-0 bg-candy-cream transition-all',
           isCollapsed && !isMobile ? 'justify-center px-2' : 'justify-between px-4 sm:px-5'
         )}
       >
@@ -233,7 +233,7 @@ function SidebarContent({
                             'text-[10px] px-2 py-0.5 rounded-full font-bold',
                             isActive
                               ? 'bg-white/20 text-white'
-                              : 'bg-candy-soft text-candy-berry border border-candy-blush'
+                              : 'bg-candy-soft text-candy-berry border border-candy-ink'
                           )}
                         >
                           مدير
@@ -318,7 +318,7 @@ function SidebarContent({
       >
         <div
           className={cn(
-            'rounded-2xl bg-white border border-candy-line/80 shadow-sm transition-all',
+            'rounded-2xl bg-candy-cream border border-candy-line/80 shadow-sm transition-all',
             isCollapsed && !isMobile ? 'p-2 flex flex-col items-center gap-2' : 'p-3 space-y-2.5'
           )}
         >
@@ -364,7 +364,7 @@ function SidebarContent({
                 className={cn(
                   'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold font-sans shrink-0 border shadow-xs',
                   role === 'manager'
-                    ? 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-950 border-amber-300'
+                    ? 'bg-candy-cream text-amber-950 border-amber-300'
                     : 'bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-950 border-teal-300'
                 )}
               >
@@ -413,7 +413,7 @@ export function AdminSidebar({ isOpen = false, onClose, className }: AdminSideba
       <aside
         aria-label="القائمة الجانبية لإدارة المتجر"
         className={cn(
-          'hidden lg:flex flex-col bg-white border-l border-candy-line h-screen sticky top-0 shrink-0 z-20 transition-all duration-300 ease-candy-ease',
+          'hidden lg:flex flex-col bg-candy-cream border-l border-candy-line h-screen sticky top-0 shrink-0 z-20 transition-all duration-300 ease-candy-ease',
           isCollapsed ? 'w-20' : 'w-64 xl:w-72',
           className
         )}
@@ -433,13 +433,13 @@ export function AdminSidebar({ isOpen = false, onClose, className }: AdminSideba
           <div
             onClick={onClose}
             aria-hidden="true"
-            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 z-50"
+            className="fixed inset-0 bg-slate-900/50  transition-opacity duration-300 z-50"
           />
 
           {/* Off-canvas sidebar */}
           <aside
             aria-label="القائمة الجانبية المتنقلة"
-            className="fixed inset-y-0 right-0 z-50 w-72 bg-white shadow-candy-3 flex flex-col transition-transform duration-300 ease-candy-ease"
+            className="fixed inset-y-0 right-0 z-50 w-72 bg-candy-cream shadow-candy-3 flex flex-col transition-transform duration-300 ease-candy-ease"
           >
             <SidebarContent isMobile onClose={onClose} />
           </aside>

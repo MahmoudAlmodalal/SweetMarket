@@ -329,7 +329,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
   // فحص الصلاحيات (RBAC): نموذج الإضافة والتعديل مخصص للمدير فقط
   if (!isManager) {
     return (
-      <div className="bg-white p-8 rounded-candy-card border border-rose-200 text-center space-y-4 shadow-candy-1 max-w-xl mx-auto my-8">
+      <div className="bg-candy-cream p-8 rounded-candy-card border border-rose-200 text-center space-y-4 shadow-candy-1 max-w-xl mx-auto my-8">
         <div className="w-16 h-16 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 mx-auto">
           <Lock className="w-8 h-8" />
         </div>
@@ -483,7 +483,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
               <span className="text-candy-ink">
                 نسبة التوفير للزبون:
               </span>
-              <span className="font-bold text-candy-strawberry px-3 py-1 rounded-candy-pill bg-white shadow-sm">
+              <span className="font-bold text-candy-strawberry px-3 py-1 rounded-candy-pill bg-candy-cream shadow-sm">
                 توفير {Math.round(((parseFloat(price) - parseFloat(salePrice)) / parseFloat(price)) * 100)}%
               </span>
             </div>
@@ -558,7 +558,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                       value={w.label}
                       onChange={(e) => handleUpdateWeight(index, 'label', e.target.value)}
                       placeholder="مثال: نصف كيلو (500 جم)"
-                      className="w-full px-3 py-1.5 text-xs font-sans rounded-candy-pill border border-candy-line bg-white"
+                      className="w-full px-3 py-1.5 text-xs font-sans rounded-candy-pill border border-candy-line bg-candy-cream"
                     />
                   </div>
 
@@ -570,7 +570,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                       min="0.1"
                       value={w.multiplier}
                       onChange={(e) => handleUpdateWeight(index, 'multiplier', parseFloat(e.target.value) || 1)}
-                      className="w-full px-3 py-1.5 text-xs font-sans rounded-candy-pill border border-candy-line bg-white"
+                      className="w-full px-3 py-1.5 text-xs font-sans rounded-candy-pill border border-candy-line bg-candy-cream"
                     />
                   </div>
 
@@ -582,7 +582,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                       min="0.1"
                       value={w.price}
                       onChange={(e) => handleUpdateWeight(index, 'price', parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-1.5 text-xs font-mono rounded-candy-pill border border-candy-line bg-white whitespace-nowrap"
+                      className="w-full px-3 py-1.5 text-xs font-mono rounded-candy-pill border border-candy-line bg-candy-cream whitespace-nowrap"
                     />
                   </div>
 
@@ -651,7 +651,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
                     'px-3 py-1 text-xs rounded-candy-pill font-sans border transition-all',
                     imageUrl === preset.url
                       ? 'bg-candy-berry text-white border-candy-berry shadow-sm'
-                      : 'bg-white text-candy-ink border-candy-line hover:bg-candy-soft'
+                      : 'bg-candy-cream text-candy-ink border-candy-line hover:bg-candy-soft'
                   )}
                 >
                   {preset.name}
@@ -662,7 +662,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
 
           {/* معاينة الصورة */}
           <div className="p-4 bg-candy-soft/60 rounded-2xl border border-candy-line flex flex-col sm:flex-row items-center gap-4">
-            <div className="relative w-28 h-28 rounded-2xl overflow-hidden border border-candy-line bg-white flex-shrink-0 shadow-sm">
+            <div className="relative w-28 h-28 rounded-2xl overflow-hidden border border-candy-line bg-candy-cream flex-shrink-0 shadow-sm">
               {imageUrl && !imageLoadError ? (
                 <img
                   src={imageUrl}
@@ -697,7 +697,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* مفتاح التوفر */}
-          <div className="p-4 rounded-2xl bg-white border border-candy-line flex items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line flex items-center justify-between gap-4">
             <div>
               <p className="text-sm font-bold text-candy-ink font-sans">
                 حالة توفر المنتج للطلب الفوري
@@ -720,7 +720,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
             >
               <span
                 className={cn(
-                  'pointer-events-none inline-block h-6 w-6 rounded-full bg-white shadow-md transform transition duration-200 ease-in-out top-0.5',
+                  'pointer-events-none inline-block h-6 w-6 rounded-full bg-candy-cream shadow-md transform transition duration-200 ease-in-out top-0.5',
                   isAvailable ? 'translate-x-[-1.85rem]' : 'translate-x-[-0.2rem]'
                 )}
               />
@@ -728,7 +728,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
           </div>
 
           {/* مفتاح التمييز */}
-          <div className="p-4 rounded-2xl bg-white border border-candy-line flex items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line flex items-center justify-between gap-4">
             <div>
               <p className="text-sm font-bold text-candy-ink font-sans">
                 تمييز المنتج في الصفحة الرئيسية (Featured)
@@ -749,7 +749,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
             >
               <span
                 className={cn(
-                  'pointer-events-none inline-block h-6 w-6 rounded-full bg-white shadow-md transform transition duration-200 ease-in-out top-0.5',
+                  'pointer-events-none inline-block h-6 w-6 rounded-full bg-candy-cream shadow-md transform transition duration-200 ease-in-out top-0.5',
                   isFeatured ? 'translate-x-[-1.85rem]' : 'translate-x-[-0.2rem]'
                 )}
               />
@@ -798,7 +798,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
       )}
 
       {/* أزرار الإجراءات السفلية */}
-      <div className="sticky bottom-4 z-10 bg-white/95 backdrop-blur-md p-4 rounded-candy-card border border-candy-line shadow-candy-2 flex items-center justify-between gap-3">
+      <div className="sticky bottom-4 z-10 bg-white/95  p-4 rounded-candy-card border border-candy-line shadow-candy-2 flex items-center justify-between gap-3">
         <Link href="/admin/products">
           <Button
             type="button"

@@ -76,20 +76,20 @@ export function ContactCard({
   return (
     <div
       className={cn(
-        "rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-6 sm:p-8 transition-all duration-300 relative overflow-hidden",
+        "rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-6 sm:p-8 transition-all duration-300 relative overflow-hidden",
         className
       )}
     >
       {/* Decorative top ambient glow */}
       <div
-        className="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-l from-candy-berry via-candy-strawberry to-candy-rose opacity-90"
+        className="absolute top-0 right-0 left-0 h-1.5 bg-candy-cream opacity-90"
         aria-hidden="true"
       />
 
       {/* Header section with brand insignia & Live Store Status Indicator Badge */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
         <div className="flex items-start gap-4">
-          <div className="w-13 h-13 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-13 h-13 rounded-2xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
             <Sparkles className="w-6 h-6 text-candy-berry" />
           </div>
           <div className="flex-1 min-w-0">
@@ -130,7 +130,7 @@ export function ContactCard({
 
       <div className="space-y-4 pt-2">
         {/* Interactive Location Card with Google Maps Pin & Directions */}
-        <div className="group rounded-2xl bg-candy-soft/70 border border-candy-line/60 p-4 transition-all hover:bg-candy-soft hover:border-candy-blush hover:shadow-xs">
+        <div className="group rounded-2xl bg-candy-soft/70 border border-candy-line/60 p-4 transition-all hover:bg-candy-soft hover:border-candy-ink hover:shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div className="flex items-start gap-3">
               <a
@@ -138,7 +138,7 @@ export function ContactCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="فتح في خرائط Google"
-                className="w-10 h-10 rounded-xl bg-white border border-candy-line text-candy-rose flex items-center justify-center shrink-0 shadow-xs mt-0.5 hover:scale-105 hover:border-candy-rose transition-all"
+                className="w-10 h-10 rounded-xl bg-candy-cream border border-candy-line text-candy-rose flex items-center justify-center shrink-0 shadow-xs mt-0.5 hover:scale-105 hover:border-candy-rose transition-all"
               >
                 <MapPin className="w-5 h-5 text-candy-rose" />
               </a>
@@ -147,7 +147,7 @@ export function ContactCard({
                   <span className="font-sans text-xs font-semibold text-candy-muted block">
                     الموقع الجغرافي وصالة العرض
                   </span>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-white border border-candy-line text-candy-muted">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-candy-cream border border-candy-line text-candy-muted">
                     غزة
                   </span>
                 </div>
@@ -170,7 +170,7 @@ export function ContactCard({
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-white text-candy-berry hover:bg-candy-blush/60 border border-candy-line text-xs font-bold transition-all shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-candy-pill bg-candy-cream text-candy-berry hover:bg-candy-blush/60 border border-candy-line text-xs font-bold transition-all shadow-xs"
               >
                 <Navigation className="w-3.5 h-3.5 text-candy-strawberry" />
                 <span>فتح الخريطة</span>
@@ -181,7 +181,7 @@ export function ContactCard({
                 type="button"
                 onClick={() => handleCopy(location, "location")}
                 aria-label="نسخ العنوان"
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-candy-pill text-xs font-medium text-candy-muted hover:text-candy-berry hover:bg-white border border-transparent hover:border-candy-line transition-all shrink-0"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-candy-pill text-xs font-medium text-candy-muted hover:text-candy-berry hover:bg-candy-cream border border-transparent hover:border-candy-line transition-all shrink-0"
               >
                 {copiedField === "location" ? (
                   <>
@@ -200,13 +200,13 @@ export function ContactCard({
         </div>
 
         {/* Store Phone Contact Card */}
-        <div className="group rounded-2xl bg-candy-soft/70 border border-candy-line/60 p-4 transition-all hover:bg-candy-soft hover:border-candy-blush hover:shadow-xs">
+        <div className="group rounded-2xl bg-candy-soft/70 border border-candy-line/60 p-4 transition-all hover:bg-candy-soft hover:border-candy-ink hover:shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div className="flex items-start gap-3">
               <a
                 href={`tel:${cleanPhoneForTel}`}
                 title="اتصال هاتفي مباشر"
-                className="w-10 h-10 rounded-xl bg-white border border-candy-line text-candy-rose flex items-center justify-center shrink-0 shadow-xs mt-0.5 hover:scale-105 hover:border-candy-rose transition-all"
+                className="w-10 h-10 rounded-xl bg-candy-cream border border-candy-line text-candy-rose flex items-center justify-center shrink-0 shadow-xs mt-0.5 hover:scale-105 hover:border-candy-rose transition-all"
               >
                 <Phone className="w-5 h-5 text-candy-rose" />
               </a>
@@ -232,7 +232,7 @@ export function ContactCard({
               <a
                 href={`tel:${cleanPhoneForTel}`}
                 aria-label="اتصال هاتفي مباشر"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-candy-pill bg-white text-candy-berry hover:bg-candy-blush/60 border border-candy-line text-xs font-bold transition-all shadow-xs active:scale-95"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-candy-pill bg-candy-cream text-candy-berry hover:bg-candy-blush/60 border border-candy-line text-xs font-bold transition-all shadow-xs active:scale-95"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-candy-berry" />
                 <span>اتصال مباشر</span>
@@ -241,7 +241,7 @@ export function ContactCard({
                 type="button"
                 onClick={() => handleCopy(phone, "phone")}
                 aria-label="نسخ رقم الهاتف"
-                className="p-1.5 rounded-candy-pill text-candy-muted hover:text-candy-berry hover:bg-white border border-transparent hover:border-candy-line transition-all"
+                className="p-1.5 rounded-candy-pill text-candy-muted hover:text-candy-berry hover:bg-candy-cream border border-transparent hover:border-candy-line transition-all"
               >
                 {copiedField === "phone" ? (
                   <Check className="w-3.5 h-3.5 text-emerald-600" />
@@ -256,7 +256,7 @@ export function ContactCard({
 
       {/* WhatsApp Concierge Banner & CTA with Pulse Animation and Prominent Click Area */}
       <div className="mt-6 pt-5 border-t border-candy-line/80">
-        <div className="rounded-2xl bg-gradient-to-br from-emerald-50/90 to-emerald-100/40 border border-emerald-200/80 p-5 sm:p-6 shadow-xs">
+        <div className="rounded-2xl bg-candy-cream border border-emerald-200/80 p-5 sm:p-6 shadow-xs">
           <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
             <div className="flex items-center gap-2">
               <span className="relative flex h-3 w-3">

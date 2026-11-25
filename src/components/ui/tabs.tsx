@@ -143,7 +143,7 @@ export const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
         className={cn(
           "flex items-center select-none overflow-x-auto no-scrollbar",
           variant === "pills" &&
-            "p-1.5 rounded-candy-pill bg-white/95 backdrop-blur-md border border-candy-line/80 shadow-candy-1 gap-1.5 inline-flex max-w-full",
+            "p-1.5 rounded-candy-pill bg-white/95  border border-candy-line/80 shadow-candy-1 gap-1.5 inline-flex max-w-full",
           variant === "line" &&
             "border-b border-candy-line gap-4 sm:gap-6 w-full",
           className
@@ -192,7 +192,7 @@ export const TabsTrigger = React.forwardRef<
         variant === "pills" && [
           "px-4 py-2 text-sm rounded-candy-pill relative",
           isSelected
-            ? "bg-gradient-to-l from-candy-berry to-candy-strawberry text-white font-bold shadow-candy-cta shadow-[0_4px_14px_rgba(163,29,86,0.25)] scale-[1.02] ring-1 ring-candy-berry/20"
+            ? "bg-candy-berry text-white font-bold shadow-candy-cta shadow-candy-cta scale-[1.02] ring-1 ring-candy-berry/20"
             : "text-candy-ink hover:text-candy-berry hover:bg-candy-soft/80 active:scale-[0.98]",
         ],
         variant === "line" && [

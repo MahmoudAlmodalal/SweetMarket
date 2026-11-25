@@ -128,7 +128,7 @@ export function FeaturedProducts({
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl bg-white border border-candy-line/80 gap-3">
+        <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl bg-candy-cream border border-candy-line/80 gap-3">
           <Cookie className="w-10 h-10 text-candy-muted stroke-1" />
           <h3 className="font-display font-bold text-lg text-candy-ink">
             لا توجد أصناف حالياً في هذا القسم

@@ -172,7 +172,7 @@ export function OrdersDataTable({
   return (
     <div className="space-y-4">
       {/* 1. أشرطة التبويبات للفلترة السريعة وأدوات البحث */}
-      <div className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
+      <div className="bg-candy-cream rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
         {/* شريط تبويبات الحالات متجاوب وسلس للتمرير الأفقي */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
           {FILTER_TABS.map((tab) => {
@@ -276,7 +276,7 @@ export function OrdersDataTable({
       {/* 3. الجدول الرئيسي (Desktop/Tablet) وشبكة البطاقات (Mobile) */}
       {filteredOrders.length === 0 ? (
         // حالة الفراغ: لا توجد طلبات تطابق المعايير
-        <div className="bg-white rounded-2xl border border-dashed border-candy-line-dark p-8 sm:p-12 text-center shadow-candy-1">
+        <div className="bg-candy-cream rounded-2xl border border-dashed border-candy-line-dark p-8 sm:p-12 text-center shadow-candy-1">
           <div className="w-16 h-16 rounded-2xl bg-candy-blush/60 border border-candy-line flex items-center justify-center mx-auto mb-4 text-candy-berry">
             <Inbox className="w-8 h-8" />
           </div>
@@ -302,7 +302,7 @@ export function OrdersDataTable({
       ) : (
         <>
           {/* عرض سطح المكتب والأجهزة اللوحية (Table Layout) */}
-          <div className="hidden md:block bg-white rounded-2xl border border-candy-line shadow-candy-1 overflow-hidden">
+          <div className="hidden md:block bg-candy-cream rounded-2xl border border-candy-line shadow-candy-1 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 <thead>
@@ -466,7 +466,7 @@ export function OrdersDataTable({
               return (
                 <div
                   key={order.id}
-                  className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-4 space-y-3"
+                  className="bg-candy-cream rounded-2xl border border-candy-line shadow-candy-1 p-4 space-y-3"
                 >
                   {/* رأس البطاقة: رقم الطلب والحالة */}
                   <div className="flex items-center justify-between pb-2 border-b border-candy-line/60">

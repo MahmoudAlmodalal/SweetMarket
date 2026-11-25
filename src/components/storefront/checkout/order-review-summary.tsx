@@ -54,7 +54,7 @@ export function OrderReviewSummary({
   return (
     <Card
       className={cn(
-        "overflow-hidden border-candy-line/80 shadow-candy-2 rounded-candy-card bg-white transition-all duration-200",
+        "overflow-hidden border-candy-line/80 shadow-candy-2 rounded-candy-card bg-candy-cream transition-all duration-200",
         className
       )}
     >
@@ -73,7 +73,7 @@ export function OrderReviewSummary({
               </p>
             </div>
           </div>
-          <span className="text-xs font-sans font-bold text-candy-berry bg-white px-2.5 py-1 rounded-candy-pill border border-candy-line shadow-xs">
+          <span className="text-xs font-sans font-bold text-candy-berry bg-candy-cream px-2.5 py-1 rounded-candy-pill border border-candy-line shadow-xs">
             مراجعة نهائية
           </span>
         </div>
@@ -104,7 +104,7 @@ export function OrderReviewSummary({
                     className="pt-2.5 first:pt-0 flex items-center justify-between gap-3 transition-colors"
                   >
                     {/* Item Thumbnail */}
-                    <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white shrink-0 border border-candy-line/70 shadow-xs">
+                    <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-candy-cream shrink-0 border border-candy-line/70 shadow-xs">
                       <ProductImage
                         src={item.imageUrl}
                         alt={item.productName}

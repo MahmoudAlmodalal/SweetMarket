@@ -161,7 +161,7 @@ export function OrderSuccessCard({
       </section>
 
       {/* 1. Festive Celebration Banner & Order Header */}
-      <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 shadow-candy-2 text-center">
+      <div className="relative overflow-hidden bg-candy-cream border border-candy-line/80 rounded-candy-card p-6 sm:p-8 shadow-candy-2 text-center">
         {/* Soft Ambient Confectionery Glow */}
         <div
           aria-hidden="true"
@@ -235,7 +235,7 @@ export function OrderSuccessCard({
               "w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-90",
               copied
                 ? "bg-emerald-600 text-white shadow-xs"
-                : "bg-white text-candy-berry border border-candy-line hover:bg-candy-berry hover:text-white"
+                : "bg-candy-berry text-candy-berry border border-candy-line hover:bg-candy-berry hover:text-white"
             )}
           >
             {copied ? (
@@ -252,9 +252,9 @@ export function OrderSuccessCard({
         </div>
 
         {/* Estimated Delivery Time Indicator Card */}
-        <div className="mt-6 w-full bg-gradient-to-r from-candy-soft via-candy-cream to-candy-soft p-4 rounded-2xl border border-candy-line/80 flex items-center justify-between gap-3 text-right">
+        <div className="mt-6 w-full bg-candy-cream p-4 rounded-2xl border border-candy-line/80 flex items-center justify-between gap-3 text-right">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-white text-candy-strawberry flex items-center justify-center shadow-xs shrink-0 border border-candy-blush">
+            <div className="w-11 h-11 rounded-full bg-candy-cream text-candy-strawberry flex items-center justify-center shadow-xs shrink-0 border border-candy-ink">
               <Clock className="w-5 h-5 text-candy-strawberry" />
             </div>
             <div className="flex flex-col">
@@ -274,7 +274,7 @@ export function OrderSuccessCard({
       </div>
 
       {/* 2. Order Summary Card (Items, Zone, Payment, Financial Breakdown) */}
-      <div className="bg-white border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
+      <div className="bg-candy-cream border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
         {/* Items Section Header */}
         <div className="p-5 sm:p-6 border-b border-candy-line/60 bg-candy-soft/40 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -394,7 +394,7 @@ export function OrderSuccessCard({
                 </span>
               </div>
               {order.customer.notes && (
-                <div className="mt-2 text-xs bg-white p-2.5 rounded-xl border border-candy-line text-candy-ink font-sans">
+                <div className="mt-2 text-xs bg-candy-cream p-2.5 rounded-xl border border-candy-line text-candy-ink font-sans">
                   <span className="font-bold text-candy-berry">ملاحظات التوصيل: </span>
                   {order.customer.notes}
                 </div>
@@ -403,7 +403,7 @@ export function OrderSuccessCard({
           </div>
 
           {/* Payment Method Badge */}
-          <div className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-candy-line">
+          <div className="flex items-center justify-between p-3.5 bg-candy-cream rounded-2xl border border-candy-line">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                 <Banknote className="w-4 h-4" />
@@ -465,7 +465,7 @@ export function OrderSuccessCard({
 
       {/* 3. Reassuring Cold-Chain Guarantee Banner */}
       <div className="bg-candy-soft border border-candy-line rounded-2xl p-4 flex items-start gap-3 shadow-xs">
-        <div className="w-9 h-9 rounded-full bg-white text-candy-berry flex items-center justify-center shrink-0 border border-candy-blush shadow-xs mt-0.5">
+        <div className="w-9 h-9 rounded-full bg-candy-cream text-candy-berry flex items-center justify-center shrink-0 border border-candy-ink shadow-xs mt-0.5">
           <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
         </div>
         <div className="flex-1">
@@ -494,7 +494,7 @@ export function OrderSuccessCard({
         {/* Secondary button: Continue Shopping */}
         <Link
           href="/"
-          className="w-full sm:flex-1 min-h-[52px] bg-white hover:bg-candy-soft text-candy-berry border-2 border-candy-blush rounded-candy-pill flex items-center justify-center gap-2.5 font-sans font-bold text-base shadow-sm hover:border-candy-rose transition-all active:scale-[0.98] text-center"
+          className="w-full sm:flex-1 min-h-[52px] bg-candy-cream hover:bg-candy-soft text-candy-berry border-2 border-candy-ink rounded-candy-pill flex items-center justify-center gap-2.5 font-sans font-bold text-base shadow-sm hover:border-candy-rose transition-all active:scale-[0.98] text-center"
         >
           <Store className="w-5 h-5" />
           <span>متابعة التسوق</span>

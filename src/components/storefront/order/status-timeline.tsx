@@ -234,7 +234,7 @@ export function StatusTimeline({
       )}
     >
       {/* 1. Header Card: Order Metadata & Status Badge */}
-      <div className="bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-7 shadow-candy-2 relative overflow-hidden">
+      <div className="bg-candy-cream border border-candy-line/80 rounded-candy-card p-6 sm:p-7 shadow-candy-2 relative overflow-hidden">
         {/* Soft Confectionery Ambient Glow */}
         <div
           aria-hidden="true"
@@ -499,7 +499,7 @@ export function StatusTimeline({
                           "bg-amber-600 text-white ring-4 ring-amber-300/40 shadow-md scale-105",
                         // Pending Stage
                         isPending &&
-                          "bg-white border-2 border-candy-line text-candy-muted/70 shadow-xs"
+                          "bg-candy-cream border-2 border-candy-line text-candy-muted/70 shadow-xs"
                       )}
                     >
                       {isPast ? (
@@ -623,7 +623,7 @@ export function StatusTimeline({
       </div>
 
       {/* 5. Safe Order Items & Financial Summary */}
-      <div className="bg-white border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
+      <div className="bg-candy-cream border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
         <div className="p-5 sm:p-6 bg-candy-soft/40 border-b border-candy-line/60 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
@@ -784,7 +784,7 @@ export function StatusTimeline({
 
         <Link
           href="/"
-          className="w-full sm:w-auto min-h-[50px] px-6 bg-white border border-candy-line hover:bg-candy-soft text-candy-ink rounded-candy-pill flex items-center justify-center gap-2 font-sans font-bold text-sm transition-colors text-center"
+          className="w-full sm:w-auto min-h-[50px] px-6 bg-candy-cream border border-candy-line hover:bg-candy-soft text-candy-ink rounded-candy-pill flex items-center justify-center gap-2 font-sans font-bold text-sm transition-colors text-center"
         >
           <Store className="w-4 h-4 text-candy-muted" />
           <span>الرئيسية</span>

@@ -95,7 +95,7 @@ export function TempPasswordDialog({
           {user && (
             <div className="p-3.5 rounded-2xl bg-candy-soft/80 border border-candy-line/80 flex items-center justify-between text-xs font-sans shadow-2xs">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-white border border-candy-line/80 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
+                <div className="w-9 h-9 rounded-xl bg-candy-cream border border-candy-line/80 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
                   <User className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div className="min-w-0">

@@ -20,7 +20,7 @@ export function ForbiddenLoadingSkeleton({
     >
       <Card
         elevation="md"
-        className="border-candy-line shadow-candy-2 bg-white overflow-hidden text-center"
+        className="border-candy-line shadow-candy-2 bg-candy-cream overflow-hidden text-center"
       >
         <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
           {/* Skeleton Icon with neutral spinner */}

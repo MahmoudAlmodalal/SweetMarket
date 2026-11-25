@@ -163,7 +163,7 @@ export function WeightSelector({
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry active:scale-[0.985]",
                 isSelected
                   ? "bg-[#F2B632]/30 border-2 border-candy-ink shadow-[3px_3px_0_#1B1A17]"
-                  : "bg-white border-2 border-candy-line/60 hover:border-candy-rose/50 shadow-sm hover:bg-candy-soft/30"
+                  : "bg-candy-cream border-2 border-candy-line/60 hover:border-candy-rose/50 shadow-sm hover:bg-candy-soft/30"
               )}
             >
               {/* Best Value Ribbon Overlay */}
@@ -185,12 +185,12 @@ export function WeightSelector({
                     "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 shrink-0 mt-0.5",
                     isSelected
                       ? "border-candy-strawberry bg-candy-strawberry text-white shadow-sm scale-105"
-                      : "border-candy-line-dark bg-white group-hover:border-candy-strawberry/50"
+                      : "border-candy-line-dark bg-candy-cream group-hover:border-candy-strawberry/50"
                   )}
                   aria-hidden="true"
                 >
                   {isSelected && (
-                    <span className="w-2 h-2 bg-white rounded-full animate-in zoom-in-50 duration-150" />
+                    <span className="w-2 h-2 bg-candy-cream rounded-full animate-in zoom-in-50 duration-150" />
                   )}
                 </span>
 

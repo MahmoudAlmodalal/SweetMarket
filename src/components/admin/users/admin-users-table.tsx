@@ -112,11 +112,11 @@ export function AdminUsersTable({
   if (isLoading) {
     return (
       <div className="space-y-4 animate-pulse" aria-busy="true" aria-label="جاري تحميل المستخدمين...">
-        <div className="h-16 bg-white rounded-2xl border border-candy-line" />
-        <div className="hidden md:block h-64 bg-white rounded-2xl border border-candy-line" />
+        <div className="h-16 bg-candy-cream rounded-2xl border border-candy-line" />
+        <div className="hidden md:block h-64 bg-candy-cream rounded-2xl border border-candy-line" />
         <div className="md:hidden space-y-3">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-56 bg-white rounded-2xl border border-candy-line" />
+            <div key={i} className="h-56 bg-candy-cream rounded-2xl border border-candy-line" />
           ))}
         </div>
       </div>
@@ -126,7 +126,7 @@ export function AdminUsersTable({
   return (
     <div className="space-y-4">
       {/* شريط البحث والفلاتر */}
-      <div className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* حقل البحث */}
         <div className="relative flex-1 min-w-[240px]">
           <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-candy-muted pointer-events-none">
@@ -137,7 +137,7 @@ export function AdminUsersTable({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="بحث بالاسم، المسمى الوظيفي، اسم المستخدم، أو البريد..."
-            className="w-full h-10 pr-10 pl-4 rounded-xl text-xs sm:text-sm font-sans bg-candy-soft/60 border border-candy-line text-candy-ink placeholder:text-candy-muted focus:outline-none focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 transition-all"
+            className="w-full h-10 pr-10 pl-4 rounded-xl text-xs sm:text-sm font-sans bg-candy-soft/60 border border-candy-line text-candy-ink placeholder:text-candy-muted focus:outline-none focus:bg-candy-cream focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 transition-all"
           />
         </div>
 
@@ -151,7 +151,7 @@ export function AdminUsersTable({
               className={cn(
                 'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center',
                 roleFilter === 'all'
-                  ? 'bg-white text-candy-berry shadow-xs'
+                  ? 'bg-candy-cream text-candy-berry shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
               )}
             >
@@ -163,7 +163,7 @@ export function AdminUsersTable({
               className={cn(
                 'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-1',
                 roleFilter === 'manager'
-                  ? 'bg-white text-candy-berry shadow-xs'
+                  ? 'bg-candy-cream text-candy-berry shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
               )}
             >
@@ -175,7 +175,7 @@ export function AdminUsersTable({
               className={cn(
                 'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-1',
                 roleFilter === 'staff'
-                  ? 'bg-white text-candy-berry shadow-xs'
+                  ? 'bg-candy-cream text-candy-berry shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
               )}
             >
@@ -191,7 +191,7 @@ export function AdminUsersTable({
               className={cn(
                 'min-h-[36px] px-3 py-1.5 rounded-lg font-semibold transition-colors flex items-center justify-center',
                 statusFilter === 'all'
-                  ? 'bg-white text-candy-ink shadow-xs'
+                  ? 'bg-candy-cream text-candy-ink shadow-xs'
                   : 'text-candy-muted hover:text-candy-ink'
               )}
             >
@@ -227,7 +227,7 @@ export function AdminUsersTable({
 
       {/* المحتوى الرئيسي: جدول لسطح المكتب وبطاقات للجوال */}
       {filteredUsers.length === 0 ? (
-        <div className="p-12 text-center bg-white rounded-3xl border border-candy-line shadow-sm space-y-3">
+        <div className="p-12 text-center bg-candy-cream rounded-3xl border border-candy-line shadow-sm space-y-3">
           <div className="w-14 h-14 mx-auto rounded-2xl bg-candy-soft text-candy-berry flex items-center justify-center">
             <Users className="w-7 h-7" aria-hidden="true" />
           </div>
@@ -256,7 +256,7 @@ export function AdminUsersTable({
       ) : (
         <>
           {/* جدول سطح المكتب (Desktop Table: شاشات md وما فوق) */}
-          <div className="hidden md:block overflow-hidden rounded-2xl bg-white border border-candy-line shadow-sm">
+          <div className="hidden md:block overflow-hidden rounded-2xl bg-candy-cream border border-candy-line shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 <thead>
@@ -321,7 +321,7 @@ export function AdminUsersTable({
                                   {member.fullName}
                                 </span>
                                 {isSelf && (
-                                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-candy-soft text-candy-berry border border-candy-blush font-bold">
+                                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-candy-soft text-candy-berry border border-candy-ink font-bold">
                                     أنت
                                   </span>
                                 )}
@@ -376,7 +376,7 @@ export function AdminUsersTable({
                               className={cn(
                                 'inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold border',
                                 member.role === 'manager'
-                                  ? 'bg-candy-soft text-candy-berry border-candy-blush'
+                                  ? 'bg-candy-soft text-candy-berry border-candy-ink'
                                   : 'bg-gray-100 text-gray-700 border-gray-200'
                               )}
                             >
@@ -503,7 +503,7 @@ export function AdminUsersTable({
                 <div
                   key={member.id}
                   className={cn(
-                    'p-4 rounded-2xl bg-white border border-candy-line shadow-sm space-y-3 font-sans transition-all',
+                    'p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm space-y-3 font-sans transition-all',
                     !member.isActive && 'bg-gray-50/70 border-gray-200 opacity-85'
                   )}
                 >
@@ -527,7 +527,7 @@ export function AdminUsersTable({
                             {member.fullName}
                           </h4>
                           {isSelf && (
-                            <span className="px-1.5 py-0.5 rounded text-[10px] bg-candy-soft text-candy-berry border border-candy-blush font-bold">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] bg-candy-soft text-candy-berry border border-candy-ink font-bold">
                               أنت
                             </span>
                           )}
@@ -588,7 +588,7 @@ export function AdminUsersTable({
                         className={cn(
                           'inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold border',
                           member.role === 'manager'
-                            ? 'bg-candy-soft text-candy-berry border-candy-blush'
+                            ? 'bg-candy-soft text-candy-berry border-candy-ink'
                             : 'bg-gray-100 text-gray-700 border-gray-200'
                         )}
                       >

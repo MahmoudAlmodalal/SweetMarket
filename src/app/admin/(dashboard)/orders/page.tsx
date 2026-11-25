@@ -128,7 +128,7 @@ export default function AdminOrdersPage() {
               setActiveTab('new');
             }
           }}
-          className="bg-white border border-candy-berry/25 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-candy-berry/50 transition-colors cursor-pointer select-none"
+          className="bg-candy-cream border border-candy-ink rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-candy-ink transition-colors cursor-pointer select-none"
           title="انقر لتصفية الطلبات الجديدة"
         >
           <div className="flex items-center gap-3">
@@ -159,7 +159,7 @@ export default function AdminOrdersPage() {
 
       {/* 3. بطاقات الإحصاءات السريعة (Stats Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
+        <div className="bg-candy-cream p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-candy-soft text-candy-berry flex items-center justify-center shrink-0">
             <ShoppingBag className="w-5 h-5" />
           </div>
@@ -177,7 +177,7 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
+        <div className="bg-candy-cream p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
             <Clock className="w-5 h-5" />
           </div>
@@ -195,7 +195,7 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
+        <div className="bg-candy-cream p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
             <Truck className="w-5 h-5" />
           </div>
@@ -213,7 +213,7 @@ export default function AdminOrdersPage() {
           </div>
         </div>
 
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
+        <div className="bg-candy-cream p-4 sm:p-5 rounded-2xl border border-candy-line flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
             <TrendingUp className="w-5 h-5" />
           </div>
@@ -267,7 +267,7 @@ export default function AdminOrdersPage() {
       {isLoading ? (
         <div className="space-y-4">
           {/* Skeleton Tabs & Search Bar */}
-          <div className="bg-white rounded-2xl border border-candy-line p-4 space-y-4">
+          <div className="bg-candy-cream rounded-2xl border border-candy-line p-4 space-y-4">
             <div className="flex flex-wrap items-center gap-1.5 pb-2">
               {[...Array(6)].map((_, i) => (
                 <Skeleton key={i} className="h-9 w-24 rounded-xl shrink-0" />
@@ -280,7 +280,7 @@ export default function AdminOrdersPage() {
           </div>
 
           {/* Skeleton Table Rows */}
-          <div className="bg-white rounded-2xl border border-candy-line p-4 space-y-3">
+          <div className="bg-candy-cream rounded-2xl border border-candy-line p-4 space-y-3">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}

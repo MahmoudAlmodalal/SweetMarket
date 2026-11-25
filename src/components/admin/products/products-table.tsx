@@ -179,7 +179,7 @@ export function ProductsTable() {
     <div className="space-y-6" dir="rtl">
       {/* شريط الإحصائيات السريعة */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 hover:shadow-candy-soft transition-all duration-200 flex items-center justify-between">
+        <div className="bg-candy-cream p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 hover:shadow-candy-soft transition-all duration-200 flex items-center justify-between">
           <div>
             <p className="text-xs font-sans text-candy-muted font-medium">إجمالي المنتجات</p>
             <p className="text-2xl font-bold font-display text-candy-ink mt-0.5">{stats.total}</p>
@@ -189,7 +189,7 @@ export function ProductsTable() {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 hover:shadow-candy-soft transition-all duration-200 flex items-center justify-between">
+        <div className="bg-candy-cream p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 hover:shadow-candy-soft transition-all duration-200 flex items-center justify-between">
           <div>
             <p className="text-xs font-sans text-emerald-700 font-medium">متاح للطلب الفوري</p>
             <p className="text-2xl font-bold font-display text-emerald-700 mt-0.5">{stats.available}</p>
@@ -199,7 +199,7 @@ export function ProductsTable() {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 hover:shadow-candy-soft transition-all duration-200 flex items-center justify-between">
+        <div className="bg-candy-cream p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 hover:shadow-candy-soft transition-all duration-200 flex items-center justify-between">
           <div>
             <p className="text-xs font-sans text-rose-700 font-medium">غير متاح (نفد المخزون)</p>
             <p className="text-2xl font-bold font-display text-rose-700 mt-0.5">{stats.unavailable}</p>
@@ -211,7 +211,7 @@ export function ProductsTable() {
       </div>
 
       {/* شريط أدوات الفلترة والبحث وإضافة منتج */}
-      <div className="bg-white p-4 sm:p-5 rounded-candy-card border border-candy-line/80 shadow-candy-1 space-y-4">
+      <div className="bg-candy-cream p-4 sm:p-5 rounded-candy-card border border-candy-line/80 shadow-candy-1 space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           {/* حقل البحث */}
           <div className="relative flex-1 max-w-lg">
@@ -270,7 +270,7 @@ export function ProductsTable() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-sans rounded-candy-pill border border-candy-line bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/30 hover:border-candy-blush transition-colors"
+              className="w-full px-3 py-2 text-xs font-sans rounded-candy-pill border border-candy-line bg-candy-cream text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/30 hover:border-candy-ink transition-colors"
             >
               <option value="all">جميع التصنيفات ({categories.length})</option>
               {categories.map((cat) => (
@@ -287,7 +287,7 @@ export function ProductsTable() {
             <select
               value={availabilityFilter}
               onChange={(e) => setAvailabilityFilter(e.target.value as AvailabilityFilter)}
-              className="w-full px-3 py-2 text-xs font-sans rounded-candy-pill border border-candy-line bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/30 hover:border-candy-blush transition-colors"
+              className="w-full px-3 py-2 text-xs font-sans rounded-candy-pill border border-candy-line bg-candy-cream text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/30 hover:border-candy-ink transition-colors"
             >
               <option value="all">جميع الحالات</option>
               <option value="available">متاح للطلب فقط</option>
@@ -301,7 +301,7 @@ export function ProductsTable() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="w-full px-3 py-2 text-xs font-sans rounded-candy-pill border border-candy-line bg-white text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/30 hover:border-candy-blush transition-colors"
+              className="w-full px-3 py-2 text-xs font-sans rounded-candy-pill border border-candy-line bg-candy-cream text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/30 hover:border-candy-ink transition-colors"
             >
               <option value="newest">الأحدث أولاً</option>
               <option value="price-asc">السعر: من الأقل للأعلى</option>
@@ -342,7 +342,7 @@ export function ProductsTable() {
       {/* محتوى المنتجات: جدول على الشاشات الكبيرة وبطاقات على الجوال */}
       {isLoading ? (
         <div className="space-y-4">
-          <div className="bg-white p-6 rounded-candy-card border border-candy-line space-y-3">
+          <div className="bg-candy-cream p-6 rounded-candy-card border border-candy-line space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="flex items-center gap-4 py-3 border-b border-candy-line/40 last:border-0">
                 <Skeleton className="w-14 h-14 rounded-2xl" />
@@ -357,7 +357,7 @@ export function ProductsTable() {
           </div>
         </div>
       ) : error ? (
-        <div className="bg-white p-8 rounded-candy-card border border-rose-200 text-center space-y-3 shadow-candy-1">
+        <div className="bg-candy-cream p-8 rounded-candy-card border border-rose-200 text-center space-y-3 shadow-candy-1">
           <AlertCircle className="w-10 h-10 text-rose-500 mx-auto" />
           <h3 className="text-base font-bold text-candy-ink font-sans">{error}</h3>
           <Button variant="secondary" size="md" onClick={loadData}>
@@ -365,7 +365,7 @@ export function ProductsTable() {
           </Button>
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="bg-white p-12 rounded-candy-card border border-candy-line text-center space-y-4 shadow-candy-1">
+        <div className="bg-candy-cream p-12 rounded-candy-card border border-candy-line text-center space-y-4 shadow-candy-1">
           <div className="w-16 h-16 rounded-3xl bg-candy-blush/40 border border-candy-line-dark flex items-center justify-center text-candy-berry mx-auto shadow-xs">
             <Package className="w-8 h-8" />
           </div>
@@ -394,7 +394,7 @@ export function ProductsTable() {
       ) : (
         <>
           {/* 1. جدول الشاشات المتوسطة والكبيرة (md:table) */}
-          <div className="hidden md:block bg-white rounded-candy-card border border-candy-line/80 shadow-candy-1 overflow-hidden">
+          <div className="hidden md:block bg-candy-cream rounded-candy-card border border-candy-line/80 shadow-candy-1 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 <thead>
@@ -556,7 +556,7 @@ export function ProductsTable() {
                 <div
                   key={product.id}
                   className={cn(
-                    'bg-white p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 space-y-3',
+                    'bg-candy-cream p-4 rounded-candy-card border border-candy-line/80 shadow-candy-1 space-y-3',
                     !product.isAvailable && 'bg-slate-50/70 border-slate-200'
                   )}
                 >

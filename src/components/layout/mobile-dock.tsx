@@ -202,7 +202,7 @@ export function MobileDock({
                     className={cn(
                       "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
                       isItemActive
-                        ? "bg-white text-primary border border-primary/30"
+                        ? "bg-candy-cream text-primary border border-primary/30"
                         : "bg-[#C2431F] text-white",
                       isBouncing && "scale-125 ring-2 ring-white animate-bounce"
                     )}

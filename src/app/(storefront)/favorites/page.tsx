@@ -139,7 +139,7 @@ export default function FavoritesPage() {
       </nav>
 
       {/* Header */}
-      <header className="rounded-3xl bg-white border border-candy-line p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <header className="bg-[#F2B632] border-2 border-candy-ink shadow-[6px_6px_0_#1B1A17] rounded-none p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1.5">
           <p className="font-sans text-xs font-semibold text-candy-berry">اختياراتك المحفوظة</p>
           <h1 className="font-display font-bold text-2xl sm:text-3xl text-candy-ink">
@@ -173,7 +173,7 @@ export default function FavoritesPage() {
               <button
                 type="button"
                 onClick={() => setIsClearDialogOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs sm:text-sm font-bold transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-candy-cream hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs sm:text-sm font-bold transition-colors"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>مسح الكل</span>
@@ -246,7 +246,7 @@ export default function FavoritesPage() {
         <section
           role="region"
           aria-label="قائمة المفضلة فارغة"
-          className="rounded-3xl bg-white border border-candy-line p-8 sm:p-14 text-center max-w-2xl mx-auto"
+          className="rounded-3xl bg-candy-cream border border-candy-line p-8 sm:p-14 text-center max-w-2xl mx-auto"
         >
           <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-line text-candy-berry flex items-center justify-center mx-auto mb-5">
             <Heart className="w-7 h-7" />

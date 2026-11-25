@@ -38,7 +38,7 @@ function DashboardProtectedShell({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-candy-cream flex flex-col items-center justify-center p-6 text-candy-ink">
-        <div className="w-14 h-14 rounded-2xl bg-white border border-candy-line shadow-candy-1 flex items-center justify-center mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-candy-cream border border-candy-line shadow-candy-1 flex items-center justify-center mb-4">
           <Loader2 className="w-7 h-7 text-candy-berry animate-spin" aria-hidden="true" />
         </div>
         <p className="font-sans font-bold text-sm text-candy-ink">جاري التحقق من الجلسة...</p>

@@ -83,7 +83,7 @@ export default function AdminUsersPage() {
         aria-label="جاري التحميل..."
       >
         <div className="h-4 w-48 bg-candy-line/60 rounded-lg" />
-        <div className="p-6 rounded-3xl bg-white border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="p-6 rounded-3xl bg-candy-cream border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-candy-soft/80" />
             <div className="space-y-2">
@@ -95,13 +95,13 @@ export default function AdminUsersPage() {
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm space-y-3">
+            <div key={i} className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm space-y-3">
               <div className="h-3 w-20 bg-candy-soft rounded" />
               <div className="h-7 w-12 bg-candy-soft/80 rounded" />
             </div>
           ))}
         </div>
-        <div className="p-6 rounded-2xl bg-white border border-candy-line shadow-sm space-y-4">
+        <div className="p-6 rounded-2xl bg-candy-cream border border-candy-line shadow-sm space-y-4">
           <div className="h-10 w-full bg-candy-soft/60 rounded-xl" />
           <div className="space-y-3 pt-2">
             {[...Array(3)].map((_, i) => (
@@ -227,10 +227,10 @@ export default function AdminUsersPage() {
       </nav>
 
       {/* ترويسة الصفحة مع زر الإضافة الرئيسي */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-white border border-candy-line shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 sm:p-6 rounded-3xl bg-candy-cream border border-candy-line shadow-sm">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-candy-soft text-candy-berry border border-candy-ink flex items-center justify-center shrink-0">
               <Users className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
@@ -260,7 +260,7 @@ export default function AdminUsersPage() {
       {/* بطاقات الإحصاءات السريعة (KPI Metric Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 font-sans">
         {/* إجمالي الفريق */}
-        <div className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm">
+        <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm">
           <div className="flex items-center justify-between text-candy-muted mb-2">
             <span className="text-xs font-semibold">إجمالي الفريق</span>
             <Users className="w-4 h-4 text-candy-berry" aria-hidden="true" />
@@ -274,7 +274,7 @@ export default function AdminUsersPage() {
         </div>
 
         {/* المديرون */}
-        <div className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm">
+        <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm">
           <div className="flex items-center justify-between text-candy-muted mb-2">
             <span className="text-xs font-semibold">المديرون (Managers)</span>
             <ShieldCheck className="w-4 h-4 text-candy-berry" aria-hidden="true" />
@@ -290,7 +290,7 @@ export default function AdminUsersPage() {
         </div>
 
         {/* الموظفون */}
-        <div className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm">
+        <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm">
           <div className="flex items-center justify-between text-candy-muted mb-2">
             <span className="text-xs font-semibold">الموظفون (Staff)</span>
             <UserCheck className="w-4 h-4 text-candy-berry" aria-hidden="true" />
@@ -304,7 +304,7 @@ export default function AdminUsersPage() {
         </div>
 
         {/* الحسابات النشطة */}
-        <div className="p-4 rounded-2xl bg-white border border-candy-line shadow-sm">
+        <div className="p-4 rounded-2xl bg-candy-cream border border-candy-line shadow-sm">
           <div className="flex items-center justify-between text-candy-muted mb-2">
             <span className="text-xs font-semibold">الحسابات النشطة</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
