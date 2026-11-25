@@ -366,6 +366,11 @@ async function runSuite() {
         'Fulfillment audit log: initial status "new" attributes "النظام التلقائي (بوابة المتجر)" and manual transitions attribute actor + role badge',
         vp,
         async (page) => {
+          // Reset seeded data first so this scenario is repeatable across viewports and re-runs
+          // (it accepts order ord-1001, which mutates the local DB).
+          await quickLoginAs(page, baseUrl, 'manager');
+          const resetRes = await page.request.post(`${baseUrl}/api/v1/dev/reset`);
+          assert.ok(resetRes.ok(), `Dev DB reset must succeed (status ${resetRes.status()})`);
           await quickLoginAs(page, baseUrl, 'staff');
           await page.goto(`${baseUrl}/admin/orders/ord-1001`, { waitUntil: 'networkidle' });
 
