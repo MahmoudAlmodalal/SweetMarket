@@ -155,7 +155,7 @@ async function loginAsRole(page, role = 'staff') {
   const quickBtn = page.locator(`button:has-text("${buttonText}")`).first();
   await quickBtn.waitFor({ state: 'visible', timeout: 5000 });
   await quickBtn.click();
-  await page.waitForURL('**/admin/orders', { timeout: 10000 });
+  await page.waitForURL('**/admin/dashboard', { timeout: 10000 });
   await page.waitForTimeout(200);
 }
 
@@ -479,7 +479,7 @@ async function runRBACRecoverySuite() {
     // -------------------------------------------------------------------------
     {
       const num = 6;
-      const title = 'Admin opens /admin/forbidden -> auto-redirects to valid admin from, falls back to /admin/orders for external/invalid';
+      const title = 'Admin opens /admin/forbidden -> auto-redirects to valid admin from, falls back to /admin/dashboard for external/invalid';
       let passed = true;
       const errors = [];
       const context = await browser.newContext({ viewport: VIEWPORTS.desktop });
@@ -496,28 +496,28 @@ async function runRBACRecoverySuite() {
           errors.push(`Valid from=/admin/users did not redirect to /admin/users, ended at: ${page.url()}`);
         }
 
-        // Sub-test 6b: External absolute URL -> fallback /admin/orders
+        // Sub-test 6b: External absolute URL -> fallback /admin/dashboard
         await page.goto(`${BASE_URL}/admin/forbidden?from=https://attacker-domain.com/malicious`, { waitUntil: 'networkidle' });
-        await page.waitForURL('**/admin/orders', { timeout: 6000 });
-        if (!page.url().includes('/admin/orders')) {
+        await page.waitForURL('**/admin/dashboard', { timeout: 6000 });
+        if (!page.url().includes('/admin/dashboard')) {
           passed = false;
-          errors.push(`External URL did not fall back to /admin/orders, ended at: ${page.url()}`);
+          errors.push(`External URL did not fall back to /admin/dashboard, ended at: ${page.url()}`);
         }
 
-        // Sub-test 6c: Protocol-relative URL -> fallback /admin/orders
+        // Sub-test 6c: Protocol-relative URL -> fallback /admin/dashboard
         await page.goto(`${BASE_URL}/admin/forbidden?from=//attacker.com`, { waitUntil: 'networkidle' });
-        await page.waitForURL('**/admin/orders', { timeout: 6000 });
-        if (!page.url().includes('/admin/orders')) {
+        await page.waitForURL('**/admin/dashboard', { timeout: 6000 });
+        if (!page.url().includes('/admin/dashboard')) {
           passed = false;
-          errors.push(`Protocol-relative URL did not fall back to /admin/orders, ended at: ${page.url()}`);
+          errors.push(`Protocol-relative URL did not fall back to /admin/dashboard, ended at: ${page.url()}`);
         }
 
-        // Sub-test 6d: Forbidden anti-loop URL -> fallback /admin/orders
+        // Sub-test 6d: Forbidden anti-loop URL -> fallback /admin/dashboard
         await page.goto(`${BASE_URL}/admin/forbidden?from=/admin/forbidden`, { waitUntil: 'networkidle' });
-        await page.waitForURL('**/admin/orders', { timeout: 6000 });
-        if (!page.url().includes('/admin/orders')) {
+        await page.waitForURL('**/admin/dashboard', { timeout: 6000 });
+        if (!page.url().includes('/admin/dashboard')) {
           passed = false;
-          errors.push(`Self-referencing forbidden URL did not fall back to /admin/orders, ended at: ${page.url()}`);
+          errors.push(`Self-referencing forbidden URL did not fall back to /admin/dashboard, ended at: ${page.url()}`);
         }
 
         recordResult(num, title, passed, 'Auto-redirect resolved valid admin return URLs and safely quarantined external/invalid inputs', errors);
