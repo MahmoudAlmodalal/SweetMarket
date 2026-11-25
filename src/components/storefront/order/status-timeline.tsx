@@ -26,6 +26,7 @@ import {
   Bike,
   Flame,
   Award,
+  Printer,
 } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
@@ -743,8 +744,8 @@ export function StatusTimeline({
         )}
       </div>
 
-      {/* 6. Action Bar: Re-order, Contact WhatsApp, New Query, Home */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+      {/* 6. Action Bar: Re-order, Contact WhatsApp, New Query, Home (screen only) */}
+      <div data-print-hidden className="flex flex-col sm:flex-row items-center gap-3 pt-2">
         {/* Re-order action available for delivered and cancelled orders */}
         {(order.status === "delivered" || order.status === "cancelled") && (
           <Button
@@ -789,6 +790,16 @@ export function StatusTimeline({
           <Store className="w-4 h-4 text-candy-muted" />
           <span>الرئيسية</span>
         </Link>
+
+        {/* Print the tracking summary / save as PDF */}
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="w-full sm:w-auto min-h-[50px] px-6 bg-candy-soft hover:bg-candy-blush border border-candy-line text-candy-berry hover:text-candy-plum rounded-candy-pill flex items-center justify-center gap-2 font-sans font-bold text-sm transition-colors"
+        >
+          <Printer className="w-4 h-4" />
+          <span>طباعة الملخص أو حفظه PDF</span>
+        </button>
       </div>
     </div>
   );
