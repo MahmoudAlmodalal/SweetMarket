@@ -167,7 +167,7 @@ export function MobileDock({
       <nav
         role="navigation"
         aria-label="شريط التنقل السفلي للهاتف"
-        className="pointer-events-auto mx-auto max-w-md min-h-[58px] px-2 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-xl rounded-candy-pill border border-candy-line/70 shadow-candy-dock flex items-center justify-around"
+        className="pointer-events-auto mx-auto max-w-md min-h-[58px] px-2 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))] bg-[#F3EBDD] rounded-none border-2 border-candy-ink shadow-[4px_4px_0_#1B1A17] flex items-center justify-around"
       >
         {dockItems.map((item) => {
           const Icon = item.icon;
@@ -181,9 +181,9 @@ export function MobileDock({
               href={item.href}
               aria-current={isItemActive ? "page" : undefined}
               className={cn(
-                "group relative flex flex-col items-center justify-center min-w-[56px] sm:min-w-[64px] min-h-[48px] px-1 sm:px-2 py-1 rounded-candy-pill transition-all duration-200 select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                "group relative flex flex-col items-center justify-center min-w-[56px] sm:min-w-[64px] min-h-[48px] px-1 sm:px-2 py-1 rounded-none transition-all duration-200 select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                 isItemActive
-                  ? "bg-primary text-white shadow-[0_4px_16px_rgba(163,29,86,0.36)] ring-1 ring-primary/20 scale-[1.04]"
+                  ? "bg-[#1B1A17] text-[#F2B632]"
                   : "text-candy-muted hover:text-primary hover:bg-candy-soft/70 active:scale-95"
               )}
             >
@@ -203,7 +203,7 @@ export function MobileDock({
                       "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
                       isItemActive
                         ? "bg-white text-primary border border-primary/30"
-                        : "bg-candy-strawberry text-white shadow-candy-cta",
+                        : "bg-[#C2431F] text-white",
                       isBouncing && "scale-125 ring-2 ring-white animate-bounce"
                     )}
                   >

@@ -543,7 +543,7 @@ export function TrackOrderForm({
                 aria-invalid={Boolean(fieldErrors.phone)}
                 aria-describedby={fieldErrors.phone ? "track-phone-error" : "track-phone-helper"}
                 className={cn(
-                  "w-full h-12 pr-28 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
+                  "w-full h-12 pr-28 pl-10 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
                   "placeholder:text-candy-muted/70",
                   "focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
                   fieldErrors.phone &&

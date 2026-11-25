@@ -28,7 +28,7 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
 
       <footer
         className={cn(
-          "w-full bg-[#F8F1EC] border-t border-candy-line/80 pt-14 pb-24 md:pb-10 text-candy-ink",
+          "w-full bg-[#E9DFC9] border-t-4 border-candy-ink pt-14 pb-24 md:pb-10 text-candy-ink",
           className
         )}
       >

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import {
   Playfair_Display,
   DM_Sans,
-  El_Messiri,
-  IBM_Plex_Sans_Arabic,
+  Reem_Kufi,
+  Tajawal,
 } from "next/font/google";
 import { SkipLink } from "@/components/ui/skip-link";
 import "./globals.css";
@@ -22,17 +22,17 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const elMessiri = El_Messiri({
+const reemKufi = Reem_Kufi({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-el-messiri",
+  variable: "--font-reem-kufi",
   display: "swap",
 });
 
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm-plex-sans-arabic",
+const tajawal = Tajawal({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "700", "800"],
+  variable: "--font-tajawal",
   display: "swap",
 });
 
@@ -80,10 +80,10 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={`${playfairDisplay.variable} ${dmSans.variable} ${elMessiri.variable} ${ibmPlexSansArabic.variable}`}
+      className={`${playfairDisplay.variable} ${dmSans.variable} ${reemKufi.variable} ${tajawal.variable}`}
     >
       <body
-        className={`${playfairDisplay.variable} ${dmSans.variable} ${elMessiri.variable} ${ibmPlexSansArabic.variable} font-sans bg-background text-foreground antialiased min-h-screen`}
+        className={`${playfairDisplay.variable} ${dmSans.variable} ${reemKufi.variable} ${tajawal.variable} font-sans bg-background text-foreground antialiased min-h-screen`}
       >
         <SkipLink />
         {children}

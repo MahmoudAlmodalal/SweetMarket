@@ -47,17 +47,17 @@ function ConfectioneryEmptyCartIllustration() {
         {/* Elegant Pedestal Cake Stand */}
         <path
           d="M75 160h50v4H75z"
-          fill="#A31D56"
+          fill="#1F5C45"
           opacity="0.85"
         />
         <path
           d="M94 136h12l4 24H90l4-24z"
-          fill="#D72D58"
+          fill="#C2431F"
           opacity="0.75"
         />
         <path
           d="M48 132c0-3 3-5 6-5h92c3 0 6 2 6 5v4H48v-4z"
-          fill="#A31D56"
+          fill="#1F5C45"
         />
 
         {/* Glass Dessert Cloche Dome (Semi-transparent luxury bell) */}
@@ -74,13 +74,13 @@ function ConfectioneryEmptyCartIllustration() {
           cx="100"
           cy="74"
           r="6.5"
-          fill="#F2B134"
-          stroke="#A31D56"
+          fill="#F2B632"
+          stroke="#1F5C45"
           strokeWidth="2"
         />
         <path
           d="M97 80h6v2h-6z"
-          fill="#A31D56"
+          fill="#1F5C45"
         />
 
         {/* Inside Sweets: 1. Strawberry Swirl Cupcake */}
@@ -104,7 +104,7 @@ function ConfectioneryEmptyCartIllustration() {
             fill="#FFA3B8"
           />
           {/* Glossy Berry Cherry on Top */}
-          <circle cx="15" cy="9.5" r="3.5" fill="#A31D56" />
+          <circle cx="15" cy="9.5" r="3.5" fill="#1F5C45" />
           <path d="M16 6.5c1-3 3-4 5-4" stroke="#5BCFCB" strokeWidth="1.2" strokeLinecap="round" />
         </g>
 
@@ -113,7 +113,7 @@ function ConfectioneryEmptyCartIllustration() {
           {/* Baklava Diamond Layers */}
           <path
             d="M14 8l14 8-14 8-14-8 14-8z"
-            fill="#F2B134"
+            fill="#F2B632"
           />
           <path
             d="M0 16l14 8v5l-14-8v-5z"
@@ -132,13 +132,13 @@ function ConfectioneryEmptyCartIllustration() {
         {/* Wrapped Candy in Foreground */}
         <g transform="translate(86, 128)">
           {/* Candy Wrapper Left Twist */}
-          <path d="M4 8L0 4v8l4-4z" fill="#D72D58" />
+          <path d="M4 8L0 4v8l4-4z" fill="#C2431F" />
           {/* Candy Body */}
-          <rect x="4" y="4.5" width="16" height="7" rx="3.5" fill="#A31D56" />
+          <rect x="4" y="4.5" width="16" height="7" rx="3.5" fill="#1F5C45" />
           <line x1="9" y1="4.5" x2="7" y2="11.5" stroke="#FFF" strokeWidth="1.2" opacity="0.6" />
           <line x1="14" y1="4.5" x2="12" y2="11.5" stroke="#FFF" strokeWidth="1.2" opacity="0.6" />
           {/* Candy Wrapper Right Twist */}
-          <path d="M20 8l4-4v8l-4-4z" fill="#D72D58" />
+          <path d="M20 8l4-4v8l-4-4z" fill="#C2431F" />
         </g>
 
         {/* Shiny Glass Reflection Highlight on Cloche */}

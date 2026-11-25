@@ -168,7 +168,7 @@ function LoginFormContent() {
                   placeholder="staff@candyloz.com"
                   disabled={isSubmitting || quickLoginRole !== null}
                   className={cn(
-                    'w-full h-12 pr-10 pl-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50 shadow-2xs',
+                    'w-full h-12 pr-10 pl-4 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50 shadow-2xs',
                     fieldErrors.identifier
                       ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200 bg-rose-50/30'
                       : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 hover:border-candy-blush'
@@ -209,7 +209,7 @@ function LoginFormContent() {
                   placeholder="••••••••"
                   disabled={isSubmitting || quickLoginRole !== null}
                   className={cn(
-                    'w-full h-12 pr-10 pl-11 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50 shadow-2xs',
+                    'w-full h-12 pr-10 pl-11 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border transition-all duration-200 outline-none placeholder:text-candy-muted focus:bg-white text-right disabled:opacity-50 shadow-2xs',
                     fieldErrors.password
                       ? 'border-rose-500 focus:border-rose-600 focus:ring-2 focus:ring-rose-200 bg-rose-50/30'
                       : 'border-candy-line focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20 hover:border-candy-blush'

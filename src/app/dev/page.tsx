@@ -37,7 +37,7 @@ export default function DevPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#4A0E23] text-white text-xs font-bold hover:bg-[#3A0A1B] transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#12382A] text-white text-xs font-bold hover:bg-[#0E2C21] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Storefront</span>

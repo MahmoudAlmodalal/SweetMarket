@@ -66,7 +66,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             aria-describedby={describedBy || undefined}
             aria-disabled={disabled}
             className={cn(
-              "w-full h-12 pr-4 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none appearance-none cursor-pointer shadow-xs",
+              "w-full h-12 pr-4 pl-10 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none appearance-none cursor-pointer shadow-xs",
               "hover:border-candy-line-dark/60 hover:bg-candy-soft/80",
               "focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20",
               "focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20",

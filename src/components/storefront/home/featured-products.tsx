@@ -42,23 +42,16 @@ export function FeaturedProducts({
       aria-label="المنتجات الأكثر طلباً والمميزة"
       className={cn("flex flex-col gap-6 w-full", className)}
     >
-      {/* Editorial Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div>
-          <p className="text-xs font-sans font-semibold text-candy-berry mb-1">
-            مختارات الشيف
-          </p>
-          <h2 className="font-display font-bold text-2xl sm:text-3xl text-candy-ink tracking-tight">
-            الأكثر طلباً ومختارات الموسم
-          </h2>
-        </div>
-
+      {/* Section Header */}
+      <div className="flex items-end justify-between gap-4 pb-3 border-b-4 border-candy-ink">
+        <h2 className="font-display font-bold text-3xl sm:text-4xl text-candy-ink">
+          الأكثر طلباً
+        </h2>
         <Link
           href="/category/all"
-          className="inline-flex items-center gap-1.5 self-start sm:self-auto font-sans font-bold text-xs sm:text-sm text-candy-berry hover:text-candy-berry-dark transition-colors"
+          className="font-bold text-sm text-candy-ink underline decoration-[3px] decoration-[#F2B632] underline-offset-8 hover:decoration-[#C2431F]"
         >
-          <span>تصفح كل التشكيلة</span>
-          <ArrowLeft className="w-4 h-4" />
+          كل التشكيلة
         </Link>
       </div>
 
@@ -66,7 +59,7 @@ export function FeaturedProducts({
       <div
         role="tablist"
         aria-label="تصفية الأصناف المميزة"
-        className="flex items-center gap-2 overflow-x-auto overscroll-x-contain border-b border-candy-line/70 pb-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex items-center gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <button
           type="button"
@@ -74,10 +67,10 @@ export function FeaturedProducts({
           aria-selected={selectedCategory === "all"}
           onClick={() => setSelectedCategory("all")}
           className={cn(
-            "h-9 px-4 rounded-xl font-sans text-xs sm:text-sm transition-colors shrink-0 inline-flex items-center gap-2 border",
+            "h-10 px-4 font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border-2",
             selectedCategory === "all"
-              ? "bg-candy-ink text-white border-candy-ink font-bold"
-              : "bg-white text-candy-ink/80 border-candy-line/80 hover:border-candy-berry/40 hover:text-candy-ink font-medium"
+              ? "bg-[#1B1A17] text-[#F3EBDD] border-candy-ink font-bold"
+              : "bg-transparent text-candy-ink border-candy-ink hover:bg-[#F2B632] font-bold"
           )}
         >
           <span>المختارات</span>
@@ -103,10 +96,10 @@ export function FeaturedProducts({
               aria-selected={isSelected}
               onClick={() => setSelectedCategory(cat.id)}
               className={cn(
-                "h-9 px-4 rounded-xl font-sans text-xs sm:text-sm transition-colors shrink-0 inline-flex items-center gap-2 border",
+                "h-10 px-4 font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border-2",
                 isSelected
-                  ? "bg-candy-ink text-white border-candy-ink font-bold"
-                  : "bg-white text-candy-ink/80 border-candy-line/80 hover:border-candy-berry/40 hover:text-candy-ink font-medium"
+                  ? "bg-[#1B1A17] text-[#F3EBDD] border-candy-ink font-bold"
+                  : "bg-transparent text-candy-ink border-candy-ink hover:bg-[#F2B632] font-bold"
               )}
             >
               <span>{cat.name}</span>
@@ -125,7 +118,7 @@ export function FeaturedProducts({
 
       {/* Responsive Product Grid */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 w-full items-stretch">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6 w-full items-stretch">
           {filteredProducts.map((product, index) => (
             <ProductCard
               key={product.id}

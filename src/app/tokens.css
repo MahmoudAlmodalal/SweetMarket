@@ -7,84 +7,84 @@
 
 :root {
   /* ---- Brand & Confectionery Luxury Palette ---- */
-  --color-primary: #A31D56;           /* Royal Berry / Dark Raspberry */
-  --color-primary-hover: #851645;     /* Deep Velvet Berry */
-  --color-primary-subtle: #FDF2F4;    /* Subtle Rose Petal */
-  --color-primary-glow: rgba(163, 29, 86, 0.22);
-  --color-accent: #E8A33D;            /* Warm Honey Caramel (ONLY with dark text --color-text) */
-  --color-accent-hover: #D4902F;
-  --color-bg: #FFFAF8;                /* Warm Marshmallow Canvas */
-  --color-surface: #FFFFFF;           /* Crisp Glaze White */
-  --color-cream: #FFFDF9;             /* Confectionery Whipped Cream Surface */
-  --color-cream-subtle: #FFF7F2;      /* Delicate Honey Cream */
-  --color-cream-border: #F3EAE3;      /* Soft Praline Border */
-  --color-soft: #FFF5F8;              /* Soft Strawberry Cream */
-  --color-blush: #FED7E7;             /* Delicate Candy Blush */
+  --color-primary: #1F5C45;           /* Royal Berry / Dark Raspberry */
+  --color-primary-hover: #174A37;     /* Deep Velvet Berry */
+  --color-primary-subtle: #E4EBDD;    /* Subtle Rose Petal */
+  --color-primary-glow: rgba(31, 92, 69, 0.25);
+  --color-accent: #F2B632;            /* Warm Honey Caramel (ONLY with dark text --color-text) */
+  --color-accent-hover: #DCA21F;
+  --color-bg: #F3EBDD;                /* Warm Marshmallow Canvas */
+  --color-surface: #FAF4E8;           /* Crisp Glaze White */
+  --color-cream: #FAF4E8;             /* Confectionery Whipped Cream Surface */
+  --color-cream-subtle: #EFE5D2;      /* Delicate Honey Cream */
+  --color-cream-border: #D9CBB0;      /* Soft Praline Border */
+  --color-soft: #E9DFC9;              /* Soft Strawberry Cream */
+  --color-blush: #F6D77A;             /* Delicate Candy Blush */
   --color-rose-subtle: #FBEAF1;
-  --color-caramel-gold: #D49B35;      /* Warm Pastry Gold */
+  --color-caramel-gold: #F2B632;      /* Warm Pastry Gold */
 
   /* ---- Text & Borders (High Contrast WCAG AA / AAA Compliant) ---- */
-  --color-text: #2B1A10;              /* Dark Chocolate (14.8:1 on #FFFAF8 - AAA) */
-  --color-text-muted: #66564E;        /* Warm Cocoa (6.5:1 on #FFFAF8 - AA) */
+  --color-text: #1B1A17;              /* Dark Chocolate (14.8:1 on #F3EBDD - AAA) */
+  --color-text-muted: #5A5348;        /* Warm Cocoa (6.5:1 on #F3EBDD - AA) */
   --color-text-subtle: #82726A;       /* Secondary Muted (4.6:1 on White - AA) */
-  --color-border: #E8DFD9;            /* Subtle decoration outline */
-  --color-border-subtle: #F3EAE4;
-  --color-border-input: #7C6C63;      /* Form controls (3.8:1 on White - WCAG 2.1 AA) */
+  --color-border: #1B1A17;            /* Subtle decoration outline */
+  --color-border-subtle: #D9CBB0;
+  --color-border-input: #1B1A17;      /* Form controls (3.8:1 on White - WCAG 2.1 AA) */
 
   /* ---- Feedback ---- */
   --color-success: #2E7D4F;           /* Mint Green Pistachio */
   --color-warning: #9A5B00;           /* Amber Butterscotch */
   --color-danger: #B3261E;            /* Candied Cherry */
-  --color-focus: #A31D56;             /* Berry Focus Indicator */
-  --color-focus-ring: rgba(163, 29, 86, 0.28);
+  --color-focus: #1F5C45;             /* Berry Focus Indicator */
+  --color-focus-ring: rgba(242, 182, 50, 0.6);
 
   /* ---- Derived Helpers ---- */
   --color-on-primary: #FFFFFF;        /* Text on primary / status fills */
   --color-overlay: rgba(43, 26, 16, 0.55);
 
   /* ---- Product Card Pastel Rotation (Rotate by index % 6) ---- */
-  --tint-1: #F9DCD9;                  /* Rose Strawberry */
-  --tint-1-border: #F0C4C0;
-  --tint-2: #DFF0DC;                  /* Pistachio Meringue */
-  --tint-2-border: #C8E5C4;
-  --tint-3: #FBD3DD;                  /* Berry Marshmallow */
-  --tint-3-border: #F4B8C8;
-  --tint-4: #FBECC8;                  /* Honey Vanilla */
-  --tint-4-border: #F2D99E;
-  --tint-5: #F6E0D2;                  /* Almond Praline */
-  --tint-5-border: #E8C8B2;
-  --tint-6: #E2EEFB;                  /* Sugar Glaze Sky */
-  --tint-6-border: #C5DCF5;
+  --tint-1: #F2B632;                  /* Rose Strawberry */
+  --tint-1-border: #D9A21F;
+  --tint-2: #B9CDB0;                  /* Pistachio Meringue */
+  --tint-2-border: #8FAE84;
+  --tint-3: #E8B4A0;                  /* Berry Marshmallow */
+  --tint-3-border: #D08F76;
+  --tint-4: #F4DFA0;                  /* Honey Vanilla */
+  --tint-4-border: #DCC273;
+  --tint-5: #D8C6A5;                  /* Almond Praline */
+  --tint-5-border: #B9A47E;
+  --tint-6: #C9D6DA;                  /* Sugar Glaze Sky */
+  --tint-6-border: #9DB3B9;
 
   /* ---- Order Status Colors (Badge ALWAYS carries text, never color alone) ---- */
   --status-new: #2F5D8A;              /* جديد */
-  --status-accepted: #A31D56;         /* مقبول */
-  --status-preparing: #E8A33D;        /* قيد التجهيز (dark text) */
-  --status-preparing-text: #2B1A10;
+  --status-accepted: #1F5C45;         /* مقبول */
+  --status-preparing: #F2B632;        /* قيد التجهيز (dark text) */
+  --status-preparing-text: #1B1A17;
   --status-out: #6B4E9B;              /* خرج للتوصيل */
   --status-delivered: #2E7D4F;        /* تم التسليم */
   --status-failed: #9A5B00;           /* تعذّر التسليم */
   --status-cancelled: #B3261E;        /* ملغي */
 
   /* ---- Radius ---- */
-  --radius-card: 22px;
-  --radius-section: 32px;
-  --radius-input: 14px;
+  --radius-card: 4px;
+  --radius-section: 6px;
+  --radius-input: 3px;
   --radius-pill: 99px;
 
   /* ---- Refined Multi-Layer Shadows ---- */
-  --shadow-1: 0 4px 14px rgba(163, 29, 86, 0.08);
-  --shadow-2: 0 14px 34px rgba(163, 29, 86, 0.14);
-  --shadow-3: 0 26px 60px rgba(124, 29, 67, 0.18);
-  --shadow-candy-soft: 0 4px 20px -2px rgba(163, 29, 86, 0.07), 0 2px 6px -1px rgba(43, 26, 16, 0.04);
-  --shadow-candy-float: 0 16px 36px -6px rgba(163, 29, 86, 0.14), 0 6px 16px -2px rgba(43, 26, 16, 0.05);
-  --shadow-candy-glow: 0 0 24px rgba(163, 29, 86, 0.20);
-  --shadow-candy-cta: 0 12px 26px rgba(163, 29, 86, 0.28);
-  --shadow-candy-dock: 0 14px 34px rgba(124, 29, 67, 0.18);
+  --shadow-1: 2px 2px 0 #1B1A17;
+  --shadow-2: 4px 4px 0 #1B1A17;
+  --shadow-3: 6px 6px 0 #1B1A17;
+  --shadow-candy-soft: none;
+  --shadow-candy-float: 4px 4px 0 #1B1A17;
+  --shadow-candy-glow: none;
+  --shadow-candy-cta: 3px 3px 0 #1B1A17;
+  --shadow-candy-dock: 4px 4px 0 #1B1A17;
 
   /* ---- Typography (mapped to next/font variables) ---- */
-  --font-heading: var(--font-el-messiri), 'El Messiri', 'IBM Plex Sans Arabic', Tahoma, sans-serif;
-  --font-body: var(--font-ibm-plex-sans-arabic), 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+  --font-heading: var(--font-reem-kufi), 'Reem Kufi', 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+  --font-body: var(--font-tajawal), 'Tajawal', Tahoma, sans-serif;
   --fs-h1: 28px;
   --fs-h2: 20px;
   --fs-h3: 18px;                      /* derived */

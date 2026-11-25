@@ -306,7 +306,7 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.currentPassword)}
                       aria-describedby={errors.currentPassword ? 'current-password-error' : undefined}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
                         'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.currentPassword &&
@@ -361,7 +361,7 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.newPassword)}
                       aria-describedby={errors.newPassword ? 'new-password-error' : 'new-password-helper'}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
                         'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.newPassword &&
@@ -475,7 +475,7 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.confirmPassword)}
                       aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
                         'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.confirmPassword &&

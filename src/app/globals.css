@@ -16,10 +16,7 @@
 
   body {
     color: var(--color-text);
-    background:
-      radial-gradient(circle at 100% 0%, rgba(253, 242, 244, 0.85), transparent 34rem),
-      radial-gradient(circle at 0% 100%, rgba(255, 248, 242, 0.70), transparent 28rem),
-      var(--color-bg);
+    background: var(--color-bg);
     font-family: var(--font-body);
     font-size: var(--fs-body);
     font-weight: var(--fw-regular);
@@ -32,7 +29,7 @@
 
   ::selection {
     background: var(--color-blush);
-    color: var(--color-primary-hover);
+    color: #1B1A17;
   }
 
   html {
@@ -316,3 +313,14 @@ body[data-capture-mode] [data-mobile-dock] {
   margin-bottom: 1rem !important;
   pointer-events: auto !important;
 }
+
+/* ---- Tatreez cross-stitch band (Palestinian embroidery motif) ---- */
+.tatreez {
+  height: 14px;
+  background-color: #1B1A17;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Cpath d='M14 1l4 4-4 4-4-4z' fill='%23C2431F'/%3E%3Cpath d='M14 5l2 2-2 2-2-2z' fill='%23F2B632'/%3E%3Cpath d='M0 7h6M22 7h6' stroke='%231F5C45' stroke-width='2'/%3E%3Cpath d='M3 4v6M25 4v6' stroke='%23F3EBDD' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 28px 14px;
+}
+.tatreez-thin { height: 8px; background-size: 16px 8px; }
+.stamp { transform: rotate(-6deg); }

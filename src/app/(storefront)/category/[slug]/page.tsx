@@ -350,7 +350,7 @@ export default function CategoryListingPage() {
       {/* Filter & Search Bar */}
       <section
         aria-label="تصفية وفرز الأصناف"
-        className="sticky top-16 sm:top-20 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[#FFFAF8]/95 backdrop-blur-md border-b border-candy-line/70 flex flex-col gap-3"
+        className="sticky top-16 sm:top-20 z-20 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 bg-[#F3EBDD]/95 backdrop-blur-md border-b border-candy-line/70 flex flex-col gap-3"
       >
         <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
           <Search className="absolute right-3.5 w-4 h-4 text-candy-muted pointer-events-none" />
@@ -434,7 +434,7 @@ export default function CategoryListingPage() {
       {/* Custom Order Concierge Banner */}
       <section
         aria-label="طلب كيكة خاصة أو صينية مخصصة"
-        className="w-full rounded-3xl bg-[#2B1A10] text-[#FFFAF8] p-6 sm:p-9 mt-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+        className="w-full rounded-3xl bg-[#1B1A17] text-[#F3EBDD] p-6 sm:p-9 mt-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
       >
         <div className="flex flex-col gap-2 text-right max-w-xl">
           <span className="font-sans text-xs font-semibold text-[#E8C47C]">
@@ -443,7 +443,7 @@ export default function CategoryListingPage() {
           <h2 className="font-display font-bold text-xl sm:text-2xl text-white">
             هل ترغب بصينية مشكلة أو كيكة مخصصة لمناسبتك؟
           </h2>
-          <p className="font-sans text-xs sm:text-sm text-[#FFFAF8]/75 leading-relaxed">
+          <p className="font-sans text-xs sm:text-sm text-[#F3EBDD]/75 leading-relaxed">
             تواصل مباشرة مع فريق الحلويات لتنسيق الوزن، التشكيلة المفضلة، ورسالة الإهداء عبر واتساب.
           </p>
         </div>
@@ -452,7 +452,7 @@ export default function CategoryListingPage() {
           href={buildWhatsAppLink("مرحباً كاندي لوز، أرغب بطلب خاص لمناسبة")}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#2B1A10] font-sans font-bold text-sm hover:bg-[#F5E6D8] transition-colors shrink-0"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#1B1A17] font-sans font-bold text-sm hover:bg-[#F5E6D8] transition-colors shrink-0"
         >
           <MessageCircle className="w-4 h-4 text-candy-berry" />
           <span>تواصل عبر واتساب</span>
