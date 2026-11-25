@@ -336,3 +336,46 @@ body[data-capture-mode] [data-mobile-dock] {
   background: linear-gradient(90deg, var(--color-primary) 0 70%, var(--color-accent) 70% 100%);
 }
 .stamp { transform: none; }
+
+/* ---- Print styles: clean invoices/order details (T: طباعة الفاتورة) ---- */
+@media print {
+  /* هوامش ورقة حتى لا يلتصق المحتوى بأطراف الصفحة */
+  @page {
+    margin: 12mm;
+  }
+
+  /* إخفاء هيكل التنقل والأزرار وعناصر التفاعل */
+  aside,
+  header,
+  nav,
+  button,
+  [role="dialog"],
+  [data-mobile-dock],
+  [data-print-hidden] {
+    display: none !important;
+  }
+
+  /* تحرير قيود الارتفاع والتمرير المخصصة للشاشة حتى يطبع المحتوى كاملاً */
+  html,
+  body,
+  div,
+  main {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  body {
+    background: #ffffff !important;
+  }
+
+  main#main-content {
+    padding: 0 !important;
+  }
+
+  /* إبقاء البطاقات والمقاطع دون انقسام بين الصفحات قدر الإمكان */
+  .rounded-card,
+  section {
+    break-inside: avoid;
+  }
+}

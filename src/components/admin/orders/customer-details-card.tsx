@@ -109,7 +109,7 @@ export function CustomerDetailsCard({
               <span>{cleanPhone}</span>
             </div>
 
-            <div className="flex items-center gap-1.5 w-full sm:w-auto justify-end">
+            <div className="flex items-center gap-1.5 w-full sm:w-auto justify-end" data-print-hidden>
               {/* زر نسخ الرقم */}
               <button
                 type="button"
