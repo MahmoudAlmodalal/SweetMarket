@@ -186,7 +186,7 @@ export function PageContainer({
       className={cn(
         'w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6',
         !fluid && 'max-w-7xl mx-auto',
-        'pb-24 md:pb-12',
+        'pb-40 md:pb-12',
         className
       )}
       {...props}

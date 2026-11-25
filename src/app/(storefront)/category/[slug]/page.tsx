@@ -337,14 +337,12 @@ export default function CategoryListingPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-sans text-candy-muted border-t lg:border-t-0 pt-4 lg:pt-0 border-candy-line/70">
-            <span className="tabular-nums font-semibold text-candy-ink">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-sans border-t lg:border-t-0 pt-4 lg:pt-0 border-candy-line/70">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-candy-soft/80 border border-candy-berry/15 tabular-nums font-bold text-candy-berry">
               {isLoading ? "جاري التحميل..." : `${availableCount} صنف متاح اليوم`}
             </span>
-            <span className="text-candy-line-dark">|</span>
-            <span>سمن بلدي نقي 100%</span>
-            <span className="text-candy-line-dark">|</span>
-            <span>توصيل مبرد</span>
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white border border-candy-line/80 font-medium text-candy-muted">سمن بلدي نقي 100%</span>
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white border border-candy-line/80 font-medium text-candy-muted">توصيل مبرد</span>
           </div>
         </div>
       </header>

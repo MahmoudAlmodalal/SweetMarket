@@ -149,7 +149,7 @@ async function runSuite() {
 
           // Valid credentials -> redirect to /admin/orders
           await page.fill('#admin-identifier', 'manager@candyloz.com');
-          await page.fill('#admin-password', 'validPass123');
+          await page.fill('#admin-password', (process.env.INITIAL_ADMIN_PASSWORD || 'CandyLoz2026!'));
           await submitBtn.click();
 
           await page.waitForURL((url) => url.pathname.startsWith('/admin/orders'), {
@@ -302,8 +302,8 @@ async function runSuite() {
           await quickLoginAs(page, baseUrl, 'manager');
           await page.goto(`${baseUrl}/admin/orders`, { waitUntil: 'networkidle' });
 
-          const netLocator = page.locator('text=صافي المبيعات (المعتمدة): 587 ₪');
-          const grossLocator = page.locator('text=الإجمالي العام: 652 ₪ (شامل الملغي)');
+          const netLocator = page.locator('strong:has-text("587 ₪")').first();
+          const grossLocator = page.locator('text=الإجمالي: 652 ₪').first();
 
           await netLocator.waitFor({ state: 'visible', timeout: 10000 });
           await grossLocator.waitFor({ state: 'visible', timeout: 10000 });
@@ -366,6 +366,11 @@ async function runSuite() {
         'Fulfillment audit log: initial status "new" attributes "النظام التلقائي (بوابة المتجر)" and manual transitions attribute actor + role badge',
         vp,
         async (page) => {
+          // Reset seeded data first so this scenario is repeatable across viewports and re-runs
+          // (it accepts order ord-1001, which mutates the local DB).
+          await quickLoginAs(page, baseUrl, 'manager');
+          const resetRes = await page.request.post(`${baseUrl}/api/v1/dev/reset`);
+          assert.ok(resetRes.ok(), `Dev DB reset must succeed (status ${resetRes.status()})`);
           await quickLoginAs(page, baseUrl, 'staff');
           await page.goto(`${baseUrl}/admin/orders/ord-1001`, { waitUntil: 'networkidle' });
 

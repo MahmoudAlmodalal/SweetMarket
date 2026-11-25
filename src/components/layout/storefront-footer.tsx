@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StoreLogo } from "@/components/ui/store-logo";
+import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
 import { STORE_PHONE_INTL, buildWhatsAppLink } from "@/lib/store-identity";
 
 export interface StorefrontFooterProps {
@@ -22,17 +23,8 @@ export function StorefrontFooter({ className }: StorefrontFooterProps) {
 
   return (
     <>
-      {/* Subtle WhatsApp Concierge Action */}
-      <a
-        href={buildWhatsAppLink()}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="تواصل فوري عبر واتساب"
-        className="fixed bottom-24 left-4 md:bottom-7 md:left-7 z-40 w-12 h-12 rounded-full bg-[#1E9E52] text-white flex items-center justify-center shadow-[0_10px_24px_rgba(30,158,82,0.3)] hover:scale-105 active:scale-95 transition-transform"
-      >
-        <MessageCircle className="w-5 h-5" />
-        <span className="sr-only">واتساب كاندي لوز</span>
-      </a>
+      {/* Subtle WhatsApp Concierge Action (client-side, hidden on conversion-critical pages) */}
+      <WhatsAppFab />
 
       <footer
         className={cn(

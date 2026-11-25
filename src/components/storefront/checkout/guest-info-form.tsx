@@ -1,5 +1,6 @@
 "use client";
 
+import { PalestineFlag } from "@/components/ui/palestine-flag";
 import * as React from "react";
 import { User, Phone, Sparkles, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -150,9 +151,7 @@ export function GuestInfoForm({
           <div className="relative flex items-center">
             {/* Country / Palestinian Network Badge on right for RTL */}
             <div className="absolute right-3.5 flex items-center gap-1.5 pointer-events-none text-candy-ink font-sans text-xs font-bold border-l border-candy-line/80 pl-2.5 z-10">
-              <span className="text-base select-none" role="img" aria-label="علم فلسطين">
-                🇵🇸
-              </span>
+              <PalestineFlag />
               <span className="text-candy-berry font-extrabold text-[13px] tracking-wide">
                 {isJawwal ? "059" : isOoredoo ? "056" : "059/056"}
               </span>

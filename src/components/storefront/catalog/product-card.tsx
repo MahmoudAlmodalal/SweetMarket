@@ -271,15 +271,15 @@ export function ProductCard({
 
       {/* Price & Add to Cart Footer */}
       <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-2.5 mt-1 border-t border-candy-line/50 flex items-center justify-between gap-2">
-        <div className="flex flex-col">
-          <div className="flex items-baseline gap-1 tabular-nums">
+        <div className="flex flex-col min-w-0">
+          <div className="flex items-baseline gap-1 tabular-nums whitespace-nowrap">
             <span className="font-sans font-extrabold text-base sm:text-lg text-candy-ink tracking-tight">
               {currentPrice}
             </span>
             <span className="text-xs font-sans font-bold text-candy-berry">₪</span>
           </div>
           {hasDiscount && (
-            <span className="text-[11px] font-sans text-candy-muted line-through tabular-nums leading-none">
+            <span className="text-[11px] font-sans text-candy-muted line-through tabular-nums leading-none whitespace-nowrap">
               {listPrice} ₪
             </span>
           )}
@@ -305,7 +305,7 @@ export function ProductCard({
             disabled={!isAvailable}
             aria-label={`أضف ${product.name} للسلة`}
             className={cn(
-              "h-9 px-3 sm:px-3.5 rounded-xl font-sans font-bold text-xs flex items-center justify-center gap-1.5 transition-all",
+              "h-9 px-2.5 sm:px-3.5 rounded-xl font-sans font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-all whitespace-nowrap shrink-0",
               isAvailable
                 ? isAdded
                   ? "bg-emerald-600 text-white"

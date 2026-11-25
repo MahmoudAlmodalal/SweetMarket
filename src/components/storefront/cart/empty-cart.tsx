@@ -204,7 +204,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-candy-pill bg-gradient-to-r from-candy-berry via-candy-strawberry to-candy-magenta text-white font-sans font-bold text-sm sm:text-base shadow-candy-cta hover:brightness-105 active:scale-95 transition-all duration-200"
         >
           <ShoppingBag className="w-4 h-4" />
-          <span>تصفح الحلويات 🍰</span>
+          <span>تصفح الحلويات</span>
           <ArrowLeft className="w-4 h-4" />
         </Link>
 
@@ -213,7 +213,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-candy-pill bg-white text-candy-ink border border-candy-line font-sans font-semibold text-sm hover:bg-candy-soft hover:border-candy-berry/40 transition-all shadow-xs"
         >
           <Package className="w-4 h-4 text-candy-muted" />
-          <span>تتبع طلب سابق 📦</span>
+          <span>تتبع طلب سابق</span>
         </Link>
 
         <Link
@@ -221,7 +221,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-candy-pill bg-candy-soft text-candy-muted hover:text-candy-berry hover:bg-candy-blush/40 font-sans font-medium text-sm transition-all"
         >
           <Home className="w-4 h-4" />
-          <span>الرئيسية 🏠</span>
+          <span>الرئيسية</span>
         </Link>
       </div>
 

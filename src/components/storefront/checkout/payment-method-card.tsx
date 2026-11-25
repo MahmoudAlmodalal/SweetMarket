@@ -84,7 +84,7 @@ export function PaymentMethodCard({
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <h4 className="font-sans font-bold text-sm sm:text-base text-candy-ink">
-                    الدفع نقداً عند الاستلام (Cash on Delivery)
+                    الدفع نقداً عند الاستلام <span dir="ltr" className="whitespace-nowrap">(Cash on Delivery)</span>
                   </h4>
                   <span className="px-2.5 py-0.5 rounded-full bg-candy-berry text-white font-sans font-bold text-[11px] shadow-xs">
                     الخيار المعتمد

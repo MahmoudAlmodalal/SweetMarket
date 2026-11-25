@@ -53,8 +53,8 @@ function TrackOrderContent() {
   }, []);
 
   return (
-    <div className="w-full min-h-[75vh] px-4 py-8 sm:py-12 bg-candy-canvas">
-      <div dir="rtl" className="w-full max-w-3xl mx-auto space-y-8">
+    <div className="w-full min-h-[75vh] px-4 py-4 sm:py-12 bg-candy-canvas">
+      <div dir="rtl" className="w-full max-w-3xl mx-auto space-y-5 sm:space-y-8">
         {/* Breadcrumb Navigation */}
         <nav
           aria-label="مسار التنقل"

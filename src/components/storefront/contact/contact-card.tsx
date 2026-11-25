@@ -123,7 +123,7 @@ export function ContactCard({
                 openNow ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
               )}
             />
-            <span>{openNow ? "مفتوح الآن 🟢" : "مغلق حالياً 🔴"}</span>
+            <span>{openNow ? "مفتوح الآن" : "مغلق حالياً"}</span>
           </span>
         </div>
       </div>

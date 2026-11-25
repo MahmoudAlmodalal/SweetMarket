@@ -164,7 +164,7 @@ export default function AdminOrdersPage() {
             <ShoppingBag className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-candy-muted block truncate">
+            <span className="font-sans text-xs text-candy-muted block">
               إجمالي الطلبات
             </span>
             {isLoading ? (
@@ -182,7 +182,7 @@ export default function AdminOrdersPage() {
             <Clock className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-candy-muted font-medium block truncate">
+            <span className="font-sans text-xs text-candy-muted font-medium block">
               طلبات جديدة
             </span>
             {isLoading ? (
@@ -200,7 +200,7 @@ export default function AdminOrdersPage() {
             <Truck className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-candy-muted font-medium block truncate">
+            <span className="font-sans text-xs text-candy-muted font-medium block">
               قيد التجهيز والتوصيل
             </span>
             {isLoading ? (
@@ -218,7 +218,7 @@ export default function AdminOrdersPage() {
             <TrendingUp className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-xs text-candy-muted block truncate">
+            <span className="font-sans text-xs text-candy-muted block">
               صافي المبيعات المعتمدة
             </span>
             {isLoading ? (

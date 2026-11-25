@@ -136,7 +136,7 @@ export function AddToCartBar({
         <div
           role="region"
           aria-label="الشريط السريع للإضافة إلى السلة"
-          className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] inset-x-3 sm:inset-x-6 z-50 md:hidden animate-in slide-in-from-bottom-4 duration-300"
+          className="fixed bottom-[calc(5.6rem+env(safe-area-inset-bottom))] inset-x-3 sm:inset-x-6 z-50 md:hidden animate-in slide-in-from-bottom-4 duration-300"
         >
           <div className="mx-auto max-w-md p-2.5 sm:p-3 bg-white/95 backdrop-blur-xl rounded-candy-card border border-candy-line/90 shadow-candy-dock flex items-center justify-between gap-3">
             {/* Instant Price Calculation Column */}

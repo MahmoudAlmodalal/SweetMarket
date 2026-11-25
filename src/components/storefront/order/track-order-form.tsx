@@ -1,5 +1,6 @@
 "use client";
 
+import { PalestineFlag } from "@/components/ui/palestine-flag";
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import {
@@ -455,8 +456,8 @@ export function TrackOrderForm({
         </div>
       </CardHeader>
 
-      <CardContent className="p-5 sm:p-7 space-y-6">
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <CardContent className="p-4 sm:p-7 space-y-5 sm:space-y-6">
+        <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5">
           {/* Lockout Security Warning */}
           {isLockedOut && (
             <div
@@ -520,9 +521,7 @@ export function TrackOrderForm({
             <div className="relative flex items-center">
               {/* Palestinian Network indicator pill on right for RTL */}
               <div className="absolute right-3.5 flex items-center gap-1.5 pointer-events-none text-candy-ink font-sans text-xs font-bold border-l border-candy-line/80 pl-2.5">
-                <span className="text-sm" role="img" aria-label="فلسطين">
-                  🇵🇸
-                </span>
+                <PalestineFlag />
                 <span className="text-candy-berry font-extrabold text-[13px]">
                   059 / 056
                 </span>
