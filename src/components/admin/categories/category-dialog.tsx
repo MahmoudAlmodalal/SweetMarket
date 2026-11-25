@@ -206,7 +206,7 @@ export function CategoryDialog({
         <div className="p-5 sm:p-6 pb-3 border-b border-candy-line/60 shrink-0">
           <DialogHeader className="mb-0 text-right">
             <div className="flex items-center gap-2.5 pl-6 sm:pl-8">
-              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
                 <Layers className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
@@ -322,7 +322,7 @@ export function CategoryDialog({
 
               {/* معاينة الصورة */}
               <div className="mt-2 p-2.5 rounded-xl bg-candy-soft border border-candy-line flex items-center gap-3">
-                <div className="w-16 h-16 rounded-lg overflow-hidden bg-candy-cream border border-candy-line shrink-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-candy-line shrink-0 flex items-center justify-center">
                   {imageUrl && !imageError ? (
                     <img
                       src={imageUrl}
@@ -358,7 +358,7 @@ export function CategoryDialog({
                         setImageUrl(item.url);
                         setImageError(false);
                       }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-sans bg-candy-cream border border-candy-line hover:border-candy-rose hover:bg-candy-soft transition-colors"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-sans bg-white border border-candy-line hover:border-candy-rose hover:bg-candy-soft transition-colors"
                     >
                       <Sparkles className="w-3 h-3 text-candy-strawberry" />
                       <span>{item.label}</span>
@@ -393,7 +393,7 @@ export function CategoryDialog({
                 </label>
                 <label
                   htmlFor="category-is-active"
-                  className="flex items-center gap-2.5 p-2.5 rounded-xl border border-candy-line bg-candy-cream hover:bg-candy-soft cursor-pointer transition-colors"
+                  className="flex items-center gap-2.5 p-2.5 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
                 >
                   <input
                     id="category-is-active"

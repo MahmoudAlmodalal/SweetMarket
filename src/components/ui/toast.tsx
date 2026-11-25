@@ -142,7 +142,7 @@ const toastVariantStyles: Record<
   },
   info: {
     container:
-      "border-candy-ink border-r-4 border-r-candy-berry bg-white/95 text-candy-ink",
+      "border-candy-blush border-r-4 border-r-candy-berry bg-white/95 text-candy-ink",
     icon: (
       <div className="shrink-0 p-1.5 rounded-full bg-candy-soft text-candy-berry ring-4 ring-candy-soft/60">
         <Info className="h-4 w-4" />
@@ -180,7 +180,7 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         aria-atomic="true"
         dir="rtl"
         className={cn(
-          "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-candy-card border p-4 shadow-candy-2  transition-all duration-300 hover:shadow-candy-3 animate-[toast-in_0.3s_cubic-bezier(0.16,1,0.3,1)] motion-reduce:animate-none",
+          "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-candy-card border p-4 shadow-candy-2 backdrop-blur-md transition-all duration-300 hover:shadow-candy-3 animate-[toast-in_0.3s_cubic-bezier(0.16,1,0.3,1)] motion-reduce:animate-none",
           variantConfig.container,
           className
         )}

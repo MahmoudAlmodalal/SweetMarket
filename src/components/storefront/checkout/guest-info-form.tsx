@@ -52,7 +52,7 @@ export function GuestInfoForm({
   return (
     <Card
       className={cn(
-        "overflow-hidden border-candy-line/80 shadow-candy-1 rounded-candy-card bg-candy-cream transition-all duration-200",
+        "overflow-hidden border-candy-line/80 shadow-candy-1 rounded-candy-card bg-white transition-all duration-200",
         className
       )}
     >
@@ -67,7 +67,7 @@ export function GuestInfoForm({
                 <CardTitle className="text-base sm:text-lg text-candy-ink font-display font-bold">
                   1. بيانات الزبون والمستلم
                 </CardTitle>
-                <span className="sm:hidden px-2 py-0.5 rounded-none bg-candy-blush text-candy-berry text-[10px] font-bold">
+                <span className="sm:hidden px-2 py-0.5 rounded-full bg-candy-blush text-candy-berry text-[10px] font-bold">
                   طلب كزائر
                 </span>
               </div>
@@ -77,7 +77,7 @@ export function GuestInfoForm({
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-cream border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-white border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-candy-strawberry animate-pulse" />
             <span>طلب كزائر (بدون حساب)</span>
           </div>
@@ -131,12 +131,12 @@ export function GuestInfoForm({
             {/* Carrier recognition pill */}
             <div className="flex items-center gap-1.5 text-xs font-sans">
               {isJawwal ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-200 animate-in fade-in duration-200">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold border border-emerald-200 animate-in fade-in duration-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping" />
                   شبكة جوال (Jawwal 059)
                 </span>
               ) : isOoredoo ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-rose-100 text-rose-800 text-[11px] font-bold border border-rose-200 animate-in fade-in duration-200">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold border border-rose-200 animate-in fade-in duration-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-ping" />
                   شبكة أوريدو (Ooredoo 056)
                 </span>
@@ -172,9 +172,9 @@ export function GuestInfoForm({
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? "checkout-phone-error" : "checkout-phone-helper"}
               className={cn(
-                "w-full h-12 pr-28 pl-10 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
+                "w-full h-12 pr-28 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
                 "placeholder:text-candy-muted/70",
-                "focus:bg-candy-cream focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
+                "focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
                 !errors.phone &&
                   isPhoneValid &&
                   "border-emerald-500/80 focus:border-emerald-600 focus:ring-emerald-500/20 bg-emerald-50/15",

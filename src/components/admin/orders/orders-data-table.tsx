@@ -172,7 +172,7 @@ export function OrdersDataTable({
   return (
     <div className="space-y-4">
       {/* 1. أشرطة التبويبات للفلترة السريعة وأدوات البحث */}
-      <div className="bg-candy-cream rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
+      <div className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-3 sm:p-4 space-y-4">
         {/* شريط تبويبات الحالات متجاوب وسلس للتمرير الأفقي */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none select-none">
           {FILTER_TABS.map((tab) => {
@@ -195,7 +195,7 @@ export function OrdersDataTable({
                 <span>{tab.label}</span>
                 <span
                   className={cn(
-                    'inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-none text-xs font-bold tabular-nums transition-colors',
+                    'inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-xs font-bold tabular-nums transition-colors',
                     isActive
                       ? 'bg-white/25 text-white'
                       : isNewWithAlert
@@ -276,7 +276,7 @@ export function OrdersDataTable({
       {/* 3. الجدول الرئيسي (Desktop/Tablet) وشبكة البطاقات (Mobile) */}
       {filteredOrders.length === 0 ? (
         // حالة الفراغ: لا توجد طلبات تطابق المعايير
-        <div className="bg-candy-cream rounded-2xl border border-dashed border-candy-line-dark p-8 sm:p-12 text-center shadow-candy-1">
+        <div className="bg-white rounded-2xl border border-dashed border-candy-line-dark p-8 sm:p-12 text-center shadow-candy-1">
           <div className="w-16 h-16 rounded-2xl bg-candy-blush/60 border border-candy-line flex items-center justify-center mx-auto mb-4 text-candy-berry">
             <Inbox className="w-8 h-8" />
           </div>
@@ -302,7 +302,7 @@ export function OrdersDataTable({
       ) : (
         <>
           {/* عرض سطح المكتب والأجهزة اللوحية (Table Layout) */}
-          <div className="hidden md:block bg-candy-cream rounded-2xl border border-candy-line shadow-candy-1 overflow-hidden">
+          <div className="hidden md:block bg-white rounded-2xl border border-candy-line shadow-candy-1 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-right border-collapse">
                 <thead>
@@ -466,7 +466,7 @@ export function OrdersDataTable({
               return (
                 <div
                   key={order.id}
-                  className="bg-candy-cream rounded-2xl border border-candy-line shadow-candy-1 p-4 space-y-3"
+                  className="bg-white rounded-2xl border border-candy-line shadow-candy-1 p-4 space-y-3"
                 >
                   {/* رأس البطاقة: رقم الطلب والحالة */}
                   <div className="flex items-center justify-between pb-2 border-b border-candy-line/60">
@@ -477,7 +477,7 @@ export function OrdersDataTable({
                       >
                         <span>{order.orderNumber}</span>
                         {hasRoyalPackaging && (
-                          <span className="inline-flex items-center gap-0.5 text-[9px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-none">
+                          <span className="inline-flex items-center gap-0.5 text-[9px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full">
                             <Sparkles className="w-2.5 h-2.5 text-amber-600" />
                             <span>ملكي</span>
                           </span>

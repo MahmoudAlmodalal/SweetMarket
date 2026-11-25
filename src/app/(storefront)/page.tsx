@@ -49,12 +49,12 @@ export default function StorefrontHomePage() {
       {/* 4. Luxury Gifting & Custom Boxes Editorial Split */}
       <section
         aria-label="خدمة الإهداء والبوكسات الخاصة"
-        className="w-full overflow-hidden bg-[#1F5C45] text-[#F3EBDD] border-2 border-candy-ink shadow-[8px_8px_0_#1B1A17]"
+        className="w-full overflow-hidden rounded-[24px] bg-[#4A0E23] text-[#FFFAF8] shadow-candy-float"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
           <div className="lg:col-span-7 p-7 sm:p-10 lg:p-14 flex flex-col justify-center gap-5 text-right">
-            <div className="flex items-center gap-3 text-sm font-sans font-bold text-[#F2B632]">
-              <span className="w-8 h-[1.5px] bg-[#F2B632]" aria-hidden="true" />
+            <div className="flex items-center gap-3 text-sm font-sans font-bold text-[#E8A33D]">
+              <span className="w-8 h-[1.5px] bg-[#E8A33D]" aria-hidden="true" />
               <span>خدمة الإهداء والمناسبات الخاصة</span>
             </div>
 
@@ -73,14 +73,14 @@ export default function StorefrontHomePage() {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/category/chocolate-gifts"
-                className="inline-flex items-center gap-2 h-12 px-7 bg-[#F2B632] hover:bg-[#F3EBDD] border-2 border-candy-ink text-[#1B1A17] font-sans font-bold text-sm transition-colors"
+                className="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-[#E8A33D] hover:bg-[#D4902F] text-[#2B1A10] font-sans font-bold text-sm transition-colors"
               >
                 <span>استكشف علب الهدايا</span>
                 <ArrowLeft className="w-4 h-4" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 h-12 px-6 border-2 border-[#F3EBDD] hover:bg-[#F3EBDD] hover:text-[#1B1A17] text-[#F3EBDD] font-sans font-semibold text-sm transition-colors"
+                className="inline-flex items-center gap-2 h-12 px-6 border-2 border-[#FFFAF8] hover:bg-[#FFFAF8] hover:text-[#2B1A10] text-[#FFFAF8] font-sans font-semibold text-sm transition-colors"
               >
                 <span>تواصل لطلب خاص</span>
               </Link>
@@ -106,11 +106,11 @@ export default function StorefrontHomePage() {
       {/* 5. Quiet Editorial Service Pillars */}
       <section
         aria-label="مزايا الخدمة والتوصيل"
-        className="w-full border-t-4 border-candy-ink pt-10"
+        className="w-full border-t border-candy-line pt-10"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-right">
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 bg-[#F2B632] border-2 border-candy-ink flex items-center justify-center text-candy-ink shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <Truck className="w-5 h-5" />
             </div>
             <div>
@@ -124,7 +124,7 @@ export default function StorefrontHomePage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 bg-[#F2B632] border-2 border-candy-ink flex items-center justify-center text-candy-ink shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -138,7 +138,7 @@ export default function StorefrontHomePage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 bg-[#F2B632] border-2 border-candy-ink flex items-center justify-center text-candy-ink shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <Banknote className="w-5 h-5" />
             </div>
             <div>
@@ -152,7 +152,7 @@ export default function StorefrontHomePage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-11 h-11 bg-[#F2B632] border-2 border-candy-ink flex items-center justify-center text-candy-ink shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-candy-soft border border-candy-line flex items-center justify-center text-candy-berry shrink-0">
               <Clock className="w-5 h-5" />
             </div>
             <div>

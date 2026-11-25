@@ -135,7 +135,7 @@ function CartPageInner() {
           <Link
             href="/"
             aria-label="الرجوع إلى المتجر"
-            className="w-10 h-10 rounded-full bg-candy-cream border border-candy-line text-candy-muted hover:text-candy-berry hover:bg-candy-soft flex items-center justify-center transition-colors shadow-xs"
+            className="w-10 h-10 rounded-full bg-white border border-candy-line text-candy-muted hover:text-candy-berry hover:bg-candy-soft flex items-center justify-center transition-colors shadow-xs"
           >
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -233,7 +233,7 @@ function CartPageInner() {
                   return (
                     <div
                       key={product.id}
-                      className="rounded-2xl bg-candy-cream p-3.5 border border-candy-line/70 shadow-candy-1 flex flex-col justify-between hover:border-candy-strawberry/40 hover:shadow-candy-2 transition-all group"
+                      className="rounded-2xl bg-white p-3.5 border border-candy-line/70 shadow-candy-1 flex flex-col justify-between hover:border-candy-strawberry/40 hover:shadow-candy-2 transition-all group"
                     >
                       <div>
                         <div className="relative w-full h-24 rounded-xl overflow-hidden bg-candy-soft mb-2.5">

@@ -237,7 +237,7 @@ export default function OrderDetailPage() {
   // حالة الخطأ أو عدم العثور على الطلب
   if (error || !order) {
     return (
-      <div className="max-w-xl mx-auto my-12 p-8 bg-candy-cream border border-candy-line rounded-candy-card text-center space-y-4 shadow-candy-1 font-sans" dir="rtl">
+      <div className="max-w-xl mx-auto my-12 p-8 bg-white border border-candy-line rounded-candy-card text-center space-y-4 shadow-candy-1 font-sans" dir="rtl">
         <div className="w-14 h-14 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center">
           <AlertCircle className="w-8 h-8" />
         </div>
@@ -362,7 +362,7 @@ export default function OrderDetailPage() {
 
           {/* سجل تتبع وتدقيق حالات الطلب (Order Timeline) */}
           <section aria-label="سجل التغييرات ومتابعة الحالة">
-            <Card className="bg-candy-cream border border-candy-line shadow-candy-1">
+            <Card className="bg-white border border-candy-line shadow-candy-1">
               <CardHeader className="pb-3 border-b border-candy-line/60">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center">

@@ -123,7 +123,7 @@ function StorefrontHeaderUI({
     <header
       role="banner"
       className={cn(
-        "sticky top-0 z-40 w-full bg-[#F3EBDD] border-b-2 border-candy-ink transition-colors",
+        "sticky top-0 z-40 w-full bg-[#FFFAF8]/92 backdrop-blur-md border-b border-candy-line/70 transition-colors",
         className
       )}
     >
@@ -136,10 +136,10 @@ function StorefrontHeaderUI({
             className="flex items-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry rounded-lg"
           >
             <span className="flex items-center gap-2.5">
-              <span className="w-10 h-10 bg-[#1B1A17] text-[#F2B632] font-display font-bold text-2xl flex items-center justify-center border-2 border-candy-ink shadow-[2px_2px_0_#C2431F]" aria-hidden="true">ك</span>
+              <span className="w-10 h-10 rounded-2xl bg-candy-berry text-white font-display font-bold text-2xl flex items-center justify-center shadow-candy-cta" role="img" aria-label="شعار كاندي لوز">ك</span>
               <span className="flex flex-col leading-none">
                 <span className="font-display font-bold text-xl text-candy-ink">كاندي لوز</span>
-                <span className="text-[10px] font-bold tracking-[0.2em] text-[#C2431F] mt-1">CANDY LOZ</span>
+                <span className="text-[10px] font-bold tracking-[0.2em] text-[#D4902F] mt-1">CANDY LOZ</span>
               </span>
             </span>
           </Link>
@@ -205,7 +205,7 @@ function StorefrontHeaderUI({
               {favoriteCount > 0 && (
                 <span
                   aria-label={`${favoriteCount} عناصر في المفضلة`}
-                  className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-none bg-candy-berry text-white font-sans text-[10px] font-bold tabular-nums flex items-center justify-center ring-2 ring-[#F3EBDD]"
+                  className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-none bg-candy-berry text-white font-sans text-[10px] font-bold tabular-nums flex items-center justify-center ring-2 ring-[#FFFAF8]"
                 >
                   {favoriteCount > 99 ? "+99" : favoriteCount}
                 </span>

@@ -50,7 +50,7 @@ export const ErrorSummary = React.forwardRef<HTMLDivElement, ErrorSummaryProps>(
         aria-atomic="true"
         tabIndex={-1}
         className={cn(
-          "error-summary mb-4 p-4 sm:p-5 border-[1.5px] border-rose-200 border-r-4 border-r-rose-600 rounded-candy-card bg-candy-cream text-rose-900 shadow-candy-1 focus:outline-none focus:ring-2 focus:ring-rose-500/40 transition-all",
+          "error-summary mb-4 p-4 sm:p-5 border-[1.5px] border-rose-200 border-r-4 border-r-rose-600 rounded-candy-card bg-gradient-to-l from-white to-rose-50/70 text-rose-900 shadow-candy-1 focus:outline-none focus:ring-2 focus:ring-rose-500/40 transition-all",
           className
         )}
         {...props}

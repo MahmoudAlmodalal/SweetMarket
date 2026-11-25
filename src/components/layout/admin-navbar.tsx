@@ -103,7 +103,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
   return (
     <header
       className={cn(
-        'h-16 border-b border-candy-line/80 bg-white/95  sticky top-0 z-30 px-3 sm:px-6 flex items-center justify-between shadow-xs transition-colors',
+        'h-16 border-b border-candy-line/80 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-3 sm:px-6 flex items-center justify-between shadow-xs transition-colors',
         className
       )}
     >
@@ -189,7 +189,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
             'inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-candy-pill text-xs font-semibold font-sans transition-all duration-200 border',
             isPasswordPage
               ? 'bg-candy-berry text-white border-candy-berry shadow-candy-1 font-bold'
-              : 'bg-candy-soft text-candy-ink border-candy-line hover:text-candy-berry hover:border-candy-ink hover:shadow-xs'
+              : 'bg-candy-soft text-candy-ink border-candy-line hover:text-candy-berry hover:border-candy-blush hover:shadow-xs'
           )}
         >
           <KeyRound className="w-3.5 h-3.5" aria-hidden="true" />
@@ -213,7 +213,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
             <div
               role="alertdialog"
               aria-label="تأكيد تسجيل الخروج"
-              className="flex items-center gap-1 bg-candy-cream border border-rose-300 rounded-candy-pill p-1 shadow-candy-2 animate-in fade-in zoom-in-95 duration-150"
+              className="flex items-center gap-1 bg-white border border-rose-300 rounded-candy-pill p-1 shadow-candy-2 animate-in fade-in zoom-in-95 duration-150"
             >
               <span className="text-[11px] font-sans font-bold text-rose-700 px-2 hidden sm:inline">
                 تأكيد الخروج؟
@@ -221,7 +221,7 @@ export function AdminNavbar({ onMenuToggle, title, className }: AdminNavbarProps
               <button
                 type="button"
                 onClick={handleLogout}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-none text-xs font-bold font-sans bg-rose-600 text-white hover:bg-rose-700 active:scale-95 transition-all shadow-xs"
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold font-sans bg-rose-600 text-white hover:bg-rose-700 active:scale-95 transition-all shadow-xs"
                 aria-label="تأكيد تسجيل الخروج"
               >
                 <Check className="w-3 h-3" aria-hidden="true" />

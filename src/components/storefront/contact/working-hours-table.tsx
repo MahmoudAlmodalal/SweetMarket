@@ -81,14 +81,14 @@ export function WorkingHoursTable({
   return (
     <div
       className={cn(
-        "rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-6 sm:p-8 transition-all duration-300 relative overflow-hidden",
+        "rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-6 sm:p-8 transition-all duration-300 relative overflow-hidden",
         className
       )}
     >
       {/* Header with Title and Dynamic Open/Closed Badge */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-candy-line/70">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-11 h-11 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
             <Clock className="w-5 h-5 text-candy-berry" />
           </div>
           <div>

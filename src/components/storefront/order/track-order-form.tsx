@@ -365,7 +365,7 @@ export function TrackOrderForm({
       <Card
         dir="rtl"
         className={cn(
-          "overflow-hidden border-candy-line/80 shadow-candy-2 bg-candy-cream text-center p-6 sm:p-8 animate-in fade-in",
+          "overflow-hidden border-candy-line/80 shadow-candy-2 bg-white text-center p-6 sm:p-8 animate-in fade-in",
           className
         )}
       >
@@ -430,7 +430,7 @@ export function TrackOrderForm({
     <Card
       dir="rtl"
       className={cn(
-        "overflow-hidden border-candy-line/80 shadow-candy-2 bg-candy-cream transition-all duration-300",
+        "overflow-hidden border-candy-line/80 shadow-candy-2 bg-white transition-all duration-300",
         className
       )}
     >
@@ -449,7 +449,7 @@ export function TrackOrderForm({
               </CardDescription>
             </div>
           </div>
-          <span className="hidden sm:inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-candy-cream border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
+          <span className="hidden sm:inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-white border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-candy-strawberry" />
             تحديث فوري
           </span>
@@ -543,9 +543,9 @@ export function TrackOrderForm({
                 aria-invalid={Boolean(fieldErrors.phone)}
                 aria-describedby={fieldErrors.phone ? "track-phone-error" : "track-phone-helper"}
                 className={cn(
-                  "w-full h-12 pr-28 pl-10 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
+                  "w-full h-12 pr-28 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
                   "placeholder:text-candy-muted/70",
-                  "focus:bg-candy-cream focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
+                  "focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
                   fieldErrors.phone &&
                     "border-rose-500 focus:border-rose-600 focus:ring-rose-500/20 text-rose-900 bg-rose-50/30",
                   (isLoading || isLockedOut) &&
@@ -639,7 +639,7 @@ export function TrackOrderForm({
             </button>
 
             {showTips && (
-              <div className="mt-2.5 p-4 rounded-2xl bg-candy-cream border border-candy-line/80 text-xs font-sans text-candy-muted space-y-2.5 animate-in fade-in">
+              <div className="mt-2.5 p-4 rounded-2xl bg-white border border-candy-line/80 text-xs font-sans text-candy-muted space-y-2.5 animate-in fade-in">
                 <div className="flex items-start gap-2">
                   <Info className="w-4 h-4 text-candy-berry shrink-0 mt-0.5" />
                   <div>

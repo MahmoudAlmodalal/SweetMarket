@@ -32,32 +32,32 @@ export function CategoryStrip({
       aria-label="تصنيفات متجر كاندي لوز"
       className={cn("w-full", className)}
     >
-      <div className="flex items-end justify-between gap-4 pb-3 border-b-4 border-candy-ink">
+      <div className="flex items-end justify-between gap-4 pb-3 border-b border-candy-line">
         <h2 className="font-display font-bold text-3xl sm:text-4xl text-candy-ink">
           قائمة الحلويات
         </h2>
         <Link
           href="/category/all"
-          className="font-bold text-sm text-candy-ink underline decoration-[3px] decoration-[#F2B632] underline-offset-8 hover:decoration-[#C2431F]"
+          className="font-bold text-sm text-candy-ink underline decoration-[3px] decoration-[#E8A33D] underline-offset-8 hover:decoration-[#D72D58]"
         >
           الكل
         </Link>
       </div>
 
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-x-2 border-candy-ink bg-candy-cream">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 pt-5">
         {list.map((cat, i) => {
           const isActive = activeSlug === cat.slug;
           return (
-            <li key={cat.id} className={cn(i === list.length - 1 && list.length % 2 === 1 && "sm:col-span-2", i === list.length - 1 && list.length % 3 === 1 && "lg:col-span-3", i === list.length - 1 && list.length % 3 === 2 && "lg:col-span-2", "border-b-2 border-candy-ink sm:border-s-2 first:sm:border-s-0 [&:nth-child(2n+1)]:sm:border-s-0 lg:[&:nth-child(2n+1)]:border-s-2 lg:[&:nth-child(3n+1)]:border-s-0")}>
+            <li key={cat.id} className={cn(i === list.length - 1 && list.length % 2 === 1 && "sm:col-span-2", i === list.length - 1 && list.length % 3 === 1 && "lg:col-span-3", i === list.length - 1 && list.length % 3 === 2 && "lg:col-span-2")}>
               <Link
                 href={`/category/${cat.slug}`}
                 className={cn(
-                  "group flex items-center gap-4 px-2 sm:px-5 py-5 min-h-[88px] transition-colors",
-                  "hover:bg-[#F2B632] focus-visible:bg-[#F2B632]",
-                  isActive && "bg-[#F2B632]"
+                  "group flex items-center gap-4 px-4 sm:px-5 py-4 min-h-[84px] rounded-candy-card border border-candy-line bg-white shadow-candy-soft transition-all hover:-translate-y-0.5 hover:shadow-candy-float",
+                  "hover:border-candy-berry/40 focus-visible:border-candy-berry",
+                  isActive && "border-candy-berry bg-candy-berry-subtle"
                 )}
               >
-                <span className="font-display text-3xl sm:text-4xl font-bold text-[#C2431F] group-hover:text-candy-ink tabular-nums w-14 shrink-0">
+                <span className="font-display text-3xl sm:text-4xl font-bold text-candy-berry/80 group-hover:text-candy-berry tabular-nums w-14 shrink-0">
                   {toAr(i + 1)}
                 </span>
                 <span className="font-display font-bold text-lg sm:text-xl text-candy-ink leading-snug flex-1">

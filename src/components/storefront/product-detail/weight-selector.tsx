@@ -162,14 +162,14 @@ export function WeightSelector({
                 "weight-chip relative w-full text-right p-3.5 sm:p-4 rounded-2xl flex items-center justify-between transition-all duration-200 select-none overflow-hidden group",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry active:scale-[0.985]",
                 isSelected
-                  ? "bg-[#F2B632]/30 border-2 border-candy-ink shadow-[3px_3px_0_#1B1A17]"
-                  : "bg-candy-cream border-2 border-candy-line/60 hover:border-candy-rose/50 shadow-sm hover:bg-candy-soft/30"
+                  ? "bg-gradient-to-l from-candy-soft via-white to-white border-2 border-candy-strawberry shadow-[0_4px_16px_rgba(215,45,88,0.12)]"
+                  : "bg-white border-2 border-candy-line/60 hover:border-candy-rose/50 shadow-sm hover:bg-candy-soft/30"
               )}
             >
               {/* Best Value Ribbon Overlay */}
               {isBestValue && (
                 <div className="absolute top-0 left-0">
-                  <div className="px-3 py-0.5 bg-candy-ink text-[#F2B632] font-sans text-[10px] font-black flex items-center gap-1 shadow-sm">
+                  <div className="px-3 py-0.5 rounded-br-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-sans text-[10px] font-black flex items-center gap-1 shadow-sm">
                     <Award className="w-3 h-3" />
                     <span>الأوفر قيمة</span>
                     {bundleSaving > 0 && <span>(وفر {bundleSaving} ₪)</span>}
@@ -185,12 +185,12 @@ export function WeightSelector({
                     "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 shrink-0 mt-0.5",
                     isSelected
                       ? "border-candy-strawberry bg-candy-strawberry text-white shadow-sm scale-105"
-                      : "border-candy-line-dark bg-candy-cream group-hover:border-candy-strawberry/50"
+                      : "border-candy-line-dark bg-white group-hover:border-candy-strawberry/50"
                   )}
                   aria-hidden="true"
                 >
                   {isSelected && (
-                    <span className="w-2 h-2 bg-candy-cream rounded-full animate-in zoom-in-50 duration-150" />
+                    <span className="w-2 h-2 bg-white rounded-full animate-in zoom-in-50 duration-150" />
                   )}
                 </span>
 

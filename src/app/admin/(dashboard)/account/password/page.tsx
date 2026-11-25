@@ -187,14 +187,14 @@ export default function ChangePasswordPage() {
       </nav>
 
       {/* بطاقة معلومات الحساب الحالي */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-candy-cream border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="p-4 sm:p-5 rounded-2xl bg-white border border-candy-line shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <div
             className={cn(
               'w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border shadow-xs',
               role === 'manager'
                 ? 'bg-candy-berry text-white border-candy-berry-dark'
-                : 'bg-candy-soft text-candy-berry border-candy-ink'
+                : 'bg-candy-soft text-candy-berry border-candy-blush'
             )}
             aria-hidden="true"
           >
@@ -211,7 +211,7 @@ export default function ChangePasswordPage() {
               </h2>
               <span
                 className={cn(
-                  'px-2.5 py-0.5 rounded-none text-xs font-bold font-sans border',
+                  'px-2.5 py-0.5 rounded-full text-xs font-bold font-sans border',
                   role === 'manager'
                     ? 'bg-candy-berry text-white border-candy-berry-dark'
                     : 'bg-candy-blush text-candy-berry border-candy-rose/30'
@@ -227,7 +227,7 @@ export default function ChangePasswordPage() {
         </div>
 
         <div className="text-xs text-candy-muted font-sans sm:text-left border-t sm:border-t-0 pt-2 sm:pt-0 border-candy-line/60">
-          <span className="inline-block px-2.5 py-1 rounded-lg bg-candy-soft border border-candy-ink text-candy-berry font-medium">
+          <span className="inline-block px-2.5 py-1 rounded-lg bg-candy-soft border border-candy-blush text-candy-berry font-medium">
             حساب إداري نشط
           </span>
         </div>
@@ -236,10 +236,10 @@ export default function ChangePasswordPage() {
       {/* قسم النموذج الرئيسي */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <Card elevation="md" className="border-candy-line bg-candy-cream shadow-candy-1 overflow-hidden">
+          <Card elevation="md" className="border-candy-line bg-white shadow-candy-1 overflow-hidden">
             <CardHeader className="p-6 border-b border-candy-line/50">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-candy-soft text-candy-berry border border-candy-ink flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0">
                   <KeyRound className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
@@ -306,9 +306,9 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.currentPassword)}
                       aria-describedby={errors.currentPassword ? 'current-password-error' : undefined}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
-                        'focus:bg-candy-cream focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
+                        'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.currentPassword &&
                           'border-rose-500 focus:border-rose-600 focus:ring-rose-500/20 text-rose-900 bg-rose-50/30'
                       )}
@@ -361,9 +361,9 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.newPassword)}
                       aria-describedby={errors.newPassword ? 'new-password-error' : 'new-password-helper'}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
-                        'focus:bg-candy-cream focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
+                        'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.newPassword &&
                           'border-rose-500 focus:border-rose-600 focus:ring-rose-500/20 text-rose-900 bg-rose-50/30'
                       )}
@@ -475,9 +475,9 @@ export default function ChangePasswordPage() {
                       aria-invalid={Boolean(errors.confirmPassword)}
                       aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
                       className={cn(
-                        'w-full h-12 pr-4 pl-12 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
+                        'w-full h-12 pr-4 pl-12 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none',
                         'placeholder:text-candy-muted',
-                        'focus:bg-candy-cream focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
+                        'focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20',
                         errors.confirmPassword &&
                           'border-rose-500 focus:border-rose-600 focus:ring-rose-500/20 text-rose-900 bg-rose-50/30'
                       )}
@@ -553,7 +553,7 @@ export default function ChangePasswordPage() {
             </CardContent>
           </Card>
 
-          <Card elevation="sm" className="border-candy-line bg-candy-cream">
+          <Card elevation="sm" className="border-candy-line bg-white">
             <CardContent className="p-4 space-y-2 text-xs font-sans text-candy-muted">
               <span className="font-bold text-candy-ink block">بيانات الحساب الحالي:</span>
               <div className="flex justify-between py-1 border-b border-candy-line/40">

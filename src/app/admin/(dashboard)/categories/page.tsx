@@ -247,7 +247,7 @@ export default function AdminCategoriesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center shadow-candy-1 shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shadow-candy-1 shrink-0">
               <Layers className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
@@ -306,7 +306,7 @@ export default function AdminCategoriesPage() {
                 {totalCategories}
               </span>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center">
               <Layers className="w-5 h-5" />
             </div>
           </CardContent>
@@ -341,7 +341,7 @@ export default function AdminCategoriesPage() {
                 {totalProducts}
               </span>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center">
               <Package className="w-5 h-5" />
             </div>
           </CardContent>
@@ -356,7 +356,7 @@ export default function AdminCategoriesPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="البحث بالاسم أو المعرف..."
             iconPrefix={<Search className="w-4 h-4 text-candy-muted" />}
-            className="text-xs sm:text-sm bg-candy-cream"
+            className="text-xs sm:text-sm bg-white"
           />
         </div>
 
@@ -364,7 +364,7 @@ export default function AdminCategoriesPage() {
           type="button"
           onClick={loadData}
           title="إعادة تحميل البيانات"
-          className="p-2.5 rounded-xl border border-candy-line bg-candy-cream hover:bg-candy-soft text-candy-muted hover:text-candy-berry transition-colors text-xs flex items-center gap-1.5 font-sans"
+          className="p-2.5 rounded-xl border border-candy-line bg-white hover:bg-candy-soft text-candy-muted hover:text-candy-berry transition-colors text-xs flex items-center gap-1.5 font-sans"
         >
           <RotateCcw className="w-4 h-4" />
           <span className="hidden sm:inline">تحديث</span>
@@ -410,10 +410,10 @@ export default function AdminCategoriesPage() {
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
         >
           <div
-            className="fixed inset-0 bg-candy-ink/40 "
+            className="fixed inset-0 bg-candy-ink/40 backdrop-blur-sm"
             onClick={() => setDeleteTarget(null)}
           />
-          <div className="relative z-10 w-full max-w-md rounded-2xl bg-candy-cream border border-candy-line shadow-candy-3 p-6 space-y-4">
+          <div className="relative z-10 w-full max-w-md rounded-2xl bg-white border border-candy-line shadow-candy-3 p-6 space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
               <AlertTriangle className="w-6 h-6" />
             </div>

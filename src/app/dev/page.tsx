@@ -24,7 +24,7 @@ export default function DevPage() {
         dir="ltr"
         className="min-h-screen bg-[#FAF7F5] flex items-center justify-center p-6 font-sans"
       >
-        <div className="max-w-md w-full bg-candy-cream rounded-2xl border border-stone-200 p-8 text-center shadow-sm space-y-4">
+        <div className="max-w-md w-full bg-white rounded-2xl border border-stone-200 p-8 text-center shadow-sm space-y-4">
           <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 flex items-center justify-center mx-auto">
             <ShieldAlert className="w-6 h-6" />
           </div>
@@ -37,7 +37,7 @@ export default function DevPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#12382A] text-white text-xs font-bold hover:bg-[#0E2C21] transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#4A0E23] text-white text-xs font-bold hover:bg-[#3A0A1B] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Storefront</span>

@@ -174,7 +174,7 @@ export function UserRoleDialog({
       <DialogContent className="max-w-md sm:max-w-xl p-6 sm:p-7 text-right">
         <DialogHeader className="mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-candy-soft text-candy-berry border border-candy-ink flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-candy-soft text-candy-berry border border-candy-blush flex items-center justify-center shrink-0 shadow-xs">
               {isEdit ? (
                 <ShieldCheck className="w-6 h-6" aria-hidden="true" />
               ) : (
@@ -293,7 +293,7 @@ export function UserRoleDialog({
                     : 'cursor-pointer',
                   role === 'staff'
                     ? 'border-candy-berry bg-candy-soft/60 shadow-candy-1 ring-2 ring-candy-strawberry/20'
-                    : 'border-candy-line bg-candy-cream hover:bg-candy-soft/30 hover:border-candy-ink'
+                    : 'border-candy-line bg-white hover:bg-candy-soft/30 hover:border-candy-blush'
                 )}
                 title={
                   isLastManager && user?.role === 'manager'
@@ -311,10 +311,10 @@ export function UserRoleDialog({
                       'w-4 h-4 rounded-full border flex items-center justify-center shrink-0',
                       role === 'staff'
                         ? 'border-candy-berry bg-candy-berry text-white'
-                        : 'border-candy-line bg-candy-cream'
+                        : 'border-candy-line bg-white'
                     )}
                   >
-                    {role === 'staff' && <div className="w-1.5 h-1.5 bg-candy-cream rounded-full" />}
+                    {role === 'staff' && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
                   </div>
                 </div>
                 <p className="text-xs text-candy-muted leading-relaxed">
@@ -333,7 +333,7 @@ export function UserRoleDialog({
                   'p-3.5 rounded-2xl border text-right transition-all flex flex-col justify-between relative cursor-pointer',
                   role === 'manager'
                     ? 'border-candy-berry bg-candy-soft/60 shadow-candy-1 ring-2 ring-candy-strawberry/20'
-                    : 'border-candy-line bg-candy-cream hover:bg-candy-soft/30 hover:border-candy-ink'
+                    : 'border-candy-line bg-white hover:bg-candy-soft/30 hover:border-candy-blush'
                 )}
               >
                 <div className="flex items-center justify-between w-full mb-1.5">
@@ -346,10 +346,10 @@ export function UserRoleDialog({
                       'w-4 h-4 rounded-full border flex items-center justify-center shrink-0',
                       role === 'manager'
                         ? 'border-candy-berry bg-candy-berry text-white'
-                        : 'border-candy-line bg-candy-cream'
+                        : 'border-candy-line bg-white'
                     )}
                   >
-                    {role === 'manager' && <div className="w-1.5 h-1.5 bg-candy-cream rounded-full" />}
+                    {role === 'manager' && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
                   </div>
                 </div>
                 <p className="text-xs text-candy-muted leading-relaxed">

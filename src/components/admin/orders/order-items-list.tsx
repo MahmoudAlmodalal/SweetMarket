@@ -34,7 +34,7 @@ export function OrderItemsList({
   );
 
   return (
-    <Card className={cn('bg-candy-cream border border-candy-line shadow-candy-1', className)}>
+    <Card className={cn('bg-white border border-candy-line shadow-candy-1', className)}>
       <CardHeader className="pb-3 border-b border-candy-line/60 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center">
@@ -103,7 +103,7 @@ export function OrderItemsList({
 
                                 {/* شارة التغليف الملكي الفاخر */}
                                 {isRoyalPackaging && (
-                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-amber-50 border border-amber-200 text-amber-900 text-[10px] font-bold">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-[10px] font-bold">
                                     <Sparkles className="w-3 h-3 text-amber-600" />
                                     <span>{item.packagingLabel || 'صندوق إهداء ملكي'}</span>
                                   </span>
@@ -193,13 +193,13 @@ export function OrderItemsList({
                     {(isRoyalPackaging || item.giftMessage) && (
                       <div className="flex flex-wrap items-center gap-1.5 pt-1 pr-1">
                         {isRoyalPackaging && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-amber-50 border border-amber-200 text-amber-900 text-[10px] font-bold">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-[10px] font-bold">
                             <Sparkles className="w-3 h-3 text-amber-600" />
                             <span>{item.packagingLabel || 'صندوق إهداء ملكي'}</span>
                           </span>
                         )}
                         {item.giftMessage && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-candy-blush text-candy-berry border border-candy-line text-[10px]">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-candy-blush text-candy-berry border border-candy-line text-[10px]">
                             <Gift className="w-3 h-3" />
                             <span className="truncate max-w-[200px]">إهداء: &ldquo;{item.giftMessage}&rdquo;</span>
                           </span>

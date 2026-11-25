@@ -118,7 +118,7 @@ export function AvailabilityToggle({
         {/* Thumb Circle */}
         <span
           className={cn(
-            'pointer-events-none flex items-center justify-center rounded-full bg-candy-cream shadow-md transform transition-transform duration-200 ease-in-out',
+            'pointer-events-none flex items-center justify-center rounded-full bg-white shadow-md transform transition-transform duration-200 ease-in-out',
             isSmall
               ? cn(
                   'h-5 w-5 top-0.5',

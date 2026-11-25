@@ -94,7 +94,7 @@ async function runAssertions() {
         await header.waitFor({ state: 'visible' });
 
         // Brand Logo assertion
-        const logo = page.locator('header img, header a[href="/"] svg').first();
+        const logo = page.locator('header img, header a[href="/"] svg, header a[href="/"] [role="img"]').first();
         assert(await logo.isVisible(), 'Brand logo must be visible in header');
 
         // Cart action visible

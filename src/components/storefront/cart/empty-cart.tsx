@@ -29,7 +29,7 @@ function ConfectioneryEmptyCartIllustration() {
       className="relative w-44 h-44 sm:w-52 sm:h-52 mx-auto flex items-center justify-center select-none"
     >
       {/* Ambient background glow & confectionery aura */}
-      <div className="absolute inset-0 rounded-full bg-candy-cream blur-xl opacity-80" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-candy-blush/80 via-candy-soft to-candy-blush/30 blur-xl opacity-80" />
 
       {/* Decorative dashed boundary circle */}
       <div className="absolute inset-2 rounded-full border-2 border-dashed border-candy-line/80 bg-white/70 backdrop-blur-xs flex items-center justify-center shadow-candy-1" />
@@ -47,17 +47,17 @@ function ConfectioneryEmptyCartIllustration() {
         {/* Elegant Pedestal Cake Stand */}
         <path
           d="M75 160h50v4H75z"
-          fill="#1F5C45"
+          fill="#A31D56"
           opacity="0.85"
         />
         <path
           d="M94 136h12l4 24H90l4-24z"
-          fill="#C2431F"
+          fill="#D72D58"
           opacity="0.75"
         />
         <path
           d="M48 132c0-3 3-5 6-5h92c3 0 6 2 6 5v4H48v-4z"
-          fill="#1F5C45"
+          fill="#A31D56"
         />
 
         {/* Glass Dessert Cloche Dome (Semi-transparent luxury bell) */}
@@ -74,13 +74,13 @@ function ConfectioneryEmptyCartIllustration() {
           cx="100"
           cy="74"
           r="6.5"
-          fill="#F2B632"
-          stroke="#1F5C45"
+          fill="#F2B134"
+          stroke="#A31D56"
           strokeWidth="2"
         />
         <path
           d="M97 80h6v2h-6z"
-          fill="#1F5C45"
+          fill="#A31D56"
         />
 
         {/* Inside Sweets: 1. Strawberry Swirl Cupcake */}
@@ -104,7 +104,7 @@ function ConfectioneryEmptyCartIllustration() {
             fill="#FFA3B8"
           />
           {/* Glossy Berry Cherry on Top */}
-          <circle cx="15" cy="9.5" r="3.5" fill="#1F5C45" />
+          <circle cx="15" cy="9.5" r="3.5" fill="#A31D56" />
           <path d="M16 6.5c1-3 3-4 5-4" stroke="#5BCFCB" strokeWidth="1.2" strokeLinecap="round" />
         </g>
 
@@ -113,7 +113,7 @@ function ConfectioneryEmptyCartIllustration() {
           {/* Baklava Diamond Layers */}
           <path
             d="M14 8l14 8-14 8-14-8 14-8z"
-            fill="#F2B632"
+            fill="#F2B134"
           />
           <path
             d="M0 16l14 8v5l-14-8v-5z"
@@ -132,13 +132,13 @@ function ConfectioneryEmptyCartIllustration() {
         {/* Wrapped Candy in Foreground */}
         <g transform="translate(86, 128)">
           {/* Candy Wrapper Left Twist */}
-          <path d="M4 8L0 4v8l4-4z" fill="#C2431F" />
+          <path d="M4 8L0 4v8l4-4z" fill="#D72D58" />
           {/* Candy Body */}
-          <rect x="4" y="4.5" width="16" height="7" rx="3.5" fill="#1F5C45" />
+          <rect x="4" y="4.5" width="16" height="7" rx="3.5" fill="#A31D56" />
           <line x1="9" y1="4.5" x2="7" y2="11.5" stroke="#FFF" strokeWidth="1.2" opacity="0.6" />
           <line x1="14" y1="4.5" x2="12" y2="11.5" stroke="#FFF" strokeWidth="1.2" opacity="0.6" />
           {/* Candy Wrapper Right Twist */}
-          <path d="M20 8l4-4v8l-4-4z" fill="#C2431F" />
+          <path d="M20 8l4-4v8l-4-4z" fill="#D72D58" />
         </g>
 
         {/* Shiny Glass Reflection Highlight on Cloche */}
@@ -154,12 +154,12 @@ function ConfectioneryEmptyCartIllustration() {
 
       {/* Floating Animated Confectionery Badges */}
       {/* 1. Sparkles Pill (Top Right) */}
-      <div className="absolute top-1 -right-1 w-9 h-9 rounded-full bg-candy-cream shadow-candy-1 border border-candy-line flex items-center justify-center text-candy-strawberry z-20 animate-bounce">
+      <div className="absolute top-1 -right-1 w-9 h-9 rounded-full bg-white shadow-candy-1 border border-candy-line flex items-center justify-center text-candy-strawberry z-20 animate-bounce">
         <Sparkles className="w-4 h-4 text-candy-strawberry" />
       </div>
 
       {/* 2. Sweet Heart Badge (Bottom Left) */}
-      <div className="absolute bottom-2 -left-2 w-8 h-8 rounded-full bg-candy-cream shadow-candy-1 border border-candy-line flex items-center justify-center text-candy-rose z-20">
+      <div className="absolute bottom-2 -left-2 w-8 h-8 rounded-full bg-white shadow-candy-1 border border-candy-line flex items-center justify-center text-candy-rose z-20">
         <Heart className="w-4 h-4 fill-candy-rose/30 text-candy-rose" />
       </div>
 
@@ -201,7 +201,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
         <Link
           href="/category/all"
           data-testid="browse-sweets-button"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-candy-pill bg-candy-berry text-white font-sans font-bold text-sm sm:text-base shadow-candy-cta hover:brightness-105 active:scale-95 transition-all duration-200"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-candy-pill bg-gradient-to-r from-candy-berry via-candy-strawberry to-candy-magenta text-white font-sans font-bold text-sm sm:text-base shadow-candy-cta hover:brightness-105 active:scale-95 transition-all duration-200"
         >
           <ShoppingBag className="w-4 h-4" />
           <span>تصفح الحلويات</span>
@@ -210,7 +210,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
 
         <Link
           href="/track"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-candy-pill bg-candy-cream text-candy-ink border border-candy-line font-sans font-semibold text-sm hover:bg-candy-soft hover:border-candy-ink transition-all shadow-xs"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-candy-pill bg-white text-candy-ink border border-candy-line font-sans font-semibold text-sm hover:bg-candy-soft hover:border-candy-berry/40 transition-all shadow-xs"
         >
           <Package className="w-4 h-4 text-candy-muted" />
           <span>تتبع طلب سابق</span>
@@ -233,25 +233,25 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Link
             href="/category/all"
-            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-candy-cream transition-all shadow-xs"
+            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             بقلاوة وحلويات شرقية
           </Link>
           <Link
             href="/category/all"
-            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-candy-cream transition-all shadow-xs"
+            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             كيك وتورتات
           </Link>
           <Link
             href="/category/all"
-            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-candy-cream transition-all shadow-xs"
+            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             معمول وبيتي فور ملكي
           </Link>
           <Link
             href="/category/all"
-            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-candy-cream transition-all shadow-xs"
+            className="px-3.5 py-1.5 rounded-candy-pill bg-candy-soft text-candy-ink text-xs font-medium border border-candy-line hover:border-candy-strawberry/40 hover:text-candy-berry hover:bg-white transition-all shadow-xs"
           >
             صواني وهدايا الضيافة
           </Link>

@@ -34,7 +34,7 @@ function ProductCardSkeleton({ index }: { index: number }) {
     >
       <div className="flex flex-col gap-2.5">
         {/* Image Cradle Skeleton with Shimmer sweep */}
-        <div className="relative w-full aspect-[4/5] rounded-[18px] bg-candy-cream bg-[length:200%_100%] overflow-hidden" />
+        <div className="relative w-full aspect-[4/5] rounded-[18px] bg-gradient-to-r from-candy-soft via-candy-blush/40 to-candy-soft bg-[length:200%_100%] overflow-hidden" />
 
         {/* Title & Description Skeleton */}
         <div className="flex flex-col gap-1.5 pt-1">
@@ -143,7 +143,7 @@ export function ProductGrid({
                   key={keyword}
                   type="button"
                   onClick={() => onSuggestionClick?.(keyword)}
-                  className="px-3.5 py-1.5 rounded-candy-pill bg-candy-cream hover:bg-candy-blush border border-candy-line text-xs font-sans font-bold text-candy-berry shadow-xs hover:border-candy-strawberry active:scale-95 transition-all"
+                  className="px-3.5 py-1.5 rounded-candy-pill bg-white hover:bg-candy-blush border border-candy-line text-xs font-sans font-bold text-candy-berry shadow-xs hover:border-candy-strawberry active:scale-95 transition-all"
                 >
                   {keyword}
                 </button>
@@ -166,7 +166,7 @@ export function ProductGrid({
 
             <Link
               href="/category/all"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line font-sans font-bold text-xs sm:text-sm shadow-xs hover:bg-candy-soft active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-candy-pill bg-white text-candy-berry border border-candy-line font-sans font-bold text-xs sm:text-sm shadow-xs hover:bg-candy-soft active:scale-95 transition-all"
             >
               <span>عرض كل الحلويات</span>
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -210,7 +210,7 @@ export function ProductGrid({
 
           <Link
             href="/category/all"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-candy-pill bg-candy-cream text-candy-berry border border-candy-line font-sans font-bold text-xs sm:text-sm shadow-sm hover:bg-candy-soft active:scale-95 transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-candy-pill bg-white text-candy-berry border border-candy-line font-sans font-bold text-xs sm:text-sm shadow-sm hover:bg-candy-soft active:scale-95 transition-all"
           >
             <span>عرض كل الحلويات</span>
             <ArrowLeft className="w-3.5 h-3.5" />

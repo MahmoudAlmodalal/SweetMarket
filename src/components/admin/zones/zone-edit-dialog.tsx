@@ -169,7 +169,7 @@ export function ZoneEditDialog({
         <div className="p-5 sm:p-6 pb-3 border-b border-candy-line/60 shrink-0">
           <DialogHeader className="mb-0 text-right">
             <div className="flex items-center gap-2.5 pl-6 sm:pl-8">
-              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
                 <MapPin className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
@@ -232,7 +232,7 @@ export function ZoneEditDialog({
                           setEstimatedTimeMax(s.tMax);
                           if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
                         }}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-sans bg-candy-cream border border-candy-line hover:border-candy-rose hover:text-candy-berry transition-colors"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-sans bg-white border border-candy-line hover:border-candy-rose hover:text-candy-berry transition-colors"
                       >
                         <Sparkles className="w-2.5 h-2.5 text-candy-strawberry" />
                         <span>{s.name}</span>
@@ -335,7 +335,7 @@ export function ZoneEditDialog({
             <div className="pt-2 border-t border-candy-line/60">
               <label
                 htmlFor="zone-is-active"
-                className="flex items-center gap-2.5 p-3 rounded-xl border border-candy-line bg-candy-cream hover:bg-candy-soft cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 p-3 rounded-xl border border-candy-line bg-white hover:bg-candy-soft cursor-pointer transition-colors"
               >
                 <input
                   id="zone-is-active"

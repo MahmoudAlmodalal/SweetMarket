@@ -115,7 +115,7 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
           className="w-full max-w-2xl mx-auto flex flex-col gap-6 py-4 animate-pulse"
         >
           {/* Header Card Skeleton */}
-          <div className="bg-candy-cream border border-candy-line/80 rounded-candy-card p-8 flex flex-col items-center text-center shadow-candy-2 gap-4">
+          <div className="bg-white border border-candy-line/80 rounded-candy-card p-8 flex flex-col items-center text-center shadow-candy-2 gap-4">
             <Skeleton className="w-20 h-20 rounded-full" />
             <Skeleton className="h-8 w-64 rounded-full" />
             <Skeleton className="h-4 w-80 max-w-full rounded-full" />
@@ -123,7 +123,7 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Items & Summary Card Skeleton */}
-          <div className="bg-candy-cream border border-candy-line/80 rounded-candy-card p-6 shadow-candy-2 space-y-4">
+          <div className="bg-white border border-candy-line/80 rounded-candy-card p-6 shadow-candy-2 space-y-4">
             <div className="flex items-center justify-between pb-4 border-b border-candy-line/60">
               <Skeleton className="h-6 w-40 rounded-full" />
               <Skeleton className="h-4 w-20 rounded-full" />
@@ -152,7 +152,7 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
       {!isLoading && (!order || errorMessage) && (
         <div
           dir="rtl"
-          className="w-full max-w-md mx-auto bg-candy-cream border border-candy-line rounded-candy-card p-6 sm:p-8 text-center shadow-candy-2"
+          className="w-full max-w-md mx-auto bg-white border border-candy-line rounded-candy-card p-6 sm:p-8 text-center shadow-candy-2"
         >
           <div className="w-16 h-16 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8" />
@@ -174,7 +174,7 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
             </Link>
             <Link
               href={orderNumber ? `/track?order=${encodeURIComponent(orderNumber)}` : "/track"}
-              className="flex-1 min-h-[46px] bg-candy-cream border border-candy-line hover:bg-candy-soft text-candy-berry rounded-candy-pill font-sans font-bold text-sm flex items-center justify-center gap-2 transition-all"
+              className="flex-1 min-h-[46px] bg-white border border-candy-line hover:bg-candy-soft text-candy-berry rounded-candy-pill font-sans font-bold text-sm flex items-center justify-center gap-2 transition-all"
             >
               <Compass className="w-4 h-4" />
               <span>تتبع طلب آخر</span>

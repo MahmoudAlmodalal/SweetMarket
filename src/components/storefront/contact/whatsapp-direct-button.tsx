@@ -56,7 +56,7 @@ export function WhatsAppDirectButton({
         variant === "secondary" &&
           "bg-emerald-50 text-emerald-800 border-2 border-emerald-300 hover:bg-emerald-100 hover:border-emerald-400 hover:scale-[1.01]",
         variant === "subtle" &&
-          "bg-white/95 text-emerald-700 hover:bg-candy-cream border border-emerald-200 shadow-xs hover:border-emerald-300",
+          "bg-white/95 text-emerald-700 hover:bg-white border border-emerald-200 shadow-xs hover:border-emerald-300",
         sizeClasses[size],
         className
       )}

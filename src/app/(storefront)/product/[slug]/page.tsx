@@ -359,7 +359,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                     "w-10 h-10 rounded-full flex items-center justify-center transition-colors border",
                     isWishlisted
                       ? "bg-candy-berry text-white border-candy-berry"
-                      : "bg-candy-cream text-candy-ink/70 border-candy-line hover:border-candy-berry hover:text-candy-berry"
+                      : "bg-white text-candy-ink/70 border-candy-line hover:border-candy-berry hover:text-candy-berry"
                   )}
                 >
                   <Heart className={cn("w-4 h-4", isWishlisted && "fill-current")} />
@@ -369,7 +369,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                   type="button"
                   onClick={handleShare}
                   aria-label="مشاركة المنتج"
-                  className="w-10 h-10 rounded-full bg-candy-cream text-candy-ink/70 border border-candy-line hover:border-candy-berry hover:text-candy-berry flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full bg-white text-candy-ink/70 border border-candy-line hover:border-candy-berry hover:text-candy-berry flex items-center justify-center transition-colors"
                 >
                   <Share2 className="w-4 h-4" />
                 </button>
@@ -382,7 +382,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Price Card */}
-          <div className="rounded-2xl bg-candy-cream p-5 border border-candy-line flex flex-col gap-3">
+          <div className="rounded-2xl bg-white p-5 border border-candy-line flex flex-col gap-3">
             <div className="flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-2 tabular-nums">
                 <span className="font-sans font-extrabold text-3xl text-candy-ink tracking-tight">
@@ -449,7 +449,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                       "w-full text-right p-3.5 rounded-xl flex items-center justify-between transition-colors select-none border",
                       isSelected
                         ? "bg-candy-soft border-candy-berry"
-                        : "bg-candy-cream border-candy-line hover:border-candy-ink"
+                        : "bg-white border-candy-line hover:border-candy-berry/40"
                     )}
                   >
                     <div className="flex items-center gap-2.5">
@@ -458,11 +458,11 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                           "w-4 h-4 rounded-full flex items-center justify-center border transition-colors",
                           isSelected
                             ? "bg-candy-berry border-candy-berry"
-                            : "bg-candy-cream border-candy-line-dark"
+                            : "bg-white border-candy-line-dark"
                         )}
                         aria-hidden="true"
                       >
-                        {isSelected && <span className="w-1.5 h-1.5 bg-candy-cream rounded-full" />}
+                        {isSelected && <span className="w-1.5 h-1.5 bg-white rounded-full" />}
                       </span>
                       <span className="font-sans text-sm font-semibold text-candy-ink">
                         {opt.label}
@@ -483,7 +483,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Gift Card */}
-          <div className="rounded-2xl bg-candy-cream p-4 border border-candy-line flex flex-col gap-2.5">
+          <div className="rounded-2xl bg-white p-4 border border-candy-line flex flex-col gap-2.5">
             <label className="flex items-center gap-2.5 cursor-pointer select-none">
               <input
                 type="checkbox"
@@ -507,7 +507,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
                   }}
                   placeholder="اكتب رسالتك الخاصة لمتلقي الهدية..."
                   rows={3}
-                  className="w-full p-3 rounded-xl bg-candy-soft text-candy-ink font-sans text-sm placeholder:text-candy-muted focus:outline-none focus:bg-candy-cream focus:ring-2 focus:ring-candy-berry/25 border border-candy-line transition-colors resize-none"
+                  className="w-full p-3 rounded-xl bg-candy-soft text-candy-ink font-sans text-sm placeholder:text-candy-muted focus:outline-none focus:bg-white focus:ring-2 focus:ring-candy-berry/25 border border-candy-line transition-colors resize-none"
                 />
                 <span className="font-sans text-[11px] text-candy-muted text-left tabular-nums">
                   المتبقي: {120 - giftMessage.length} حرف
@@ -517,7 +517,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
           </div>
 
           {/* Quantity Row */}
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-candy-cream border border-candy-line">
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-white border border-candy-line">
             <div className="flex flex-col">
               <span className="font-sans text-xs text-candy-muted font-medium">
                 الكمية المطلوبة
@@ -553,7 +553,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
       {/* Product Details Accordion */}
       <section
         aria-label="تفاصيل الصنف"
-        className="flex flex-col gap-3 rounded-3xl bg-candy-cream p-5 sm:p-8 border border-candy-line"
+        className="flex flex-col gap-3 rounded-3xl bg-white p-5 sm:p-8 border border-candy-line"
       >
         <h2 className="font-display text-xl sm:text-2xl font-bold text-candy-ink flex items-center gap-2 mb-1">
           <BookOpen className="w-5 h-5 text-candy-berry" />
@@ -628,7 +628,7 @@ export default function ProductDetailPage({ params: propParams }: PageProps) {
               return (
                 <div
                   key={item.id}
-                  className="rounded-2xl bg-candy-cream p-3.5 border border-candy-line flex flex-col justify-between hover:border-candy-ink transition-colors group"
+                  className="rounded-2xl bg-white p-3.5 border border-candy-line flex flex-col justify-between hover:border-candy-berry/40 transition-colors group"
                 >
                   <Link href={`/product/${item.slug}`} className="block">
                     <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-candy-soft mb-3 relative">

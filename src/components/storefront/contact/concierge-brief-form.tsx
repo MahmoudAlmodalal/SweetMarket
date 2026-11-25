@@ -70,13 +70,13 @@ export function ConciergeBriefForm({
       id={id}
       aria-labelledby="concierge-brief-title"
       className={cn(
-        "rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-6 sm:p-8 transition-all duration-300 relative overflow-hidden",
+        "rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-6 sm:p-8 transition-all duration-300 relative overflow-hidden",
         className
       )}
     >
       {/* Decorative top ambient bar */}
       <div
-        className="absolute top-0 right-0 left-0 h-1.5 bg-candy-cream opacity-90"
+        className="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-l from-candy-berry via-[#25D366] to-candy-rose opacity-90"
         aria-hidden="true"
       />
 
@@ -124,7 +124,7 @@ export function ConciergeBriefForm({
               placeholder="مثال: حفل زفاف، تخرج، عيد ميلاد، ضيافة شركات"
               className={cn(
                 "w-full rounded-xl border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all",
-                "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-candy-cream",
+                "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-white",
                 errors.occasion
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200"
                   : "border-candy-line focus:border-candy-berry focus:ring-candy-berry/20"
@@ -166,7 +166,7 @@ export function ConciergeBriefForm({
               placeholder="مثال: 50 شخص، 20 بوكس إهداء، أو ميزانية 400 شيكل"
               className={cn(
                 "w-full rounded-xl border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all",
-                "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-candy-cream",
+                "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-white",
                 errors.quantityOrBudget
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200"
                   : "border-candy-line focus:border-candy-berry focus:ring-candy-berry/20"
@@ -214,7 +214,7 @@ export function ConciergeBriefForm({
               placeholder="0599000000"
               className={cn(
                 "w-full rounded-xl border bg-candy-soft/30 px-3.5 py-2.5 text-xs sm:text-sm text-candy-ink font-sans transition-all text-left",
-                "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-candy-cream",
+                "focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-white",
                 errors.phone
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200"
                   : "border-candy-line focus:border-candy-berry focus:ring-candy-berry/20"

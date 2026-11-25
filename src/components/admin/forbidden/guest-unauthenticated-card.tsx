@@ -28,10 +28,10 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
     <div className="w-full max-w-lg mx-auto" dir="rtl">
       <Card
         elevation="md"
-        className="border-candy-line/80 shadow-candy-2 bg-candy-cream overflow-hidden text-center rounded-3xl"
+        className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-3xl"
       >
         {/* شريط الإشعاع العلوي */}
-        <div className="h-1.5 bg-candy-cream" aria-hidden="true" />
+        <div className="h-1.5 bg-gradient-to-l from-amber-500 via-candy-amber to-candy-berry" aria-hidden="true" />
 
         <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
           {/* Lock Icon */}
@@ -40,7 +40,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
           </div>
 
           {/* 401 Pill */}
-          <div className="inline-block px-3.5 py-1 mb-2.5 rounded-none bg-amber-100/80 text-amber-900 text-xs font-bold tracking-wider font-mono border border-amber-200/60">
+          <div className="inline-block px-3.5 py-1 mb-2.5 rounded-full bg-amber-100/80 text-amber-900 text-xs font-bold tracking-wider font-mono border border-amber-200/60">
             401 • تسجيل الدخول مطلوب
           </div>
 
@@ -76,7 +76,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
 
             <div className="text-left">
               <span className="text-xs text-candy-muted block mb-0.5">الدور</span>
-              <span className="inline-block px-2.5 py-0.5 rounded-none text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200 shadow-xs">
+              <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200 shadow-xs">
                 زائر
               </span>
             </div>
@@ -101,7 +101,7 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
               size="lg"
               onClick={handleStorefrontClick}
               leftIcon={<Store className="w-4 h-4 text-candy-berry" />}
-              className="w-full sm:flex-1 font-display min-h-[48px] border-candy-ink hover:bg-candy-soft font-bold"
+              className="w-full sm:flex-1 font-display min-h-[48px] border-candy-blush hover:bg-candy-soft font-bold"
             >
               العودة لواجهة المتجر الرئيسية
             </Button>

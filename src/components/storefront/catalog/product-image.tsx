@@ -95,7 +95,7 @@ export function ProductImage({
         aria-label={alt}
         className={cn(
           'flex flex-col items-center justify-center select-none overflow-hidden text-candy-berry p-2 text-center transition-all duration-300',
-          'bg-gradient-to-br from-[#FFF5F8] via-[#F6D77A]/40 to-[#FDF2F4] border border-candy-line/40',
+          'bg-gradient-to-br from-[#FFF5F8] via-[#FED7E7]/40 to-[#FDF2F4] border border-candy-line/40',
           isFill ? 'absolute inset-0 w-full h-full' : 'w-full h-full',
           fallbackClassName,
           className
@@ -114,7 +114,7 @@ export function ProductImage({
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
-            <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#F6D77A" strokeWidth="2" />
+            <circle cx="50" cy="50" r="46" fill="#FFFFFF" stroke="#FED7E7" strokeWidth="2" />
             <circle
               cx="50"
               cy="50"
@@ -127,32 +127,32 @@ export function ProductImage({
             {/* لمعات برّاقة ذهبية */}
             <path
               d="M28,26 Q28,21 24,21 Q28,21 28,16 Q28,21 32,21 Q28,21 28,26 Z"
-              fill="#F2B632"
+              fill="#E8A33D"
             />
             <path
               d="M74,28 Q74,24 70,24 Q74,24 74,20 Q74,24 78,24 Q74,24 74,28 Z"
-              fill="#F2B632"
+              fill="#E8A33D"
             />
             {/* حبة حلوى بونبون كاندي لوز */}
             <g transform="translate(50, 48) rotate(-26)">
               <path
                 d="M-18,0 L-32,-11 C-36,-8 -34,-5 -35,0 C-34,5 -36,8 -32,11 Z"
-                fill="#F2B632"
+                fill="#E8A33D"
               />
               <path
                 d="M18,0 L32,-11 C36,-8 34,-5 35,0 C34,5 36,8 32,11 Z"
-                fill="#F2B632"
+                fill="#E8A33D"
               />
               <ellipse
                 cx="0"
                 cy="0"
                 rx="22"
                 ry="16"
-                fill="#1F5C45"
+                fill="#A31D56"
                 stroke="#FFFFFF"
                 strokeWidth="1.5"
               />
-              <ellipse cx="0" cy="0" rx="14" ry="10" fill="#F6D77A" opacity="0.3" />
+              <ellipse cx="0" cy="0" rx="14" ry="10" fill="#FED7E7" opacity="0.3" />
             </g>
           </svg>
 

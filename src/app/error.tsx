@@ -37,7 +37,7 @@ export default function Error({ error, reset }: ErrorProps) {
               aria-hidden="true"
             />
             {/* Center icon container */}
-            <div className="relative w-28 h-28 rounded-full bg-candy-cream border-2 border-candy-ink shadow-candy-2 flex items-center justify-center text-candy-berry group transition-transform duration-300 hover:scale-105">
+            <div className="relative w-28 h-28 rounded-full bg-white border-2 border-candy-blush shadow-candy-2 flex items-center justify-center text-candy-berry group transition-transform duration-300 hover:scale-105">
               <RotateCcw className="w-12 h-12 text-candy-berry transition-transform duration-500 group-hover:rotate-180" />
               <Sparkles
                 className="absolute top-2 right-2 w-5 h-5 text-candy-strawberry animate-bounce"
@@ -87,7 +87,7 @@ export default function Error({ error, reset }: ErrorProps) {
           {/* Return Home Action */}
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2.5 h-13 min-h-[52px] px-8 text-base font-sans font-semibold rounded-candy-pill bg-candy-cream border-2 border-candy-ink text-candy-berry hover:bg-candy-soft hover:border-candy-rose active:translate-y-[1px] shadow-sm transition-all duration-200 w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2.5 h-13 min-h-[52px] px-8 text-base font-sans font-semibold rounded-candy-pill bg-white border-2 border-candy-blush text-candy-berry hover:bg-candy-soft hover:border-candy-rose active:translate-y-[1px] shadow-sm transition-all duration-200 w-full sm:w-auto"
           >
             <Home className="w-5 h-5" aria-hidden="true" />
             <span>العودة للرئيسية</span>

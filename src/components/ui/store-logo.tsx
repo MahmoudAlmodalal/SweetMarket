@@ -80,7 +80,7 @@ export function StoreLogo({
       role="img"
       aria-label={alt || logoConfig.defaultAlt}
       style={{ width: size, height: size, fontSize: size * 0.6 }}
-      className="shrink-0 bg-[#1B1A17] text-[#F2B632] font-display font-bold flex items-center justify-center border-2 border-candy-ink shadow-[2px_2px_0_#C2431F] leading-none"
+      className="shrink-0 rounded-2xl bg-candy-berry text-white font-display font-bold flex items-center justify-center shadow-candy-cta leading-none"
     >
       ك
     </span>
@@ -101,7 +101,7 @@ export function StoreLogo({
         <span className="font-display font-bold text-xl text-candy-ink whitespace-nowrap">
           كاندي لوز
         </span>
-        <span className="font-sans text-[10px] font-bold tracking-[0.2em] text-[#C2431F] uppercase mt-1 whitespace-nowrap">
+        <span className="font-sans text-[10px] font-bold tracking-[0.2em] text-[#E8A33D] uppercase mt-1 whitespace-nowrap">
           CANDY LOZ
         </span>
       </div>

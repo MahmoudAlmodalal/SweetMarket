@@ -43,13 +43,13 @@ export function FeaturedProducts({
       className={cn("flex flex-col gap-6 w-full", className)}
     >
       {/* Section Header */}
-      <div className="flex items-end justify-between gap-4 pb-3 border-b-4 border-candy-ink">
+      <div className="flex items-end justify-between gap-4 pb-3 border-b border-candy-line">
         <h2 className="font-display font-bold text-3xl sm:text-4xl text-candy-ink">
           الأكثر طلباً
         </h2>
         <Link
           href="/category/all"
-          className="font-bold text-sm text-candy-ink underline decoration-[3px] decoration-[#F2B632] underline-offset-8 hover:decoration-[#C2431F]"
+          className="font-bold text-sm text-candy-ink underline decoration-[3px] decoration-[#E8A33D] underline-offset-8 hover:decoration-[#D72D58]"
         >
           كل التشكيلة
         </Link>
@@ -67,10 +67,10 @@ export function FeaturedProducts({
           aria-selected={selectedCategory === "all"}
           onClick={() => setSelectedCategory("all")}
           className={cn(
-            "h-10 px-4 font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border-2",
+            "h-10 px-4 rounded-full font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border",
             selectedCategory === "all"
-              ? "bg-[#1B1A17] text-[#F3EBDD] border-candy-ink font-bold"
-              : "bg-transparent text-candy-ink border-candy-ink hover:bg-[#F2B632] font-bold"
+              ? "bg-candy-berry text-white border-candy-berry font-bold"
+              : "bg-white text-candy-ink border-candy-line hover:border-candy-berry/40 font-medium"
           )}
         >
           <span>المختارات</span>
@@ -96,10 +96,10 @@ export function FeaturedProducts({
               aria-selected={isSelected}
               onClick={() => setSelectedCategory(cat.id)}
               className={cn(
-                "h-10 px-4 font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border-2",
+                "h-10 px-4 rounded-full font-sans text-sm transition-colors shrink-0 inline-flex items-center gap-2 border",
                 isSelected
-                  ? "bg-[#1B1A17] text-[#F3EBDD] border-candy-ink font-bold"
-                  : "bg-transparent text-candy-ink border-candy-ink hover:bg-[#F2B632] font-bold"
+                  ? "bg-candy-berry text-white border-candy-berry font-bold"
+                  : "bg-white text-candy-ink border-candy-line hover:border-candy-berry/40 font-medium"
               )}
             >
               <span>{cat.name}</span>

@@ -185,15 +185,15 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col justify-between bg-candy-cream border-2 border-candy-ink",
-        "shadow-[4px_4px_0_#1B1A17] transition-all duration-150 hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-[6px_6px_0_#C2431F]",
+        "group relative flex flex-col justify-between rounded-2xl bg-white border border-candy-line overflow-hidden",
+        "shadow-candy-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-candy-float hover:border-candy-berry/30",
         !isAvailable && "opacity-75",
         className
       )}
     >
       {/* Image Container */}
       <div>
-        <div className="relative w-full aspect-[4/3] overflow-hidden bg-candy-soft border-b-2 border-candy-ink">
+        <div className="relative w-full aspect-[4/3] overflow-hidden bg-candy-soft">
           <Link
             href={`/product/${product.slug}`}
             className="relative block w-full h-full"
@@ -222,7 +222,7 @@ export function ProductCard({
             }
             title={isWishlisted ? "إزالة من المفضلة" : "إضافة للمفضلة"}
             className={cn(
-              "absolute top-2.5 right-2.5 w-9 h-9 bg-candy-cream flex items-center justify-center transition-colors z-10 border-2 border-candy-ink",
+              "absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-white/95 flex items-center justify-center transition-colors z-10 shadow-candy-soft",
               isWishlisted
                 ? "text-candy-berry"
                 : "text-candy-ink/60 hover:text-candy-berry"
@@ -238,11 +238,11 @@ export function ProductCard({
 
           {/* Single Crisp Status / Discount Tag */}
           {!isAvailable ? (
-            <span className="absolute top-2.5 left-2.5 px-2.5 py-1 bg-[#1B1A17] text-white text-[11px] font-sans font-bold">
+            <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-[#2B1A10]/85 text-white text-[11px] font-sans font-bold">
               نفد حالياً
             </span>
           ) : hasDiscount ? (
-            <span className="absolute top-2.5 left-2.5 px-2.5 py-1 bg-[#C2431F] text-white border-2 border-candy-ink text-[11px] font-sans font-bold tabular-nums">
+            <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-candy-berry text-white text-[11px] font-sans font-bold tabular-nums">
               خصم {discountPercent}%
             </span>
           ) : null}
@@ -259,7 +259,7 @@ export function ProductCard({
             href={`/product/${product.slug}`}
             className="block group/title focus:outline-none"
           >
-            <h3 className="font-display font-bold text-base sm:text-lg text-candy-ink line-clamp-2 min-h-[2.6em] leading-snug group-hover/title:underline decoration-[3px] decoration-[#F2B632] underline-offset-4">
+            <h3 className="font-display font-bold text-base sm:text-lg text-candy-ink line-clamp-2 min-h-[2.6em] leading-snug group-hover/title:underline decoration-[3px] decoration-[#E8A33D] underline-offset-4">
               {product.name}
             </h3>
           </Link>
@@ -270,10 +270,10 @@ export function ProductCard({
       </div>
 
       {/* Price & Add to Cart Footer */}
-      <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-2.5 mt-1 border-t-2 border-dashed border-candy-ink/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+      <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-2.5 mt-1 border-t border-candy-line/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="flex flex-col min-w-0">
           <div className="flex items-baseline gap-1 tabular-nums whitespace-nowrap">
-            <span className="font-display font-bold text-xl sm:text-2xl text-candy-ink">
+            <span className="font-display font-bold text-xl sm:text-2xl text-candy-berry">
               {currentPrice}
             </span>
             <span className="text-xs font-sans font-bold text-candy-berry">₪</span>
@@ -305,11 +305,11 @@ export function ProductCard({
             disabled={!isAvailable}
             aria-label={`أضف ${product.name} للسلة`}
             className={cn(
-              "h-11 sm:h-10 px-3 sm:px-4 flex-1 sm:flex-none font-sans font-bold text-sm flex items-center justify-center gap-1 sm:gap-1.5 transition-all whitespace-nowrap shrink-0",
+              "h-11 sm:h-10 px-3 sm:px-4 rounded-xl flex-1 sm:flex-none font-sans font-bold text-sm flex items-center justify-center gap-1 sm:gap-1.5 transition-all whitespace-nowrap shrink-0",
               isAvailable
                 ? isAdded
-                  ? "bg-[#1F5C45] text-white border-2 border-candy-ink"
-                  : "bg-[#F2B632] text-candy-ink border-2 border-candy-ink hover:bg-candy-ink hover:text-[#F3EBDD]"
+                  ? "bg-emerald-600 text-white"
+                  : "bg-candy-berry text-white hover:bg-candy-berry-dark"
                 : "bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed"
             )}
           >

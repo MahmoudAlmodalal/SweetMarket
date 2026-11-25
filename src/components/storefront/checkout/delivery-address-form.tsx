@@ -81,7 +81,7 @@ export function DeliveryAddressForm({
   return (
     <Card
       className={cn(
-        "overflow-hidden border-candy-line/80 shadow-candy-1 rounded-candy-card bg-candy-cream transition-all duration-200",
+        "overflow-hidden border-candy-line/80 shadow-candy-1 rounded-candy-card bg-white transition-all duration-200",
         className
       )}
     >
@@ -133,10 +133,10 @@ export function DeliveryAddressForm({
                     type="button"
                     onClick={() => onZoneChange(zone.id)}
                     className={cn(
-                      "text-xs font-sans px-2.5 py-1 rounded-none transition-all border",
+                      "text-xs font-sans px-2.5 py-1 rounded-full transition-all border",
                       isSelected
                         ? "bg-candy-berry text-white border-candy-berry font-bold shadow-xs scale-105"
-                        : "bg-candy-soft text-candy-ink border-candy-line/70 hover:border-candy-ink hover:bg-candy-cream"
+                        : "bg-candy-soft text-candy-ink border-candy-line/70 hover:border-candy-berry/50 hover:bg-white"
                     )}
                   >
                     {zone.name} ({zone.deliveryFee} ₪)
@@ -166,10 +166,10 @@ export function DeliveryAddressForm({
 
           {/* Real-Time Zone Fee & Time Indicator Card */}
           {selectedZone && (
-            <div className="mt-3.5 p-4 rounded-2xl bg-candy-cream border border-candy-line/80 shadow-xs animate-in fade-in duration-300">
+            <div className="mt-3.5 p-4 rounded-2xl bg-gradient-to-r from-candy-soft/80 to-white border border-candy-line/80 shadow-xs animate-in fade-in duration-300">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans">
                 {/* Delivery Fee Highlight */}
-                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-candy-cream border border-candy-line/60">
+                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-candy-line/60">
                   <div className="w-9 h-9 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
                     <Truck className="w-4 h-4" />
                   </div>
@@ -184,7 +184,7 @@ export function DeliveryAddressForm({
                 </div>
 
                 {/* Estimated Arrival Time */}
-                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-candy-cream border border-candy-line/60">
+                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-candy-line/60">
                   <div className="w-9 h-9 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 shadow-xs border border-amber-100">
                     <Clock className="w-4 h-4" />
                   </div>
@@ -312,7 +312,7 @@ export function DeliveryAddressForm({
                 key={idx}
                 type="button"
                 onClick={() => handleQuickNoteClick(preset)}
-                className="text-[11px] font-sans px-2.5 py-0.5 rounded-none bg-candy-soft text-candy-ink border border-candy-line/60 hover:bg-candy-blush/40 hover:text-candy-berry transition-colors"
+                className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-candy-soft text-candy-ink border border-candy-line/60 hover:bg-candy-blush/40 hover:text-candy-berry transition-colors"
               >
                 {preset}
               </button>

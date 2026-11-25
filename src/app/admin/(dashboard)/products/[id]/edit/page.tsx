@@ -52,7 +52,7 @@ export default function EditProductPage() {
             <Skeleton className="h-4 w-1/4" />
           </div>
         </div>
-        <div className="bg-candy-cream p-6 rounded-candy-card border border-candy-line space-y-4">
+        <div className="bg-white p-6 rounded-candy-card border border-candy-line space-y-4">
           <Skeleton className="h-10 w-full" />
           <Skeleton className="h-24 w-full" />
           <Skeleton className="h-10 w-1/2" />
@@ -63,7 +63,7 @@ export default function EditProductPage() {
 
   if (error || !product) {
     return (
-      <div className="max-w-xl mx-auto my-12 p-8 bg-candy-cream rounded-candy-card border border-rose-200 text-center space-y-4 shadow-candy-1" dir="rtl">
+      <div className="max-w-xl mx-auto my-12 p-8 bg-white rounded-candy-card border border-rose-200 text-center space-y-4 shadow-candy-1" dir="rtl">
         <div className="w-16 h-16 rounded-full bg-rose-50 flex items-center justify-center text-rose-600 mx-auto">
           <AlertCircle className="w-8 h-8" />
         </div>

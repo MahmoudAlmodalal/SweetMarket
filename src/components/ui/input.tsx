@@ -98,10 +98,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={describedBy || undefined}
             className={cn(
-              "w-full h-12 px-4 rounded-[4px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none shadow-xs",
+              "w-full h-12 px-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none shadow-xs",
               "hover:border-candy-line-dark/60 hover:bg-candy-soft/80",
               "placeholder:text-candy-muted/70",
-              "focus:bg-candy-cream focus:border-primary focus:ring-2 focus:ring-primary/20",
+              "focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20",
               "focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20",
               iconPrefix ? "pr-10" : "pr-4",
               iconSuffix ? "pl-10" : "pl-4",

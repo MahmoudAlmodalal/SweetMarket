@@ -49,7 +49,7 @@ export default function ContactPage() {
       </nav>
 
       {/* Hero Header Section */}
-      <section className="relative bg-[#F2B632] border-2 border-candy-ink shadow-[6px_6px_0_#1B1A17] rounded-none p-6 sm:p-10 lg:p-12 overflow-hidden">
+      <section className="relative rounded-candy-section bg-gradient-to-br from-candy-soft via-white to-candy-blush/30 border border-candy-line p-6 sm:p-10 lg:p-12 overflow-hidden shadow-candy-1">
         {/* Soft decorative background circles */}
         <div
           className="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-candy-blush/40 blur-2xl pointer-events-none"
@@ -94,11 +94,11 @@ export default function ContactPage() {
           {/* Google Maps Placeholder Card */}
           <section
             aria-labelledby="map-card-title"
-            className="rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-6 transition-all duration-300 relative overflow-hidden"
+            className="rounded-candy-card bg-white border border-candy-line shadow-candy-1 p-6 transition-all duration-300 relative overflow-hidden"
           >
             <div className="flex items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-ink text-candy-berry flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center shrink-0">
                   <MapPin className="w-4 h-4 text-candy-berry" />
                 </div>
                 <div>
@@ -212,7 +212,7 @@ export default function ContactPage() {
                 href={mapSearchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 h-11 px-4 rounded-candy-pill bg-candy-soft text-candy-berry hover:bg-candy-blush/60 hover:text-candy-berry-dark border border-candy-ink text-xs sm:text-sm font-bold transition-all shadow-xs"
+                className="w-full inline-flex items-center justify-center gap-2 h-11 px-4 rounded-candy-pill bg-candy-soft text-candy-berry hover:bg-candy-blush/60 hover:text-candy-berry-dark border border-candy-blush text-xs sm:text-sm font-bold transition-all shadow-xs"
               >
                 <Navigation className="w-4 h-4" />
                 <span>فتح في خرائط Google</span>
@@ -224,7 +224,7 @@ export default function ContactPage() {
           {/* Delivery Coverage Note Card */}
           <section
             aria-labelledby="delivery-coverage-title"
-            className="rounded-candy-card bg-candy-cream border border-candy-line shadow-candy-1 p-6 relative overflow-hidden"
+            className="rounded-candy-card bg-gradient-to-br from-white to-candy-soft/60 border border-candy-line shadow-candy-1 p-6 relative overflow-hidden"
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-2xl bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
@@ -302,7 +302,7 @@ export default function ContactPage() {
       <section className="rounded-candy-card bg-candy-soft/60 border border-candy-line p-6 sm:p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-candy-cream border border-candy-line text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-white border border-candy-line text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
               <Sparkles className="w-5 h-5 text-candy-berry" />
             </div>
             <div>
@@ -317,7 +317,7 @@ export default function ContactPage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-candy-cream border border-candy-line text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-white border border-candy-line text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
               <Gift className="w-5 h-5 text-candy-berry" />
             </div>
             <div>
@@ -332,7 +332,7 @@ export default function ContactPage() {
           </div>
 
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-full bg-candy-cream border border-candy-line text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-white border border-candy-line text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
               <HeartHandshake className="w-5 h-5 text-candy-berry" />
             </div>
             <div>

@@ -107,7 +107,7 @@ export function CartSummary({
   return (
     <div
       className={cn(
-        "rounded-3xl bg-candy-cream p-5 sm:p-6 border border-candy-line space-y-5",
+        "rounded-3xl bg-white p-5 sm:p-6 border border-candy-line space-y-5",
         className
       )}
     >
@@ -146,7 +146,7 @@ export function CartSummary({
           value={selectedZoneId || ""}
           onChange={(e) => handleZoneChange(e.target.value)}
           aria-label="اختر منطقة التوصيل لحساب الرسوم"
-          className="w-full h-10 px-3 text-xs sm:text-sm font-sans rounded-xl bg-candy-cream border border-candy-line text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/20 focus:border-candy-berry transition-colors"
+          className="w-full h-10 px-3 text-xs sm:text-sm font-sans rounded-xl bg-white border border-candy-line text-candy-ink focus:outline-none focus:ring-2 focus:ring-candy-berry/20 focus:border-candy-berry transition-colors"
         >
           <option value="">-- اختر منطقة التوصيل --</option>
           {zones.map((zone) => (
@@ -247,7 +247,7 @@ export function CartSummary({
         <Link
           href="/checkout"
           data-testid="proceed-to-checkout-button"
-          className="w-full min-h-[52px] rounded-none bg-candy-berry hover:bg-candy-berry-dark text-white font-sans font-bold text-sm sm:text-base transition-colors flex items-center justify-between px-6"
+          className="w-full min-h-[52px] rounded-full bg-candy-berry hover:bg-candy-berry-dark text-white font-sans font-bold text-sm sm:text-base transition-colors flex items-center justify-between px-6"
         >
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4" />

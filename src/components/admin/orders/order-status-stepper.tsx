@@ -124,7 +124,7 @@ export function OrderStatusStepper({
   return (
     <div
       className={cn(
-        'bg-candy-cream border border-candy-line rounded-candy-card p-4 sm:p-6 shadow-candy-1',
+        'bg-white border border-candy-line rounded-candy-card p-4 sm:p-6 shadow-candy-1',
         className
       )}
       aria-label="مسار معالجة حالة الطلب"
@@ -242,7 +242,7 @@ export function OrderStatusStepper({
             {ORDER_STATUS_LABELS[currentStatus] || currentStatus}
           </span>
           {isTerminal && (
-            <span className="text-[11px] bg-candy-soft px-2 py-0.5 rounded-none border border-candy-line">
+            <span className="text-[11px] bg-candy-soft px-2 py-0.5 rounded-full border border-candy-line">
               حالة نهائية
             </span>
           )}
