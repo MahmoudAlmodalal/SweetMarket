@@ -19,7 +19,7 @@ import { ConciergeBriefForm } from "@/components/storefront/contact/concierge-br
 import { buildWhatsAppLink } from "@/lib/store-identity";
 
 export const metadata: Metadata = {
-  title: "تواصل معنا وساعات العمل وخدمة الكونسيرج | كاندي لوز",
+  title: "تواصل معنا وساعات العمل وخدمة الكونسيرج",
   description:
     "تواصل مع متجر حلويات كاندي لوز في غزة، شارع عمر المختار، وتعرف على ساعات العمل اليومية وتغطية التوصيل وخدمة كونسيرج واتساب الفورية.",
 };

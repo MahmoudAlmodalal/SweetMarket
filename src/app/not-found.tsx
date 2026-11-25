@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NotFoundRecovery } from "@/components/not-found-recovery";
 
 export const metadata: Metadata = {
-  title: "الصفحة غير موجودة | كاندي لوز",
+  title: "الصفحة غير موجودة",
   description: "عذراً، الصفحة التي تبحث عنها غير موجودة في متجر كاندي لوز",
 };
 

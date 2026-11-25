@@ -17,7 +17,7 @@ import { getDb } from "@/server/db";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "كاندي لوز | حلويات شرقية وغربية فاخرة",
+  title: { absolute: "كاندي لوز | حلويات شرقية وغربية فاخرة" },
   description:
     "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة. بقلاوة، كيك، كنافة، شوكولاتة بلجيكية وتوصيل سريع ومبرد.",
 };

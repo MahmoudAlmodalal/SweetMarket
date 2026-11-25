@@ -63,14 +63,14 @@ export function ProductImage({
   onError,
 }: ProductImageProps) {
   const [hasError, setHasError] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(priority);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   // إعادة ضبط حالة الخطأ والتحميل عند تغيّر رابط الصورة
   useEffect(() => {
     setHasError(false);
-    setIsLoaded(false);
-  }, [src]);
+    setIsLoaded(priority);
+  }, [src, priority]);
 
   // في حال كانت الصورة مخبأة بالفعل في المتصفح أو اكتمل تحميلها فورياً
   useEffect(() => {

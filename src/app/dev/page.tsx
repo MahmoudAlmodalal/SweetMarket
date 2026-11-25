@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { ShieldAlert, ArrowLeft } from 'lucide-react';
 import { DevWorkbench } from '@/components/dev/dev-workbench';
+import { COOKIE_NAME, verifySessionToken } from '@/server/auth';
+import { getDb, sanitizeAdminUser } from '@/server/db';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Developer Workbench | Candy Loz',
+  title: { absolute: 'Developer Workbench | Candy Loz' },
   description: 'Interactive API v1 Explorer, OpenAPI 3.1 spec, and local seed tools for Candy Loz developers.',
   robots: { index: false, follow: false },
 };
@@ -46,5 +49,31 @@ export default function DevPage() {
 
   const backendMode = process.env.BACKEND_API_URL ? 'upstream-proxy' : 'local-persistent';
 
-  return <DevWorkbench backendMode={backendMode} />;
+  let initialSessionUser: {
+    id: string;
+    username: string;
+    fullName: string;
+    role: 'manager' | 'staff';
+    email: string;
+  } | null = null;
+
+  const cookieToken = cookies().get(COOKIE_NAME)?.value;
+  if (cookieToken) {
+    const payload = verifySessionToken(cookieToken);
+    if (payload) {
+      const found = getDb().users.find((u) => u.id === payload.sub && u.isActive);
+      if (found) {
+        const safe = sanitizeAdminUser(found);
+        initialSessionUser = {
+          id: safe.id,
+          username: safe.username,
+          fullName: safe.fullName,
+          role: safe.role,
+          email: safe.email,
+        };
+      }
+    }
+  }
+
+  return <DevWorkbench backendMode={backendMode} initialSessionUser={initialSessionUser} />;
 }

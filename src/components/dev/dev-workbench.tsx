@@ -214,7 +214,13 @@ const METHOD_COLORS: Record<HttpMethod, string> = {
   DELETE: 'bg-rose-500/15 text-rose-700 border-rose-500/30',
 };
 
-export function DevWorkbench({ backendMode }: { backendMode: string }) {
+export function DevWorkbench({
+  backendMode,
+  initialSessionUser = null,
+}: {
+  backendMode: string;
+  initialSessionUser?: AdminSessionUser | null;
+}) {
   const [selectedPresetId, setSelectedPresetId] = useState<string>('health');
   const [method, setMethod] = useState<HttpMethod>('GET');
   const [endpointPath, setEndpointPath] = useState<string>('/api/v1/health');
@@ -223,7 +229,7 @@ export function DevWorkbench({ backendMode }: { backendMode: string }) {
   const [result, setResult] = useState<ApiRunResult | null>(null);
 
   const [health, setHealth] = useState<HealthSummary | null>(null);
-  const [sessionUser, setSessionUser] = useState<AdminSessionUser | null>(null);
+  const [sessionUser, setSessionUser] = useState<AdminSessionUser | null>(initialSessionUser);
   const [authBusy, setAuthBusy] = useState(false);
 
   const [confirmReset, setConfirmReset] = useState(false);
@@ -233,19 +239,10 @@ export function DevWorkbench({ backendMode }: { backendMode: string }) {
 
   const refreshStatus = useCallback(async () => {
     try {
-      const [healthRes, meRes] = await Promise.all([
-        fetch('/api/v1/health', { cache: 'no-store' }),
-        fetch('/api/v1/admin/auth/me', { credentials: 'include', cache: 'no-store' }),
-      ]);
+      const healthRes = await fetch('/api/v1/health', { cache: 'no-store' });
       if (healthRes.ok) {
         const hJson = await healthRes.json();
         setHealth(hJson?.data ?? null);
-      }
-      if (meRes.ok) {
-        const mJson = await meRes.json();
-        setSessionUser(mJson?.data?.user ?? mJson?.data ?? null);
-      } else {
-        setSessionUser(null);
       }
     } catch {
       // Ignore transient refresh errors

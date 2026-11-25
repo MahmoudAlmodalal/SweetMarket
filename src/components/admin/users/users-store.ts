@@ -36,11 +36,15 @@ export interface UseAdminUsersReturn {
   refreshUsers: () => void;
 }
 
-export function useAdminUsers(): UseAdminUsersReturn {
+export function useAdminUsers(enabled = true): UseAdminUsersReturn {
   const [users, setUsers] = useState<AdminUser[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(enabled);
 
   const loadData = useCallback(async () => {
+    if (!enabled) {
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     try {
       const rawList = await apiRequest<Array<Record<string, unknown>>>('/api/v1/admin/users');
@@ -52,11 +56,15 @@ export function useAdminUsers(): UseAdminUsersReturn {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
-    void loadData();
-  }, [loadData]);
+    if (enabled) {
+      void loadData();
+    } else {
+      setIsLoading(false);
+    }
+  }, [enabled, loadData]);
 
   const activeManagersCount = useMemo(
     () => users.filter((u) => u.role === 'manager' && u.isActive).length,

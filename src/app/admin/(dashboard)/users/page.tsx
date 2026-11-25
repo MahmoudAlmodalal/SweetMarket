@@ -46,7 +46,7 @@ export default function AdminUsersPage() {
     toggleUserStatus,
     resetPassword,
     isLastActiveManager,
-  } = useAdminUsers();
+  } = useAdminUsers(!isAuthLoading && isManager);
 
   // Dialogs state
   const [roleDialogOpen, setRoleDialogOpen] = React.useState(false);
