@@ -75,6 +75,23 @@ describe('Session token tamper resistance', () => {
     }
   });
 
+  it('rejects the token exactly at its exp second (RFC 7519 boundary)', () => {
+    const realNow = Date.now;
+    try {
+      const T = realNow();
+      Date.now = () => T;
+      const token = signSessionToken({ id: 'usr-1', role: 'manager' });
+      // One second before expiry: still valid.
+      Date.now = () => T + 12 * 60 * 60 * 1000 - 1000;
+      assert.ok(verifySessionToken(token), 'token should be valid one second before exp');
+      // Exactly at exp: must be rejected (exp is not inclusive).
+      Date.now = () => T + 12 * 60 * 60 * 1000;
+      assert.equal(verifySessionToken(token), null);
+    } finally {
+      Date.now = realNow;
+    }
+  });
+
   it('keeps tokens without a jti rejected after revocation bookkeeping', () => {
     // Revoking an already-invalid token must not throw or create state.
     revokeSessionToken('garbage.token.here');

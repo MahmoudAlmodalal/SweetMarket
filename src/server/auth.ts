@@ -125,7 +125,8 @@ export function verifySessionToken(token: string): JwtPayload | null {
   try {
     const payload = JSON.parse(base64UrlDecode(payloadB64)) as JwtPayload;
     if (!payload.sub || !payload.exp || !payload.jti) return null;
-    if (payload.exp < Math.floor(Date.now() / 1000)) return null;
+    // RFC 7519: a token MUST NOT be accepted on or after its exp second.
+    if (payload.exp <= Math.floor(Date.now() / 1000)) return null;
     if (getRevokedSet().has(payload.jti)) return null;
     return payload;
   } catch {
