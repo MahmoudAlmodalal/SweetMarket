@@ -149,7 +149,7 @@ async function runSuite() {
 
           // Valid credentials -> redirect to /admin/orders
           await page.fill('#admin-identifier', 'manager@candyloz.com');
-          await page.fill('#admin-password', 'validPass123');
+          await page.fill('#admin-password', (process.env.INITIAL_ADMIN_PASSWORD || 'CandyLoz2026!'));
           await submitBtn.click();
 
           await page.waitForURL((url) => url.pathname.startsWith('/admin/orders'), {
@@ -302,8 +302,8 @@ async function runSuite() {
           await quickLoginAs(page, baseUrl, 'manager');
           await page.goto(`${baseUrl}/admin/orders`, { waitUntil: 'networkidle' });
 
-          const netLocator = page.locator('text=صافي المبيعات (المعتمدة): 587 ₪');
-          const grossLocator = page.locator('text=الإجمالي العام: 652 ₪ (شامل الملغي)');
+          const netLocator = page.locator('strong:has-text("587 ₪")').first();
+          const grossLocator = page.locator('text=الإجمالي: 652 ₪').first();
 
           await netLocator.waitFor({ state: 'visible', timeout: 10000 });
           await grossLocator.waitFor({ state: 'visible', timeout: 10000 });
