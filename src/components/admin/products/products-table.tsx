@@ -27,6 +27,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AvailabilityToggle } from './availability-toggle';
+import { ProductImage } from '@/components/storefront/catalog/product-image';
 import { getAdminProducts, getAdminCategories } from './product-repository';
 import { cn } from '@/lib/utils';
 
@@ -425,17 +426,15 @@ export function ProductsTable() {
                         <td className="py-3 px-4">
                           <div className="relative w-14 h-14 rounded-card overflow-hidden border border-candy-line bg-candy-soft flex-shrink-0 shadow-xs">
                             {product.imageUrl ? (
-                              <img
+                              <ProductImage
                                 src={product.imageUrl}
                                 alt={product.name}
+                                fill
+                                sizes="56px"
                                 className={cn(
                                   'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300',
                                   !product.isAvailable && 'grayscale-[40%]'
                                 )}
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).src =
-                                    'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80';
-                                }}
                               />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-candy-muted">
@@ -563,17 +562,15 @@ export function ProductsTable() {
                   <div className="flex items-start gap-3">
                     {/* الصورة */}
                     <div className="relative w-16 h-16 rounded-card overflow-hidden border border-candy-line bg-candy-soft flex-shrink-0 shadow-xs">
-                      <img
+                      <ProductImage
                         src={product.imageUrl}
                         alt={product.name}
+                        fill
+                        sizes="64px"
                         className={cn(
                           'w-full h-full object-cover',
                           !product.isAvailable && 'grayscale-[40%]'
                         )}
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80';
-                        }}
                       />
                       {product.isFeatured && (
                         <span className="absolute top-1 right-1 bg-amber-400 text-amber-950 p-0.5 rounded-full shadow-sm">

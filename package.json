@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test:unit": "npx --yes tsx --test src/server/business-rules.test.ts src/lib/api-adapters.test.ts src/lib/recently-viewed.test.ts",
+    "test:unit": "npx --yes tsx --test src/server/business-rules.test.ts src/lib/api-adapters.test.ts src/lib/recently-viewed.test.ts src/lib/storefront-libs.test.ts",
     "check": "npm run typecheck && npm run lint && npm run test:unit",
     "check:prod": "node scripts/check-prod-env.mjs",
     "secrets:generate": "node scripts/generate-secrets.mjs",

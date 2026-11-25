@@ -664,6 +664,8 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
           <div className="p-4 bg-candy-soft/60 rounded-card border border-candy-line flex flex-col sm:flex-row items-center gap-4">
             <div className="relative w-28 h-28 rounded-card overflow-hidden border border-candy-line bg-white flex-shrink-0 shadow-sm">
               {imageUrl && !imageLoadError ? (
+                // معاينة حية لرابط يدخله المدير يدوياً من أي مصدر؛ next/image يقتصر على النطاقات الموثوقة في next.config
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={imageUrl}
                   alt={name || 'معاينة المنتج'}

@@ -324,6 +324,8 @@ export function CategoryDialog({
               <div className="mt-2 p-2.5 rounded-input bg-candy-soft border border-candy-line flex items-center gap-3">
                 <div className="w-16 h-16 rounded-[4px] overflow-hidden bg-white border border-candy-line shrink-0 flex items-center justify-center">
                   {imageUrl && !imageError ? (
+                    // معاينة حية لرابط يدخله المدير يدوياً من أي مصدر؛ next/image يقتصر على النطاقات الموثوقة في next.config
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={imageUrl}
                       alt={name || 'معاينة التصنيف'}

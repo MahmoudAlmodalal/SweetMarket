@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { ProductImage } from '@/components/storefront/catalog/product-image';
 import type { Category } from '@/types';
 
 export interface CategoryListProps {
@@ -171,13 +172,12 @@ export function CategoryList({
               {/* صورة مصغرة للتصنيف */}
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-input overflow-hidden bg-candy-soft border border-candy-line shrink-0 flex items-center justify-center relative shadow-xs">
                 {cat.imageUrl ? (
-                  <img
+                  <ProductImage
                     src={cat.imageUrl}
                     alt={cat.name}
+                    fill
+                    sizes="64px"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLElement).style.display = 'none';
-                    }}
                   />
                 ) : (
                   <ImageIcon className="w-6 h-6 text-candy-muted/50" />
