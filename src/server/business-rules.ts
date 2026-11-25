@@ -102,7 +102,7 @@ export function slugifySafe(input: string, fallbackPrefix = 'item'): string {
   const cleaned = String(input || '')
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[^a-z0-9\s_-]/g, '')
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
