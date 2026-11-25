@@ -70,7 +70,7 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     id: "stage-2-accepted",
     stepNumber: 2,
     title: "مراجعة واعتماد الطلب",
-    subtitle: "تمت مراجعة تفاصيل طلبك وتأكيد جاهزية المكونات الطازجة",
+    subtitle: "مراجعة تفاصيل طلبك وتأكيد جاهزية المكونات الطازجة",
     icon: CheckCircle2,
     badgeText: "معتمد رسمياً",
     badgeType: "standard",
@@ -117,8 +117,8 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
   {
     id: "stage-7-delivered",
     stepNumber: 7,
-    title: "تم التسليم بالهناء والعافية",
-    subtitle: "تم تسليم الطلب باليد بنجاح، صحة وعافية على قلوبكم",
+    title: "التسليم بالهناء والعافية",
+    subtitle: "تسليم الطلب باليد بنجاح، صحة وعافية على قلوبكم",
     icon: Award,
     badgeText: "تم التسليم بنجاح",
     badgeType: "success",
@@ -266,6 +266,13 @@ export function StatusTimeline({
                   <Copy className="w-3.5 h-3.5 text-candy-muted group-hover:text-candy-berry transition-colors" />
                 )}
               </button>
+              {/* نسخة مطبوعة من رقم التتبع - أزرار النسخ تُخفى عند الطباعة */}
+              <span
+                dir="ltr"
+                className="hidden print:inline-block px-3 py-1 font-mono text-sm sm:text-base font-bold text-candy-berry tracking-wider"
+              >
+                {order.orderNumber}
+              </span>
               {copied && (
                 <span className="text-[11px] font-sans font-bold text-emerald-600 animate-in fade-in">
                   تم النسخ!
@@ -483,12 +490,12 @@ export function StatusTimeline({
                   <li
                     key={stage.id}
                     aria-current={isCurrent ? "step" : undefined}
-                    className="relative flex items-start gap-4 sm:gap-5 pr-2 group"
+                    className="relative flex items-start gap-4 sm:gap-5 pr-2 group print:break-inside-avoid"
                   >
                     {/* Stage Node Icon with Pulsing Effect on Active */}
                     <div
                       className={cn(
-                        "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0",
+                        "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0 print:bg-transparent print:text-gray-800 print:border-2 print:border-gray-400 print:shadow-none print:ring-0 print:scale-100 print:animate-none",
                         // Completed Stage
                         isPast &&
                           "bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)] scale-100",
@@ -504,7 +511,7 @@ export function StatusTimeline({
                       )}
                     >
                       {isPast ? (
-                        <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                        <Check className="w-5 h-5 text-white print:text-gray-800" strokeWidth={3} />
                       ) : (
                         <StageIcon className="w-5 h-5" />
                       )}
