@@ -106,7 +106,7 @@ export function OrderSuccessCard({
     <div
       dir="rtl"
       className={cn(
-        "w-full max-w-2xl mx-auto flex flex-col gap-6 py-4 animate-in fade-in duration-300",
+        "w-full max-w-2xl mx-auto flex flex-col gap-6 py-4 print:gap-3 print:py-0 animate-in fade-in duration-300",
         className
       )}
     >
@@ -163,7 +163,7 @@ export function OrderSuccessCard({
       </section>
 
       {/* 1. Festive Celebration Banner & Order Header */}
-      <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 shadow-candy-2 text-center">
+      <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 print:p-4 shadow-candy-2 text-center">
         {/* Soft Ambient Confectionery Glow */}
         <div
           aria-hidden="true"
@@ -195,7 +195,7 @@ export function OrderSuccessCard({
           شكراً لطلبك من كاندي لوز!
         </h1>
 
-        <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6">
+        <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6 print:mb-3">
           {order.customer.fullName ? (
             <span>
               عزيزنا <strong className="text-candy-ink">{order.customer.fullName}</strong>، تم
@@ -271,7 +271,7 @@ export function OrderSuccessCard({
       {/* 2. Order Summary Card (Items, Zone, Payment, Financial Breakdown) */}
       <div className="bg-white border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
         {/* Items Section Header */}
-        <div className="p-5 sm:p-6 border-b border-candy-line/60 bg-candy-soft/40 flex items-center justify-between">
+        <div className="p-5 sm:p-6 print:p-3 border-b border-candy-line/60 bg-candy-soft/40 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shadow-xs shrink-0">
               <ShoppingBag className="w-5 h-5" />
@@ -302,7 +302,7 @@ export function OrderSuccessCard({
 
         {/* Ordered Items List */}
         {isItemsExpanded && (
-          <div className="p-5 sm:p-6 divide-y divide-candy-line/60 space-y-4">
+          <div className="p-5 sm:p-6 print:p-3 print:space-y-2 divide-y divide-candy-line/60 space-y-4">
             {order.items.map((item) => {
               return (
                 <div
@@ -364,7 +364,7 @@ export function OrderSuccessCard({
         )}
 
         {/* Delivery Details Section */}
-        <div className="border-t border-candy-line/60 p-5 sm:p-6 bg-candy-soft/20 space-y-4">
+        <div className="border-t border-candy-line/60 p-5 sm:p-6 print:p-3 print:space-y-2 bg-candy-soft/20 space-y-4">
           <div className="flex items-start gap-3">
             <div className="w-9 h-9 rounded-full bg-candy-blush/60 text-candy-berry flex items-center justify-center shrink-0 mt-0.5">
               <MapPin className="w-4 h-4" />
@@ -417,7 +417,7 @@ export function OrderSuccessCard({
         </div>
 
         {/* Financial Bill Breakdown */}
-        <div data-print-keep className="border-t border-candy-line/60 p-5 sm:p-6 bg-candy-soft/60 space-y-2.5">
+        <div data-print-keep className="border-t border-candy-line/60 p-5 sm:p-6 print:p-3 print:space-y-1.5 bg-candy-soft/60 space-y-2.5">
           <div className="flex justify-between items-center text-sm font-sans text-candy-muted">
             <span>مجموع المشتريات:</span>
             <span className="font-mono font-semibold text-candy-ink">
