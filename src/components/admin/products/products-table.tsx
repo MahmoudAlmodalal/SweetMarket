@@ -30,6 +30,7 @@ import { AvailabilityToggle } from './availability-toggle';
 import { ProductImage } from '@/components/storefront/catalog/product-image';
 import { getAdminProducts, getAdminCategories } from './product-repository';
 import { cn } from '@/lib/utils';
+import { normalizeArabicText } from '@/lib/search';
 
 const UNIT_LABELS: Record<ProductUnit, string> = {
   kg: 'كيلوغرام',
@@ -106,13 +107,13 @@ export function ProductsTable() {
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
-    // فلتر البحث
+    // فلتر البحث - يطبق قواعد التنقيح العربي الموحدة (توحيد الألفات والتاء المربوطة وتجريد التشكيل)
     if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
+      const q = normalizeArabicText(searchQuery);
       result = result.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) ||
-          (p.nameEn && p.nameEn.toLowerCase().includes(q)) ||
+          normalizeArabicText(p.name).includes(q) ||
+          (p.nameEn && normalizeArabicText(p.nameEn).includes(q)) ||
           p.id.toLowerCase().includes(q) ||
           p.slug.toLowerCase().includes(q)
       );

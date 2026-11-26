@@ -21,6 +21,7 @@ import type { Order, OrderStatus, DeliveryZone } from '@/types';
 import { OrderStatusBadge } from './order-status-badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { normalizeArabicText } from '@/lib/search';
 
 export type FilterTabKey = 'all' | OrderStatus;
 
@@ -136,17 +137,18 @@ export function OrdersDataTable({
     }
 
     // 2. البحث الفوري برقم الطلب، اسم العميل، رقم الهاتف، أو المنطقة
-    const query = searchQuery.trim().toLowerCase();
+    // يطبق قواعد التنقيح العربي الموحدة على الأسماء والمناطق (توحيد الألفات والتاء المربوطة وتجريد التشكيل)
+    const query = normalizeArabicText(searchQuery);
     const cleanQuery = query.replace(/[\s-]/g, '');
 
     if (query) {
       result = result.filter((order) => {
         const orderNumberMatch = order.orderNumber.toLowerCase().includes(query);
-        const customerNameMatch = order.customer.fullName.toLowerCase().includes(query);
+        const customerNameMatch = normalizeArabicText(order.customer.fullName).includes(query);
         const rawPhone = order.customer.phone.replace(/[\s-]/g, '');
         const customerPhoneMatch = rawPhone.includes(cleanQuery);
         const zoneName = zonesMap.get(order.customer.zoneId) || '';
-        const zoneMatch = zoneName.toLowerCase().includes(query);
+        const zoneMatch = normalizeArabicText(zoneName).includes(query);
 
         return orderNumberMatch || customerNameMatch || customerPhoneMatch || zoneMatch;
       });
