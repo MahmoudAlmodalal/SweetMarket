@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, LayoutGrid, ShoppingBag, Truck, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { arabicCountLabel, ITEM_COUNT_FORMS } from "@/lib/arabic-plural";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import {
   getResolvedFavoritesCount,
@@ -134,7 +135,7 @@ export function MobileDock({
       icon: Heart,
       isActive: pathname === "/favorites",
       badgeCount: favoriteCount,
-      badgeLabel: "عناصر في المفضلة",
+      badgeLabel: "في المفضلة",
     },
     {
       href: "/cart",
@@ -142,7 +143,7 @@ export function MobileDock({
       icon: ShoppingBag,
       isActive: pathname === "/cart",
       badgeCount: internalCount,
-      badgeLabel: "عناصر بالسلة",
+      badgeLabel: "بالسلة",
     },
     {
       href: "/track",
@@ -193,7 +194,7 @@ export function MobileDock({
                 />
                 {hasBadge && (
                   <span
-                    aria-label={`${item.badgeCount} ${item.badgeLabel || "عناصر"}`}
+                    aria-label={`${arabicCountLabel(item.badgeCount ?? 0, ITEM_COUNT_FORMS)}${item.badgeLabel ? ` ${item.badgeLabel}` : ""}`}
                     className={cn(
                       "absolute -top-1.5 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full font-sans text-[10px] font-bold flex items-center justify-center shadow-sm transition-transform duration-200",
                       isItemActive

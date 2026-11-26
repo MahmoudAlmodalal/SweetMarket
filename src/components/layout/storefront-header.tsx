@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StoreStatusBadge } from "@/components/storefront/home/store-status-badge";
+import { arabicCountLabel, ITEM_COUNT_FORMS } from "@/lib/arabic-plural";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import {
   getResolvedFavoritesCount,
@@ -174,13 +175,13 @@ function StorefrontHeaderUI({
             <div className="flex items-center justify-end gap-0.5 sm:gap-1">
               <Link
                 href="/favorites"
-                aria-label={favoriteCount > 0 ? `المفضلة (${favoriteCount} عناصر)` : "المفضلة"}
+                aria-label={favoriteCount > 0 ? `المفضلة (${arabicCountLabel(favoriteCount, ITEM_COUNT_FORMS)})` : "المفضلة"}
                 className={iconBtn(pathname === "/favorites")}
               >
                 <Heart className="w-[19px] h-[19px]" />
                 {favoriteCount > 0 && (
                   <span
-                    aria-label={`${favoriteCount} عناصر في المفضلة`}
+                    aria-label={`${arabicCountLabel(favoriteCount, ITEM_COUNT_FORMS)} في المفضلة`}
                     className="absolute top-0.5 right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-candy-berry text-white font-sans text-[10px] font-bold tabular-nums flex items-center justify-center"
                   >
                     {favoriteCount > 99 ? "+99" : favoriteCount}
@@ -192,7 +193,7 @@ function StorefrontHeaderUI({
               </Link>
               <Link
                 href="/cart"
-                aria-label={`سلة المشتريات (${internalCount} عناصر)`}
+                aria-label={`سلة المشتريات (${arabicCountLabel(internalCount, ITEM_COUNT_FORMS)})`}
                 className={cn(
                   "relative inline-flex items-center gap-2 h-10 px-3 sm:px-4 ms-1 rounded-button border font-sans text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
                   internalCount > 0
