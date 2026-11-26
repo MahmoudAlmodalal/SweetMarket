@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb, StoredAdminUser } from './db';
+import { getDb, isJtiRevoked, StoredAdminUser } from './db';
 import {
   extractTokenFromRequest,
   verifyMutationOrigin,
@@ -57,6 +57,14 @@ export function requireAdmin(
     return {
       ok: false,
       response: apiError('UNAUTHORIZED', 'الحساب غير نشط أو غير موجود', 401),
+    };
+  }
+
+  // Explicitly revoked sessions (e.g. logout) stay revoked across restarts.
+  if (payload.jti && isJtiRevoked(payload.jti)) {
+    return {
+      ok: false,
+      response: apiError('UNAUTHORIZED', 'تم تسجيل الخروج، يرجى تسجيل الدخول من جديد', 401),
     };
   }
 

@@ -16,11 +16,15 @@ export interface StoredProduct extends Product {
 export interface StoredAdminUser extends AdminUser {
   passwordHash: string;
   /**
-   * ISO time of the last password change. Sessions issued at or before this
-   * instant are rejected by requireAdmin (session invalidation on password change).
+   * Opaque revocation stamp of the last password change (ISO time + unique
+   * suffix so consecutive changes always differ). Sessions minted before the
+   * change carry the old stamp (or none) and are rejected by requireAdmin.
    */
   passwordChangedAt?: string;
 }
+
+/** jti -> exp (seconds) of explicitly revoked session tokens (e.g. logout). */
+export type RevokedJtiMap = Record<string, number>;
 
 export interface CandyLozDatabase {
   version: number;
@@ -30,6 +34,7 @@ export interface CandyLozDatabase {
   orders: Order[];
   users: StoredAdminUser[];
   idempotencyMap: Record<string, string>; // Idempotency-Key -> Order ID
+  revokedJtis?: RevokedJtiMap;
 }
 
 // High-resolution studio photography mapped cleanly to our catalog
@@ -118,6 +123,7 @@ function buildSeedDatabase(): CandyLozDatabase {
     orders: seededOrders,
     users: seededUsers,
     idempotencyMap: {},
+    revokedJtis: {},
   };
 }
 
@@ -175,6 +181,28 @@ export function resetDb(): CandyLozDatabase {
   const fresh = buildSeedDatabase();
   saveDb(fresh);
   return fresh;
+}
+
+/**
+ * Persist a revoked session jti (with its exp) so logout survives restarts.
+ * Expired entries are pruned on every write to bound the map's size.
+ */
+export function recordRevokedJti(jti: string, expSeconds: number): void {
+  const db = getDb();
+  const nowSeconds = Math.floor(Date.now() / 1000);
+  const pruned: RevokedJtiMap = {};
+  for (const [id, exp] of Object.entries(db.revokedJtis ?? {})) {
+    if (exp > nowSeconds) pruned[id] = exp;
+  }
+  pruned[jti] = expSeconds;
+  db.revokedJtis = pruned;
+  saveDb(db);
+}
+
+export function isJtiRevoked(jti: string): boolean {
+  const db = getDb();
+  const exp = db.revokedJtis?.[jti];
+  return typeof exp === 'number' && exp > Math.floor(Date.now() / 1000);
 }
 
 export function sanitizeAdminUser(user: StoredAdminUser): AdminUser {

@@ -9,6 +9,7 @@ import { getDb, resetDb, saveDb } from './db';
 import { requireAdmin } from './guard';
 import { POST as changePassword } from '@/app/api/v1/admin/auth/change-password/route';
 import { POST as login } from '@/app/api/v1/admin/auth/login/route';
+import { POST as logout } from '@/app/api/v1/admin/auth/logout/route';
 
 // Isolate the JSON database for this test process before any getDb() call.
 process.env.CANDY_LOZ_DB_PATH = path.join(
@@ -217,6 +218,86 @@ describe('requireAdmin guard', () => {
     const after = requireAdmin(authedReq(token));
     assert.equal(after.ok, false);
     if (!after.ok) assert.equal(after.response.status, 401);
+  });
+
+  it('distinguishes consecutive password changes even at a frozen clock', async () => {
+    resetDb();
+    const staff = seedUser('staff');
+    const realNow = Date.now;
+    try {
+      const frozen = realNow();
+      Date.now = () => frozen;
+
+      const change = async (current: string, next: string, token: string) => {
+        const req = new NextRequest('http://localhost:3000/api/v1/admin/auth/change-password', {
+          method: 'POST',
+          headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+          body: JSON.stringify({ currentPassword: current, newPassword: next }),
+        });
+        return changePassword(req);
+      };
+
+      // First change, then an immediate re-login, then a second change: all in
+      // the same millisecond as far as Date is concerned.
+      const t0 = signSessionToken({ id: staff.id, role: staff.role });
+      assert.equal((await change('CandyLoz2026!', 'SecondSecret1!', t0)).status, 200);
+      const stamp1 = getDb().users.find((u) => u.id === staff.id)?.passwordChangedAt;
+
+      const loginReq = new NextRequest('http://localhost:3000/api/v1/admin/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: staff.email, password: 'SecondSecret1!' }),
+      });
+      const loginJson = await (await login(loginReq)).json();
+      const t1 = loginJson.data.token as string;
+
+      assert.equal((await change('SecondSecret1!', 'ThirdSecret1!', t1)).status, 200);
+      const stamp2 = getDb().users.find((u) => u.id === staff.id)?.passwordChangedAt;
+
+      assert.ok(stamp1 && stamp2 && stamp1 !== stamp2, 'consecutive stamps must differ');
+      // The token minted between the two changes must die after the second.
+      assert.equal(requireAdmin(authedReq(t1)).ok, false);
+    } finally {
+      Date.now = realNow;
+    }
+  });
+
+  it('logout revokes the session persistently and prunes expired revocations', async () => {
+    resetDb();
+    const staff = seedUser('staff');
+    const token = signSessionToken(staff);
+    assert.equal(requireAdmin(authedReq(token)).ok, true);
+
+    const logoutReq = new NextRequest('http://localhost:3000/api/v1/admin/auth/logout', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${token}` },
+    });
+    const res = await logout(logoutReq);
+    assert.equal(res.status, 200);
+
+    // Same token is rejected by the guard, backed by the persisted file.
+    const after = requireAdmin(authedReq(token));
+    assert.equal(after.ok, false);
+    if (!after.ok) assert.equal(after.response.status, 401);
+    const raw = JSON.parse(fs.readFileSync(process.env.CANDY_LOZ_DB_PATH!, 'utf8'));
+    assert.ok(
+      raw.revokedJtis && Object.keys(raw.revokedJtis).length === 1,
+      'revoked jti must persist to disk'
+    );
+
+    // A second logout prunes entries whose exp already passed.
+    const db = getDb();
+    db.revokedJtis = { ...db.revokedJtis, 'expired-jti': 1 };
+    saveDb(db);
+    const token2 = signSessionToken({ id: staff.id, role: staff.role });
+    const logoutReq2 = new NextRequest('http://localhost:3000/api/v1/admin/auth/logout', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${token2}` },
+    });
+    assert.equal((await logout(logoutReq2)).status, 200);
+    const raw2 = JSON.parse(fs.readFileSync(process.env.CANDY_LOZ_DB_PATH!, 'utf8'));
+    assert.equal(raw2.revokedJtis['expired-jti'], undefined, 'expired revocation pruned');
+    assert.equal(Object.keys(raw2.revokedJtis).length, 2);
   });
 
   it('change-password route rejects a wrong current password without side effects', async () => {
