@@ -115,7 +115,11 @@ export const ConciergeBriefSchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^(059|056)\d{7}$/, 'رقم الهاتف غير صالح، يجب أن يبدأ بـ 059 أو 056 ويتكون من 10 أرقام'),
+    .refine((val) => isValidPalestinianPhone(val), {
+      message: 'رقم الهاتف غير صالح، يجب أن يبدأ بـ 059 أو 056 ويتكون من 10 أرقام',
+    })
+    // يعتمد دالة التطبيع الموحدة حتى تظهر الصيغة القياسية في رسالة واتساب
+    .transform((val) => normalizePalestinianPhone(val)),
 });
 
 export type ConciergeBriefData = z.infer<typeof ConciergeBriefSchema>;
