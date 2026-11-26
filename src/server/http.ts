@@ -48,26 +48,83 @@ export function handleRouteError(err: unknown): NextResponse {
 }
 
 // ============================================================================
-// Rate limiter for public Order Tracking (BR-010: max 5 failed attempts / 15m)
+// Rate limiters (in-process; see PRODUCTION_DEPLOYMENT.md for the
+// single-instance assumption in local JSON mode)
 // ============================================================================
-const TRACK_MAX_FAILED = 5;
-const TRACK_WINDOW_MS = 15 * 60 * 1000;
 
 interface RateEntry {
   count: number;
   resetAt: number;
 }
 
-const globalForRate = globalThis as unknown as {
-  __candyTrackRateMap?: Map<string, RateEntry>;
-};
-
-function getRateMap(): Map<string, RateEntry> {
-  if (!globalForRate.__candyTrackRateMap) {
-    globalForRate.__candyTrackRateMap = new Map<string, RateEntry>();
-  }
-  return globalForRate.__candyTrackRateMap;
+interface RateLimiter {
+  check(key: string): { allowed: boolean; retryAfterSeconds: number };
+  recordFailure(key: string): { attempts: number; locked: boolean; retryAfterSeconds: number };
+  clear(key: string): void;
 }
+
+function createRateLimiter(
+  globalKey: '__candyTrackRateMap' | '__candyLoginRateMap',
+  maxFailed: number,
+  windowMs: number
+): RateLimiter {
+  const store = globalThis as unknown as Record<string, Map<string, RateEntry> | undefined>;
+  const getMap = (): Map<string, RateEntry> => {
+    if (!store[globalKey]) {
+      store[globalKey] = new Map<string, RateEntry>();
+    }
+    return store[globalKey]!;
+  };
+
+  return {
+    check(key) {
+      const map = getMap();
+      const entry = map.get(key);
+      const now = Date.now();
+      if (!entry || entry.resetAt <= now) {
+        map.delete(key);
+        return { allowed: true, retryAfterSeconds: 0 };
+      }
+      if (entry.count >= maxFailed) {
+        return {
+          allowed: false,
+          retryAfterSeconds: Math.max(1, Math.ceil((entry.resetAt - now) / 1000)),
+        };
+      }
+      return { allowed: true, retryAfterSeconds: 0 };
+    },
+    recordFailure(key) {
+      const map = getMap();
+      const now = Date.now();
+      const current = map.get(key);
+      if (!current || current.resetAt <= now) {
+        map.set(key, { count: 1, resetAt: now + windowMs });
+        return { attempts: 1, locked: false, retryAfterSeconds: 0 };
+      }
+      current.count += 1;
+      map.set(key, current);
+      const locked = current.count >= maxFailed;
+      return {
+        attempts: current.count,
+        locked,
+        retryAfterSeconds: locked ? Math.max(1, Math.ceil((current.resetAt - now) / 1000)) : 0,
+      };
+    },
+    clear(key) {
+      getMap().delete(key);
+    },
+  };
+}
+
+// Public order tracking (BR-010: max 5 failed attempts / 15 minutes)
+const TRACK_MAX_FAILED = 5;
+const TRACK_WINDOW_MS = 15 * 60 * 1000;
+const trackingLimiter = createRateLimiter('__candyTrackRateMap', TRACK_MAX_FAILED, TRACK_WINDOW_MS);
+
+// Admin login: max 5 failed attempts / 15 minutes per client
+const LOGIN_MAX_FAILED = 5;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const loginLimiter = createRateLimiter('__candyLoginRateMap', LOGIN_MAX_FAILED, LOGIN_WINDOW_MS);
 
 export function getClientIp(req: NextRequest): string {
   const forwarded = req.headers.get('x-forwarded-for');
@@ -78,20 +135,7 @@ export function getClientIp(req: NextRequest): string {
 }
 
 export function checkTrackingRateLimit(ip: string): { allowed: boolean; retryAfterSeconds: number } {
-  const map = getRateMap();
-  const entry = map.get(ip);
-  const now = Date.now();
-  if (!entry || entry.resetAt <= now) {
-    map.delete(ip);
-    return { allowed: true, retryAfterSeconds: 0 };
-  }
-  if (entry.count >= TRACK_MAX_FAILED) {
-    return {
-      allowed: false,
-      retryAfterSeconds: Math.max(1, Math.ceil((entry.resetAt - now) / 1000)),
-    };
-  }
-  return { allowed: true, retryAfterSeconds: 0 };
+  return trackingLimiter.check(ip);
 }
 
 export function recordFailedTrackingAttempt(ip: string): {
@@ -99,27 +143,27 @@ export function recordFailedTrackingAttempt(ip: string): {
   locked: boolean;
   retryAfterSeconds: number;
 } {
-  const map = getRateMap();
-  const now = Date.now();
-  const current = map.get(ip);
-  if (!current || current.resetAt <= now) {
-    const next: RateEntry = { count: 1, resetAt: now + TRACK_WINDOW_MS };
-    map.set(ip, next);
-    return { attempts: 1, locked: false, retryAfterSeconds: 0 };
-  }
-
-  current.count += 1;
-  map.set(ip, current);
-  const locked = current.count >= TRACK_MAX_FAILED;
-  return {
-    attempts: current.count,
-    locked,
-    retryAfterSeconds: locked ? Math.max(1, Math.ceil((current.resetAt - now) / 1000)) : 0,
-  };
+  return trackingLimiter.recordFailure(ip);
 }
 
 export function clearTrackingRateLimit(ip: string): void {
-  getRateMap().delete(ip);
+  trackingLimiter.clear(ip);
+}
+
+export function checkLoginRateLimit(ip: string): { allowed: boolean; retryAfterSeconds: number } {
+  return loginLimiter.check(ip);
+}
+
+export function recordFailedLoginAttempt(ip: string): {
+  attempts: number;
+  locked: boolean;
+  retryAfterSeconds: number;
+} {
+  return loginLimiter.recordFailure(ip);
+}
+
+export function clearLoginRateLimit(ip: string): void {
+  loginLimiter.clear(ip);
 }
 
 /**
