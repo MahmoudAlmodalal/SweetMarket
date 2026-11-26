@@ -7,7 +7,7 @@ import { Home, LayoutGrid, ShoppingBag, Truck, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import {
-  getFavoriteProductIds,
+  getResolvedFavoritesCount,
   FAVORITES_UPDATED_EVENT,
 } from "@/components/storefront/catalog/wishlist-utils";
 import type { CartItem } from "@/types";
@@ -97,12 +97,9 @@ export function MobileDock({
     }
 
     const syncFavorites = () => {
-      try {
-        const ids = getFavoriteProductIds();
-        setFavoriteCount(Array.isArray(ids) ? ids.length : 0);
-      } catch {
-        setFavoriteCount(0);
-      }
+      // Resolved against the public catalog so the badge matches the favorites page
+      // (saved IDs are never pruned; archived products are excluded from the count).
+      void getResolvedFavoritesCount().then(setFavoriteCount);
     };
 
     syncFavorites();

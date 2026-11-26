@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { NextRequest } from 'next/server';
 import { resetDb } from '@/server/db';
-import { POST as demoLogin } from './route';
+import { POST as demoLogin, GET as demoLoginProbe } from './route';
 import { GET as me } from '../me/route';
 
 // Isolate the JSON database for this test process before any getDb() call.
@@ -43,6 +43,39 @@ describe('POST /api/v1/admin/auth/demo-login gating', () => {
     else mutableEnv.ALLOW_DEMO_LOGIN = ORIGINAL_ALLOW;
     if (ORIGINAL_NODE_ENV === undefined) delete mutableEnv.NODE_ENV;
     else mutableEnv.NODE_ENV = ORIGINAL_NODE_ENV;
+  });
+
+  it('GET probe reports disabled when ALLOW_DEMO_LOGIN=false outside production', async () => {
+    mutableEnv.NODE_ENV = 'development';
+    mutableEnv.ALLOW_DEMO_LOGIN = 'false';
+
+    const res = await demoLoginProbe();
+    assert.equal(res.status, 200);
+    assert.equal((await res.json()).data.enabled, false);
+  });
+
+  it('GET probe reports disabled in production when ALLOW_DEMO_LOGIN is unset', async () => {
+    mutableEnv.NODE_ENV = 'production';
+    delete mutableEnv.ALLOW_DEMO_LOGIN;
+
+    const res = await demoLoginProbe();
+    assert.equal((await res.json()).data.enabled, false);
+  });
+
+  it('GET probe reports enabled when explicitly allowed in production', async () => {
+    mutableEnv.NODE_ENV = 'production';
+    mutableEnv.ALLOW_DEMO_LOGIN = 'true';
+
+    const res = await demoLoginProbe();
+    assert.equal((await res.json()).data.enabled, true);
+  });
+
+  it('GET probe reports enabled in development by default', async () => {
+    mutableEnv.NODE_ENV = 'development';
+    delete mutableEnv.ALLOW_DEMO_LOGIN;
+
+    const res = await demoLoginProbe();
+    assert.equal((await res.json()).data.enabled, true);
   });
 
   it('refuses with 403 when ALLOW_DEMO_LOGIN=false outside production', async () => {

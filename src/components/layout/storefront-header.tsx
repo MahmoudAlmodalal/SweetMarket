@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { StoreStatusBadge } from "@/components/storefront/home/store-status-badge";
 import { getStorageItem, STORAGE_KEYS } from "@/lib/storage";
 import {
-  getFavoriteProductIds,
+  getResolvedFavoritesCount,
   FAVORITES_UPDATED_EVENT,
 } from "@/components/storefront/catalog/wishlist-utils";
 import { StoreLogo } from "@/components/ui/store-logo";
@@ -55,12 +55,9 @@ function StorefrontHeaderUI({
     }
 
     const syncFavorites = () => {
-      try {
-        const ids = getFavoriteProductIds();
-        setFavoriteCount(Array.isArray(ids) ? ids.length : 0);
-      } catch {
-        setFavoriteCount(0);
-      }
+      // Resolved against the public catalog so the badge matches the favorites page
+      // (saved IDs are never pruned; archived products are excluded from the count).
+      void getResolvedFavoritesCount().then(setFavoriteCount);
     };
 
     syncFavorites();

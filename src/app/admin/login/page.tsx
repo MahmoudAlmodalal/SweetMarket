@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -34,6 +34,22 @@ function LoginFormContent() {
   const [quickLoginRole, setQuickLoginRole] = useState<'manager' | 'staff' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ identifier?: string; password?: string }>({});
+  // Demo quick-login availability, probed from the API (the server gate is env-based).
+  // Defaults to the current behavior (buttons visible) until the probe answers.
+  const [demoLoginEnabled, setDemoLoginEnabled] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch('/api/v1/admin/auth/demo-login')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((body) => {
+        if (isMounted && body?.data?.enabled === false) setDemoLoginEnabled(false);
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -249,6 +265,8 @@ function LoginFormContent() {
             </Button>
           </form>
 
+          {demoLoginEnabled && (
+            <>
           {/* خط فاصل أنيق */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
@@ -290,12 +308,16 @@ function LoginFormContent() {
               <span className="text-[11px] text-candy-muted font-normal mt-0.5">طلبات وتجهيز</span>
             </Button>
           </div>
+            </>
+          )}
 
           {/* تنويه الأمان وسياسة الدخول */}
           <div className="mt-4 p-3 rounded-card bg-candy-soft/70 border border-candy-line/60 text-[11px] text-candy-muted font-sans space-y-1">
             <p className="text-candy-ink font-semibold">بوابة الإدارة المحمية</p>
             <p className="text-candy-muted leading-relaxed">
-              يرجى استخدام بيانات الاعتماد المخصصة للمسؤول أو النقر على أحد أزرار الدخول التجريبي السريع المعزول.
+              {demoLoginEnabled
+                ? 'يرجى استخدام بيانات الاعتماد المخصصة للمسؤول أو النقر على أحد أزرار الدخول التجريبي السريع المعزول.'
+                : 'يرجى استخدام بيانات الاعتماد المخصصة للمسؤول.'}
             </p>
           </div>
 

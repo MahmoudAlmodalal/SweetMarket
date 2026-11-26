@@ -137,3 +137,33 @@ export function clearFavoriteProducts(): void {
 
   dispatchFavoritesUpdated([]);
 }
+
+/**
+ * عدّ المفضلة المحصور بالمنتجات المعروضة حالياً في الكتالوج العام.
+ * المعرّفات المحفوظة تبقى كما هي في التخزين (لا حذف)، لكن العدّاد الظاهر
+ * يطابق ما ستعرضه صفحة المفضلة فعلياً. عند تعذّر جلب الكتالوج يُرجع العدد الخام
+ * (السلوك السابق) حتى لا يختفي العداد بسبب مشكلة شبكة.
+ */
+let sellableIdsPromise: Promise<Set<string>> | null = null;
+
+function getSellableProductIds(): Promise<Set<string>> {
+  if (!sellableIdsPromise) {
+    sellableIdsPromise = import("@/lib/repositories")
+      .then(({ getProducts }) => getProducts())
+      .then((products) => new Set(products.map((product) => product.id)))
+      .catch(() => new Set<string>());
+  }
+  return sellableIdsPromise;
+}
+
+export async function getResolvedFavoritesCount(): Promise<number> {
+  try {
+    const ids = getFavoriteProductIds();
+    if (ids.length === 0) return 0;
+    const sellable = await getSellableProductIds();
+    if (sellable.size === 0) return ids.length;
+    return ids.filter((id) => sellable.has(id)).length;
+  } catch {
+    return 0;
+  }
+}
