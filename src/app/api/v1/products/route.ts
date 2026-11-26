@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getDb } from '@/server/db';
+import { normalizeArabicText } from '@/lib/search';
 import { apiOk, handleRouteError, proxyToUpstreamIfConfigured } from '@/server/http';
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +13,10 @@ export async function GET(req: NextRequest) {
     const db = getDb();
     const { searchParams } = new URL(req.url);
     const categoryParam = searchParams.get('category')?.trim() || '';
-    const searchParam = searchParams.get('search')?.trim().toLowerCase() || '';
+    // Apply the store's canonical Arabic normalization (src/lib/search.ts) so the
+    // public API matches the storefront search behavior: teh marbuta/heh, alef
+    // forms, diacritics and Eastern Arabic digits all fold together.
+    const searchParam = normalizeArabicText(searchParams.get('search') || '');
     const featuredParam = searchParams.get('featured');
     const availableParam = searchParams.get('available');
     const page = Math.max(1, Number(searchParams.get('page') || 1));
@@ -34,9 +38,9 @@ export async function GET(req: NextRequest) {
     if (searchParam) {
       list = list.filter(
         (p) =>
-          p.name.toLowerCase().includes(searchParam) ||
-          (p.nameEn && p.nameEn.toLowerCase().includes(searchParam)) ||
-          p.description.toLowerCase().includes(searchParam)
+          normalizeArabicText(p.name).includes(searchParam) ||
+          (p.nameEn !== undefined && normalizeArabicText(p.nameEn).includes(searchParam)) ||
+          normalizeArabicText(p.description).includes(searchParam)
       );
     }
 
