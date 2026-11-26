@@ -43,6 +43,11 @@ against a fresh database. A single uninterrupted full pass has not been run.
   into `tests/audit-results.json` by screen id.
 - Test servers must use a fresh `CANDY_LOZ_DB_PATH`; the default db in the OS temp
   dir persists across restarts and contaminates KPI/order assertions.
+- Admin/storefront suites start their own **dev** server (wiping `.next`) when no
+  server answers; always pass `BASE_URL=http://localhost:3000` with a confirmed
+  server, and `ALLOW_DEV_TOOLS=true` on production servers (SCN-07 dev reset).
+  Confirm the server is actually up before running: a dead server surfaces as
+  scenario timeouts, not a connection error.
 
 ## Resolved this cycle
 

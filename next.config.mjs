@@ -30,7 +30,8 @@ const nextConfig = {
               // يسمح بسكربتات Next المضمّنة (لا حماية XSS إضافية للسكربتات — يتطلب نونس + توليد ديناميكي)
               "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' blob: data:",
+              // images.unsplash.com يطابق remotePatterns في next.config (صور مقترحة للوحة الإدارة)
+              "img-src 'self' blob: data: https://images.unsplash.com",
               "font-src 'self'",
               "connect-src 'self'",
               "object-src 'none'",

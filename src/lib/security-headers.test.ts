@@ -38,6 +38,9 @@ describe('next.config security headers', () => {
     ]) {
       assert.ok(csp.value.includes(directive), `CSP includes ${directive}`);
     }
+    // image policy mirrors next.config images.remotePatterns so admin-picked
+    // Unsplash presets keep rendering even when the optimizer is bypassed
+    assert.ok(csp.value.includes('https://images.unsplash.com'), 'CSP img-src allows the configured Unsplash host');
     // script-src is intentionally not restricted: nonce-based script CSP needs
     // per-request nonces on prerendered pages, which Next 14 does not apply.
     assert.ok(!/script-src[^;]*nonce/.test(csp.value), 'no half-applied nonce in script-src');
