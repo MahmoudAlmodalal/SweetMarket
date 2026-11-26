@@ -15,6 +15,11 @@ export interface StoredProduct extends Product {
 
 export interface StoredAdminUser extends AdminUser {
   passwordHash: string;
+  /**
+   * ISO time of the last password change. Sessions issued at or before this
+   * instant are rejected by requireAdmin (session invalidation on password change).
+   */
+  passwordChangedAt?: string;
 }
 
 export interface CandyLozDatabase {

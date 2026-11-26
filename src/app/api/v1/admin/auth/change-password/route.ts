@@ -57,6 +57,9 @@ export async function POST(req: NextRequest) {
     const target = db.users.find((u) => u.id === auth.user.id);
     if (target) {
       target.passwordHash = hashPassword(newPassword);
+      // Invalidate every session issued up to this moment (including this one);
+      // the next request must authenticate with the new password.
+      target.passwordChangedAt = new Date().toISOString();
       saveDb(db);
     }
 

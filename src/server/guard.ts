@@ -60,6 +60,21 @@ export function requireAdmin(
     };
   }
 
+  // Sessions issued at or before the last password change are no longer valid.
+  if (user.passwordChangedAt) {
+    const changedAtMs = Date.parse(user.passwordChangedAt);
+    if (!Number.isNaN(changedAtMs) && payload.iat * 1000 <= changedAtMs) {
+      return {
+        ok: false,
+        response: apiError(
+          'UNAUTHORIZED',
+          'تم تغيير كلمة المرور، يرجى تسجيل الدخول من جديد',
+          401
+        ),
+      };
+    }
+  }
+
   if (options?.managerOnly && user.role !== 'manager') {
     return {
       ok: false,
