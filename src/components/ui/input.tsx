@@ -72,7 +72,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block mb-1.5 text-sm font-bold text-candy-ink font-sans select-none"
+            className="block mb-1.5 text-[13px] font-medium text-candy-ink font-sans select-none"
           >
             {label}
           </label>
@@ -98,11 +98,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={describedBy || undefined}
             className={cn(
-              "w-full h-12 px-4 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none shadow-xs",
-              "hover:border-candy-line-dark/60 hover:bg-candy-soft/80",
+              "w-full h-12 px-4 rounded-input font-sans text-[15px] text-candy-ink bg-white border border-candy-line-dark transition-colors duration-200 outline-none",
+              "hover:border-candy-ink",
               "placeholder:text-candy-muted/70",
-              "focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20",
-              "focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20",
+              "focus:border-primary focus:ring-1 focus:ring-primary",
+              "focus-visible:outline-none focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary",
               iconPrefix ? "pr-10" : "pr-4",
               iconSuffix ? "pl-10" : "pl-4",
               error &&

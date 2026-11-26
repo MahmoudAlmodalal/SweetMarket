@@ -9,6 +9,18 @@ const VIEWPORTS = [
   { name: 'Mobile (390x844)', width: 390, height: 844, isMobile: true },
 ];
 
+// Optional subset selection so long runs can be split across invocations:
+//   ADMIN_SUITE_VIEWPORTS=desktop   (comma-separated, case-insensitive substrings)
+//   ADMIN_SUITE_SCENARIOS=SCN-01,SCN-02
+const VIEWPORT_FILTER = (process.env.ADMIN_SUITE_VIEWPORTS || '')
+  .split(',')
+  .map((v) => v.trim().toLowerCase())
+  .filter(Boolean);
+const SCENARIO_FILTER = (process.env.ADMIN_SUITE_SCENARIOS || '')
+  .split(',')
+  .map((v) => v.trim())
+  .filter(Boolean);
+
 async function isServerRunning(url) {
   try {
     const controller = new AbortController();
@@ -64,9 +76,20 @@ async function quickLoginAs(page, baseUrl, role) {
   const btn = page.locator(`button:has-text("${label}")`).first();
   await btn.waitFor({ state: 'visible', timeout: 10000 });
   await btn.click();
-  await page.waitForURL((url) => url.pathname.startsWith('/admin/orders'), {
+  await page.waitForURL((url) => url.pathname.startsWith('/admin/dashboard'), {
     timeout: 15000,
   });
+}
+
+// Poll a DOM predicate until it holds; post-networkidle hydration can lag,
+// so a single immediate evaluate is flaky for rendered-class assertions.
+async function pollDom(page, predicate, timeout = 15000) {
+  try {
+    await page.waitForFunction(predicate, null, { timeout });
+    return true;
+  } catch {
+    return page.evaluate(predicate);
+  }
 }
 
 async function runSuite() {
@@ -79,6 +102,9 @@ async function runSuite() {
   const results = [];
 
   async function runScenario(id, title, vp, fn) {
+    if (SCENARIO_FILTER.length > 0 && !SCENARIO_FILTER.includes(id)) {
+      return;
+    }
     const context = await browser.newContext({
       viewport: { width: vp.width, height: vp.height },
     });
@@ -114,7 +140,11 @@ async function runSuite() {
   }
 
   try {
-    for (const vp of VIEWPORTS) {
+    for (const vp of VIEWPORTS.filter(
+      (v) =>
+        VIEWPORT_FILTER.length === 0 ||
+        VIEWPORT_FILTER.some((f) => v.name.toLowerCase().includes(f))
+    )) {
       console.log(`\n----------------------------------------------------------------`);
       console.log(`🖥️  Running Scenarios on Viewport: ${vp.name}`);
       console.log(`----------------------------------------------------------------`);
@@ -147,15 +177,15 @@ async function runSuite() {
           await authBanner.waitFor({ state: 'visible', timeout: 5000 });
           assert.equal(await authBanner.isVisible(), true, 'Invalid credentials error banner should be visible');
 
-          // Valid credentials -> redirect to /admin/orders
+          // Valid credentials -> redirect to /admin/dashboard
           await page.fill('#admin-identifier', 'manager@candyloz.com');
           await page.fill('#admin-password', (process.env.INITIAL_ADMIN_PASSWORD || 'CandyLoz2026!'));
           await submitBtn.click();
 
-          await page.waitForURL((url) => url.pathname.startsWith('/admin/orders'), {
+          await page.waitForURL((url) => url.pathname.startsWith('/admin/dashboard'), {
             timeout: 15000,
           });
-          assert.ok(page.url().includes('/admin/orders'), 'Should redirect to /admin/orders on valid login');
+          assert.ok(page.url().includes('/admin/dashboard'), 'Should redirect to /admin/dashboard on valid login');
           return 'Empty field alerts, invalid auth banner, and valid redirect verified';
         }
       );
@@ -601,7 +631,7 @@ async function runSuite() {
         async (page) => {
           // Verify on Login page ("العودة إلى متجر كاندي لوز")
           await page.goto(`${baseUrl}/admin/login`, { waitUntil: 'networkidle' });
-          const loginBackHasArrowLeft = await page.evaluate(() => {
+          const loginBackHasArrowLeft = await pollDom(page, () => {
             const link = Array.from(document.querySelectorAll('a')).find((a) =>
               a.textContent?.includes('العودة إلى متجر كاندي لوز')
             );
@@ -614,7 +644,7 @@ async function runSuite() {
           await quickLoginAs(page, baseUrl, 'manager');
 
           await page.goto(`${baseUrl}/admin/orders/ord-1001`, { waitUntil: 'networkidle' });
-          const orderDetailBackHasArrowLeft = await page.evaluate(() => {
+          const orderDetailBackHasArrowLeft = await pollDom(page, () => {
             const backBtn = Array.from(document.querySelectorAll('a button')).find((b) =>
               b.textContent?.trim() === 'الطلبات'
             );
@@ -624,7 +654,7 @@ async function runSuite() {
           assert.equal(orderDetailBackHasArrowLeft, true, 'Order detail back button must use lucide-arrow-left');
 
           await page.goto(`${baseUrl}/admin/products/new`, { waitUntil: 'networkidle' });
-          const newProductBackHasArrowLeft = await page.evaluate(() => {
+          const newProductBackHasArrowLeft = await pollDom(page, () => {
             const link = Array.from(document.querySelectorAll('a')).find((a) =>
               a.textContent?.includes('العودة إلى قائمة المنتجات')
             );
@@ -634,7 +664,7 @@ async function runSuite() {
           assert.equal(newProductBackHasArrowLeft, true, 'New product back link must use lucide-arrow-left');
 
           await page.goto(`${baseUrl}/admin/account/password`, { waitUntil: 'networkidle' });
-          const passwordBackHasArrowLeft = await page.evaluate(() => {
+          const passwordBackHasArrowLeft = await pollDom(page, () => {
             const btn = Array.from(document.querySelectorAll('button')).find((b) =>
               b.textContent?.includes('رجوع للطلبات')
             );
@@ -677,7 +707,16 @@ async function runSuite() {
     process.exit(1);
   }
 
-  console.log('\n✅ All Admin Portal E2E scenarios passed across Desktop and Mobile viewports!');
+  if (results.length === 0) {
+    console.error('\n❌ No scenarios ran; check ADMIN_SUITE_VIEWPORTS / ADMIN_SUITE_SCENARIOS filters.');
+    process.exit(1);
+  }
+
+  const scope =
+    VIEWPORT_FILTER.length > 0 || SCENARIO_FILTER.length > 0
+      ? ` (filtered subset: viewports=${VIEWPORT_FILTER.join('|') || 'all'}, scenarios=${SCENARIO_FILTER.join('|') || 'all'})`
+      : ' across Desktop and Mobile viewports';
+  console.log(`\n✅ All Admin Portal E2E scenarios passed${scope}!`);
   process.exit(0);
 }
 

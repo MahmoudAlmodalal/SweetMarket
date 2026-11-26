@@ -65,6 +65,7 @@ export const tanqihAlNassAlArabi = normalizeArabicText;
  */
 export interface SearchableProduct {
   name: string;
+  nameEn?: string;
   description?: string;
 }
 
@@ -83,7 +84,13 @@ export function matchesProductSearch(
   if (!cleanQuery) return true;
 
   const cleanName = normalizeArabicText(product.name || "");
+  // يطابق سلوك واجهة /api/v1/products?search= التي تبحث في الاسم الإنجليزي أيضاً
+  const cleanNameEn = normalizeArabicText(product.nameEn || "");
   const cleanDescription = normalizeArabicText(product.description || "");
 
-  return cleanName.includes(cleanQuery) || cleanDescription.includes(cleanQuery);
+  return (
+    cleanName.includes(cleanQuery) ||
+    cleanNameEn.includes(cleanQuery) ||
+    cleanDescription.includes(cleanQuery)
+  );
 }

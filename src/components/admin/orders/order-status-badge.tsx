@@ -39,7 +39,7 @@ export const OrderStatusBadge = React.forwardRef<HTMLSpanElement, OrderStatusBad
         role="status"
         aria-label={`حالة الطلب: ${config.label}`}
         className={cn(
-          'inline-flex items-center justify-center font-sans font-bold rounded-full border transition-colors select-none whitespace-nowrap',
+          'inline-flex items-center justify-center font-sans font-bold rounded-full border transition-colors select-none whitespace-nowrap print:bg-transparent print:text-gray-900 print:border-gray-300',
           config.badgeClass,
           sizeClasses[size],
           className
@@ -48,7 +48,7 @@ export const OrderStatusBadge = React.forwardRef<HTMLSpanElement, OrderStatusBad
       >
         {showDot && (
           <span
-            className={cn('w-1.5 h-1.5 rounded-full shrink-0', config.dotClass)}
+            className={cn('w-1.5 h-1.5 rounded-full shrink-0 print:hidden', config.dotClass)}
             aria-hidden="true"
           />
         )}

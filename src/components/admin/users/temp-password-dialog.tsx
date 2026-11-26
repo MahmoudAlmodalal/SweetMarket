@@ -74,7 +74,7 @@ export function TempPasswordDialog({
       <DialogContent className="max-w-md sm:max-w-lg p-6 sm:p-7 text-right" dir="rtl">
         <DialogHeader className="mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 border border-amber-200/80 flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-12 h-12 rounded-card bg-amber-50 text-amber-700 border border-amber-200/80 flex items-center justify-center shrink-0 shadow-xs">
               <KeyRound className="w-6 h-6 text-amber-600" aria-hidden="true" />
             </div>
             <div>
@@ -93,9 +93,9 @@ export function TempPasswordDialog({
         <div className="space-y-4">
           {/* بطاقة معلومات الحساب المستهدف مع شارة الدور الإداري */}
           {user && (
-            <div className="p-3.5 rounded-2xl bg-candy-soft/80 border border-candy-line/80 flex items-center justify-between text-xs font-sans shadow-2xs">
+            <div className="p-3.5 rounded-card bg-candy-soft/80 border border-candy-line/80 flex items-center justify-between text-xs font-sans shadow-2xs">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-white border border-candy-line/80 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
+                <div className="w-9 h-9 rounded-input bg-white border border-candy-line/80 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
                   <User className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div className="min-w-0">
@@ -136,7 +136,7 @@ export function TempPasswordDialog({
             <label className="block text-xs font-bold text-candy-ink font-sans select-none">
               كلمة المرور المؤقتة:
             </label>
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-candy-cream border-2 border-dashed border-amber-300/80 flex items-center justify-between gap-3 shadow-inner">
+            <div className="p-3.5 sm:p-4 rounded-card bg-candy-cream border-2 border-dashed border-amber-300/80 flex items-center justify-between gap-3 shadow-inner">
               <code
                 dir="ltr"
                 className="font-mono text-base sm:text-lg font-bold text-candy-berry tracking-wider select-all px-2 py-0.5 rounded bg-white/70 border border-amber-200/50"
@@ -171,7 +171,7 @@ export function TempPasswordDialog({
           {/* تنبيه أمني إلزامي وفق مواصفات SCR-19 (كلمة مؤقتة تُعرض مرة واحدة فقط) */}
           <div
             role="alert"
-            className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200/90 text-amber-950 text-xs font-sans space-y-1 shadow-2xs"
+            className="p-3.5 rounded-card bg-amber-50 border border-amber-200/90 text-amber-950 text-xs font-sans space-y-1 shadow-2xs"
           >
             <div className="flex items-center gap-2 font-bold text-amber-900">
               <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0" aria-hidden="true" />

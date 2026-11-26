@@ -159,17 +159,17 @@ export function WeightSelector({
               aria-checked={isSelected}
               onClick={() => onSelectWeight(option)}
               className={cn(
-                "weight-chip relative w-full text-right p-3.5 sm:p-4 rounded-2xl flex items-center justify-between transition-all duration-200 select-none overflow-hidden group",
+                "weight-chip relative w-full text-right p-3.5 sm:p-4 rounded-card flex items-center justify-between transition-all duration-200 select-none overflow-hidden group",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry active:scale-[0.985]",
                 isSelected
-                  ? "bg-gradient-to-l from-candy-soft via-white to-white border-2 border-candy-strawberry shadow-[0_4px_16px_rgba(215,45,88,0.12)]"
+                  ? "bg-candy-soft border-2 border-candy-strawberry shadow-[0_4px_16px_rgba(215,45,88,0.12)]"
                   : "bg-white border-2 border-candy-line/60 hover:border-candy-rose/50 shadow-sm hover:bg-candy-soft/30"
               )}
             >
               {/* Best Value Ribbon Overlay */}
               {isBestValue && (
                 <div className="absolute top-0 left-0">
-                  <div className="px-3 py-0.5 rounded-br-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-sans text-[10px] font-black flex items-center gap-1 shadow-sm">
+                  <div className="px-3 py-0.5 rounded-br-xl bg-candy-soft text-white font-sans text-[10px] font-black flex items-center gap-1 shadow-sm">
                     <Award className="w-3 h-3" />
                     <span>الأوفر قيمة</span>
                     {bundleSaving > 0 && <span>(وفر {bundleSaving} ₪)</span>}

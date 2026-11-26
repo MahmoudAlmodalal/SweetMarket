@@ -131,7 +131,7 @@ export default function CheckoutSuccessPage({ params: propParams }: PageProps) {
             <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <Skeleton className="w-14 h-14 rounded-2xl" />
+                  <Skeleton className="w-14 h-14 rounded-card" />
                   <div className="space-y-2">
                     <Skeleton className="h-4 w-36 rounded-full" />
                     <Skeleton className="h-3 w-24 rounded-full" />

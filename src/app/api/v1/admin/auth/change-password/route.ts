@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { NextRequest } from 'next/server';
 import { requireAdmin } from '@/server/guard';
 import { getDb, saveDb } from '@/server/db';
@@ -57,6 +58,11 @@ export async function POST(req: NextRequest) {
     const target = db.users.find((u) => u.id === auth.user.id);
     if (target) {
       target.passwordHash = hashPassword(newPassword);
+      // Invalidate every session minted with a previous stamp (including this one);
+      // the next request must authenticate with the new password. The random
+      // suffix guarantees consecutive changes never reuse a stamp, even within
+      // the same millisecond.
+      target.passwordChangedAt = `${new Date().toISOString()}#${crypto.randomUUID().slice(0, 8)}`;
       saveDb(db);
     }
 

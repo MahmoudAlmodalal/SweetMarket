@@ -5,17 +5,26 @@ import { apiError, apiOk, handleRouteError } from '@/server/http';
 
 export const dynamic = 'force-dynamic';
 
+/** Single source for the demo-login gate, shared by POST (issue session) and GET (UI probe). */
+function isDemoLoginAllowed(): boolean {
+  return (
+    process.env.ALLOW_DEMO_LOGIN === 'true' ||
+    (process.env.NODE_ENV !== 'production' && process.env.ALLOW_DEMO_LOGIN !== 'false')
+  );
+}
+
+/** Public availability probe so the login page can hide the quick-login buttons when disabled. */
+export async function GET() {
+  return apiOk({ enabled: isDemoLoginAllowed() });
+}
+
 /**
  * Preview/demo quick-sign-in endpoint that issues a real server-signed JWT + HttpOnly cookie
  * without ever exposing credentials in client bundles. Disabled if ALLOW_DEMO_LOGIN=false.
  */
 export async function POST(req: NextRequest) {
   try {
-    const isDemoAllowed =
-      process.env.ALLOW_DEMO_LOGIN === 'true' ||
-      (process.env.NODE_ENV !== 'production' && process.env.ALLOW_DEMO_LOGIN !== 'false');
-
-    if (!isDemoAllowed) {
+    if (!isDemoLoginAllowed()) {
       return apiError('FORBIDDEN', 'الدخول التجريبي السريع معطّل في بيئة الإنتاج', 403);
     }
 

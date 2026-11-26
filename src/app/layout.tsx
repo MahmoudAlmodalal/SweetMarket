@@ -1,45 +1,10 @@
 import type { Metadata } from "next";
-import {
-  Playfair_Display,
-  DM_Sans,
-  El_Messiri,
-  IBM_Plex_Sans_Arabic,
-} from "next/font/google";
 import { SkipLink } from "@/components/ui/skip-link";
+import { getStoreJsonLd } from "@/lib/store-identity";
+import { getBaseUrl, jsonLdScriptContent } from "@/lib/structured-data";
 import "./globals.css";
 
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
-
-const elMessiri = El_Messiri({
-  subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-el-messiri",
-  display: "swap",
-});
-
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm-plex-sans-arabic",
-  display: "swap",
-});
-
-const appBaseUrl =
-  process.env.NEXT_PUBLIC_APP_URL && /^https?:\/\//i.test(process.env.NEXT_PUBLIC_APP_URL)
-    ? process.env.NEXT_PUBLIC_APP_URL
-    : "http://localhost:3000";
+const appBaseUrl = getBaseUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(appBaseUrl),
@@ -80,11 +45,20 @@ export default function RootLayout({
     <html
       lang="ar"
       dir="rtl"
-      className={`${playfairDisplay.variable} ${dmSans.variable} ${elMessiri.variable} ${ibmPlexSansArabic.variable}`}
+      
     >
       <body
-        className={`${playfairDisplay.variable} ${dmSans.variable} ${elMessiri.variable} ${ibmPlexSansArabic.variable} font-sans bg-background text-foreground antialiased min-h-screen`}
+        className="font-sans bg-background text-foreground antialiased min-h-screen"
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: jsonLdScriptContent({
+              ...getStoreJsonLd(),
+              url: getBaseUrl(),
+            }),
+          }}
+        />
         <SkipLink />
         {children}
       </body>

@@ -29,7 +29,7 @@ function ConfectioneryEmptyCartIllustration() {
       className="relative w-44 h-44 sm:w-52 sm:h-52 mx-auto flex items-center justify-center select-none"
     >
       {/* Ambient background glow & confectionery aura */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-candy-blush/80 via-candy-soft to-candy-blush/30 blur-xl opacity-80" />
+      <div className="absolute inset-0 rounded-full bg-candy-soft blur-xl opacity-80" />
 
       {/* Decorative dashed boundary circle */}
       <div className="absolute inset-2 rounded-full border-2 border-dashed border-candy-line/80 bg-white/70 backdrop-blur-xs flex items-center justify-center shadow-candy-1" />
@@ -47,7 +47,7 @@ function ConfectioneryEmptyCartIllustration() {
         {/* Elegant Pedestal Cake Stand */}
         <path
           d="M75 160h50v4H75z"
-          fill="#A31D56"
+          fill="var(--color-primary)"
           opacity="0.85"
         />
         <path
@@ -57,7 +57,7 @@ function ConfectioneryEmptyCartIllustration() {
         />
         <path
           d="M48 132c0-3 3-5 6-5h92c3 0 6 2 6 5v4H48v-4z"
-          fill="#A31D56"
+          fill="var(--color-primary)"
         />
 
         {/* Glass Dessert Cloche Dome (Semi-transparent luxury bell) */}
@@ -75,12 +75,12 @@ function ConfectioneryEmptyCartIllustration() {
           cy="74"
           r="6.5"
           fill="#F2B134"
-          stroke="#A31D56"
+          stroke="var(--color-primary)"
           strokeWidth="2"
         />
         <path
           d="M97 80h6v2h-6z"
-          fill="#A31D56"
+          fill="var(--color-primary)"
         />
 
         {/* Inside Sweets: 1. Strawberry Swirl Cupcake */}
@@ -104,7 +104,7 @@ function ConfectioneryEmptyCartIllustration() {
             fill="#FFA3B8"
           />
           {/* Glossy Berry Cherry on Top */}
-          <circle cx="15" cy="9.5" r="3.5" fill="#A31D56" />
+          <circle cx="15" cy="9.5" r="3.5" fill="var(--color-primary)" />
           <path d="M16 6.5c1-3 3-4 5-4" stroke="#5BCFCB" strokeWidth="1.2" strokeLinecap="round" />
         </g>
 
@@ -134,7 +134,7 @@ function ConfectioneryEmptyCartIllustration() {
           {/* Candy Wrapper Left Twist */}
           <path d="M4 8L0 4v8l4-4z" fill="#D72D58" />
           {/* Candy Body */}
-          <rect x="4" y="4.5" width="16" height="7" rx="3.5" fill="#A31D56" />
+          <rect x="4" y="4.5" width="16" height="7" rx="3.5" fill="var(--color-primary)" />
           <line x1="9" y1="4.5" x2="7" y2="11.5" stroke="#FFF" strokeWidth="1.2" opacity="0.6" />
           <line x1="14" y1="4.5" x2="12" y2="11.5" stroke="#FFF" strokeWidth="1.2" opacity="0.6" />
           {/* Candy Wrapper Right Twist */}
@@ -185,9 +185,9 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
       </div>
 
       {/* Main Cheerful Heading */}
-      <h2 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry mb-3">
+      <h1 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry mb-3">
         {isCheckout ? "سلة المشتريات فارغة" : "سلتك فارغة وتنتظر أشهى الحلويات!"}
-      </h2>
+      </h1>
 
       {/* Warm Friendly Sensory Arabic Description */}
       <p className="font-sans text-candy-muted text-sm sm:text-base leading-relaxed mb-8 max-w-md">
@@ -201,7 +201,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
         <Link
           href="/category/all"
           data-testid="browse-sweets-button"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-candy-pill bg-gradient-to-r from-candy-berry via-candy-strawberry to-candy-magenta text-white font-sans font-bold text-sm sm:text-base shadow-candy-cta hover:brightness-105 active:scale-95 transition-all duration-200"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-button bg-candy-berry text-white font-sans font-bold text-sm sm:text-base shadow-candy-cta hover:brightness-105 active:scale-95 transition-all duration-200"
         >
           <ShoppingBag className="w-4 h-4" />
           <span>تصفح الحلويات</span>
@@ -210,7 +210,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
 
         <Link
           href="/track"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-candy-pill bg-white text-candy-ink border border-candy-line font-sans font-semibold text-sm hover:bg-candy-soft hover:border-candy-berry/40 transition-all shadow-xs"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-button bg-white text-candy-ink border border-candy-line font-sans font-semibold text-sm hover:bg-candy-soft hover:border-candy-berry/40 transition-all shadow-xs"
         >
           <Package className="w-4 h-4 text-candy-muted" />
           <span>تتبع طلب سابق</span>
@@ -218,7 +218,7 @@ export function EmptyCart({ className, isCheckout = false }: EmptyCartProps) {
 
         <Link
           href="/"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-candy-pill bg-candy-soft text-candy-muted hover:text-candy-berry hover:bg-candy-blush/40 font-sans font-medium text-sm transition-all"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-button bg-candy-soft text-candy-muted hover:text-candy-berry hover:bg-candy-blush/40 font-sans font-medium text-sm transition-all"
         >
           <Home className="w-4 h-4" />
           <span>الرئيسية</span>

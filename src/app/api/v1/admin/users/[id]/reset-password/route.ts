@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { NextRequest } from 'next/server';
 import { requireAdmin } from '@/server/guard';
 import { getDb, sanitizeAdminUser, saveDb } from '@/server/db';
@@ -29,6 +30,10 @@ export async function POST(
 
     const temporaryPassword = generateTemporaryPassword();
     target.passwordHash = hashPassword(temporaryPassword);
+    // Invalidate every session minted with a previous stamp, the same as a
+    // user-initiated password change; a reset must cut off the old sessions.
+    // The random suffix guarantees consecutive resets never reuse a stamp.
+    target.passwordChangedAt = `${new Date().toISOString()}#${crypto.randomUUID().slice(0, 8)}`;
     saveDb(db);
 
     return apiOk({

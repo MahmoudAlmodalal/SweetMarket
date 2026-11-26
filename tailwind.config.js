@@ -22,7 +22,7 @@ module.exports = {
           hover: 'var(--color-accent-hover, #D4902F)',
         },
         secondary: {
-          DEFAULT: '#d72d58',
+          DEFAULT: '#B8284F',
           foreground: '#FFFFFF',
         },
         surface: {
@@ -65,8 +65,8 @@ module.exports = {
           berry: 'var(--color-primary)',
           'berry-dark': 'var(--color-primary-hover)',
           'berry-subtle': 'var(--color-primary-subtle)',
-          strawberry: '#d72d58',
-          magenta: '#bf0079',
+          strawberry: '#B8284F',
+          magenta: '#8A1650',
           rose: '#b85c6e',
           blush: 'var(--color-blush)',
           soft: 'var(--color-soft)',
@@ -89,6 +89,7 @@ module.exports = {
           'pastel-5-border': 'var(--tint-5-border)',
           'pastel-6-border': 'var(--tint-6-border)',
           // Accents & Neutrals
+          plum: 'var(--color-plum)',
           mint: '#5bcfcb',
           'mint-soft': '#e3f6f1',
           'mint-text': '#2f8a6d',
@@ -103,8 +104,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['var(--font-heading)', 'var(--font-el-messiri)', '"El Messiri"', '"IBM Plex Sans Arabic"', 'serif'],
-        sans: ['var(--font-body)', 'var(--font-ibm-plex-sans-arabic)', '"IBM Plex Sans Arabic"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        display: ['var(--font-heading)', 'Amiri', 'serif'],
+        sans: ['var(--font-body)', '"Readex Pro"', 'Tahoma', 'sans-serif'],
       },
       borderRadius: {
         button: 'var(--radius-input)',
@@ -123,8 +124,8 @@ module.exports = {
         'candy-soft': 'var(--shadow-candy-soft)',
         'candy-float': 'var(--shadow-candy-float)',
         'candy-glow': 'var(--shadow-candy-glow)',
-        'candy-cta': '0 12px 26px rgba(163, 29, 86, 0.28)',
-        'candy-dock': '0 14px 34px rgba(124, 29, 67, 0.18)',
+        'candy-cta': '0 1px 0 rgba(42, 22, 32, 0.12)',
+        'candy-dock': 'var(--shadow-candy-dock)',
         card: 'var(--shadow-1)',
         1: 'var(--shadow-1)',
         2: 'var(--shadow-2)',

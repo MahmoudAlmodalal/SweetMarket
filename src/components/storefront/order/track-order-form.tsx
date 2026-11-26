@@ -384,7 +384,7 @@ export function TrackOrderForm({
         </p>
 
         {/* Recovery Tips on Not Found */}
-        <div className="bg-candy-soft border border-candy-line/80 rounded-2xl p-4 text-right mb-6 max-w-md mx-auto text-xs font-sans text-candy-ink space-y-2">
+        <div className="bg-candy-soft border border-candy-line/80 rounded-card p-4 text-right mb-6 max-w-md mx-auto text-xs font-sans text-candy-ink space-y-2">
           <div className="font-bold text-candy-berry flex items-center gap-1.5">
             <HelpCircle className="w-4 h-4 text-candy-strawberry" />
             <span>نصائح مفيدة لاستعادة الطلب:</span>
@@ -441,7 +441,7 @@ export function TrackOrderForm({
               <Search className="w-5 h-5 text-candy-berry" />
             </div>
             <div>
-              <CardTitle className="text-lg sm:text-xl text-candy-ink font-display">
+              <CardTitle as="h2" className="text-lg sm:text-xl text-candy-ink font-display">
                 استعلام وتتبع مسار الطلب
               </CardTitle>
               <CardDescription className="text-xs sm:text-sm text-candy-muted font-sans mt-0.5">
@@ -462,7 +462,7 @@ export function TrackOrderForm({
           {isLockedOut && (
             <div
               role="alert"
-              className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-3 animate-in fade-in"
+              className="p-4 rounded-card bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-3 animate-in fade-in"
             >
               <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div className="text-xs sm:text-sm font-sans">
@@ -543,7 +543,7 @@ export function TrackOrderForm({
                 aria-invalid={Boolean(fieldErrors.phone)}
                 aria-describedby={fieldErrors.phone ? "track-phone-error" : "track-phone-helper"}
                 className={cn(
-                  "w-full h-12 pr-28 pl-10 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
+                  "w-full h-12 pr-28 pl-10 rounded-card font-sans text-sm text-candy-ink bg-candy-soft/60 border border-candy-line transition-all duration-200 outline-none text-left tracking-wider",
                   "placeholder:text-candy-muted/70",
                   "focus:bg-white focus:border-candy-berry focus:ring-2 focus:ring-candy-strawberry/20",
                   fieldErrors.phone &&
@@ -625,7 +625,7 @@ export function TrackOrderForm({
             <button
               type="button"
               onClick={() => setShowTips((prev) => !prev)}
-              className="flex items-center justify-between w-full p-3 rounded-xl bg-candy-soft/60 hover:bg-candy-soft border border-candy-line/60 text-xs font-sans text-candy-ink font-semibold transition-colors"
+              className="flex items-center justify-between w-full p-3 rounded-input bg-candy-soft/60 hover:bg-candy-soft border border-candy-line/60 text-xs font-sans text-candy-ink font-semibold transition-colors"
             >
               <span className="flex items-center gap-2">
                 <HelpCircle className="w-4 h-4 text-candy-strawberry" />
@@ -639,7 +639,7 @@ export function TrackOrderForm({
             </button>
 
             {showTips && (
-              <div className="mt-2.5 p-4 rounded-2xl bg-white border border-candy-line/80 text-xs font-sans text-candy-muted space-y-2.5 animate-in fade-in">
+              <div className="mt-2.5 p-4 rounded-card bg-white border border-candy-line/80 text-xs font-sans text-candy-muted space-y-2.5 animate-in fade-in">
                 <div className="flex items-start gap-2">
                   <Info className="w-4 h-4 text-candy-berry shrink-0 mt-0.5" />
                   <div>

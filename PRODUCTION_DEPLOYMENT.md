@@ -47,6 +47,8 @@ openssl rand -hex 32
    - Next.js: `GET /api/v1/health` (also pings Django upstream when `BACKEND_API_URL` is set)
    - Django: `GET /api/v1/health/` (verifies live database connectivity)
 
+> **Deployment assumption (local JSON mode):** without `BACKEND_API_URL`, the order-tracking rate limiter (BR-010) is an in-process in-memory map, so its counters apply per Node process and reset on restart; run a single Next.js instance or proxy to Django for multi-instance deployments. Logout revocations and password-change session invalidation are persisted in the JSON database and survive restarts.
+
 ## 3. Production Build & Pre-Deploy Verification
 
 ### Backend (`/backend`)
@@ -64,7 +66,7 @@ gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
 
 ```bash
 npm ci
-npm run check          # TypeScript + ESLint + 20 unit tests
+npm run check          # TypeScript + ESLint + 114 unit tests
 npm run check:prod     # Validates production secrets & flags
 npm run build          # Optimized production bundle
 npm run start          # Serves production build

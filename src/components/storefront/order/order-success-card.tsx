@@ -21,11 +21,13 @@ import {
   PartyPopper,
   PackageCheck,
   Heart,
+  Printer,
 } from "lucide-react";
 import type { Order, DeliveryZone } from "@/types";
 import { cn } from "@/lib/utils";
 import { buildWhatsAppLink } from "@/lib/store-identity";
 import { ProductImage } from "@/components/storefront/catalog/product-image";
+import { OrderStatusBadge } from "@/components/admin/orders/order-status-badge";
 import { toast } from "@/components/ui/toast";
 
 export interface OrderSuccessCardProps {
@@ -49,7 +51,7 @@ export function OrderSuccessCard({
         setCopied(true);
         toast.success(
           "تم نسخ رقم الطلب بنجاح",
-          `رقم الطلب ${order.orderNumber} تم نسخه إلى الحافظة. احتفظ به لتتبع شحنتك 📋`
+          `رقم الطلب ${order.orderNumber} تم نسخه إلى الحافظة. احتفظ به لتتبع شحنتك`
         );
         const timer = setTimeout(() => setCopied(false), 2500);
         return () => clearTimeout(timer);
@@ -104,17 +106,17 @@ export function OrderSuccessCard({
     <div
       dir="rtl"
       className={cn(
-        "w-full max-w-2xl mx-auto flex flex-col gap-6 py-4 animate-in fade-in duration-300",
+        "w-full max-w-2xl mx-auto flex flex-col gap-6 py-4 print:gap-3 print:py-0 animate-in fade-in duration-300",
         className
       )}
     >
-      {/* 0. Three-Step Completed Checkout Stepper */}
-      <section className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
+      {/* 0. Three-Step Completed Checkout Stepper (screen-only checkout chrome, hidden on printed receipt) */}
+      <section data-print-hidden className="w-full rounded-candy-card bg-candy-soft p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2 text-emerald-800">
             <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
             <span className="font-sans font-bold text-xs sm:text-sm">
-              تم إكمال الطلب بنجاح • خطوة 3 من 3 🔒
+              تم إكمال الطلب بنجاح • خطوة 3 من 3
             </span>
           </div>
           <span className="bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-sans font-bold text-xs flex items-center gap-1">
@@ -161,7 +163,7 @@ export function OrderSuccessCard({
       </section>
 
       {/* 1. Festive Celebration Banner & Order Header */}
-      <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 shadow-candy-2 text-center">
+      <div className="relative overflow-hidden bg-white border border-candy-line/80 rounded-candy-card p-6 sm:p-8 print:p-4 shadow-candy-2 text-center">
         {/* Soft Ambient Confectionery Glow */}
         <div
           aria-hidden="true"
@@ -172,7 +174,7 @@ export function OrderSuccessCard({
         <div className="flex items-center justify-center gap-2 mb-4">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-candy-pill bg-candy-blush border border-candy-line text-xs font-bold text-candy-berry shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-candy-strawberry animate-pulse" />
-            <span>صنع يدوي طازج بحب وعناية 💖</span>
+            <span>صنع يدوي طازج بحب وعناية</span>
           </span>
           <span className="inline-flex items-center gap-1 px-3 py-1 rounded-candy-pill bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 shadow-xs">
             <PackageCheck className="w-3.5 h-3.5 text-emerald-600" />
@@ -180,37 +182,30 @@ export function OrderSuccessCard({
           </span>
         </div>
 
-        {/* Animated Success Badge with Festive Confectionery Micro-Animation */}
-        <div className="relative mb-5 inline-flex items-center justify-center">
+        {/* Animated Success Badge (decorative, hidden on printed receipt) */}
+        <div data-print-hidden className="relative mb-5 inline-flex items-center justify-center">
           <div className="absolute w-24 h-24 rounded-full bg-emerald-100/70 animate-ping opacity-60" />
-          <div className="relative w-20 h-20 rounded-full bg-gradient-to-tr from-[#166534] via-[#1B8755] to-[#22c55e] flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
+          <div className="relative w-20 h-20 rounded-full bg-emerald-600 flex items-center justify-center shadow-[0_10px_28px_rgba(27,135,85,0.35)] transform transition-transform duration-300 hover:scale-105">
             <CheckCircle2 className="w-10 h-10 text-white" strokeWidth={2.5} />
           </div>
-          <span
-            role="img"
-            aria-label="احتفال"
-            className="absolute -bottom-1 -right-1 text-2xl select-none animate-bounce"
-          >
-            🎉
-          </span>
         </div>
 
         {/* Warm Arabic Thank You Heading */}
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-candy-berry tracking-tight mb-2">
-          شكراً لطلبك من كاندي لوز! 🎉
+          شكراً لطلبك من كاندي لوز!
         </h1>
 
-        <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6">
+        <p className="font-sans text-sm sm:text-base text-candy-muted max-w-md mx-auto leading-relaxed mb-6 print:mb-3">
           {order.customer.fullName ? (
             <span>
               عزيزنا <strong className="text-candy-ink">{order.customer.fullName}</strong>، تم
               استلام وتأكيد طلبك بنجاح. فريق حلوانيي كاندي لوز يعمل الآن على تجهيز أصنافك بكل حب
-              وعناية لتصلك طازجة وشهية 🍰
+              وعناية لتصلك طازجة وشهية
             </span>
           ) : (
             <span>
               تم استلام وتأكيد طلبك بنجاح. فريق حلويات كاندي لوز يعمل الآن على تجهيز طلبك الفاخر
-              بكل حب وعناية ليصلك طازجاً وشهياً 💖
+              بكل حب وعناية ليصلك طازجاً وشهياً
             </span>
           )}
         </p>
@@ -252,7 +247,7 @@ export function OrderSuccessCard({
         </div>
 
         {/* Estimated Delivery Time Indicator Card */}
-        <div className="mt-6 w-full bg-gradient-to-r from-candy-soft via-candy-cream to-candy-soft p-4 rounded-2xl border border-candy-line/80 flex items-center justify-between gap-3 text-right">
+        <div className="mt-6 w-full bg-candy-soft p-4 rounded-card border border-candy-line/80 flex items-center justify-between gap-3 text-right">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-full bg-white text-candy-strawberry flex items-center justify-center shadow-xs shrink-0 border border-candy-blush">
               <Clock className="w-5 h-5 text-candy-strawberry" />
@@ -276,7 +271,7 @@ export function OrderSuccessCard({
       {/* 2. Order Summary Card (Items, Zone, Payment, Financial Breakdown) */}
       <div className="bg-white border border-candy-line/80 rounded-candy-card shadow-candy-2 overflow-hidden">
         {/* Items Section Header */}
-        <div className="p-5 sm:p-6 border-b border-candy-line/60 bg-candy-soft/40 flex items-center justify-between">
+        <div className="p-5 sm:p-6 print:p-3 border-b border-candy-line/60 bg-candy-soft/40 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shadow-xs shrink-0">
               <ShoppingBag className="w-5 h-5" />
@@ -307,7 +302,7 @@ export function OrderSuccessCard({
 
         {/* Ordered Items List */}
         {isItemsExpanded && (
-          <div className="p-5 sm:p-6 divide-y divide-candy-line/60 space-y-4">
+          <div className="p-5 sm:p-6 print:p-3 print:space-y-2 divide-y divide-candy-line/60 space-y-4">
             {order.items.map((item) => {
               return (
                 <div
@@ -315,7 +310,7 @@ export function OrderSuccessCard({
                   className="pt-4 first:pt-0 flex items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-candy-soft shrink-0 border border-candy-line/80 flex items-center justify-center">
+                    <div className="relative w-14 h-14 rounded-card overflow-hidden bg-candy-soft shrink-0 border border-candy-line/80 flex items-center justify-center">
                       <ProductImage
                         src={item.imageUrl}
                         alt={item.productName}
@@ -369,7 +364,7 @@ export function OrderSuccessCard({
         )}
 
         {/* Delivery Details Section */}
-        <div className="border-t border-candy-line/60 p-5 sm:p-6 bg-candy-soft/20 space-y-4">
+        <div className="border-t border-candy-line/60 p-5 sm:p-6 print:p-3 print:space-y-2 bg-candy-soft/20 space-y-4">
           <div className="flex items-start gap-3">
             <div className="w-9 h-9 rounded-full bg-candy-blush/60 text-candy-berry flex items-center justify-center shrink-0 mt-0.5">
               <MapPin className="w-4 h-4" />
@@ -394,7 +389,7 @@ export function OrderSuccessCard({
                 </span>
               </div>
               {order.customer.notes && (
-                <div className="mt-2 text-xs bg-white p-2.5 rounded-xl border border-candy-line text-candy-ink font-sans">
+                <div className="mt-2 text-xs bg-white p-2.5 rounded-input border border-candy-line text-candy-ink font-sans">
                   <span className="font-bold text-candy-berry">ملاحظات التوصيل: </span>
                   {order.customer.notes}
                 </div>
@@ -403,7 +398,7 @@ export function OrderSuccessCard({
           </div>
 
           {/* Payment Method Badge */}
-          <div className="flex items-center justify-between p-3.5 bg-white rounded-2xl border border-candy-line">
+          <div className="flex items-center justify-between p-3.5 bg-white rounded-card border border-candy-line">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                 <Banknote className="w-4 h-4" />
@@ -417,14 +412,12 @@ export function OrderSuccessCard({
                 </span>
               </div>
             </div>
-            <span className="text-xs font-sans font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-candy-pill shrink-0">
-              جاهز للتسليم 💵
-            </span>
+            <OrderStatusBadge status={order.status} size="md" className="shrink-0" />
           </div>
         </div>
 
         {/* Financial Bill Breakdown */}
-        <div className="border-t border-candy-line/60 p-5 sm:p-6 bg-candy-soft/60 space-y-2.5">
+        <div data-print-keep className="border-t border-candy-line/60 p-5 sm:p-6 print:p-3 print:space-y-1.5 bg-candy-soft/60 space-y-2.5">
           <div className="flex justify-between items-center text-sm font-sans text-candy-muted">
             <span>مجموع المشتريات:</span>
             <span className="font-mono font-semibold text-candy-ink">
@@ -435,7 +428,7 @@ export function OrderSuccessCard({
             <span>رسوم التوصيل المبرد:</span>
             <span className="font-mono font-semibold text-candy-ink">
               {order.deliveryFee === 0 ? (
-                <span className="text-emerald-600 font-bold">مجاني 🎉</span>
+                <span className="text-emerald-600 font-bold">مجاني</span>
               ) : (
                 `${order.deliveryFee.toFixed(2)} ₪`
               )}
@@ -463,14 +456,14 @@ export function OrderSuccessCard({
         </div>
       </div>
 
-      {/* 3. Reassuring Cold-Chain Guarantee Banner */}
-      <div className="bg-candy-soft border border-candy-line rounded-2xl p-4 flex items-start gap-3 shadow-xs">
+      {/* 3. Reassuring Cold-Chain Guarantee Banner (marketing copy, hidden on printed receipt) */}
+      <div data-print-hidden className="bg-candy-soft border border-candy-line rounded-card p-4 flex items-start gap-3 shadow-xs">
         <div className="w-9 h-9 rounded-full bg-white text-candy-berry flex items-center justify-center shrink-0 border border-candy-blush shadow-xs mt-0.5">
           <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
         </div>
         <div className="flex-1">
           <h4 className="font-sans font-bold text-xs sm:text-sm text-candy-ink">
-            تغليف ملكي ونقل مبرد معتمد ❄️
+            تغليف ملكي ونقل مبرد معتمد
           </h4>
           <p className="font-sans text-xs text-candy-muted mt-0.5 leading-relaxed">
             يتم نقل طلبيتك في صناديق مبردة خاصة لحماية نضارة الكريمة وقرمشة البقلاوة
@@ -480,7 +473,7 @@ export function OrderSuccessCard({
       </div>
 
       {/* 4. Action Buttons (Direct tracking & Back to shopping) */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2" data-print-hidden>
         {/* Direct button: Track Order */}
         <Link
           href={`/track?order=${encodeURIComponent(order.orderNumber)}`}
@@ -501,8 +494,20 @@ export function OrderSuccessCard({
         </Link>
       </div>
 
+      {/* 4ب. طباعة الإيصال */}
+      <div className="text-center" data-print-hidden>
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="inline-flex items-center justify-center gap-2 text-xs font-sans font-bold text-candy-berry hover:text-candy-plum bg-candy-soft hover:bg-candy-blush border border-candy-line px-4 py-2.5 rounded-candy-pill transition-colors"
+        >
+          <Printer className="w-4 h-4" />
+          <span>طباعة الإيصال أو حفظه PDF</span>
+        </button>
+      </div>
+
       {/* 5. Customer Concierge WhatsApp Assistance */}
-      <div className="text-center pt-1">
+      <div className="text-center pt-1" data-print-hidden>
         <a
           href={buildWhatsAppLink(`مرحباً كاندي لوز، أستفسر عن طلبي رقم ${order.orderNumber}.`)}
           target="_blank"
@@ -510,7 +515,7 @@ export function OrderSuccessCard({
           className="inline-flex items-center justify-center gap-2 text-xs font-sans font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-4 py-2.5 rounded-candy-pill transition-colors"
         >
           <MessageCircle className="w-4 h-4 text-emerald-600 fill-emerald-600" />
-          <span>واجهتك أي رغبة إضافية؟ تواصل مع الشيف وخدمة العملاء 💬</span>
+          <span>واجهتك أي رغبة إضافية؟ تواصل مع الشيف وخدمة العملاء</span>
         </a>
       </div>
     </div>

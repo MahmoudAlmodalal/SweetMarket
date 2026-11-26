@@ -1,117 +1,109 @@
 /* ==========================================================================
-   tokens.css — Design Tokens
-   Candy Loz Sweet Store Design Tokens migrated to Next.js
-   Confectionery Luxury Palette (WCAG AA Compliant)
-   Fonts loaded natively via next/font in src/app/layout.tsx
+   tokens.css - Candy Loz "Atelier" design system
+   Berry + cream family, rebuilt as a flat, hairline, editorial system.
+   Fonts are self-hosted (see fonts.css), no network dependency.
    ========================================================================== */
 
 :root {
-  /* ---- Brand & Confectionery Luxury Palette ---- */
-  --color-primary: #A31D56;           /* Royal Berry / Dark Raspberry */
-  --color-primary-hover: #851645;     /* Deep Velvet Berry */
-  --color-primary-subtle: #FDF2F4;    /* Subtle Rose Petal */
-  --color-primary-glow: rgba(163, 29, 86, 0.22);
-  --color-accent: #E8A33D;            /* Warm Honey Caramel (ONLY with dark text --color-text) */
-  --color-accent-hover: #D4902F;
-  --color-bg: #FFFAF8;                /* Warm Marshmallow Canvas */
-  --color-surface: #FFFFFF;           /* Crisp Glaze White */
-  --color-cream: #FFFDF9;             /* Confectionery Whipped Cream Surface */
-  --color-cream-subtle: #FFF7F2;      /* Delicate Honey Cream */
-  --color-cream-border: #F3EAE3;      /* Soft Praline Border */
-  --color-soft: #FFF5F8;              /* Soft Strawberry Cream */
-  --color-blush: #FED7E7;             /* Delicate Candy Blush */
-  --color-rose-subtle: #FBEAF1;
-  --color-caramel-gold: #D49B35;      /* Warm Pastry Gold */
+  /* ---- Brand palette (berry / cream family) ---- */
+  --color-primary: #9B1B4E;           /* Berry */
+  --color-primary-hover: #7A1239;     /* Deep berry */
+  --color-primary-subtle: #F7E6EB;    /* Berry wash */
+  --color-primary-glow: rgba(155, 27, 78, 0.18);
+  --color-accent: #D99A2B;            /* Honey (dark text on it) */
+  --color-accent-hover: #C28620;
+  --color-bg: #FBF6F0;                /* Warm paper */
+  --color-surface: #FFFFFF;
+  --color-cream: #FFFCF7;
+  --color-cream-subtle: #F6EDE3;
+  --color-cream-border: #E9DACE;
+  --color-soft: #F7E6EB;
+  --color-blush: #F0C9D5;
+  --color-rose-subtle: #F7E6EB;
+  --color-caramel-gold: #C98A1E;
+  --color-plum: #3A0F25;              /* Deep plum for footers and dark bands */
 
-  /* ---- Text & Borders (High Contrast WCAG AA / AAA Compliant) ---- */
-  --color-text: #2B1A10;              /* Dark Chocolate (14.8:1 on #FFFAF8 - AAA) */
-  --color-text-muted: #66564E;        /* Warm Cocoa (6.5:1 on #FFFAF8 - AA) */
-  --color-text-subtle: #82726A;       /* Secondary Muted (4.6:1 on White - AA) */
-  --color-border: #E8DFD9;            /* Subtle decoration outline */
-  --color-border-subtle: #F3EAE4;
-  --color-border-input: #7C6C63;      /* Form controls (3.8:1 on White - WCAG 2.1 AA) */
+  /* ---- Text & lines ---- */
+  --color-text: #2A1620;
+  --color-text-muted: #5E4A52;
+  --color-text-subtle: #7F6A72;
+  --color-border: #E5D6CC;
+  --color-border-subtle: #EFE3DA;
+  --color-border-input: #8A737B;
 
   /* ---- Feedback ---- */
-  --color-success: #2E7D4F;           /* Mint Green Pistachio */
-  --color-warning: #9A5B00;           /* Amber Butterscotch */
-  --color-danger: #B3261E;            /* Candied Cherry */
-  --color-focus: #A31D56;             /* Berry Focus Indicator */
-  --color-focus-ring: rgba(163, 29, 86, 0.28);
+  --color-success: #2A7048;
+  --color-warning: #94560A;
+  --color-danger: #B3261E;
+  --color-focus: #9B1B4E;
+  --color-focus-ring: rgba(155, 27, 78, 0.25);
 
-  /* ---- Derived Helpers ---- */
-  --color-on-primary: #FFFFFF;        /* Text on primary / status fills */
-  --color-overlay: rgba(43, 26, 16, 0.55);
+  --color-on-primary: #FFFFFF;
+  --color-overlay: rgba(42, 22, 32, 0.55);
 
-  /* ---- Product Card Pastel Rotation (Rotate by index % 6) ---- */
-  --tint-1: #F9DCD9;                  /* Rose Strawberry */
-  --tint-1-border: #F0C4C0;
-  --tint-2: #DFF0DC;                  /* Pistachio Meringue */
-  --tint-2-border: #C8E5C4;
-  --tint-3: #FBD3DD;                  /* Berry Marshmallow */
-  --tint-3-border: #F4B8C8;
-  --tint-4: #FBECC8;                  /* Honey Vanilla */
-  --tint-4-border: #F2D99E;
-  --tint-5: #F6E0D2;                  /* Almond Praline */
-  --tint-5-border: #E8C8B2;
-  --tint-6: #E2EEFB;                  /* Sugar Glaze Sky */
-  --tint-6-border: #C5DCF5;
+  /* ---- Product tints (calmer, same family) ---- */
+  --tint-1: #F5DDD8;  --tint-1-border: #E9C6BF;
+  --tint-2: #E3EBD9;  --tint-2-border: #CFDCC2;
+  --tint-3: #F3D5DE;  --tint-3-border: #E6BCC9;
+  --tint-4: #F6E7C6;  --tint-4-border: #E8D3A2;
+  --tint-5: #EFDACB;  --tint-5-border: #DEC4B1;
+  --tint-6: #E1E7EE;  --tint-6-border: #CBD4DE;
 
-  /* ---- Order Status Colors (Badge ALWAYS carries text, never color alone) ---- */
-  --status-new: #2F5D8A;              /* جديد */
-  --status-accepted: #A31D56;         /* مقبول */
-  --status-preparing: #E8A33D;        /* قيد التجهيز (dark text) */
-  --status-preparing-text: #2B1A10;
-  --status-out: #6B4E9B;              /* خرج للتوصيل */
-  --status-delivered: #2E7D4F;        /* تم التسليم */
-  --status-failed: #9A5B00;           /* تعذّر التسليم */
-  --status-cancelled: #B3261E;        /* ملغي */
+  /* ---- Order status ---- */
+  --status-new: #2F5D8A;
+  --status-accepted: #9B1B4E;
+  --status-preparing: #D99A2B;
+  --status-preparing-text: #2A1620;
+  --status-out: #6B4E9B;
+  --status-delivered: #2A7048;
+  --status-failed: #94560A;
+  --status-cancelled: #B3261E;
 
-  /* ---- Radius ---- */
-  --radius-card: 22px;
-  --radius-section: 32px;
-  --radius-input: 14px;
-  --radius-pill: 99px;
+  /* ---- Shape: small radii, pills only for chips ---- */
+  --radius-card: 6px;
+  --radius-section: 10px;
+  --radius-input: 6px;
+  --radius-pill: 999px;
 
-  /* ---- Refined Multi-Layer Shadows ---- */
-  --shadow-1: 0 4px 14px rgba(163, 29, 86, 0.08);
-  --shadow-2: 0 14px 34px rgba(163, 29, 86, 0.14);
-  --shadow-3: 0 26px 60px rgba(124, 29, 67, 0.18);
-  --shadow-candy-soft: 0 4px 20px -2px rgba(163, 29, 86, 0.07), 0 2px 6px -1px rgba(43, 26, 16, 0.04);
-  --shadow-candy-float: 0 16px 36px -6px rgba(163, 29, 86, 0.14), 0 6px 16px -2px rgba(43, 26, 16, 0.05);
-  --shadow-candy-glow: 0 0 24px rgba(163, 29, 86, 0.20);
-  --shadow-candy-cta: 0 12px 26px rgba(163, 29, 86, 0.28);
-  --shadow-candy-dock: 0 14px 34px rgba(124, 29, 67, 0.18);
+  /* ---- Elevation: hairline first, shadow only on hover/overlays ---- */
+  --shadow-1: 0 1px 0 rgba(42, 22, 32, 0.04);
+  --shadow-2: 0 6px 18px rgba(42, 22, 32, 0.08);
+  --shadow-3: 0 18px 40px rgba(42, 22, 32, 0.14);
+  --shadow-candy-soft: 0 1px 0 rgba(42, 22, 32, 0.04);
+  --shadow-candy-float: 0 10px 26px rgba(42, 22, 32, 0.10);
+  --shadow-candy-glow: 0 0 0 3px var(--color-focus-ring);
+  --shadow-candy-cta: 0 1px 0 rgba(42, 22, 32, 0.12);
+  --shadow-candy-dock: 0 -1px 0 var(--color-border), 0 -8px 24px rgba(42, 22, 32, 0.06);
 
-  /* ---- Typography (mapped to next/font variables) ---- */
-  --font-heading: var(--font-el-messiri), 'El Messiri', 'IBM Plex Sans Arabic', Tahoma, sans-serif;
-  --font-body: var(--font-ibm-plex-sans-arabic), 'IBM Plex Sans Arabic', Tahoma, sans-serif;
-  --fs-h1: 28px;
-  --fs-h2: 20px;
-  --fs-h3: 18px;                      /* derived */
-  --fs-body: 16px;
-  --fs-small: 14px;
-  --fs-price: 18px;
+  /* ---- Typography ---- */
+  --font-heading: 'Amiri', 'Readex Pro', Tahoma, serif;
+  --font-body: 'Readex Pro', Tahoma, sans-serif;
+  --fs-h1: 34px;
+  --fs-h2: 24px;
+  --fs-h3: 19px;
+  --fs-body: 15.5px;
+  --fs-small: 13.5px;
+  --fs-price: 17px;
   --fw-regular: 400;
   --fw-bold: 700;
-  --lh-body: 1.6;
-  --lh-heading: 1.3;
+  --lh-body: 1.75;
+  --lh-heading: 1.25;
 
-  /* ---- Spacing grid (4px) ---- */
+  /* ---- Spacing (8px rhythm) ---- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-6: 24px;
   --space-8: 32px;
-  --space-12: 48px;
+  --space-12: 56px;
 
-  /* ---- Layout & Interaction ---- */
-  --container-max: 1200px;
+  --container-max: 1240px;
   --gutter: 16px;
   --touch-min: 44px;
-  --ease: cubic-bezier(.2, .8, .2, 1);
-  --duration-fast: 150ms;
-  --duration: 250ms;
+  --ease: cubic-bezier(.3, .7, .2, 1);
+  --duration-fast: 140ms;
+  --duration: 220ms;
   --duration-float: 3.5s;
   --duration-shimmer: 2s;
   --duration-pulse: 2.5s;
@@ -121,7 +113,5 @@
 }
 
 @media (min-width: 1024px) {
-  :root {
-    --gutter: 24px;
-  }
+  :root { --gutter: 28px; }
 }

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   BusinessRuleError,
   normalizePhoneNumber,
+  slugifySafe,
   computeAuthoritativeOrderTotals,
   validateOrderStatusTransition,
   evaluateProductDeletion,
@@ -64,9 +65,18 @@ describe('normalizePhoneNumber', () => {
     assert.equal(normalizePhoneNumber('00972 56 123 4567'), '0561234567');
   });
 
+  it('folds Eastern Arabic digits, matching the unified client normalizer', () => {
+    // Customers on Arabic keyboards type ٠-٩; src/lib/validations.ts accepts these,
+    // so the server must normalize them identically rather than reject the order/track.
+    assert.equal(normalizePhoneNumber('٠٥٩٩١٢٣٤٥٦'), '0599123456');
+    assert.equal(normalizePhoneNumber('٠٥٦٨٩٨٧٦٥٤'), '0568987654');
+    assert.equal(normalizePhoneNumber('+٩٧٠ ٥٩ ٩١٢ ٣٤٥٦'), '0599123456');
+  });
+
   it('rejects invalid phone numbers', () => {
     assert.throws(() => normalizePhoneNumber('0501234567'), BusinessRuleError);
     assert.throws(() => normalizePhoneNumber('059123'), BusinessRuleError);
+    assert.throws(() => normalizePhoneNumber('٠٥٠١٢٣٤٥٦٧'), BusinessRuleError);
   });
 });
 
@@ -317,5 +327,117 @@ describe('Password Hashing & Session Token Lifecycle', () => {
 
     revokeSessionToken(token);
     assert.equal(verifySessionToken(token), null);
+  });
+});
+
+describe('slugifySafe', () => {
+  it('lowercases, strips punctuation, and collapses separators', () => {
+    assert.equal(slugifySafe('Mixed Baklava Extra!'), 'mixed-baklava-extra');
+    assert.equal(slugifySafe('hello  world__test--x'), 'hello-world-test-x');
+    assert.equal(slugifySafe('  Kunafa-Nabulsia  '), 'kunafa-nabulsia');
+  });
+
+  it('falls back with the given prefix for Arabic-only or too-short input', () => {
+    const arabicSlug = slugifySafe('بقلاوة', 'sweet');
+    assert.ok(arabicSlug.startsWith('sweet-'), `expected sweet- fallback, got ${arabicSlug}`);
+    assert.equal(slugifySafe('a', 'sweet').startsWith('sweet-'), true);
+    assert.equal(slugifySafe('', 'category').startsWith('category-'), true);
+  });
+});
+
+describe('computeAuthoritativeOrderTotals - edge cases', () => {
+  const productsMap = new Map<string, Product>([
+    [sampleProduct.id, sampleProduct],
+  ]);
+
+  it('rejects an empty cart with VALIDATION_ERROR (400)', () => {
+    assert.throws(
+      () => computeAuthoritativeOrderTotals([], productsMap, sampleZone),
+      (err: unknown) =>
+        err instanceof BusinessRuleError && err.code === 'VALIDATION_ERROR' && err.status === 400
+    );
+  });
+
+  it('rejects quantities outside 1-50 or non-numeric', () => {
+    for (const badQty of [0, 51, -3, 'abc']) {
+      assert.throws(
+        () =>
+          computeAuthoritativeOrderTotals(
+            [{ productId: sampleProduct.id, quantity: badQty as unknown as number }],
+            productsMap,
+            sampleZone
+          ),
+        (err: unknown) =>
+          err instanceof BusinessRuleError && err.code === 'VALIDATION_ERROR' && err.status === 400,
+        `quantity ${badQty} should be rejected`
+      );
+    }
+  });
+
+  it('rejects unknown or archived products with PRODUCT_NOT_FOUND (422)', () => {
+    assert.throws(
+      () =>
+        computeAuthoritativeOrderTotals(
+          [{ productId: 'prod-missing', quantity: 1 }],
+          productsMap,
+          sampleZone
+        ),
+      (err: unknown) =>
+        err instanceof BusinessRuleError && err.code === 'PRODUCT_NOT_FOUND' && err.status === 422
+    );
+
+    const archivedMap = new Map<string, Product>([
+      [sampleProduct.id, { ...sampleProduct, isArchived: true } as Product],
+    ]);
+    assert.throws(
+      () =>
+        computeAuthoritativeOrderTotals(
+          [{ productId: sampleProduct.id, quantity: 1 }],
+          archivedMap,
+          sampleZone
+        ),
+      (err: unknown) => err instanceof BusinessRuleError && err.code === 'PRODUCT_NOT_FOUND'
+    );
+  });
+
+  it('matches weight options by multiplier and applies their sale price', () => {
+    const result = computeAuthoritativeOrderTotals(
+      [{ productId: sampleProduct.id, quantity: 2, selectedWeightMultiplier: 0.5 }],
+      productsMap,
+      sampleZone
+    );
+    // نصف كيلو sale price 30 + standard packaging 0 => unit 30, line 60
+    assert.equal(result.items[0].unitPrice, 30);
+    assert.equal(result.items[0].lineTotal, 60);
+    assert.equal(result.subtotal, 60);
+    assert.equal(result.items[0].selectedWeightLabel, 'نصف كيلو (500 جم)');
+  });
+
+  it('falls back to the multiplier-1 weight when the requested weight is unknown', () => {
+    const result = computeAuthoritativeOrderTotals(
+      [{ productId: sampleProduct.id, quantity: 1, selectedWeightMultiplier: 9 }],
+      productsMap,
+      sampleZone
+    );
+    // fallback: 1 كيلو sale price 55
+    assert.equal(result.items[0].selectedWeightMultiplier, 1);
+    assert.equal(result.items[0].unitPrice, 55);
+  });
+
+  it('trims gift messages and caps them at 120 characters', () => {
+    const longMessage = `  ${'أ'.repeat(200)}  `;
+    const result = computeAuthoritativeOrderTotals(
+      [{ productId: sampleProduct.id, quantity: 1, giftMessage: longMessage }],
+      productsMap,
+      sampleZone
+    );
+    assert.equal(result.items[0].giftMessage?.length, 120);
+
+    const blank = computeAuthoritativeOrderTotals(
+      [{ productId: sampleProduct.id, quantity: 1, giftMessage: '   ' }],
+      productsMap,
+      sampleZone
+    );
+    assert.equal(blank.items[0].giftMessage, undefined);
   });
 });

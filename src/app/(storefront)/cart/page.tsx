@@ -106,12 +106,12 @@ function CartPageInner() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           <div className="lg:col-span-7 xl:col-span-8 space-y-4">
-            <Skeleton className="h-32 w-full rounded-2xl sm:rounded-3xl" />
-            <Skeleton className="h-32 w-full rounded-2xl sm:rounded-3xl" />
-            <Skeleton className="h-32 w-full rounded-2xl sm:rounded-3xl" />
+            <Skeleton className="h-32 w-full rounded-card sm:rounded-card" />
+            <Skeleton className="h-32 w-full rounded-card sm:rounded-card" />
+            <Skeleton className="h-32 w-full rounded-card sm:rounded-card" />
           </div>
           <div className="lg:col-span-5 xl:col-span-4">
-            <Skeleton className="h-96 w-full rounded-2xl sm:rounded-3xl" />
+            <Skeleton className="h-96 w-full rounded-card sm:rounded-card" />
           </div>
         </div>
       </div>
@@ -160,7 +160,7 @@ function CartPageInner() {
         </div>
 
         <div className="flex items-center justify-between sm:justify-end gap-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50/80 border border-emerald-200/70 text-emerald-800 text-xs font-medium">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-input bg-emerald-50/80 border border-emerald-200/70 text-emerald-800 text-xs font-medium">
             <Clock className="w-3.5 h-3.5 text-emerald-600" />
             <span>اختياراتك محفوظة لمدة 24 ساعة</span>
           </div>
@@ -168,7 +168,7 @@ function CartPageInner() {
           <button
             type="button"
             onClick={() => setIsClearDialogOpen(true)}
-            className="inline-flex items-center gap-1.5 min-h-11 text-xs font-semibold text-candy-muted hover:text-rose-600 hover:bg-rose-50 px-3 rounded-candy-pill transition-colors touch-manipulation"
+            className="inline-flex items-center gap-1.5 min-h-11 text-xs font-semibold text-candy-muted hover:text-rose-600 hover:bg-rose-50 px-3 rounded-button transition-colors touch-manipulation"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>تفريغ السلة</span>
@@ -233,10 +233,10 @@ function CartPageInner() {
                   return (
                     <div
                       key={product.id}
-                      className="rounded-2xl bg-white p-3.5 border border-candy-line/70 shadow-candy-1 flex flex-col justify-between hover:border-candy-strawberry/40 hover:shadow-candy-2 transition-all group"
+                      className="rounded-card bg-white p-3.5 border border-candy-line/70 shadow-candy-1 flex flex-col justify-between hover:border-candy-strawberry/40 hover:shadow-candy-2 transition-all group"
                     >
                       <div>
-                        <div className="relative w-full h-24 rounded-xl overflow-hidden bg-candy-soft mb-2.5">
+                        <div className="relative w-full h-24 rounded-input overflow-hidden bg-candy-soft mb-2.5">
                           <ProductImage
                             src={product.imageUrl}
                             alt={product.name}

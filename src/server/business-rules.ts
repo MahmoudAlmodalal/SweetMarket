@@ -61,7 +61,11 @@ export const ACTIVE_ORDER_STATUSES: ReadonlySet<OrderStatus> = new Set<OrderStat
  * Normalize and validate Palestinian mobile numbers (059 / 056, 10 digits).
  */
 export function normalizePhoneNumber(rawPhone: string): string {
-  const digits = String(rawPhone || '').replace(/[\s\-().+]/g, '');
+  // Fold Eastern Arabic digits (٠-٩) first: the storefront's unified validator
+  // (src/lib/validations.ts) accepts them, so the server must agree.
+  const digits = String(rawPhone || '')
+    .replace(/[٠-٩]/g, (ch) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(ch)))
+    .replace(/[\s\-().+]/g, '');
   let normalized = digits;
 
   if (normalized.startsWith('00970')) {
@@ -72,6 +76,13 @@ export function normalizePhoneNumber(rawPhone: string): string {
     normalized = '0' + normalized.slice(5);
   } else if (normalized.startsWith('972')) {
     normalized = '0' + normalized.slice(3);
+  }
+
+  // Match the storefront validator (src/lib/validations.ts): a caller who keeps
+  // the trunk zero after the international prefix ('+970 059…', '00970059…')
+  // yields 11 digits with a doubled leading zero — fold it to the 10-digit form.
+  if (normalized.length === 11 && normalized.startsWith('00')) {
+    normalized = normalized.slice(1);
   }
 
   if (!/^(059|056)\d{7}$/.test(normalized)) {
@@ -102,7 +113,7 @@ export function slugifySafe(input: string, fallbackPrefix = 'item'): string {
   const cleaned = String(input || '')
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[^a-z0-9\s_-]/g, '')
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '');
 

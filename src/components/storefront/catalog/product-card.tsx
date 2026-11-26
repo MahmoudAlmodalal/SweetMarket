@@ -185,114 +185,83 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col justify-between rounded-2xl bg-white border border-candy-line/80 overflow-hidden",
-        "transition-all duration-300 hover:border-candy-berry/35 hover:shadow-[0_14px_34px_rgba(43,26,16,0.08)]",
+        "group relative flex flex-col justify-between bg-white border border-candy-line rounded-card overflow-hidden",
+        "transition-colors duration-200 hover:border-candy-berry",
         !isAvailable && "opacity-75",
         className
       )}
     >
-      {/* Image Container */}
       <div>
-        <div className="relative w-full aspect-[4/3] overflow-hidden bg-candy-soft">
-          <Link
-            href={`/product/${product.slug}`}
-            className="relative block w-full h-full"
-            aria-label={product.name}
-          >
+        <div className="relative w-full aspect-[5/4] overflow-hidden bg-candy-soft">
+          <Link href={`/product/${product.slug}`} className="relative block w-full h-full" aria-label={product.name}>
             <ProductImage
               src={product.imageUrl}
               alt={product.name}
               fill
               sizes="(max-width: 640px) 48vw, (max-width: 1024px) 31vw, 24vw"
               className={cn(
-                "w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105",
+                "w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]",
                 !isAvailable && "grayscale-[35%]"
               )}
             />
           </Link>
 
-          {/* Wishlist Button */}
           <button
             type="button"
             onClick={toggleWishlist}
-            aria-label={
-              isWishlisted
-                ? `إزالة ${product.name} من المفضلة`
-                : `إضافة ${product.name} للمفضلة`
-            }
+            aria-label={isWishlisted ? `إزالة ${product.name} من المفضلة` : `إضافة ${product.name} للمفضلة`}
             title={isWishlisted ? "إزالة من المفضلة" : "إضافة للمفضلة"}
             className={cn(
-              "absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-white/92 backdrop-blur-sm flex items-center justify-center transition-colors z-10 border border-black/5 shadow-xs",
-              isWishlisted
-                ? "text-candy-berry"
-                : "text-candy-ink/60 hover:text-candy-berry"
+              "absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-white flex items-center justify-center transition-colors z-10",
+              isWishlisted ? "text-candy-berry" : "text-candy-ink hover:text-candy-berry"
             )}
           >
-            <Heart
-              className={cn(
-                "w-4 h-4 transition-transform",
-                isWishlisted ? "fill-candy-berry text-candy-berry" : "stroke-current"
-              )}
-            />
+            <Heart className={cn("w-4 h-4", isWishlisted ? "fill-candy-berry text-candy-berry" : "stroke-current")} />
           </button>
 
-          {/* Single Crisp Status / Discount Tag */}
           {!isAvailable ? (
-            <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-[#2B1A10]/85 text-white text-[11px] font-sans font-semibold backdrop-blur-sm">
+            <span className="absolute bottom-0 left-0 px-3 py-1 bg-candy-ink text-white text-[11px] font-sans font-medium">
               نفد حالياً
             </span>
           ) : hasDiscount ? (
-            <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-candy-berry text-white text-[11px] font-sans font-bold tabular-nums shadow-xs">
+            <span className="absolute bottom-0 left-0 px-3 py-1 bg-candy-berry text-white text-[11px] font-sans font-medium tabular-nums">
               خصم {discountPercent}%
             </span>
           ) : null}
         </div>
 
-        {/* Product Info */}
-        <div className="p-3.5 sm:p-4 pb-2 space-y-1.5">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-[11px] font-sans font-medium text-candy-muted">
-              {unitBadgeText}
-            </span>
-          </div>
-          <Link
-            href={`/product/${product.slug}`}
-            className="block group/title focus:outline-none"
-          >
-            <h3 className="font-display font-bold text-sm sm:text-base text-candy-ink line-clamp-2 leading-snug group-hover/title:text-candy-berry transition-colors">
+        <div className="px-4 pt-3.5 pb-2 space-y-1">
+          <span className="block text-[11.5px] font-sans text-candy-muted">{unitBadgeText}</span>
+          <Link href={`/product/${product.slug}`} className="block focus:outline-none">
+            <h3 className="font-display font-bold text-[1.2rem] sm:text-[1.3rem] text-candy-ink line-clamp-2 min-h-[2.4em] leading-[1.2] group-hover:text-candy-berry transition-colors">
               {product.name}
             </h3>
           </Link>
-          <p className="text-xs text-candy-muted font-sans line-clamp-1 leading-relaxed">
-            {product.description}
-          </p>
+          <p className="text-[12.5px] text-candy-muted font-sans line-clamp-1">{product.description}</p>
         </div>
       </div>
 
-      {/* Price & Add to Cart Footer */}
-      <div className="px-3.5 sm:px-4 pb-3.5 sm:pb-4 pt-2.5 mt-1 border-t border-candy-line/50 flex items-center justify-between gap-2">
+      <div className="mx-4 mb-4 mt-2 pt-3 border-t border-candy-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex flex-col min-w-0">
           <div className="flex items-baseline gap-1 tabular-nums whitespace-nowrap">
-            <span className="font-sans font-extrabold text-base sm:text-lg text-candy-ink tracking-tight">
-              {currentPrice}
-            </span>
-            <span className="text-xs font-sans font-bold text-candy-berry">₪</span>
+            <span className="font-display font-bold text-[1.6rem] text-candy-ink leading-none">{currentPrice}</span>
+            <span className="text-xs font-sans text-candy-muted">₪</span>
           </div>
           {hasDiscount && (
-            <span className="text-[11px] font-sans text-candy-muted line-through tabular-nums leading-none whitespace-nowrap">
+            <span className="text-[11px] font-sans text-candy-muted line-through tabular-nums leading-none mt-1 whitespace-nowrap">
               {listPrice} ₪
             </span>
           )}
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 w-full sm:w-auto">
           {showRemoveButton && (
             <button
               type="button"
               onClick={handleDirectRemove}
               aria-label={`إزالة ${product.name} من المفضلة`}
               title="إزالة من المفضلة"
-              className="h-9 px-2.5 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 transition-colors flex items-center justify-center gap-1 text-xs font-semibold"
+              className="h-10 px-2.5 rounded-button border border-rose-200 text-rose-600 hover:bg-rose-50 transition-colors flex items-center justify-center gap-1 text-xs font-medium"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">إزالة</span>
@@ -305,12 +274,12 @@ export function ProductCard({
             disabled={!isAvailable}
             aria-label={`أضف ${product.name} للسلة`}
             className={cn(
-              "h-9 px-2.5 sm:px-3.5 rounded-xl font-sans font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 sm:gap-1.5 transition-all whitespace-nowrap shrink-0",
+              "h-11 sm:h-10 px-4 rounded-button flex-1 sm:flex-none font-sans font-medium text-[13px] flex items-center justify-center gap-1.5 transition-colors whitespace-nowrap shrink-0 border",
               isAvailable
                 ? isAdded
-                  ? "bg-emerald-600 text-white"
-                  : "bg-candy-soft text-candy-berry border border-candy-berry/20 hover:bg-candy-berry hover:text-white hover:border-candy-berry"
-                : "bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed"
+                  ? "bg-emerald-700 border-emerald-700 text-white"
+                  : "border-candy-ink text-candy-ink hover:bg-candy-berry hover:border-candy-berry hover:text-white"
+                : "bg-stone-100 text-stone-400 border-stone-200 cursor-not-allowed"
             )}
           >
             {isAdded ? (

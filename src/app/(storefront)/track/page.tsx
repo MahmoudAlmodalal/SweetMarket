@@ -27,9 +27,9 @@ function TrackOrderSkeleton() {
       </div>
       <div className="bg-white border border-candy-line/80 rounded-candy-card p-8 shadow-candy-2 space-y-4">
         <Skeleton className="h-6 w-48 rounded-full" />
-        <Skeleton className="h-12 w-full rounded-2xl" />
-        <Skeleton className="h-12 w-full rounded-2xl" />
-        <Skeleton className="h-12 w-40 rounded-candy-pill mt-4" />
+        <Skeleton className="h-12 w-full rounded-card" />
+        <Skeleton className="h-12 w-full rounded-card" />
+        <Skeleton className="h-12 w-40 rounded-button mt-4" />
       </div>
     </div>
   );
@@ -79,7 +79,7 @@ function TrackOrderContent() {
           </div>
 
           <h1 className="font-display text-2xl sm:text-4xl font-black text-candy-berry tracking-tight">
-            تتبع مسار طلبك الملكي 🍰
+            تتبع مسار طلبك الملكي
           </h1>
 
           <p className="font-sans text-sm sm:text-base text-candy-muted max-w-xl mx-auto leading-relaxed">
@@ -99,7 +99,7 @@ function TrackOrderContent() {
 
             {/* Guarantees & Features Triple Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-              <div className="bg-white border border-candy-line/80 rounded-2xl p-5 shadow-xs text-center space-y-2.5 hover:border-candy-rose/60 transition-colors">
+              <div className="bg-white border border-candy-line/80 rounded-card p-5 shadow-xs text-center space-y-2.5 hover:border-candy-rose/60 transition-colors">
                 <div className="w-10 h-10 rounded-full bg-candy-soft text-candy-berry flex items-center justify-center mx-auto border border-candy-line">
                   <Package className="w-5 h-5 text-candy-strawberry" />
                 </div>
@@ -111,7 +111,7 @@ function TrackOrderContent() {
                 </p>
               </div>
 
-              <div className="bg-white border border-candy-line/80 rounded-2xl p-5 shadow-xs text-center space-y-2.5 hover:border-candy-rose/60 transition-colors">
+              <div className="bg-white border border-candy-line/80 rounded-card p-5 shadow-xs text-center space-y-2.5 hover:border-candy-rose/60 transition-colors">
                 <div className="w-10 h-10 rounded-full bg-candy-soft text-candy-berry flex items-center justify-center mx-auto border border-candy-line">
                   <ShieldCheck className="w-5 h-5 text-candy-strawberry" />
                 </div>
@@ -123,7 +123,7 @@ function TrackOrderContent() {
                 </p>
               </div>
 
-              <div className="bg-white border border-candy-line/80 rounded-2xl p-5 shadow-xs text-center space-y-2.5 hover:border-candy-rose/60 transition-colors">
+              <div className="bg-white border border-candy-line/80 rounded-card p-5 shadow-xs text-center space-y-2.5 hover:border-candy-rose/60 transition-colors">
                 <div className="w-10 h-10 rounded-full bg-candy-soft text-candy-berry flex items-center justify-center mx-auto border border-candy-line">
                   <MessageCircle className="w-5 h-5 text-emerald-600" />
                 </div>
@@ -137,7 +137,7 @@ function TrackOrderContent() {
             </div>
 
             {/* Quick Assistance Box */}
-            <div className="bg-candy-soft/80 border border-candy-line rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 shadow-xs">
+            <div className="bg-candy-soft/80 border border-candy-line rounded-card p-4 sm:p-5 flex items-start gap-3.5 shadow-xs">
               <div className="w-8 h-8 rounded-full bg-white text-candy-berry flex items-center justify-center shrink-0 border border-candy-line mt-0.5">
                 <HelpCircle className="w-4 h-4 text-candy-strawberry" />
               </div>

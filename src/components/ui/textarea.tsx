@@ -68,7 +68,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={textareaId}
-            className="block mb-1.5 text-sm font-bold text-candy-ink font-sans select-none"
+            className="block mb-1.5 text-[13px] font-medium text-candy-ink font-sans select-none"
           >
             {label}
           </label>
@@ -86,7 +86,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={describedBy || undefined}
             className={cn(
-              "w-full p-3.5 rounded-[14px] font-sans text-sm text-candy-ink bg-candy-soft/50 border border-candy-line transition-all duration-200 outline-none resize-y min-h-[100px] shadow-xs",
+              "w-full p-3.5 rounded-input font-sans text-sm text-candy-ink bg-white border border-candy-line-dark transition-all duration-200 outline-none resize-y min-h-[100px] shadow-xs",
               "hover:border-candy-line-dark/60 hover:bg-candy-soft/80",
               "placeholder:text-candy-muted/70",
               "focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20",

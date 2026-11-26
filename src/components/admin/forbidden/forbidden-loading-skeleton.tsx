@@ -24,7 +24,7 @@ export function ForbiddenLoadingSkeleton({
       >
         <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
           {/* Skeleton Icon with neutral spinner */}
-          <div className="w-16 h-16 mx-auto mb-4 rounded-3xl bg-candy-soft border-2 border-candy-line/60 flex items-center justify-center text-candy-berry animate-pulse">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-card bg-candy-soft border-2 border-candy-line/60 flex items-center justify-center text-candy-berry animate-pulse">
             <Loader2 className="w-8 h-8 animate-spin text-candy-berry/70" aria-hidden="true" />
           </div>
 
@@ -32,7 +32,7 @@ export function ForbiddenLoadingSkeleton({
           <div className="h-6 w-36 mx-auto mb-3 rounded-full bg-candy-soft animate-pulse" />
 
           {/* Skeleton Title */}
-          <div className="h-7 w-3/4 mx-auto mb-3 rounded-lg bg-candy-soft animate-pulse" />
+          <div className="h-7 w-3/4 mx-auto mb-3 rounded-[4px] bg-candy-soft animate-pulse" />
 
           {/* Skeleton Description */}
           <div className="h-4 w-5/6 mx-auto rounded bg-candy-soft/70 animate-pulse" />
@@ -40,7 +40,7 @@ export function ForbiddenLoadingSkeleton({
 
         <CardContent className="p-6 sm:p-8 space-y-6">
           {/* Skeleton Status Box */}
-          <div className="h-20 w-full rounded-2xl bg-candy-soft/80 border border-candy-line/60 animate-pulse" />
+          <div className="h-20 w-full rounded-card bg-candy-soft/80 border border-candy-line/60 animate-pulse" />
 
           {/* Skeleton Actions */}
           <div className="flex flex-col sm:flex-row gap-3 pt-2">

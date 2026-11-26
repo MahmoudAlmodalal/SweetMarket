@@ -26,6 +26,7 @@ import {
   Bike,
   Flame,
   Award,
+  Printer,
 } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
@@ -61,7 +62,7 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     title: "استلام وتأكيد الطلب",
     subtitle: "تم استلام الطلب وتسجيله ومطابقته آلياً بنظام كاندي لوز",
     icon: Sparkles,
-    badgeText: "طلب جديد 📋",
+    badgeText: "طلب جديد",
     badgeType: "standard",
     statusKey: "new",
   },
@@ -69,9 +70,9 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     id: "stage-2-accepted",
     stepNumber: 2,
     title: "مراجعة واعتماد الطلب",
-    subtitle: "تمت مراجعة تفاصيل طلبك وتأكيد جاهزية المكونات الطازجة",
+    subtitle: "مراجعة تفاصيل طلبك وتأكيد جاهزية المكونات الطازجة",
     icon: CheckCircle2,
-    badgeText: "معتمد رسمياً ✓",
+    badgeText: "معتمد رسمياً",
     badgeType: "standard",
     statusKey: "accepted",
   },
@@ -81,7 +82,7 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     title: "معمل الحلويات والطهي",
     subtitle: "الخبز والتزيين اليدوي الفاخر بأيدي أمهر حلوانيي كاندي لوز",
     icon: ChefHat,
-    badgeText: "معمل الحلويات 👨‍🍳",
+    badgeText: "معمل الحلويات",
     badgeType: "kitchen",
     statusKey: "in_preparation",
   },
@@ -91,7 +92,7 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     title: "فحص الجودة والتغليف الملكي",
     subtitle: "فحص معايير الجودة وتعبئة الحلويات في صناديق التبريد الملكية",
     icon: PackageCheck,
-    badgeText: "تغليف مبرد فاخر ❄️",
+    badgeText: "تغليف مبرد فاخر",
     badgeType: "kitchen",
   },
   {
@@ -100,7 +101,7 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     title: "تسليم الشحنة لأسطول التوصيل",
     subtitle: "تسليم الصناديق المجهزة والمبردة إلى طاقم الشحن والتسليم",
     icon: Package,
-    badgeText: "جاهز للانطلاق 📦",
+    badgeText: "جاهز للانطلاق",
     badgeType: "delivery",
   },
   {
@@ -109,17 +110,17 @@ export const SEVEN_ORDER_STAGES: StageDefinition[] = [
     title: "خرج للتوصيل في الطريق إليك",
     subtitle: "كابتن التوصيل في طريقه إلى عنوانك، يرجى الاستعداد للاستلام",
     icon: Truck,
-    badgeText: "كابتن التوصيل 🛵",
+    badgeText: "كابتن التوصيل",
     badgeType: "delivery",
     statusKey: "out_for_delivery",
   },
   {
     id: "stage-7-delivered",
     stepNumber: 7,
-    title: "تم التسليم بالهناء والعافية",
-    subtitle: "تم تسليم الطلب باليد بنجاح، صحة وعافية على قلوبكم",
+    title: "التسليم بالهناء والعافية",
+    subtitle: "تسليم الطلب باليد بنجاح، صحة وعافية على قلوبكم",
     icon: Award,
-    badgeText: "تم التسليم بنجاح ✨",
+    badgeText: "تم التسليم بنجاح",
     badgeType: "success",
     statusKey: "delivered",
   },
@@ -198,7 +199,7 @@ export function StatusTimeline({
         setCopied(true);
         toast.success(
           "تم نسخ رقم التتبع بنجاح",
-          `رقم الطلب ${order.orderNumber} منسوخ في الحافظة 📋`
+          `رقم الطلب ${order.orderNumber} منسوخ في الحافظة`
         );
         const timer = setTimeout(() => setCopied(false), 2000);
         return () => clearTimeout(timer);
@@ -211,7 +212,7 @@ export function StatusTimeline({
   const handleReorder = React.useCallback(() => {
     if (order.items && order.items.length > 0) {
       restoreCartItems(order.items);
-      toast.success("تمت استعادة الأصناف إلى السلة بنجاح! 🛍️");
+      toast.success("تمت استعادة الأصناف إلى السلة بنجاح!");
       router.push("/cart");
     }
   }, [order.items, restoreCartItems, router]);
@@ -265,6 +266,13 @@ export function StatusTimeline({
                   <Copy className="w-3.5 h-3.5 text-candy-muted group-hover:text-candy-berry transition-colors" />
                 )}
               </button>
+              {/* نسخة مطبوعة من رقم التتبع - أزرار النسخ تُخفى عند الطباعة */}
+              <span
+                dir="ltr"
+                className="hidden print:inline-block px-3 py-1 font-mono text-sm sm:text-base font-bold text-candy-berry tracking-wider"
+              >
+                {order.orderNumber}
+              </span>
               {copied && (
                 <span className="text-[11px] font-sans font-bold text-emerald-600 animate-in fade-in">
                   تم النسخ!
@@ -326,7 +334,7 @@ export function StatusTimeline({
         {isCancelled && (
           <div
             role="alert"
-            className="mt-5 p-5 rounded-2xl bg-rose-50 border border-rose-200/90 text-rose-900 flex items-start gap-3.5 shadow-xs animate-in fade-in"
+            className="mt-5 p-5 rounded-card bg-rose-50 border border-rose-200/90 text-rose-900 flex items-start gap-3.5 shadow-xs animate-in fade-in"
           >
             <div className="w-10 h-10 rounded-full bg-rose-100 border border-rose-300 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
               <XCircle className="w-6 h-6 text-rose-600" />
@@ -353,7 +361,7 @@ export function StatusTimeline({
         {isUndelivered && (
           <div
             role="alert"
-            className="mt-5 p-5 rounded-2xl bg-amber-50 border border-amber-200/90 text-amber-900 flex items-start gap-3.5 shadow-xs animate-in fade-in"
+            className="mt-5 p-5 rounded-card bg-amber-50 border border-amber-200/90 text-amber-900 flex items-start gap-3.5 shadow-xs animate-in fade-in"
           >
             <div className="w-10 h-10 rounded-full bg-amber-100 border border-amber-300 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
               <AlertTriangle className="w-6 h-6 text-amber-600" />
@@ -443,7 +451,7 @@ export function StatusTimeline({
                         </span>
                       )}
                     </div>
-                    <div className="mt-2 text-xs font-sans bg-rose-50 border border-rose-200 rounded-xl p-3 text-rose-900 leading-relaxed">
+                    <div className="mt-2 text-xs font-sans bg-rose-50 border border-rose-200 rounded-input p-3 text-rose-900 leading-relaxed">
                       <span className="font-bold ml-1">سبب الإلغاء:</span>
                       {order.cancelReason ||
                         cancelledEvent?.note ||
@@ -482,12 +490,12 @@ export function StatusTimeline({
                   <li
                     key={stage.id}
                     aria-current={isCurrent ? "step" : undefined}
-                    className="relative flex items-start gap-4 sm:gap-5 pr-2 group"
+                    className="relative flex items-start gap-4 sm:gap-5 pr-2 group print:break-inside-avoid"
                   >
                     {/* Stage Node Icon with Pulsing Effect on Active */}
                     <div
                       className={cn(
-                        "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0",
+                        "relative z-10 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shrink-0 print:bg-transparent print:text-gray-800 print:border-2 print:border-gray-400 print:shadow-none print:ring-0 print:scale-100 print:animate-none",
                         // Completed Stage
                         isPast &&
                           "bg-emerald-600 text-white shadow-[0_4px_14px_rgba(16,185,129,0.35)] scale-100",
@@ -503,7 +511,7 @@ export function StatusTimeline({
                       )}
                     >
                       {isPast ? (
-                        <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                        <Check className="w-5 h-5 text-white print:text-gray-800" strokeWidth={3} />
                       ) : (
                         <StageIcon className="w-5 h-5" />
                       )}
@@ -600,13 +608,13 @@ export function StatusTimeline({
                       {isCurrent && stage.id === "stage-6-out-for_delivery" && (
                         <div className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-candy-pill bg-blue-50 border border-blue-200 text-blue-900 font-sans text-xs font-bold shadow-xs">
                           <Truck className="w-4 h-4 text-blue-600 animate-pulse" />
-                          <span>الكابتن في طريقه إليك بصناديق التبريد الملكية 🛵 يرجى إبقاء الهاتف متاحاً</span>
+                          <span>الكابتن في طريقه إليك بصناديق التبريد الملكية يرجى إبقاء الهاتف متاحاً</span>
                         </div>
                       )}
 
                       {/* Timeline Event Note (if available) */}
                       {matchingEvent?.note && (
-                        <div className="mt-2 text-xs font-sans bg-candy-soft/80 border border-candy-line/60 rounded-xl p-2.5 text-candy-ink leading-relaxed">
+                        <div className="mt-2 text-xs font-sans bg-candy-soft/80 border border-candy-line/60 rounded-input p-2.5 text-candy-ink leading-relaxed">
                           <span className="font-bold text-candy-berry ml-1">
                             ملاحظة التحديث:
                           </span>
@@ -665,7 +673,7 @@ export function StatusTimeline({
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
                       {/* Product Thumbnail or Fallback */}
-                      <div className="relative w-12 h-12 rounded-xl bg-candy-soft border border-candy-line/80 overflow-hidden shrink-0 flex items-center justify-center">
+                      <div className="relative w-12 h-12 rounded-input bg-candy-soft border border-candy-line/80 overflow-hidden shrink-0 flex items-center justify-center">
                         <ProductImage
                           src={item.imageUrl}
                           alt={item.productName}
@@ -723,7 +731,7 @@ export function StatusTimeline({
                 <span>رسوم التوصيل:</span>
                 <span className="font-mono font-semibold text-candy-ink">
                   {order.deliveryFee === 0 ? (
-                    <span className="text-emerald-600 font-bold">مجاني 🎉</span>
+                    <span className="text-emerald-600 font-bold">مجاني</span>
                   ) : (
                     `${order.deliveryFee.toFixed(2)} ₪`
                   )}
@@ -743,8 +751,8 @@ export function StatusTimeline({
         )}
       </div>
 
-      {/* 6. Action Bar: Re-order, Contact WhatsApp, New Query, Home */}
-      <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+      {/* 6. Action Bar: Re-order, Contact WhatsApp, New Query, Home (screen only) */}
+      <div data-print-hidden className="flex flex-col sm:flex-row items-center gap-3 pt-2">
         {/* Re-order action available for delivered and cancelled orders */}
         {(order.status === "delivered" || order.status === "cancelled") && (
           <Button
@@ -789,6 +797,16 @@ export function StatusTimeline({
           <Store className="w-4 h-4 text-candy-muted" />
           <span>الرئيسية</span>
         </Link>
+
+        {/* Print the tracking summary / save as PDF */}
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="w-full sm:w-auto min-h-[50px] px-6 bg-candy-soft hover:bg-candy-blush border border-candy-line text-candy-berry hover:text-candy-plum rounded-candy-pill flex items-center justify-center gap-2 font-sans font-bold text-sm transition-colors"
+        >
+          <Printer className="w-4 h-4" />
+          <span>طباعة الملخص أو حفظه PDF</span>
+        </button>
       </div>
     </div>
   );

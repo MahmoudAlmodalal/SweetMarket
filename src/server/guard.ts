@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb, StoredAdminUser } from './db';
+import { getDb, isJtiRevoked, StoredAdminUser } from './db';
 import {
   extractTokenFromRequest,
   verifyMutationOrigin,
@@ -57,6 +57,31 @@ export function requireAdmin(
     return {
       ok: false,
       response: apiError('UNAUTHORIZED', 'الحساب غير نشط أو غير موجود', 401),
+    };
+  }
+
+  // Explicitly revoked sessions (e.g. logout) stay revoked across restarts.
+  if (payload.jti && isJtiRevoked(payload.jti)) {
+    return {
+      ok: false,
+      response: apiError('UNAUTHORIZED', 'تم تسجيل الخروج، يرجى تسجيل الدخول من جديد', 401),
+    };
+  }
+
+  // Sessions minted before the last password change are no longer valid:
+  // the token's mint-time password stamp must match the user's current stamp.
+  // Exact match, so even a session minted in the same second as the change is
+  // rejected, while an immediate re-login (minted with the new stamp) passes.
+  // Tokens without the claim (pre-feature format) carry pwd=null: they still
+  // work for users who never changed a password and die for users who did.
+  if ((payload.pwd ?? null) !== (user.passwordChangedAt ?? null)) {
+    return {
+      ok: false,
+      response: apiError(
+        'UNAUTHORIZED',
+        'تم تغيير كلمة المرور، يرجى تسجيل الدخول من جديد',
+        401
+      ),
     };
   }
 

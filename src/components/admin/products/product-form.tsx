@@ -479,7 +479,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
 
           {/* معاينة شارة الخصم المحسوبة */}
           {parseFloat(price) > 0 && parseFloat(salePrice) > 0 && parseFloat(salePrice) < parseFloat(price) && (
-            <div className="p-3 bg-candy-blush/40 border border-candy-line-dark rounded-2xl flex items-center justify-between text-xs font-sans">
+            <div className="p-3 bg-candy-blush/40 border border-candy-line-dark rounded-card flex items-center justify-between text-xs font-sans">
               <span className="text-candy-ink">
                 نسبة التوفير للزبون:
               </span>
@@ -531,7 +531,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
         </CardHeader>
         <CardContent className="space-y-3">
           {weights.length === 0 ? (
-            <div className="text-center py-6 border-2 border-dashed border-candy-line rounded-2xl text-candy-muted text-xs font-sans space-y-2">
+            <div className="text-center py-6 border-2 border-dashed border-candy-line rounded-card text-candy-muted text-xs font-sans space-y-2">
               <p>لم يتم تحديد خيارات وزن مخصصة لهذا المنتج بعد.</p>
               <p className="text-[11px]">سيتم احتساب السعر الأساسي للوحدة المحددة أعلاه تلقائياً.</p>
               <Button
@@ -549,7 +549,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
               {weights.map((w, index) => (
                 <div
                   key={index}
-                  className="p-3 bg-candy-cream/60 rounded-2xl border border-candy-line grid grid-cols-1 sm:grid-cols-12 gap-3 items-center"
+                  className="p-3 bg-candy-cream/60 rounded-card border border-candy-line grid grid-cols-1 sm:grid-cols-12 gap-3 items-center"
                 >
                   <div className="sm:col-span-5">
                     <label className="block text-[11px] font-bold text-candy-muted mb-1">تسمية الخيار:</label>
@@ -661,9 +661,11 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
           </div>
 
           {/* معاينة الصورة */}
-          <div className="p-4 bg-candy-soft/60 rounded-2xl border border-candy-line flex flex-col sm:flex-row items-center gap-4">
-            <div className="relative w-28 h-28 rounded-2xl overflow-hidden border border-candy-line bg-white flex-shrink-0 shadow-sm">
+          <div className="p-4 bg-candy-soft/60 rounded-card border border-candy-line flex flex-col sm:flex-row items-center gap-4">
+            <div className="relative w-28 h-28 rounded-card overflow-hidden border border-candy-line bg-white flex-shrink-0 shadow-sm">
               {imageUrl && !imageLoadError ? (
+                // معاينة حية لرابط يدخله المدير يدوياً من أي مصدر؛ next/image يقتصر على النطاقات الموثوقة في next.config
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={imageUrl}
                   alt={name || 'معاينة المنتج'}
@@ -697,7 +699,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* مفتاح التوفر */}
-          <div className="p-4 rounded-2xl bg-white border border-candy-line flex items-center justify-between gap-4">
+          <div className="p-4 rounded-card bg-white border border-candy-line flex items-center justify-between gap-4">
             <div>
               <p className="text-sm font-bold text-candy-ink font-sans">
                 حالة توفر المنتج للطلب الفوري
@@ -728,7 +730,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
           </div>
 
           {/* مفتاح التمييز */}
-          <div className="p-4 rounded-2xl bg-white border border-candy-line flex items-center justify-between gap-4">
+          <div className="p-4 rounded-card bg-white border border-candy-line flex items-center justify-between gap-4">
             <div>
               <p className="text-sm font-bold text-candy-ink font-sans">
                 تمييز المنتج في الصفحة الرئيسية (Featured)
@@ -779,7 +781,7 @@ export function ProductForm({ mode, initialProduct }: ProductFormProps) {
         <div
           role="alert"
           aria-live="polite"
-          className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-start gap-3 text-rose-800 text-sm font-sans shadow-sm"
+          className="p-4 bg-rose-50 border border-rose-200 rounded-card flex items-start gap-3 text-rose-800 text-sm font-sans shadow-sm"
         >
           <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-600 mt-0.5" />
           <div className="space-y-1 flex-1">

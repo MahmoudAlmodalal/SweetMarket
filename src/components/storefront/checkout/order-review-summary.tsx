@@ -92,7 +92,7 @@ export function OrderReviewSummary({
           </div>
 
           {isCartEmpty ? (
-            <div className="p-4 rounded-2xl bg-candy-soft text-center text-xs text-candy-muted font-sans border border-dashed border-candy-line">
+            <div className="p-4 rounded-card bg-candy-soft text-center text-xs text-candy-muted font-sans border border-dashed border-candy-line">
               لا توجد منتجات في السلة حالياً
             </div>
           ) : (
@@ -104,7 +104,7 @@ export function OrderReviewSummary({
                     className="pt-2.5 first:pt-0 flex items-center justify-between gap-3 transition-colors"
                   >
                     {/* Item Thumbnail */}
-                    <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-white shrink-0 border border-candy-line/70 shadow-xs">
+                    <div className="relative w-12 h-12 rounded-input overflow-hidden bg-white shrink-0 border border-candy-line/70 shadow-xs">
                       <ProductImage
                         src={item.imageUrl}
                         alt={item.productName}
@@ -203,7 +203,7 @@ export function OrderReviewSummary({
                     <span className="text-xs text-candy-muted font-normal">₪</span>
                   </>
                 ) : (
-                  <span className="text-emerald-600 font-bold">مجاناً 🚚</span>
+                  <span className="text-emerald-600 font-bold">مجاناً</span>
                 )
               ) : (
                 <span className="text-xs text-candy-muted font-normal">
@@ -253,7 +253,7 @@ export function OrderReviewSummary({
             disabled={isSubmitDisabled}
             isLoading={isSubmitting}
             className={cn(
-              "w-full min-h-[54px] rounded-candy-pill font-sans font-extrabold text-sm sm:text-base transition-all duration-200",
+              "w-full min-h-[54px] rounded-button font-sans font-extrabold text-sm sm:text-base transition-all duration-200",
               "bg-emerald-700 hover:bg-emerald-800 text-white shadow-lg active:scale-[0.99]",
               "disabled:bg-gray-200 disabled:text-gray-400 disabled:border-transparent disabled:cursor-not-allowed disabled:shadow-none"
             )}
@@ -280,7 +280,7 @@ export function OrderReviewSummary({
                 بضغطك على تأكيد وإرسال الطلب، سيتم توجيه طلبك فوراً لمطبخ كاندي لوز لبدء التجهيز الفوري والتنسيق معك هاتفياً.
               </p>
             ) : (
-              <div className="space-y-1.5 p-3 rounded-xl bg-candy-soft/60 border border-candy-line/60 text-right">
+              <div className="space-y-1.5 p-3 rounded-input bg-candy-soft/60 border border-candy-line/60 text-right">
                 {isCartEmpty && (
                   <p className="text-candy-rose flex items-center gap-1.5 text-xs">
                     <AlertCircle className="w-4 h-4 shrink-0" />

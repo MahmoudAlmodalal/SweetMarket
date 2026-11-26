@@ -327,7 +327,7 @@ export function evaluateRouteAccess(
  * يحمي ضد هجمات إعادة التوجيه المفتوح (Open Redirect) ومسارات الحلقات المفرغة
  */
 export function validateAdminReturnUrl(url: string | null | undefined): string {
-  const fallback = '/admin/orders';
+  const fallback = '/admin/dashboard';
   if (!url || typeof url !== 'string') {
     return fallback;
   }

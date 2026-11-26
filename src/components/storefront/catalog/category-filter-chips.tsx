@@ -95,17 +95,17 @@ export function CategoryFilterChips({
               aria-selected={isActive}
               onClick={() => onFilterChange(chip.id)}
               className={cn(
-                "group relative flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-candy-pill font-sans text-xs sm:text-sm font-bold transition-all duration-300 shrink-0 select-none",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry/50 active:scale-95",
+                "group relative flex items-center gap-2 px-4 py-2 rounded-full font-sans text-[13px] transition-colors shrink-0 select-none border",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-berry",
                 isActive
-                  ? "bg-gradient-to-r from-candy-strawberry to-candy-berry text-white shadow-candy-cta scale-[1.02] border border-candy-strawberry/50"
-                  : "bg-white/95 backdrop-blur-sm text-candy-ink border border-candy-line/80 hover:border-candy-blush hover:bg-candy-soft text-candy-ink/90 shadow-[0_2px_8px_rgba(43,26,16,0.04)] hover:shadow-[0_4px_12px_rgba(163,29,86,0.08)]"
+                  ? "bg-candy-ink text-white border-candy-ink font-medium"
+                  : "bg-white text-candy-ink border-candy-line-dark/50 hover:border-candy-ink font-normal"
               )}
             >
               <Icon
                 className={cn(
                   "w-4 h-4 transition-transform duration-200 group-hover:scale-110",
-                  isActive ? "text-white" : "text-candy-strawberry"
+                  isActive ? "text-candy-gold" : "text-candy-muted"
                 )}
               />
               <span>{chip.label}</span>
@@ -116,8 +116,8 @@ export function CategoryFilterChips({
                   className={cn(
                     "min-w-5 h-5 px-1.5 rounded-full text-[11px] font-sans font-extrabold flex items-center justify-center leading-none transition-colors",
                     isActive
-                      ? "bg-white/25 text-white border border-white/30"
-                      : "bg-candy-soft text-candy-berry border border-candy-blush/80"
+                      ? "bg-white/20 text-white"
+                      : "bg-candy-soft text-candy-berry"
                   )}
                 >
                   {badgeValue}
@@ -131,7 +131,7 @@ export function CategoryFilterChips({
       {/* حافة التلاشي على الجانب الأيسر (في نظام RTL) لتنبيه المستخدم بوجود عناصر إضافية */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-10 bg-gradient-to-r from-candy-cream via-candy-cream/80 to-transparent sm:hidden"
+        className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-10 bg-candy-soft sm:hidden"
       />
     </div>
   );

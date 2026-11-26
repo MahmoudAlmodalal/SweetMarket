@@ -28,14 +28,14 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
     <div className="w-full max-w-lg mx-auto" dir="rtl">
       <Card
         elevation="md"
-        className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-3xl"
+        className="border-candy-line/80 shadow-candy-2 bg-white overflow-hidden text-center rounded-card"
       >
         {/* شريط الإشعاع العلوي */}
-        <div className="h-1.5 bg-gradient-to-l from-amber-500 via-candy-amber to-candy-berry" aria-hidden="true" />
+        <div className="h-1.5 bg-candy-soft" aria-hidden="true" />
 
         <CardHeader className="pt-8 pb-4 px-6 sm:px-8 border-b border-candy-line/40">
           {/* Lock Icon */}
-          <div className="inline-flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-3xl bg-amber-50 border-2 border-amber-200/80 text-amber-700 shadow-sm animate-pulse">
+          <div className="inline-flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-card bg-amber-50 border-2 border-amber-200/80 text-amber-700 shadow-sm animate-pulse">
             <Lock className="w-8 h-8" aria-hidden="true" />
           </div>
 
@@ -58,12 +58,12 @@ export function GuestUnauthenticatedCard({ rawFrom }: GuestUnauthenticatedCardPr
         <CardContent className="p-6 sm:p-8 space-y-6">
           {/* Status Box */}
           <div
-            className="p-4 rounded-2xl bg-candy-soft/80 border border-candy-line text-right flex items-center justify-between shadow-2xs"
+            className="p-4 rounded-card bg-candy-soft/80 border border-candy-line text-right flex items-center justify-between shadow-2xs"
             role="region"
             aria-label="حالة الجلسة"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-candy-blush/60 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
+              <div className="w-10 h-10 rounded-input bg-candy-blush/60 flex items-center justify-center text-candy-berry shrink-0 shadow-xs">
                 <Lock className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>

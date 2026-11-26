@@ -31,7 +31,7 @@ async function resolveOrStartServer() {
     return { baseUrl, serverProcess: null };
   }
 
-  console.log(`⏳ Starting Next.js dev server on ${baseUrl}...`);
+  console.log(`⏳ Starting Next.js production server (next start) on ${baseUrl}...`);
   const serverProcess = spawn('npx', ['next', 'start', '-p', String(DEFAULT_PORT)], {
     stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: String(DEFAULT_PORT) },
@@ -46,7 +46,7 @@ async function resolveOrStartServer() {
   const start = Date.now();
   while (Date.now() - start < maxWaitMs) {
     if (await isServerRunning(baseUrl)) {
-      console.log(`✅ Next.js dev server ready at ${baseUrl}`);
+      console.log(`✅ Next.js production server (next start) ready at ${baseUrl}`);
       return { baseUrl, serverProcess };
     }
     await new Promise((r) => setTimeout(r, 800));
@@ -94,7 +94,7 @@ async function runAssertions() {
         await header.waitFor({ state: 'visible' });
 
         // Brand Logo assertion
-        const logo = page.locator('header img, header a[href="/"] svg').first();
+        const logo = page.locator('header img, header a[href="/"] svg, header a[href="/"] [role="img"]').first();
         assert(await logo.isVisible(), 'Brand logo must be visible in header');
 
         // Cart action visible
@@ -227,11 +227,9 @@ async function runAssertions() {
           await demoPill.click();
           await page.waitForTimeout(300);
 
-          const submitQuery = page.locator('button:has-text("استعلام عن حالة الطلب")').first();
-          if (await submitQuery.isVisible()) {
-            await submitQuery.click();
-            await page.waitForTimeout(600);
-          }
+          // The demo pill runs the lookup itself and replaces the form with the
+          // result, so wait for the timeline instead of racing the submit button.
+          await page.locator('ol[aria-label*="مراحل"]').first().waitFor({ state: 'visible', timeout: 10000 });
 
           // Timeline check
           const timeline = page.locator('ol[aria-label*="مراحل"], div:has-text("الخط الزمني")');

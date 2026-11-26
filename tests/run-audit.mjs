@@ -33,7 +33,7 @@ const SCREENS = [
   { id: 'SCR-17', name: 'إدارة التصنيفات (Categories)', path: '/admin/categories', role: 'admin' },
   { id: 'SCR-18', name: 'مناطق التوصيل (Zones)', path: '/admin/zones', role: 'admin' },
   { id: 'SCR-19', name: 'إدارة فريق العمل (Users)', path: '/admin/users', role: 'admin' },
-  { id: 'SCR-20', name: 'غير مصرح (Forbidden)', path: '/admin/forbidden', role: 'guest' },
+  { id: 'SCR-20', name: 'غير مصرح (Forbidden)', path: '/admin/forbidden', role: 'staff' },
 ];
 
 async function runAudit() {
@@ -50,13 +50,33 @@ async function runAudit() {
     summary: { passed: 0, failed: 0, notRun: 0 },
   };
 
+  const AUDIT_SECTIONS = (process.env.AUDIT_SECTIONS || '1,2,3,4').split(',').map((s) => s.trim());
+  const AUDIT_SCREENS = process.env.AUDIT_SCREENS ? process.env.AUDIT_SCREENS.split(',').map((s) => s.trim()) : null;
+
+  // Assert the demo session for the intended role is actually established.
+  // Returns the session user or null; callers must record an explicit failure on null.
+  async function assertDemoSession(page, expectedRoles) {
+    for (let a = 0; a < 4; a++) {
+      const me = await page.evaluate(async () => {
+        const r = await fetch('/api/v1/admin/auth/me');
+        if (!r.ok) return null;
+        const b = await r.json();
+        return b?.data?.user ?? null;
+      });
+      if (me && expectedRoles.includes(me.role)) return me;
+      await page.waitForTimeout(800);
+    }
+    return null;
+  }
+
   try {
+    if (AUDIT_SECTIONS.includes('1')) {
     // ------------------------------------------------------------------------
     // SECTION 1: VERIFY ALL 20 SCREENS ACROSS VIEWPORTS
     // ------------------------------------------------------------------------
     console.log('\n--- Section 1: Screen & Viewport Matrix ---');
 
-    for (const screen of SCREENS) {
+    for (const screen of (AUDIT_SCREENS ? SCREENS.filter((s) => AUDIT_SCREENS.includes(s.id)) : SCREENS)) {
       console.log(`Auditing ${screen.id}: ${screen.name} (${screen.path})...`);
 
       if (screen.isErrorBoundary) {
@@ -98,9 +118,27 @@ async function runAudit() {
         const quickRole = screen.role === 'admin' ? 'دخول كمدير' : 'دخول كموظف';
         const quickBtn = page.locator(`button:has-text("${quickRole}")`).first();
         if ((await quickBtn.count()) > 0) {
-          await quickBtn.click();
-          await page.waitForTimeout(600);
+          await Promise.all([
+            page.waitForResponse((r) => r.url().includes('/admin/auth/demo-login'), { timeout: 10000 }).catch(() => null),
+            quickBtn.click(),
+          ]);
+          await page.waitForTimeout(300);
         }
+      }
+
+      // Resolve the seeded order id at runtime (seeds use generated ids, not mock ids)
+      if (screen.path.includes('ord-mock-01')) {
+        let firstOrderId = null;
+        for (let attempt = 0; attempt < 4 && !firstOrderId; attempt++) {
+          firstOrderId = await page.evaluate(async () => {
+            const r = await fetch('/api/v1/admin/orders?limit=1');
+            if (!r.ok) return null;
+            const body = await r.json();
+            return body?.data?.[0]?.id ?? null;
+          });
+          if (!firstOrderId) await page.waitForTimeout(800);
+        }
+        if (firstOrderId) screen.path = screen.path.replace('ord-mock-01', firstOrderId);
       }
 
       const screenStatus = {
@@ -112,6 +150,21 @@ async function runAudit() {
         passed: true,
         errors: [],
       };
+
+      // Authenticated-role assertion: a protected screen must be audited under the
+      // intended session, not as a guest (guest redirects still pass layout checks).
+      if (screen.role === 'staff' || screen.role === 'admin') {
+        const expected = screen.role === 'admin' ? ['manager', 'admin'] : ['staff', 'manager', 'admin'];
+        const session = await assertDemoSession(page, expected);
+        if (!session) {
+          screenStatus.passed = false;
+          screenStatus.errors.push(
+            `AUTH SETUP FAILED: no ${screen.role} session after demo login (production needs ALLOW_DEMO_LOGIN=true)`
+          );
+        } else {
+          screenStatus.authenticatedRole = session.role;
+        }
+      }
 
       for (const vp of VIEWPORTS) {
         await page.setViewportSize({ width: vp.width, height: vp.height });
@@ -163,6 +216,18 @@ async function runAudit() {
         };
       }
 
+      // SCR-20: with an authenticated staff session, the expected denial is the
+      // staff forbidden card ("صلاحية غير كافية"), not a 401 from a missing session.
+      if (screen.id === 'SCR-20' && screenStatus.authenticatedRole) {
+        const denialContent = await page.content();
+        if (!denialContent.includes('صلاحية غير كافية')) {
+          screenStatus.passed = false;
+          screenStatus.errors.push('SCR-20 did not render the staff forbidden card for an authenticated staff session');
+        } else {
+          screenStatus.staffDenialCard = true;
+        }
+      }
+
       screenStatus.consoleErrors = consoleErrors;
       if (consoleErrors.length > 0) {
         // filter benign next.js dev warnings and expected 404 responses for the 404 test screen
@@ -185,6 +250,9 @@ async function runAudit() {
       await context.close();
     }
 
+    }
+
+    if (AUDIT_SECTIONS.includes('2')) {
     // ------------------------------------------------------------------------
     // SECTION 2: ROLE-BASED ACCESS CONTROL (RBAC) & PERMISSION GUARDS
     // ------------------------------------------------------------------------
@@ -215,6 +283,13 @@ async function runAudit() {
       await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle' });
       await page.locator('button:has-text("دخول كموظف"), button:has-text("كموظف")').first().click();
       await page.waitForTimeout(600);
+
+      const staffSession = await assertDemoSession(page, ['staff']);
+      auditReport.rbacResults.push({
+        test: 'Staff demo login establishes an authenticated staff session',
+        expected: 'auth/me returns role staff',
+        passed: Boolean(staffSession && staffSession.role === 'staff'),
+      });
 
       // Verify orders accessible
       await page.goto(`${BASE_URL}/admin/orders`, { waitUntil: 'networkidle' });
@@ -274,6 +349,14 @@ async function runAudit() {
       await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle' });
       await page.locator('button:has-text("دخول كمدير"), button:has-text("كمدير")').first().click();
       await page.waitForTimeout(600);
+      const managerSession = await assertDemoSession(page, ['manager', 'admin']);
+      auditReport.rbacResults.push({
+        test: 'Manager demo login establishes an authenticated manager session',
+        expected: 'auth/me returns role manager',
+        passed: Boolean(managerSession),
+      });
+
+      await page.waitForTimeout(600);
 
       // Verify access to /admin/users
       await page.goto(`${BASE_URL}/admin/users`, { waitUntil: 'networkidle' });
@@ -315,6 +398,9 @@ async function runAudit() {
       await context.close();
     }
 
+    }
+
+    if (AUDIT_SECTIONS.includes('3')) {
     // ------------------------------------------------------------------------
     // SECTION 3: FORM INTERACTIONS & END-TO-END MOCK FLOWS
     // ------------------------------------------------------------------------
@@ -352,18 +438,18 @@ async function runAudit() {
       await page.waitForTimeout(600);
 
       const submitBtn = page.locator('button:has-text("تأكيد وإرسال الطلب")').first();
-      const isInitialSubmitDisabled = await submitBtn.isDisabled();
-      const helperContent = await page.content();
-      const hasHelperValidation =
-        helperContent.includes('يرجى اختيار منطقة التوصيل') ||
-        helperContent.includes('يرجى استكمال الحقول الإلزامية') ||
-        helperContent.includes('بضغطك على تأكيد وإرسال الطلب') ||
-        isInitialSubmitDisabled;
+      // Design: CTA stays enabled with items in cart; empty-form submit surfaces validation
+      await submitBtn.click();
+      await page.waitForTimeout(800);
+      const afterContent = await page.content();
+      const showsGuidance = afterContent.includes('يرجى استكمال');
+      const showsFieldErrors =
+        (await page.locator('#checkout-phone-error, [aria-invalid="true"]').count()) > 0;
 
       auditReport.formInteractionResults.push({
-        flow: 'Empty checkout submission triggers proactive validation guards & disabled CTA',
-        expected: 'Submit button disabled and guidance displayed',
-        passed: isInitialSubmitDisabled && hasHelperValidation,
+        flow: 'Empty checkout submission surfaces on-submit validation guidance',
+        expected: 'Missing-fields alert and field-level errors displayed after submit',
+        passed: showsGuidance || showsFieldErrors,
       });
 
       // 3.3: Complete valid checkout
@@ -405,10 +491,20 @@ async function runAudit() {
       // 3.4: Track Order (SCR-07)
       if (orderNumber) {
         await page.goto(`${BASE_URL}/track?order=${orderNumber}`, { waitUntil: 'networkidle' });
-        await page.waitForTimeout(600);
-        await page.fill('#track-phone', '0599123456');
-        await page.locator('button[type="submit"]').click();
-        await page.waitForTimeout(1500);
+        // The checkout handoff (sessionStorage) may auto-submit the lookup and
+        // swap the form for the timeline before we can type — that seamless
+        // transition is intended, so wait for either state instead of racing it.
+        const phoneField = page.locator('#track-phone');
+        const timelineMarker = page.locator('text=خط سير الطلب');
+        const raceWinner = await Promise.race([
+          phoneField.waitFor({ state: 'visible', timeout: 8000 }).then(() => 'form'),
+          timelineMarker.waitFor({ state: 'visible', timeout: 8000 }).then(() => 'timeline'),
+        ]).catch(() => 'neither');
+        if (raceWinner === 'form') {
+          await page.fill('#track-phone', '0599123456');
+          await page.locator('button[type="submit"]').click();
+          await page.waitForTimeout(1500);
+        }
         const trackContent = await page.content();
         const foundOrder = trackContent.includes(orderNumber) || trackContent.includes('جديد') || trackContent.includes('خط سير الطلب');
 
@@ -422,6 +518,9 @@ async function runAudit() {
       await context.close();
     }
 
+    }
+
+    if (AUDIT_SECTIONS.includes('4')) {
     // ------------------------------------------------------------------------
     // SECTION 4: ACCESSIBILITY (WCAG 2.1 AA) CHECKS
     // ------------------------------------------------------------------------
@@ -480,8 +579,29 @@ async function runAudit() {
       await context.close();
     }
 
-    // Save output
+    }
+
+    // Save output (merge prior partial results when running a section subset)
     const jsonPath = path.resolve('tests/audit-results.json');
+    if ((process.env.AUDIT_SECTIONS || process.env.AUDIT_SCREENS) && fs.existsSync(jsonPath)) {
+      try {
+        const prior = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+        if (prior.screenResults) {
+          if (!AUDIT_SECTIONS.includes('1')) {
+            auditReport.screenResults = prior.screenResults;
+          } else {
+            const byId = new Map(prior.screenResults.map((s) => [s.id, s]));
+            for (const s of auditReport.screenResults) byId.set(s.id, s);
+            auditReport.screenResults = [...byId.values()];
+          }
+        }
+        if (!AUDIT_SECTIONS.includes('2') && prior.rbacResults) auditReport.rbacResults = prior.rbacResults;
+        if (!AUDIT_SECTIONS.includes('3') && prior.formInteractionResults) auditReport.formInteractionResults = prior.formInteractionResults;
+        if (!AUDIT_SECTIONS.includes('4') && prior.a11yResults) auditReport.a11yResults = prior.a11yResults;
+        auditReport.summary.passed = auditReport.screenResults.filter((s) => s.passed && (!s.errors || s.errors.length === 0)).length;
+        auditReport.summary.failed = auditReport.screenResults.length - auditReport.summary.passed;
+      } catch {}
+    }
     fs.writeFileSync(jsonPath, JSON.stringify(auditReport, null, 2));
     console.log(`\n Audit completed! Results saved to ${jsonPath}`);
     console.log(`Summary: Passed: ${auditReport.summary.passed}, Failed: ${auditReport.summary.failed}`);

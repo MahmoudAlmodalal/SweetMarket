@@ -66,7 +66,7 @@ export function QuantityStepper({
       role="group"
       aria-label="محدد كمية الطلب"
       className={cn(
-        "inline-flex items-center bg-candy-soft rounded-candy-pill border border-candy-line/80 shadow-inner select-none transition-all duration-200",
+        "inline-flex items-center bg-candy-soft rounded-button border border-candy-line/80 shadow-inner select-none transition-all duration-200",
         sizeClasses.container,
         disabled && "opacity-60 pointer-events-none",
         className
@@ -80,7 +80,7 @@ export function QuantityStepper({
         disabled={isMin}
         onClick={handleDecrement}
         className={cn(
-          "rounded-full bg-white text-candy-berry flex items-center justify-center font-bold shadow-sm transition-all duration-150 ease-out",
+          "rounded-button bg-white text-candy-berry flex items-center justify-center font-bold shadow-sm transition-all duration-150 ease-out",
           "hover:bg-candy-soft/80 active:scale-85 active:shadow-inner focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry",
           "disabled:opacity-35 disabled:cursor-not-allowed disabled:active:scale-100 disabled:shadow-none",
           sizeClasses.btn
@@ -117,7 +117,7 @@ export function QuantityStepper({
         disabled={isMax}
         onClick={handleIncrement}
         className={cn(
-          "rounded-full bg-candy-strawberry text-white flex items-center justify-center font-bold shadow-candy-cta transition-all duration-150 ease-out",
+          "rounded-button bg-candy-strawberry text-white flex items-center justify-center font-bold shadow-candy-cta transition-all duration-150 ease-out",
           "hover:bg-candy-berry-dark active:scale-85 active:shadow-inner focus:outline-none focus-visible:ring-2 focus-visible:ring-candy-strawberry",
           "disabled:opacity-35 disabled:cursor-not-allowed disabled:active:scale-100 disabled:shadow-none",
           sizeClasses.btn

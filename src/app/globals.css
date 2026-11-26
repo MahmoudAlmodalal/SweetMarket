@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "./tokens.css";
 
 @tailwind base;
@@ -16,15 +17,13 @@
 
   body {
     color: var(--color-text);
-    background:
-      radial-gradient(circle at 100% 0%, rgba(253, 242, 244, 0.85), transparent 34rem),
-      radial-gradient(circle at 0% 100%, rgba(255, 248, 242, 0.70), transparent 28rem),
-      var(--color-bg);
+    background: var(--color-bg);
     font-family: var(--font-body);
     font-size: var(--fs-body);
     font-weight: var(--fw-regular);
     line-height: var(--lh-body);
     min-height: 100vh;
+    overflow-x: clip;
     text-align: start;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -48,6 +47,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
     font-weight: var(--fw-bold);
+    letter-spacing: 0;
     line-height: var(--lh-heading);
     color: var(--color-text);
   }
@@ -87,10 +87,23 @@
   }
 
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     color: var(--color-primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+  }
+  .rule-double {
+    border: 0;
+    height: 5px;
+    border-block: 1px solid var(--color-border);
   }
 }
 
@@ -315,4 +328,56 @@ body[data-capture-mode] [data-mobile-dock] {
   margin-top: auto !important;
   margin-bottom: 1rem !important;
   pointer-events: auto !important;
+}
+
+/* ---- Thin berry/honey band (replaces the old embroidery strip) ---- */
+.tatreez {
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-primary) 0 70%, var(--color-accent) 70% 100%);
+}
+.stamp { transform: none; }
+
+/* ---- Print styles: clean invoices/order details (T: طباعة الفاتورة) ---- */
+@media print {
+  /* هوامش ورقة حتى لا يلتصق المحتوى بأطراف الصفحة */
+  @page {
+    margin: 12mm;
+  }
+
+  /* إخفاء هيكل التنقل والأزرار وعناصر التفاعل */
+  aside,
+  header,
+  footer,
+  nav,
+  button,
+  [role="dialog"],
+  [data-mobile-dock],
+  [data-print-hidden] {
+    display: none !important;
+  }
+
+  /* تحرير قيود الارتفاع والتمرير المخصصة للشاشة حتى يطبع المحتوى كاملاً */
+  html,
+  body,
+  div,
+  main {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  body {
+    background: #ffffff !important;
+  }
+
+  main#main-content {
+    padding: 0 !important;
+  }
+
+  /* إبقاء البطاقات والمقاطع دون انقسام بين الصفحات قدر الإمكان */
+  .rounded-card,
+  section,
+  [data-print-keep] {
+    break-inside: avoid !important;
+  }
 }

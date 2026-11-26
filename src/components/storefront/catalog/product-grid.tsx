@@ -34,7 +34,7 @@ function ProductCardSkeleton({ index }: { index: number }) {
     >
       <div className="flex flex-col gap-2.5">
         {/* Image Cradle Skeleton with Shimmer sweep */}
-        <div className="relative w-full aspect-[4/5] rounded-[18px] bg-gradient-to-r from-candy-soft via-candy-blush/40 to-candy-soft bg-[length:200%_100%] overflow-hidden" />
+        <div className="relative w-full aspect-[4/5] rounded-card bg-candy-soft bg-[length:200%_100%] overflow-hidden" />
 
         {/* Title & Description Skeleton */}
         <div className="flex flex-col gap-1.5 pt-1">
@@ -78,7 +78,7 @@ export function ProductGrid({
         aria-label="جاري تحميل المنتجات"
         aria-busy="true"
         className={cn(
-          "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 w-full",
+          "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 w-full",
           className
         )}
       >
@@ -225,7 +225,7 @@ export function ProductGrid({
     <section
       aria-label="قائمة منتجات التصنيف"
       className={cn(
-        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 w-full",
+        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 w-full",
         className
       )}
     >

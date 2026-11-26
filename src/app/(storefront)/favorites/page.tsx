@@ -139,7 +139,7 @@ export default function FavoritesPage() {
       </nav>
 
       {/* Header */}
-      <header className="rounded-3xl bg-white border border-candy-line p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <header className="rounded-card bg-white border border-candy-line p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1.5">
           <p className="font-sans text-xs font-semibold text-candy-berry">اختياراتك المحفوظة</p>
           <h1 className="font-display font-bold text-2xl sm:text-3xl text-candy-ink">
@@ -151,7 +151,7 @@ export default function FavoritesPage() {
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
-          <span className="text-xs font-semibold text-candy-muted tabular-nums px-3 py-1.5 rounded-xl bg-candy-soft border border-candy-line">
+          <span className="text-xs font-semibold text-candy-muted tabular-nums px-3 py-1.5 rounded-input bg-candy-soft border border-candy-line">
             {getFavoritesCountLabel(favoriteProducts.length)}
           </span>
 
@@ -187,7 +187,7 @@ export default function FavoritesPage() {
       <Dialog open={isClearDialogOpen} onOpenChange={setIsClearDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-2">
+            <div className="w-11 h-11 rounded-card bg-rose-50 text-rose-600 flex items-center justify-center mb-2">
               <AlertCircle className="w-5 h-5" />
             </div>
             <DialogTitle className="text-candy-ink">
@@ -246,9 +246,9 @@ export default function FavoritesPage() {
         <section
           role="region"
           aria-label="قائمة المفضلة فارغة"
-          className="rounded-3xl bg-white border border-candy-line p-8 sm:p-14 text-center max-w-2xl mx-auto"
+          className="rounded-card bg-white border border-candy-line p-8 sm:p-14 text-center max-w-2xl mx-auto"
         >
-          <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-line text-candy-berry flex items-center justify-center mx-auto mb-5">
+          <div className="w-16 h-16 rounded-card bg-candy-soft border border-candy-line text-candy-berry flex items-center justify-center mx-auto mb-5">
             <Heart className="w-7 h-7" />
           </div>
 
@@ -262,19 +262,19 @@ export default function FavoritesPage() {
           <div className="flex items-center justify-center gap-2 flex-wrap mb-7">
             <Link
               href="/category/baklava-eastern"
-              className="text-xs font-semibold px-3.5 py-2 rounded-xl bg-candy-soft hover:bg-candy-blush/50 text-candy-ink border border-candy-line transition-colors"
+              className="text-xs font-semibold px-3.5 py-2 rounded-input bg-candy-soft hover:bg-candy-blush/50 text-candy-ink border border-candy-line transition-colors"
             >
               البقلاوة والحلويات الشرقية
             </Link>
             <Link
               href="/category/chocolate-gifts"
-              className="text-xs font-semibold px-3.5 py-2 rounded-xl bg-candy-soft hover:bg-candy-blush/50 text-candy-ink border border-candy-line transition-colors"
+              className="text-xs font-semibold px-3.5 py-2 rounded-input bg-candy-soft hover:bg-candy-blush/50 text-candy-ink border border-candy-line transition-colors"
             >
               الشوكولاتة والهدايا
             </Link>
             <Link
               href="/category/cakes-tarts"
-              className="text-xs font-semibold px-3.5 py-2 rounded-xl bg-candy-soft hover:bg-candy-blush/50 text-candy-ink border border-candy-line transition-colors"
+              className="text-xs font-semibold px-3.5 py-2 rounded-input bg-candy-soft hover:bg-candy-blush/50 text-candy-ink border border-candy-line transition-colors"
             >
               الكيك والتورتات
             </Link>

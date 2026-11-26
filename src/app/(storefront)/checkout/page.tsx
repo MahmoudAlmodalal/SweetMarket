@@ -361,7 +361,7 @@ export default function CheckoutPage() {
 
           <Link
             href="/cart"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-white px-3.5 py-2 rounded-xl border border-candy-line"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-candy-berry hover:text-candy-strawberry transition-colors bg-white px-3.5 py-2 rounded-input border border-candy-line"
           >
             <ArrowRight className="w-4 h-4" />
             <span>العودة لتعديل السلة</span>
@@ -370,7 +370,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* 2. Stepper & Security Seal Context */}
-      <section className="w-full rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-xs">
+      <section className="w-full rounded-card bg-white p-4 sm:p-5 border border-candy-line/80 shadow-xs">
         <div className="flex items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2 text-candy-ink">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -431,7 +431,7 @@ export default function CheckoutPage() {
         <div
           role="alert"
           id="checkout-validation-alert"
-          className="rounded-2xl bg-rose-50 border border-rose-300 p-4 flex items-center gap-3 text-rose-800 text-sm font-sans font-bold shadow-xs animate-in fade-in"
+          className="rounded-card bg-rose-50 border border-rose-300 p-4 flex items-center gap-3 text-rose-800 text-sm font-sans font-bold shadow-xs animate-in fade-in"
         >
           <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
           <span>يرجى استكمال {missingFieldsCount} حقول مطلوبة بالبيانات الصحيحة</span>
@@ -441,7 +441,7 @@ export default function CheckoutPage() {
       {submissionError && (
         <div
           role="alert"
-          className="rounded-2xl bg-rose-50 border border-rose-200 p-4 flex items-center gap-3 text-rose-900 text-sm font-sans shadow-xs animate-in fade-in"
+          className="rounded-card bg-rose-50 border border-rose-200 p-4 flex items-center gap-3 text-rose-900 text-sm font-sans shadow-xs animate-in fade-in"
         >
           <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
           <div className="flex-1">

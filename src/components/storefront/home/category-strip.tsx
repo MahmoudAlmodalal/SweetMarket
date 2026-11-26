@@ -2,10 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types";
-import { ProductImage } from "@/components/storefront/catalog/product-image";
 
 export interface CategoryStripProps {
   categories?: Category[];
@@ -13,144 +11,69 @@ export interface CategoryStripProps {
   className?: string;
 }
 
+const AR_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+const toAr = (n: number) =>
+  String(n)
+    .padStart(2, "0")
+    .split("")
+    .map((d) => AR_DIGITS[Number(d)])
+    .join("");
+
 export function CategoryStrip({
   categories = [],
   activeSlug,
   className,
 }: CategoryStripProps) {
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-  const activeCategories = categories.filter((c) => c.isActive !== false);
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = direction === "left" ? -280 : 280;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
+  const list = categories.filter((c) => c.isActive !== false);
 
   return (
     <section
       id="categories"
       aria-label="تصنيفات متجر كاندي لوز"
-      className={cn("flex flex-col gap-5 w-full", className)}
+      className={cn("w-full", className)}
     >
-      {/* Clean Section Header */}
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <p className="text-xs font-sans font-semibold text-candy-berry mb-1">
-            تصفح حسب القسم
-          </p>
-          <h2 className="font-display font-bold text-2xl sm:text-3xl text-candy-ink tracking-tight">
-            أقسام الحلويات
-          </h2>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => scroll("right")}
-              aria-label="التمرير لليمين"
-              className="w-9 h-9 rounded-xl border border-candy-line bg-white text-candy-ink/75 hover:text-candy-berry hover:border-candy-berry/40 flex items-center justify-center transition-colors"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scroll("left")}
-              aria-label="التمرير لليسار"
-              className="w-9 h-9 rounded-xl border border-candy-line bg-white text-candy-ink/75 hover:text-candy-berry hover:border-candy-berry/40 flex items-center justify-center transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-          </div>
-
-          <Link
-            href="/category/all"
-            className="inline-flex items-center gap-1 font-sans font-bold text-xs sm:text-sm text-candy-berry hover:text-candy-berry-dark transition-colors"
-          >
-            <span>عرض الكل</span>
-            <ChevronLeft className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Cohesive Category Cards Rail */}
-      <div
-        ref={scrollRef}
-        tabIndex={0}
-        aria-label="قائمة التصنيفات الأفقية"
-        className="flex items-stretch gap-3.5 sm:gap-4 overflow-x-auto overscroll-x-contain scroll-smooth touch-pan-x snap-x snap-mandatory pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {/* All Products Card */}
+      <div className="flex items-end justify-between gap-4 pb-4 border-b-2 border-candy-ink">
+        <h2 className="font-display font-bold text-3xl sm:text-4xl text-candy-ink">
+          قائمة الحلويات
+        </h2>
         <Link
           href="/category/all"
-          className={cn(
-            "group flex flex-col items-center gap-2.5 min-w-[104px] sm:min-w-[132px] p-3 rounded-2xl border transition-all shrink-0 snap-start",
-            !activeSlug || activeSlug === "all"
-              ? "bg-candy-berry border-candy-berry text-white shadow-[0_8px_20px_rgba(163,29,86,0.2)]"
-              : "bg-white border-candy-line/80 text-candy-ink hover:border-candy-berry/40"
-          )}
+          className="font-medium text-sm text-candy-berry hover:text-candy-berry-dark inline-flex items-center gap-1"
         >
-          <div
-            className={cn(
-              "w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105",
-              !activeSlug || activeSlug === "all"
-                ? "bg-white/15 text-white"
-                : "bg-candy-soft text-candy-berry"
-            )}
-          >
-            <LayoutGrid className="w-6 h-6" />
-          </div>
-          <span className="font-sans font-bold text-xs sm:text-sm text-center leading-snug">
-            كل الأصناف
-          </span>
+          الكل
         </Link>
+      </div>
 
-        {/* Dynamic Categories */}
-        {activeCategories.map((cat) => {
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pt-7">
+        {list.map((cat, i) => {
           const isActive = activeSlug === cat.slug;
           return (
-            <Link
-              key={cat.id}
-              href={`/category/${cat.slug}`}
-              className={cn(
-                "group flex flex-col items-center gap-2.5 min-w-[110px] sm:min-w-[140px] p-3 rounded-2xl border transition-all shrink-0 snap-start",
-                isActive
-                  ? "bg-candy-soft/90 border-candy-berry text-candy-berry shadow-sm"
-                  : "bg-white border-candy-line/80 text-candy-ink hover:border-candy-berry/40 hover:shadow-[0_8px_20px_rgba(43,26,16,0.05)]"
-              )}
-            >
-              <div
+            <li key={cat.id} className={cn(i === list.length - 1 && list.length % 2 === 1 && "sm:col-span-2", i === list.length - 1 && list.length % 3 === 1 && "lg:col-span-3", i === list.length - 1 && list.length % 3 === 2 && "lg:col-span-2")}>
+              <Link
+                href={`/category/${cat.slug}`}
                 className={cn(
-                  "relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border transition-all duration-300",
-                  isActive
-                    ? "border-candy-berry ring-2 ring-candy-berry/20"
-                    : "border-candy-line/70 group-hover:border-candy-berry/40"
+                  "group flex items-center gap-4 px-4 sm:px-5 py-5 min-h-[88px] rounded-card border border-candy-line bg-white transition-colors hover:bg-candy-berry hover:border-candy-berry",
+                  "focus-visible:border-candy-berry",
+                  isActive && "border-candy-berry bg-candy-berry-subtle"
                 )}
               >
-                <ProductImage
-                  src={cat.imageUrl}
-                  alt={cat.name}
-                  fill
-                  sizes="(max-width: 640px) 64px, 80px"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <span
-                className={cn(
-                  "font-sans text-xs sm:text-sm text-center leading-snug line-clamp-2",
-                  isActive
-                    ? "font-bold text-candy-berry"
-                    : "font-semibold text-candy-ink group-hover:text-candy-berry transition-colors"
-                )}
-              >
-                {cat.name}
-              </span>
-            </Link>
+                <span className="font-display text-3xl sm:text-4xl font-bold text-candy-gold group-hover:text-white tabular-nums w-14 shrink-0">
+                  {toAr(i + 1)}
+                </span>
+                <span className="font-display font-bold text-lg sm:text-xl text-candy-ink group-hover:text-white leading-snug flex-1">
+                  {cat.name}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="text-xl text-candy-ink group-hover:text-white transition-transform group-hover:-translate-x-1"
+                >
+                  ←
+                </span>
+              </Link>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </section>
   );
 }

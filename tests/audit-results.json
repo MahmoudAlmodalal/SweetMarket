@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-05T13:45:47.675Z",
+  "timestamp": "2026-11-26T04:43:02.950Z",
   "testedUrl": "http://localhost:3000",
   "screenResults": [
     {
@@ -10,8 +10,8 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
-          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "title": "كاندي لوز | حلويات شرقية وغربية فاخرة",
+          "h1": "حلويات شرقية وغربية\nبطعم الأصالة",
           "hasOverflow": false,
           "scrollWidth": 390,
           "innerWidth": 390,
@@ -20,8 +20,8 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
-          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "title": "كاندي لوز | حلويات شرقية وغربية فاخرة",
+          "h1": "حلويات شرقية وغربية\nبطعم الأصالة",
           "hasOverflow": false,
           "scrollWidth": 768,
           "innerWidth": 768,
@@ -30,8 +30,8 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
-          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "title": "كاندي لوز | حلويات شرقية وغربية فاخرة",
+          "h1": "حلويات شرقية وغربية\nبطعم الأصالة",
           "hasOverflow": false,
           "scrollWidth": 1024,
           "innerWidth": 1024,
@@ -40,8 +40,8 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
-          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "title": "كاندي لوز | حلويات شرقية وغربية فاخرة",
+          "h1": "حلويات شرقية وغربية\nبطعم الأصالة",
           "hasOverflow": false,
           "scrollWidth": 1366,
           "innerWidth": 1366,
@@ -50,8 +50,8 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "الرئيسية | متجر كاندي لوز للحلويات الفاخرة",
-          "h1": "أشهى الحلويات الشرقية والغربية بطعم الأصالة والفخامة",
+          "title": "كاندي لوز | حلويات شرقية وغربية فاخرة",
+          "h1": "حلويات شرقية وغربية\nبطعم الأصالة",
           "hasOverflow": false,
           "scrollWidth": 1440,
           "innerWidth": 1440,
@@ -71,7 +71,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "البقلاوة والحلويات الشرقية",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -81,7 +81,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "البقلاوة والحلويات الشرقية",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -91,7 +91,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "البقلاوة والحلويات الشرقية",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -101,7 +101,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "البقلاوة والحلويات الشرقية",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -111,7 +111,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "البقلاوة والحلويات الشرقية",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -132,7 +132,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "صينية مشكل بقلاوة إكسترا فستق - البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "صينية مشكل بقلاوة إكسترا فستق",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -142,7 +142,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "صينية مشكل بقلاوة إكسترا فستق - البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "صينية مشكل بقلاوة إكسترا فستق",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -152,7 +152,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "صينية مشكل بقلاوة إكسترا فستق - البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "صينية مشكل بقلاوة إكسترا فستق",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -162,7 +162,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "صينية مشكل بقلاوة إكسترا فستق - البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "صينية مشكل بقلاوة إكسترا فستق",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -172,7 +172,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "صينية مشكل بقلاوة إكسترا فستق - البقلاوة والحلويات الشرقية | كاندي لوز",
           "h1": "صينية مشكل بقلاوة إكسترا فستق",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -193,8 +193,8 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "سلتك فارغة وتنتظر أشهى الحلويات!",
           "hasOverflow": false,
           "scrollWidth": 390,
           "innerWidth": 390,
@@ -203,8 +203,8 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "سلتك فارغة وتنتظر أشهى الحلويات!",
           "hasOverflow": false,
           "scrollWidth": 768,
           "innerWidth": 768,
@@ -213,8 +213,8 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "سلتك فارغة وتنتظر أشهى الحلويات!",
           "hasOverflow": false,
           "scrollWidth": 1024,
           "innerWidth": 1024,
@@ -223,8 +223,8 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "سلتك فارغة وتنتظر أشهى الحلويات!",
           "hasOverflow": false,
           "scrollWidth": 1366,
           "innerWidth": 1366,
@@ -233,8 +233,8 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "سلتك فارغة وتنتظر أشهى الحلويات!",
           "hasOverflow": false,
           "scrollWidth": 1440,
           "innerWidth": 1440,
@@ -254,7 +254,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "سلة المشتريات فارغة",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -264,7 +264,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "سلة المشتريات فارغة",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -274,7 +274,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "سلة المشتريات فارغة",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -284,7 +284,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "سلة المشتريات فارغة",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -294,7 +294,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "سلة المشتريات فارغة",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -315,7 +315,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -325,7 +325,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -335,7 +335,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -345,7 +345,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -355,7 +355,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -376,8 +376,8 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "تتبع مسار طلبك الملكي",
           "hasOverflow": false,
           "scrollWidth": 390,
           "innerWidth": 390,
@@ -386,8 +386,8 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "تتبع مسار طلبك الملكي",
           "hasOverflow": false,
           "scrollWidth": 768,
           "innerWidth": 768,
@@ -396,8 +396,8 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "تتبع مسار طلبك الملكي",
           "hasOverflow": false,
           "scrollWidth": 1024,
           "innerWidth": 1024,
@@ -406,8 +406,8 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "تتبع مسار طلبك الملكي",
           "hasOverflow": false,
           "scrollWidth": 1366,
           "innerWidth": 1366,
@@ -416,8 +416,8 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": "تتبع مسار طلبك الملكي 🍰",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "تتبع مسار طلبك الملكي",
           "hasOverflow": false,
           "scrollWidth": 1440,
           "innerWidth": 1440,
@@ -548,13 +548,7 @@
         }
       },
       "passed": true,
-      "errors": [
-        "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "Failed to load resource: the server responded with a status of 404 (Not Found)",
-        "Failed to load resource: the server responded with a status of 404 (Not Found)"
-      ],
+      "errors": [],
       "consoleErrors": [
         "Failed to load resource: the server responded with a status of 404 (Not Found)",
         "Failed to load resource: the server responded with a status of 404 (Not Found)",
@@ -586,8 +580,8 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "بوابة إدارة كاندي لوز",
           "hasOverflow": false,
           "scrollWidth": 390,
           "innerWidth": 390,
@@ -596,8 +590,8 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "بوابة إدارة كاندي لوز",
           "hasOverflow": false,
           "scrollWidth": 768,
           "innerWidth": 768,
@@ -606,8 +600,8 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "بوابة إدارة كاندي لوز",
           "hasOverflow": false,
           "scrollWidth": 1024,
           "innerWidth": 1024,
@@ -616,8 +610,8 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "بوابة إدارة كاندي لوز",
           "hasOverflow": false,
           "scrollWidth": 1366,
           "innerWidth": 1366,
@@ -626,8 +620,8 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
-          "h1": null,
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
+          "h1": "بوابة إدارة كاندي لوز",
           "hasOverflow": false,
           "scrollWidth": 1440,
           "innerWidth": 1440,
@@ -647,7 +641,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "تغيير كلمة المرور",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -657,7 +651,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "تغيير كلمة المرور",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -667,7 +661,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "تغيير كلمة المرور",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -677,7 +671,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "تغيير كلمة المرور",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -687,7 +681,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "تغيير كلمة المرور",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -698,6 +692,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "staff",
       "consoleErrors": []
     },
     {
@@ -708,7 +703,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -718,7 +713,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -728,7 +723,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -738,7 +733,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -748,7 +743,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -759,17 +754,18 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "staff",
       "consoleErrors": []
     },
     {
       "id": "SCR-14",
       "name": "تفاصيل الطلب (Order Detail)",
-      "path": "/admin/orders/ord-mock-01",
+      "path": "/admin/orders/ord-1001",
       "role": "staff",
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -779,7 +775,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -789,7 +785,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -799,7 +795,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -809,7 +805,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة الطلبات",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -820,6 +816,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "staff",
       "consoleErrors": []
     },
     {
@@ -830,7 +827,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -840,7 +837,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -850,7 +847,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -860,7 +857,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -870,7 +867,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -881,6 +878,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "staff",
       "consoleErrors": []
     },
     {
@@ -891,7 +889,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -901,7 +899,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -911,7 +909,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -921,7 +919,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -931,7 +929,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -942,6 +940,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "manager",
       "consoleErrors": []
     },
     {
@@ -952,7 +951,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -962,7 +961,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -972,7 +971,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -982,7 +981,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -992,7 +991,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة المنتجات",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -1003,6 +1002,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "manager",
       "consoleErrors": []
     },
     {
@@ -1013,7 +1013,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة التصنيفات",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -1023,7 +1023,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة التصنيفات",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -1033,7 +1033,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة التصنيفات",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -1043,7 +1043,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة التصنيفات",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -1053,7 +1053,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "إدارة التصنيفات",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -1064,6 +1064,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "manager",
       "consoleErrors": []
     },
     {
@@ -1074,7 +1075,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "مناطق التوصيل",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -1084,7 +1085,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "مناطق التوصيل",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -1094,7 +1095,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "مناطق التوصيل",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -1104,7 +1105,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "مناطق التوصيل",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -1114,7 +1115,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "مناطق التوصيل",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -1125,6 +1126,7 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "manager",
       "consoleErrors": []
     },
     {
@@ -1135,7 +1137,7 @@
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "فريق العمل",
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -1145,7 +1147,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "فريق العمل",
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -1155,7 +1157,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "فريق العمل",
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -1165,7 +1167,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "فريق العمل",
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -1175,7 +1177,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": "فريق العمل",
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -1186,17 +1188,18 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "manager",
       "consoleErrors": []
     },
     {
       "id": "SCR-20",
       "name": "غير مصرح (Forbidden)",
       "path": "/admin/forbidden",
-      "role": "guest",
+      "role": "staff",
       "viewports": {
         "390px (Mobile)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 390,
@@ -1206,7 +1209,7 @@
         },
         "768px (Tablet)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 768,
@@ -1216,7 +1219,7 @@
         },
         "1024px (Small Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 1024,
@@ -1226,7 +1229,7 @@
         },
         "1366px (Standard Laptop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 1366,
@@ -1236,7 +1239,7 @@
         },
         "1440px (Wide Desktop)": {
           "httpStatus": 200,
-          "title": "كاندي لوز | Candy Loz",
+          "title": "كاندي لوز | Candy Loz — حلويات شرقية وغربية فاخرة",
           "h1": null,
           "hasOverflow": false,
           "scrollWidth": 1440,
@@ -1247,6 +1250,8 @@
       },
       "passed": true,
       "errors": [],
+      "authenticatedRole": "staff",
+      "staffDenialCard": true,
       "consoleErrors": []
     }
   ],
@@ -1259,6 +1264,11 @@
       "passed": true
     },
     {
+      "test": "Staff demo login establishes an authenticated staff session",
+      "expected": "auth/me returns role staff",
+      "passed": true
+    },
+    {
       "test": "Staff access to /admin/orders permitted",
       "expected": "Allowed access to orders",
       "actual": "إدارة الطلبات",
@@ -1267,7 +1277,7 @@
     {
       "test": "Staff access to /admin/users blocked & redirected to forbidden/403",
       "expected": "Redirect to /admin/forbidden or 403 guard",
-      "actualUrl": "http://localhost:3000/admin/forbidden?from=/admin/users",
+      "actualUrl": "http://localhost:3000/admin/forbidden?from=%2Fadmin%2Fusers",
       "passed": true
     },
     {
@@ -1281,6 +1291,11 @@
       "passed": true
     },
     {
+      "test": "Manager demo login establishes an authenticated manager session",
+      "expected": "auth/me returns role manager",
+      "passed": true
+    },
+    {
       "test": "Manager access to /admin/users granted",
       "expected": "Allowed access",
       "actual": "فريق العمل",
@@ -1289,7 +1304,7 @@
     {
       "test": "Manager can see Cancel Order button on SCR-14 (FR-018)",
       "expected": "Cancel button visible",
-      "passed": false
+      "passed": true
     },
     {
       "test": "Manager can access Add Product on SCR-15/16",
@@ -1301,21 +1316,21 @@
     {
       "flow": "Add to Cart from SCR-03 and view in SCR-04",
       "expected": "Item successfully added to cart and displayed",
-      "passed": false
+      "passed": true
     },
     {
-      "flow": "Empty checkout submission triggers proactive validation guards & disabled CTA",
-      "expected": "Submit button disabled and guidance displayed",
+      "flow": "Empty checkout submission surfaces on-submit validation guidance",
+      "expected": "Missing-fields alert and field-level errors displayed after submit",
       "passed": true
     },
     {
       "flow": "Valid checkout submission completes and navigates to SCR-06",
       "expected": "Redirect to /checkout/success/:orderNumber",
-      "actualUrl": "http://localhost:3000/checkout/success/CL-2026-4437",
+      "actualUrl": "http://localhost:3000/checkout/success/CL-2026-1007",
       "passed": true
     },
     {
-      "flow": "Track placed order CL-2026-4437 on SCR-07",
+      "flow": "Track placed order CL-2026-1007 on SCR-07",
       "expected": "Order timeline and status displayed",
       "passed": true
     }
@@ -1334,8 +1349,8 @@
     "buttonsWithoutLabels": 0
   },
   "summary": {
-    "passed": 20,
-    "failed": 1,
+    "passed": 21,
+    "failed": 0,
     "notRun": 0
   }
 }

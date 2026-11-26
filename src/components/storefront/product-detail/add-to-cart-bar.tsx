@@ -44,7 +44,7 @@ export function AddToCartBar({
       return (
         <span className="flex items-center gap-2">
           <Check className="w-5 h-5 text-white animate-bounce" />
-          <span>تمت الإضافة بحب ✨</span>
+          <span>تمت الإضافة بحب</span>
         </span>
       );
     }
@@ -69,7 +69,7 @@ export function AddToCartBar({
       {(layout === "inline" || layout === "both") && (
         <div
           className={cn(
-            "hidden md:flex flex-col gap-3 rounded-2xl bg-white p-4 sm:p-5 border border-candy-line/80 shadow-candy-2 transition-shadow duration-300 hover:shadow-candy-3",
+            "hidden md:flex flex-col gap-3 rounded-card bg-white p-4 sm:p-5 border border-candy-line/80 shadow-candy-2 transition-shadow duration-300 hover:shadow-candy-3",
             className
           )}
         >
@@ -80,7 +80,7 @@ export function AddToCartBar({
             disabled={isButtonDisabled}
             aria-label={isAvailable ? `إضافة إلى السلة بقيمة ${totalPrice} ₪` : "المنتج غير متوفر"}
             className={cn(
-              "relative w-full min-h-[52px] px-6 rounded-candy-pill font-sans text-base font-bold flex items-center justify-center transition-all duration-300 select-none overflow-hidden group shadow-candy-cta",
+              "relative w-full min-h-[52px] px-6 rounded-button font-sans text-base font-bold flex items-center justify-center transition-all duration-300 select-none overflow-hidden group shadow-candy-cta",
               isAvailable
                 ? isSuccess
                   ? "bg-candy-berry text-white scale-[0.99]"
@@ -92,7 +92,7 @@ export function AddToCartBar({
             {/* Shimmer light sweep on hover */}
             {isAvailable && !isAdding && !isSuccess && (
               <div
-                className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000"
+                className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-candy-soft transition-transform duration-1000"
                 aria-hidden="true"
               />
             )}
@@ -103,7 +103,7 @@ export function AddToCartBar({
             <button
               type="button"
               onClick={onAddToCart}
-              className="w-full min-h-[46px] rounded-candy-pill bg-black hover:bg-stone-900 text-white font-sans text-sm font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
+              className="w-full min-h-[46px] rounded-button bg-black hover:bg-stone-900 text-white font-sans text-sm font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-all"
             >
               <span>الشراء السريع عبر</span>
               <span className="font-bold tracking-tight text-base">Pay</span>
@@ -112,17 +112,17 @@ export function AddToCartBar({
 
           {/* Mini Trust Badges Grid */}
           <div className="grid grid-cols-3 gap-2 pt-2 border-t border-candy-line/50 text-center">
-            <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
+            <div className="flex flex-col items-center gap-0.5 p-2 rounded-input bg-candy-soft/60">
               <Snowflake className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans text-[11px] font-bold text-candy-ink">توصيل مبرد</span>
               <span className="font-sans text-[9px] text-candy-muted">سيارات مجهزة</span>
             </div>
-            <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
+            <div className="flex flex-col items-center gap-0.5 p-2 rounded-input bg-candy-soft/60">
               <ShieldCheck className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans text-[11px] font-bold text-candy-ink">ضمان الطزاجة</span>
               <span className="font-sans text-[9px] text-candy-muted">قرمشة 21 يوماً</span>
             </div>
-            <div className="flex flex-col items-center gap-0.5 p-2 rounded-xl bg-candy-soft/60">
+            <div className="flex flex-col items-center gap-0.5 p-2 rounded-input bg-candy-soft/60">
               <Lock className="w-4 h-4 text-candy-strawberry" />
               <span className="font-sans text-[11px] font-bold text-candy-ink">دفع آمن 100%</span>
               <span className="font-sans text-[9px] text-candy-muted">مشفر بالكامل</span>
@@ -161,7 +161,7 @@ export function AddToCartBar({
               disabled={isButtonDisabled}
               aria-label={isAvailable ? `إضافة إلى السلة بقيمة ${totalPrice} ₪` : "المنتج غير متوفر"}
               className={cn(
-                "flex-1 min-h-[48px] px-4 rounded-candy-pill font-sans text-sm font-bold flex items-center justify-center transition-all duration-200 select-none shadow-candy-cta active:scale-95",
+                "flex-1 min-h-[48px] px-4 rounded-button font-sans text-sm font-bold flex items-center justify-center transition-all duration-200 select-none shadow-candy-cta active:scale-95",
                 isAvailable
                   ? isSuccess
                     ? "bg-candy-berry text-white shadow-candy-1"
@@ -178,7 +178,7 @@ export function AddToCartBar({
                 ) : isSuccess ? (
                   <span className="flex items-center gap-1.5">
                     <Check className="w-4 h-4 text-white" />
-                    <span>تمت الإضافة ✨</span>
+                    <span>تمت الإضافة</span>
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2 w-full">

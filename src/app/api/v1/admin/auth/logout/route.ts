@@ -5,7 +5,9 @@ import {
   extractTokenFromRequest,
   REFRESH_COOKIE_NAME,
   revokeSessionToken,
+  verifySessionToken,
 } from '@/server/auth';
+import { recordRevokedJti } from '@/server/db';
 import { apiOk, handleRouteError, proxyToUpstreamIfConfigured } from '@/server/http';
 
 export const dynamic = 'force-dynamic';
@@ -39,7 +41,13 @@ export async function POST(req: NextRequest) {
 
     const { token } = extractTokenFromRequest(req);
     if (token) {
+      // Extract the payload before in-memory revocation (afterwards it verifies null),
+      // then persist the jti so the revocation survives a process restart.
+      const payload = verifySessionToken(token);
       revokeSessionToken(token);
+      if (payload?.jti && payload.exp) {
+        recordRevokedJti(payload.jti, payload.exp);
+      }
     }
 
     const res = apiOk({ loggedOut: true });

@@ -20,12 +20,12 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "rounded-candy-card border border-candy-line/90 bg-surface text-candy-ink transition-all duration-300 ease-out",
+          "rounded-card border border-candy-line bg-surface text-candy-ink transition-colors duration-200",
           elevation === "none" && "shadow-none",
-          elevation === "sm" && "shadow-1 hover:shadow-candy-1",
-          elevation === "md" && "shadow-card hover:shadow-candy-2",
+          elevation === "sm" && "shadow-none",
+          elevation === "md" && "shadow-candy-float",
           interactive &&
-            "hover:shadow-candy-2 hover:-translate-y-1 hover:border-candy-rose/40 cursor-pointer active:translate-y-0 active:scale-[0.99] motion-reduce:hover:translate-y-0 motion-reduce:transition-none",
+            "hover:border-candy-berry cursor-pointer",
           className
         )}
         {...props}
@@ -48,10 +48,10 @@ export const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader";
 
 export const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, children, ...props }, ref) => (
-  <h3
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement> & { as?: "h1" | "h2" | "h3" }
+>(({ className, children, as: HeadingTag = "h3", ...props }, ref) => (
+  <HeadingTag
     ref={ref}
     className={cn(
       "font-display font-semibold text-lg sm:text-xl text-candy-ink leading-snug tracking-tight",
@@ -60,7 +60,7 @@ export const CardTitle = React.forwardRef<
     {...props}
   >
     {children}
-  </h3>
+  </HeadingTag>
 ));
 CardTitle.displayName = "CardTitle";
 

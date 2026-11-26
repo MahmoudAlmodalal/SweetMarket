@@ -40,10 +40,10 @@ export interface DeliveryAddressFormProps {
 }
 
 const QUICK_NOTES = [
-  "🚗 يرجى الاتصال قبل الوصول بـ 15 دقيقة",
-  "🕒 يرجى التوصيل بعد العصر",
-  "🥄 تزويد الطلب بملاعق وشوك ضيافة",
-  "🎁 تغليف إضافي للهدايا مع بطاقة",
+  "يرجى الاتصال قبل الوصول بـ 15 دقيقة",
+  "يرجى التوصيل بعد العصر",
+  "تزويد الطلب بملاعق وشوك ضيافة",
+  "تغليف إضافي للهدايا مع بطاقة",
 ];
 
 export function DeliveryAddressForm({
@@ -96,7 +96,7 @@ export function DeliveryAddressForm({
                 2. تفاصيل ومنطقة التوصيل
               </CardTitle>
               <p className="text-xs text-candy-muted font-sans mt-0.5">
-                توصيل سريع ومبرد بسيارات مخصصة لحفظ قرمشة وجودة الحلويات ❄️
+                توصيل سريع ومبرد بسيارات مخصصة لحفظ قرمشة وجودة الحلويات
               </p>
             </div>
           </div>
@@ -166,10 +166,10 @@ export function DeliveryAddressForm({
 
           {/* Real-Time Zone Fee & Time Indicator Card */}
           {selectedZone && (
-            <div className="mt-3.5 p-4 rounded-2xl bg-gradient-to-r from-candy-soft/80 to-white border border-candy-line/80 shadow-xs animate-in fade-in duration-300">
+            <div className="mt-3.5 p-4 rounded-card bg-candy-soft border border-candy-line/80 shadow-xs animate-in fade-in duration-300">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-sans">
                 {/* Delivery Fee Highlight */}
-                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-candy-line/60">
+                <div className="flex items-center gap-3 p-2.5 rounded-input bg-white border border-candy-line/60">
                   <div className="w-9 h-9 rounded-full bg-candy-blush text-candy-berry flex items-center justify-center shrink-0 shadow-xs">
                     <Truck className="w-4 h-4" />
                   </div>
@@ -178,13 +178,13 @@ export function DeliveryAddressForm({
                       رسوم التوصيل لمنطقة {selectedZone.name}
                     </span>
                     <span className="font-extrabold text-candy-berry text-sm">
-                      {selectedZone.deliveryFee === 0 ? "توصيل مجاني 🚚" : `${selectedZone.deliveryFee} ₪ (شيكل)`}
+                      {selectedZone.deliveryFee === 0 ? "توصيل مجاني" : `${selectedZone.deliveryFee} ₪ (شيكل)`}
                     </span>
                   </div>
                 </div>
 
                 {/* Estimated Arrival Time */}
-                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-candy-line/60">
+                <div className="flex items-center gap-3 p-2.5 rounded-input bg-white border border-candy-line/60">
                   <div className="w-9 h-9 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 shadow-xs border border-amber-100">
                     <Clock className="w-4 h-4" />
                   </div>
@@ -204,7 +204,7 @@ export function DeliveryAddressForm({
                 {!isMinOrderMet ? (
                   <div
                     role="alert"
-                    className="rounded-xl bg-amber-50/90 border border-amber-200/90 p-3.5 flex items-start gap-3 text-amber-950 text-xs font-sans animate-in fade-in duration-200"
+                    className="rounded-input bg-amber-50/90 border border-amber-200/90 p-3.5 flex items-start gap-3 text-amber-950 text-xs font-sans animate-in fade-in duration-200"
                   >
                     <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                     <div className="flex-1 leading-relaxed">
@@ -224,7 +224,7 @@ export function DeliveryAddressForm({
                     </div>
                   </div>
                 ) : (
-                  <div className="rounded-xl bg-emerald-50/80 border border-emerald-200 p-2.5 flex items-center gap-2 text-emerald-800 text-xs font-sans">
+                  <div className="rounded-input bg-emerald-50/80 border border-emerald-200 p-2.5 flex items-center gap-2 text-emerald-800 text-xs font-sans">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>
                       تم استيفاء الحد الأدنى للطلب لمنطقة {selectedZone.name} (الحد الأدنى: {minOrderAmount} ₪).

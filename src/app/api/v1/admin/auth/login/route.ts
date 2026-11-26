@@ -6,7 +6,16 @@ import {
   signSessionToken,
   verifyPassword,
 } from '@/server/auth';
-import { apiError, apiOk, handleRouteError, proxyToUpstreamIfConfigured } from '@/server/http';
+import {
+  apiError,
+  apiOk,
+  checkLoginRateLimit,
+  clearLoginRateLimit,
+  getClientIp,
+  handleRouteError,
+  proxyToUpstreamIfConfigured,
+  recordFailedLoginAttempt,
+} from '@/server/http';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,6 +60,16 @@ export async function POST(req: NextRequest) {
       return apiError('VALIDATION_ERROR', 'يرجى إدخال اسم المستخدم وكلمة المرور', 400);
     }
 
+    const ip = getClientIp(req);
+    const rate = checkLoginRateLimit(ip);
+    if (!rate.allowed) {
+      return apiError(
+        'RATE_LIMITED',
+        `تم تجاوز الحد المسموح من المحاولات، يرجى المحاولة بعد ${Math.ceil(rate.retryAfterSeconds / 60)} دقيقة`,
+        429
+      );
+    }
+
     const db = getDb();
     const user = db.users.find(
       (u) =>
@@ -58,8 +77,18 @@ export async function POST(req: NextRequest) {
     );
 
     if (!user || !verifyPassword(password, user.passwordHash)) {
+      const attempt = recordFailedLoginAttempt(ip);
+      if (attempt.locked) {
+        return apiError(
+          'RATE_LIMITED',
+          'تم تجاوز عدد محاولات الدخول المسموح بها، يرجى الانتظار 15 دقيقة قبل المحاولة مجدداً',
+          429
+        );
+      }
       return apiError('INVALID_CREDENTIALS', 'بيانات الدخول غير صحيحة، يرجى التحقق والمحاولة مجدداً', 401);
     }
+
+    clearLoginRateLimit(ip);
 
     if (!user.isActive) {
       return apiError(

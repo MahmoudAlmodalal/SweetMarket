@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { ProductImage } from '@/components/storefront/catalog/product-image';
 import type { Category } from '@/types';
 
 export interface CategoryListProps {
@@ -52,11 +53,11 @@ export function CategoryList({
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="p-4 rounded-2xl bg-white border border-candy-line shadow-candy-1 flex items-center justify-between gap-4 animate-pulse"
+            className="p-4 rounded-card bg-white border border-candy-line shadow-candy-1 flex items-center justify-between gap-4 animate-pulse"
           >
             <div className="flex items-center gap-3.5">
-              <Skeleton className="w-10 h-10 rounded-xl" />
-              <Skeleton className="w-14 h-14 rounded-xl" />
+              <Skeleton className="w-10 h-10 rounded-input" />
+              <Skeleton className="w-14 h-14 rounded-input" />
               <div className="space-y-2">
                 <Skeleton className="w-40 h-4 rounded-md" />
                 <Skeleton className="w-24 h-3 rounded-md" />
@@ -75,8 +76,8 @@ export function CategoryList({
   // حالة القائمة الفارغة (Empty State)
   if (categories.length === 0) {
     return (
-      <div className="text-center py-16 px-4 rounded-3xl bg-white border border-candy-line/80 shadow-candy-1">
-        <div className="w-16 h-16 rounded-2xl bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4 shadow-xs">
+      <div className="text-center py-16 px-4 rounded-card bg-white border border-candy-line/80 shadow-candy-1">
+        <div className="w-16 h-16 rounded-card bg-candy-soft border border-candy-blush text-candy-berry flex items-center justify-center mx-auto mb-4 shadow-xs">
           <Layers className="w-8 h-8" aria-hidden="true" />
         </div>
         <h3 className="font-display font-bold text-lg text-candy-ink mb-1">
@@ -118,7 +119,7 @@ export function CategoryList({
             key={cat.id}
             role="listitem"
             className={cn(
-              'group p-3.5 sm:p-4 rounded-2xl bg-white border transition-all duration-200 shadow-candy-1 hover:shadow-candy-soft flex flex-col md:flex-row md:items-center justify-between gap-4',
+              'group p-3.5 sm:p-4 rounded-card bg-white border transition-all duration-200 shadow-candy-1 hover:shadow-candy-soft flex flex-col md:flex-row md:items-center justify-between gap-4',
               cat.isActive
                 ? 'border-candy-line/80 hover:border-candy-blush'
                 : 'border-candy-line/60 bg-gray-50/70 opacity-90'
@@ -135,7 +136,7 @@ export function CategoryList({
                   aria-label={`نقل تصنيف ${cat.name} للأعلى`}
                   title={`نقل تصنيف ${cat.name} للأعلى`}
                   className={cn(
-                    'p-1.5 rounded-lg border text-candy-ink transition-all focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 active:scale-95',
+                    'p-1.5 rounded-[4px] border text-candy-ink transition-all focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 active:scale-95',
                     isFirst || !canManage
                       ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50 active:scale-100'
                       : 'border-candy-line hover:bg-candy-soft hover:text-candy-berry hover:border-candy-rose shadow-2xs'
@@ -158,7 +159,7 @@ export function CategoryList({
                   aria-label={`نقل تصنيف ${cat.name} للأسفل`}
                   title={`نقل تصنيف ${cat.name} للأسفل`}
                   className={cn(
-                    'p-1.5 rounded-lg border text-candy-ink transition-all focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 active:scale-95',
+                    'p-1.5 rounded-[4px] border text-candy-ink transition-all focus:outline-none focus:ring-2 focus:ring-candy-strawberry/30 active:scale-95',
                     isLast || !canManage
                       ? 'border-gray-200 text-gray-300 cursor-not-allowed bg-gray-50 active:scale-100'
                       : 'border-candy-line hover:bg-candy-soft hover:text-candy-berry hover:border-candy-rose shadow-2xs'
@@ -169,15 +170,14 @@ export function CategoryList({
               </div>
 
               {/* صورة مصغرة للتصنيف */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-candy-soft border border-candy-line shrink-0 flex items-center justify-center relative shadow-xs">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-input overflow-hidden bg-candy-soft border border-candy-line shrink-0 flex items-center justify-center relative shadow-xs">
                 {cat.imageUrl ? (
-                  <img
+                  <ProductImage
                     src={cat.imageUrl}
                     alt={cat.name}
+                    fill
+                    sizes="64px"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLElement).style.display = 'none';
-                    }}
                   />
                 ) : (
                   <ImageIcon className="w-6 h-6 text-candy-muted/50" />
@@ -226,7 +226,7 @@ export function CategoryList({
                 disabled={!canManage}
                 aria-label={`تبديل حالة تصنيف ${cat.name} (حالياً ${cat.isActive ? 'مفعّل' : 'معطّل'})`}
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans font-semibold transition-all duration-200 border active:scale-95 touch-manipulation',
+                  'inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-input text-xs font-sans font-semibold transition-all duration-200 border active:scale-95 touch-manipulation',
                   cat.isActive
                     ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
                     : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200',

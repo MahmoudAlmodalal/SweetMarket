@@ -148,7 +148,7 @@ export async function captureSystemScreenshots(baseUrl = process.env.BASE_URL ||
       const staffBtn = page.locator('button:has-text("دخول كموظف")');
       await staffBtn.waitFor({ state: 'visible', timeout: 5000 });
       await staffBtn.click();
-      await page.waitForURL('**/admin/orders', { timeout: 10000 });
+      await page.waitForURL('**/admin/dashboard', { timeout: 10000 });
 
       await page.goto(`${baseUrl}/admin/forbidden`, { waitUntil: 'networkidle' });
       await page.waitForTimeout(300);
@@ -168,7 +168,7 @@ export async function captureSystemScreenshots(baseUrl = process.env.BASE_URL ||
       const managerBtn = page.locator('button:has-text("دخول كمدير")');
       await managerBtn.waitFor({ state: 'visible', timeout: 5000 });
       await managerBtn.click();
-      await page.waitForURL('**/admin/orders', { timeout: 10000 });
+      await page.waitForURL('**/admin/dashboard', { timeout: 10000 });
 
       await page.goto(`${baseUrl}/admin/users`, { waitUntil: 'networkidle' });
       await page.waitForTimeout(400);
