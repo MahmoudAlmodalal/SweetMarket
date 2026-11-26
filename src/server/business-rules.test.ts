@@ -65,9 +65,18 @@ describe('normalizePhoneNumber', () => {
     assert.equal(normalizePhoneNumber('00972 56 123 4567'), '0561234567');
   });
 
+  it('folds Eastern Arabic digits, matching the unified client normalizer', () => {
+    // Customers on Arabic keyboards type ٠-٩; src/lib/validations.ts accepts these,
+    // so the server must normalize them identically rather than reject the order/track.
+    assert.equal(normalizePhoneNumber('٠٥٩٩١٢٣٤٥٦'), '0599123456');
+    assert.equal(normalizePhoneNumber('٠٥٦٨٩٨٧٦٥٤'), '0568987654');
+    assert.equal(normalizePhoneNumber('+٩٧٠ ٥٩ ٩١٢ ٣٤٥٦'), '0599123456');
+  });
+
   it('rejects invalid phone numbers', () => {
     assert.throws(() => normalizePhoneNumber('0501234567'), BusinessRuleError);
     assert.throws(() => normalizePhoneNumber('059123'), BusinessRuleError);
+    assert.throws(() => normalizePhoneNumber('٠٥٠١٢٣٤٥٦٧'), BusinessRuleError);
   });
 });
 

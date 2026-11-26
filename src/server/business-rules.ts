@@ -61,7 +61,11 @@ export const ACTIVE_ORDER_STATUSES: ReadonlySet<OrderStatus> = new Set<OrderStat
  * Normalize and validate Palestinian mobile numbers (059 / 056, 10 digits).
  */
 export function normalizePhoneNumber(rawPhone: string): string {
-  const digits = String(rawPhone || '').replace(/[\s\-().+]/g, '');
+  // Fold Eastern Arabic digits (٠-٩) first: the storefront's unified validator
+  // (src/lib/validations.ts) accepts them, so the server must agree.
+  const digits = String(rawPhone || '')
+    .replace(/[٠-٩]/g, (ch) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(ch)))
+    .replace(/[\s\-().+]/g, '');
   let normalized = digits;
 
   if (normalized.startsWith('00970')) {

@@ -49,6 +49,18 @@ describe('POST /api/v1/orders/track (BR-010)', () => {
     assert.ok(json.data.estimatedDeliveryTime);
   });
 
+  it('finds the order when the customer types their phone in Eastern Arabic digits', async () => {
+    // The track form's own validator (src/lib/validations.ts) accepts ٠-٩ digits;
+    // the server must normalize them the same way instead of rejecting the lookup.
+    ipCounter++;
+    const order = seededOrder();
+    const easternPhone = order.customer.phone.replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[Number(d)]);
+    const res = await trackOrder(trackRequest({ orderNumber: order.orderNumber, phone: easternPhone }));
+    assert.equal(res.status, 200);
+    const json = await res.json();
+    assert.equal(json.data.orderNumber, order.orderNumber);
+  });
+
   it('returns 404 for a wrong phone and does not leak whether the order exists', async () => {
     ipCounter++;
     const order = seededOrder();
