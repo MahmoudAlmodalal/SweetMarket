@@ -31,7 +31,7 @@ async function resolveOrStartServer() {
     return { baseUrl, serverProcess: null };
   }
 
-  console.log(`⏳ Starting Next.js dev server on ${baseUrl}...`);
+  console.log(`⏳ Starting Next.js production server (next start) on ${baseUrl}...`);
   const serverProcess = spawn('npx', ['next', 'start', '-p', String(DEFAULT_PORT)], {
     stdio: ['ignore', 'pipe', 'pipe'],
     env: { ...process.env, PORT: String(DEFAULT_PORT) },
@@ -46,7 +46,7 @@ async function resolveOrStartServer() {
   const start = Date.now();
   while (Date.now() - start < maxWaitMs) {
     if (await isServerRunning(baseUrl)) {
-      console.log(`✅ Next.js dev server ready at ${baseUrl}`);
+      console.log(`✅ Next.js production server (next start) ready at ${baseUrl}`);
       return { baseUrl, serverProcess };
     }
     await new Promise((r) => setTimeout(r, 800));
