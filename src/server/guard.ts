@@ -60,10 +60,14 @@ export function requireAdmin(
     };
   }
 
-  // Sessions issued at or before the last password change are no longer valid.
+  // Sessions issued before the last password change are no longer valid.
+  // JWT iat has 1-second resolution, so compare in whole seconds with a strict
+  // less-than: a token minted in the same second as the change (an immediate
+  // re-login) must stay valid, while every older session is rejected.
   if (user.passwordChangedAt) {
     const changedAtMs = Date.parse(user.passwordChangedAt);
-    if (!Number.isNaN(changedAtMs) && payload.iat * 1000 <= changedAtMs) {
+    const changedAtSec = Math.floor(changedAtMs / 1000);
+    if (!Number.isNaN(changedAtMs) && payload.iat < changedAtSec) {
       return {
         ok: false,
         response: apiError(

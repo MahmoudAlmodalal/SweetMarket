@@ -7,6 +7,7 @@ import { signSessionToken } from './auth';
 import { getDb, resetDb, saveDb } from './db';
 import { requireAdmin } from './guard';
 import { POST as changePassword } from '@/app/api/v1/admin/auth/change-password/route';
+import { POST as login } from '@/app/api/v1/admin/auth/login/route';
 
 // Isolate the JSON database for this test process before any getDb() call.
 process.env.CANDY_LOZ_DB_PATH = path.join(
@@ -73,10 +74,18 @@ describe('requireAdmin guard', () => {
     saveDb(getDb());
   });
 
-  it('invalidates sessions issued at or before a password change', () => {
+  it('invalidates sessions issued before a password change', () => {
     resetDb();
     const manager = seedUser('manager');
-    const staleToken = signSessionToken(manager);
+    // Sign the stale token a few seconds in the past: iat resolution is 1s.
+    const realNow = Date.now;
+    let staleToken: string;
+    try {
+      Date.now = () => realNow() - 5000;
+      staleToken = signSessionToken(manager);
+    } finally {
+      Date.now = realNow;
+    }
 
     // Baseline: token works before any password change.
     assert.equal(requireAdmin(authedReq(staleToken)).ok, true);
@@ -93,7 +102,6 @@ describe('requireAdmin guard', () => {
     if (!rejected.ok) assert.equal(rejected.response.status, 401);
 
     // A token issued after the change is accepted.
-    const realNow = Date.now;
     try {
       Date.now = () => realNow() + 2000;
       const freshToken = signSessionToken(manager);
@@ -103,10 +111,65 @@ describe('requireAdmin guard', () => {
     }
   });
 
+  it('keeps an immediate same-second re-login valid (iat has 1s resolution)', async () => {
+    resetDb();
+    const staff = seedUser('staff');
+    const realNow = Date.now;
+    try {
+      // Freeze the clock: password change and re-login land in the same second.
+      const frozen = realNow();
+      Date.now = () => frozen;
+
+      const oldToken = signSessionToken(staff);
+      const changeReq = new NextRequest('http://localhost:3000/api/v1/admin/auth/change-password', {
+        method: 'POST',
+        headers: { authorization: `Bearer ${oldToken}`, 'content-type': 'application/json' },
+        body: JSON.stringify({ currentPassword: 'CandyLoz2026!', newPassword: 'NewSecret123!' }),
+      });
+      const changeRes = await changePassword(changeReq);
+      assert.equal(changeRes.status, 200);
+
+      // Fresh login with the new password in the same clock second.
+      const loginReq = new NextRequest('http://localhost:3000/api/v1/admin/auth/login', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: staff.email, password: 'NewSecret123!' }),
+      });
+      const loginRes = await login(loginReq);
+      assert.equal(loginRes.status, 200);
+      const loginJson = await loginRes.json();
+      const freshToken = loginJson.data.token as string;
+
+      // The new same-second session must work; a pre-change-second token must not.
+      assert.equal(requireAdmin(authedReq(freshToken)).ok, true);
+    } finally {
+      Date.now = realNow;
+    }
+
+    const older = (() => {
+      const realNow2 = Date.now;
+      try {
+        Date.now = () => realNow2() - 5000;
+        return signSessionToken(staff);
+      } finally {
+        Date.now = realNow2;
+      }
+    })();
+    const rejected = requireAdmin(authedReq(older));
+    assert.equal(rejected.ok, false);
+  });
+
   it('change-password route stamps passwordChangedAt and old sessions die', async () => {
     resetDb();
     const staff = seedUser('staff');
-    const token = signSessionToken(staff);
+    const realNow = Date.now;
+    let token: string;
+    try {
+      Date.now = () => realNow() - 5000;
+      token = signSessionToken(staff);
+    } finally {
+      Date.now = realNow;
+    }
 
     const req = new NextRequest('http://localhost:3000/api/v1/admin/auth/change-password', {
       method: 'POST',
