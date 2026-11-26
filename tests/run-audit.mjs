@@ -33,7 +33,7 @@ const SCREENS = [
   { id: 'SCR-17', name: 'إدارة التصنيفات (Categories)', path: '/admin/categories', role: 'admin' },
   { id: 'SCR-18', name: 'مناطق التوصيل (Zones)', path: '/admin/zones', role: 'admin' },
   { id: 'SCR-19', name: 'إدارة فريق العمل (Users)', path: '/admin/users', role: 'admin' },
-  { id: 'SCR-20', name: 'غير مصرح (Forbidden)', path: '/admin/forbidden', role: 'guest' },
+  { id: 'SCR-20', name: 'غير مصرح (Forbidden)', path: '/admin/forbidden', role: 'staff' },
 ];
 
 async function runAudit() {
@@ -51,6 +51,23 @@ async function runAudit() {
   };
 
   const AUDIT_SECTIONS = (process.env.AUDIT_SECTIONS || '1,2,3,4').split(',').map((s) => s.trim());
+  const AUDIT_SCREENS = process.env.AUDIT_SCREENS ? process.env.AUDIT_SCREENS.split(',').map((s) => s.trim()) : null;
+
+  // Assert the demo session for the intended role is actually established.
+  // Returns the session user or null; callers must record an explicit failure on null.
+  async function assertDemoSession(page, expectedRoles) {
+    for (let a = 0; a < 4; a++) {
+      const me = await page.evaluate(async () => {
+        const r = await fetch('/api/v1/admin/auth/me');
+        if (!r.ok) return null;
+        const b = await r.json();
+        return b?.data?.user ?? null;
+      });
+      if (me && expectedRoles.includes(me.role)) return me;
+      await page.waitForTimeout(800);
+    }
+    return null;
+  }
 
   try {
     if (AUDIT_SECTIONS.includes('1')) {
@@ -59,7 +76,7 @@ async function runAudit() {
     // ------------------------------------------------------------------------
     console.log('\n--- Section 1: Screen & Viewport Matrix ---');
 
-    for (const screen of SCREENS) {
+    for (const screen of (AUDIT_SCREENS ? SCREENS.filter((s) => AUDIT_SCREENS.includes(s.id)) : SCREENS)) {
       console.log(`Auditing ${screen.id}: ${screen.name} (${screen.path})...`);
 
       if (screen.isErrorBoundary) {
@@ -101,8 +118,11 @@ async function runAudit() {
         const quickRole = screen.role === 'admin' ? 'دخول كمدير' : 'دخول كموظف';
         const quickBtn = page.locator(`button:has-text("${quickRole}")`).first();
         if ((await quickBtn.count()) > 0) {
-          await quickBtn.click();
-          await page.waitForTimeout(600);
+          await Promise.all([
+            page.waitForResponse((r) => r.url().includes('/admin/auth/demo-login'), { timeout: 10000 }).catch(() => null),
+            quickBtn.click(),
+          ]);
+          await page.waitForTimeout(300);
         }
       }
 
@@ -130,6 +150,21 @@ async function runAudit() {
         passed: true,
         errors: [],
       };
+
+      // Authenticated-role assertion: a protected screen must be audited under the
+      // intended session, not as a guest (guest redirects still pass layout checks).
+      if (screen.role === 'staff' || screen.role === 'admin') {
+        const expected = screen.role === 'admin' ? ['manager', 'admin'] : ['staff', 'manager', 'admin'];
+        const session = await assertDemoSession(page, expected);
+        if (!session) {
+          screenStatus.passed = false;
+          screenStatus.errors.push(
+            `AUTH SETUP FAILED: no ${screen.role} session after demo login (production needs ALLOW_DEMO_LOGIN=true)`
+          );
+        } else {
+          screenStatus.authenticatedRole = session.role;
+        }
+      }
 
       for (const vp of VIEWPORTS) {
         await page.setViewportSize({ width: vp.width, height: vp.height });
@@ -181,16 +216,24 @@ async function runAudit() {
         };
       }
 
+      // SCR-20: with an authenticated staff session, the expected denial is the
+      // staff forbidden card ("صلاحية غير كافية"), not a 401 from a missing session.
+      if (screen.id === 'SCR-20' && screenStatus.authenticatedRole) {
+        const denialContent = await page.content();
+        if (!denialContent.includes('صلاحية غير كافية')) {
+          screenStatus.passed = false;
+          screenStatus.errors.push('SCR-20 did not render the staff forbidden card for an authenticated staff session');
+        } else {
+          screenStatus.staffDenialCard = true;
+        }
+      }
+
       screenStatus.consoleErrors = consoleErrors;
       if (consoleErrors.length > 0) {
         // filter benign next.js dev warnings and expected 404 responses for the 404 test screen
         const is404Screen = screen.id === 'SCR-09';
-        const isForbiddenScreen = screen.id === 'SCR-20';
         const realErrors = consoleErrors.filter(
-          (e) =>
-            !e.includes('React DevTools') &&
-            !(is404Screen && e.includes('404 (Not Found)')) &&
-            !(isForbiddenScreen && e.includes('401 (Unauthorized)'))
+          (e) => !e.includes('React DevTools') && !(is404Screen && e.includes('404 (Not Found)'))
         );
         if (realErrors.length > 0) {
           screenStatus.errors.push(...realErrors);
@@ -240,6 +283,13 @@ async function runAudit() {
       await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle' });
       await page.locator('button:has-text("دخول كموظف"), button:has-text("كموظف")').first().click();
       await page.waitForTimeout(600);
+
+      const staffSession = await assertDemoSession(page, ['staff']);
+      auditReport.rbacResults.push({
+        test: 'Staff demo login establishes an authenticated staff session',
+        expected: 'auth/me returns role staff',
+        passed: Boolean(staffSession && staffSession.role === 'staff'),
+      });
 
       // Verify orders accessible
       await page.goto(`${BASE_URL}/admin/orders`, { waitUntil: 'networkidle' });
@@ -298,6 +348,14 @@ async function runAudit() {
       const page = await context.newPage();
       await page.goto(`${BASE_URL}/admin/login`, { waitUntil: 'networkidle' });
       await page.locator('button:has-text("دخول كمدير"), button:has-text("كمدير")').first().click();
+      await page.waitForTimeout(600);
+      const managerSession = await assertDemoSession(page, ['manager', 'admin']);
+      auditReport.rbacResults.push({
+        test: 'Manager demo login establishes an authenticated manager session',
+        expected: 'auth/me returns role manager',
+        passed: Boolean(managerSession),
+      });
+
       await page.waitForTimeout(600);
 
       // Verify access to /admin/users
@@ -525,10 +583,18 @@ async function runAudit() {
 
     // Save output (merge prior partial results when running a section subset)
     const jsonPath = path.resolve('tests/audit-results.json');
-    if (process.env.AUDIT_SECTIONS && fs.existsSync(jsonPath)) {
+    if ((process.env.AUDIT_SECTIONS || process.env.AUDIT_SCREENS) && fs.existsSync(jsonPath)) {
       try {
         const prior = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-        if (!AUDIT_SECTIONS.includes('1') && prior.screenResults) auditReport.screenResults = prior.screenResults;
+        if (prior.screenResults) {
+          if (!AUDIT_SECTIONS.includes('1')) {
+            auditReport.screenResults = prior.screenResults;
+          } else {
+            const byId = new Map(prior.screenResults.map((s) => [s.id, s]));
+            for (const s of auditReport.screenResults) byId.set(s.id, s);
+            auditReport.screenResults = [...byId.values()];
+          }
+        }
         if (!AUDIT_SECTIONS.includes('2') && prior.rbacResults) auditReport.rbacResults = prior.rbacResults;
         if (!AUDIT_SECTIONS.includes('3') && prior.formInteractionResults) auditReport.formInteractionResults = prior.formInteractionResults;
         if (!AUDIT_SECTIONS.includes('4') && prior.a11yResults) auditReport.a11yResults = prior.a11yResults;
