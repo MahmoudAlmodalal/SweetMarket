@@ -60,23 +60,21 @@ export function requireAdmin(
     };
   }
 
-  // Sessions issued before the last password change are no longer valid.
-  // JWT iat has 1-second resolution, so compare in whole seconds with a strict
-  // less-than: a token minted in the same second as the change (an immediate
-  // re-login) must stay valid, while every older session is rejected.
-  if (user.passwordChangedAt) {
-    const changedAtMs = Date.parse(user.passwordChangedAt);
-    const changedAtSec = Math.floor(changedAtMs / 1000);
-    if (!Number.isNaN(changedAtMs) && payload.iat < changedAtSec) {
-      return {
-        ok: false,
-        response: apiError(
-          'UNAUTHORIZED',
-          'تم تغيير كلمة المرور، يرجى تسجيل الدخول من جديد',
-          401
-        ),
-      };
-    }
+  // Sessions minted before the last password change are no longer valid:
+  // the token's mint-time password stamp must match the user's current stamp.
+  // Exact match, so even a session minted in the same second as the change is
+  // rejected, while an immediate re-login (minted with the new stamp) passes.
+  // Tokens without the claim (pre-feature format) carry pwd=null: they still
+  // work for users who never changed a password and die for users who did.
+  if ((payload.pwd ?? null) !== (user.passwordChangedAt ?? null)) {
+    return {
+      ok: false,
+      response: apiError(
+        'UNAUTHORIZED',
+        'تم تغيير كلمة المرور، يرجى تسجيل الدخول من جديد',
+        401
+      ),
+    };
   }
 
   if (options?.managerOnly && user.role !== 'manager') {

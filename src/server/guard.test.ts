@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it, before } from 'node:test';
+import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { NextRequest } from 'next/server';
@@ -140,23 +141,53 @@ describe('requireAdmin guard', () => {
       const loginJson = await loginRes.json();
       const freshToken = loginJson.data.token as string;
 
-      // The new same-second session must work; a pre-change-second token must not.
+      // The new same-second session must work; even the SAME-second pre-change
+      // token must die (stamp mismatch, no clock-granularity window).
       assert.equal(requireAdmin(authedReq(freshToken)).ok, true);
+      const sameSecondOld = requireAdmin(authedReq(oldToken));
+      assert.equal(sameSecondOld.ok, false);
+      if (!sameSecondOld.ok) assert.equal(sameSecondOld.response.status, 401);
     } finally {
       Date.now = realNow;
     }
 
+    // A pre-change token carries no stamp (pass id/role only, like the old format).
     const older = (() => {
       const realNow2 = Date.now;
       try {
         Date.now = () => realNow2() - 5000;
-        return signSessionToken(staff);
+        return signSessionToken({ id: staff.id, role: staff.role });
       } finally {
         Date.now = realNow2;
       }
     })();
     const rejected = requireAdmin(authedReq(older));
     assert.equal(rejected.ok, false);
+  });
+
+  it('persists passwordChangedAt to the database file across reloads', async () => {
+    resetDb();
+    const staff = seedUser('staff');
+    const token = signSessionToken(staff);
+    const req = new NextRequest('http://localhost:3000/api/v1/admin/auth/change-password', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ currentPassword: 'CandyLoz2026!', newPassword: 'NewSecret123!' }),
+    });
+    assert.equal((await changePassword(req)).status, 200);
+
+    // Read the persisted file directly: the stamp must survive a process restart.
+    const raw = JSON.parse(fs.readFileSync(process.env.CANDY_LOZ_DB_PATH!, 'utf8'));
+    const persisted = raw.users.find((u: { id: string }) => u.id === staff.id);
+    assert.ok(persisted.passwordChangedAt, 'stamp must be written to disk');
+
+    // Backward compatibility: users without a stamp (pre-feature databases)
+    // keep working with both old-format (pwd-less) and new-format tokens.
+    resetDb();
+    const legacy = seedUser('staff');
+    assert.equal(legacy.passwordChangedAt, undefined);
+    const oldFormat = signSessionToken({ id: legacy.id, role: legacy.role });
+    assert.equal(requireAdmin(authedReq(oldFormat)).ok, true);
   });
 
   it('change-password route stamps passwordChangedAt and old sessions die', async () => {

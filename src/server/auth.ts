@@ -72,6 +72,13 @@ interface JwtPayload {
   jti: string;
   iat: number;
   exp: number;
+  /**
+   * Password-change stamp of the user at mint time (ISO string) or null when
+   * the password was never changed. requireAdmin rejects the token when this
+   * no longer matches the user's current stamp, which invalidates every
+   * session minted before a password change with no clock-granularity window.
+   */
+  pwd: string | null;
 }
 
 function base64UrlEncode(input: string | Buffer): string {
@@ -87,7 +94,9 @@ function base64UrlDecode(input: string): string {
   return Buffer.from(padded, 'base64').toString('utf8');
 }
 
-export function signSessionToken(user: Pick<AdminUser, 'id' | 'role'>): string {
+export function signSessionToken(
+  user: Pick<AdminUser, 'id' | 'role'> & { passwordChangedAt?: string }
+): string {
   const header = base64UrlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
   const now = Math.floor(Date.now() / 1000);
   const payload: JwtPayload = {
@@ -96,6 +105,7 @@ export function signSessionToken(user: Pick<AdminUser, 'id' | 'role'>): string {
     jti: crypto.randomUUID(),
     iat: now,
     exp: now + TOKEN_TTL_SECONDS,
+    pwd: user.passwordChangedAt ?? null,
   };
   const payloadB64 = base64UrlEncode(JSON.stringify(payload));
   const data = `${header}.${payloadB64}`;
