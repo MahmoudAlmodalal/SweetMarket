@@ -61,6 +61,22 @@ describe('POST /api/v1/orders/track (BR-010)', () => {
     assert.equal(json.data.orderNumber, order.orderNumber);
   });
 
+  it('finds the order when the customer keeps the trunk zero after the +970 prefix', async () => {
+    // '+970 059 …' / '00970 059…' are common ways to write a Palestinian number.
+    // The storefront validator (src/lib/validations.ts) accepts them; the server
+    // must agree instead of rejecting a lookup the client said was valid.
+    const seededPhone = seededOrder().customer.phone;
+    const variants = [`+970 ${seededPhone.slice(0, 3)} ${seededPhone.slice(3, 6)} ${seededPhone.slice(6)}`, `00970${seededPhone}`];
+    for (const phone of variants) {
+      ipCounter++;
+      const order = seededOrder();
+      const res = await trackOrder(trackRequest({ orderNumber: order.orderNumber, phone }));
+      assert.equal(res.status, 200, `expected 200 for ${phone}`);
+      const json = await res.json();
+      assert.equal(json.data.orderNumber, order.orderNumber);
+    }
+  });
+
   it('returns 404 for a wrong phone and does not leak whether the order exists', async () => {
     ipCounter++;
     const order = seededOrder();

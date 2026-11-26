@@ -78,6 +78,13 @@ export function normalizePhoneNumber(rawPhone: string): string {
     normalized = '0' + normalized.slice(3);
   }
 
+  // Match the storefront validator (src/lib/validations.ts): a caller who keeps
+  // the trunk zero after the international prefix ('+970 059…', '00970059…')
+  // yields 11 digits with a doubled leading zero — fold it to the 10-digit form.
+  if (normalized.length === 11 && normalized.startsWith('00')) {
+    normalized = normalized.slice(1);
+  }
+
   if (!/^(059|056)\d{7}$/.test(normalized)) {
     throw new BusinessRuleError(
       'VALIDATION_ERROR',
