@@ -1,13 +1,13 @@
 # Verification status — November 26, 2026
 
-Scope: local branch `development-improvements`, head `68837f5` (41 commits ahead of the
+Scope: local branch `development-improvements`, head `5196b89` (43 commits ahead of the
 remote head `7c2bcf1`). Nothing is pushed or deployed; all results below are local.
 
 ## Test results at exact head 68837f5
 
 | Suite | Result | Mode |
 | --- | --- | --- |
-| Unit (`npm run test:unit`) | 261/261 | node test runner |
+| Unit (`npm run test:unit`) | 271/271 | node test runner |
 | `npm run check` | exit 0 | typecheck + lint |
 | Frontend QA audit (`tests/run-audit.mjs`) | screens 21/21, RBAC 10/10, forms 4/4, a11y clean | production server, `ALLOW_DEMO_LOGIN=true` |
 | Storefront board | 16/16 | production build (verified at `72da3fd`) |
@@ -44,15 +44,23 @@ against a fresh database. A single uninterrupted full pass has not been run.
 - Test servers must use a fresh `CANDY_LOZ_DB_PATH`; the default db in the OS temp
   dir persists across restarts and contaminates KPI/order assertions.
 
+## Resolved this cycle
+
+- Favorites badge now counts only catalog-sellable products, matching the
+  favorites page; saved IDs are never pruned.
+- Login page hides demo quick-login buttons when the API gate is disabled
+  (GET probe on the demo-login route).
+- Badge aria labels use correct Arabic plural agreement (عنصر واحد / عنصران /
+  N عناصر / N عنصراً).
+- Content-Security-Policy headers ship on every route (see deferred note below
+  for the script-src tradeoff).
+
 ## Deferred design decisions (documented, not defects)
 
-- Archived-favorite badge/count drift: saved favorite IDs are preserved; badge and
-  favorites-page counts may diverge when a product is archived.
-- Content-Security-Policy: not enabled; Next.js inline scripts require a nonce
-  strategy first.
-- Login page shows quick-login buttons even when the demo-login API is disabled in
-  production (the click fails with a toast). Hiding them needs a build-time or
-  public-config signal.
+- Strict script CSP (nonce-based `script-src`): evaluated and not adopted. Next 14
+  does not apply per-request nonces to prerendered pages (verified: strict policy
+  produced 68 violations, 0 nonced inline scripts), so it would require forcing
+  dynamic rendering app-wide. Non-script CSP directives ship instead.
 
 ## Backup / restore
 
