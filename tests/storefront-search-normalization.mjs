@@ -24,6 +24,8 @@ const CASES = [
   ['كنافه', 'nabulsia-rough-kunafa-cheese', 'mixed-baklava-extra-pistachio', 'haa matches taa-marbuta (كنافة)'],
   ['الحلبى', 'royal-pistachio-mabrouma', 'nabulsia-rough-kunafa-cheese', 'alef-maqsura matches ya (الحلبي)'],
   ['بَقْلَاوَة', 'mixed-baklava-extra-pistachio', 'nabulsia-rough-kunafa-cheese', 'diacritics stripped (بَقْلَاوَة)'],
+  ['baklava', 'mixed-baklava-extra-pistachio', 'nabulsia-rough-kunafa-cheese', 'Latin query matches nameEn (baklava)'],
+  ['Cheesecake', 'candy-loz-berry-cheesecake', 'nabulsia-rough-kunafa-cheese', 'mixed-case Latin query matches nameEn (Berry Cheesecake)'],
 ];
 
 async function resolveSlugs(page) {

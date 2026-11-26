@@ -60,6 +60,15 @@ describe('Arabic Search Normalization', () => {
     assert.equal(matchesProductSearch(product, 'بقلاوة'), false);
     assert.equal(matchesProductSearch(product, ''), true);
   });
+
+  test('matches the English name like the public API does', () => {
+    // /api/v1/products?search= matches name + nameEn + description; the
+    // category page search box must not underperform the store's own API.
+    const product = { name: 'أصابع بقلاوة مقرمشة بالكاجو', nameEn: 'Crispy Cashew Baklava Fingers', description: 'أصابع جلاش ذهبية' };
+    assert.equal(matchesProductSearch(product, 'baklava'), true);
+    assert.equal(matchesProductSearch(product, 'CASHEW'), true);
+    assert.equal(matchesProductSearch(product, 'kunafa'), false);
+  });
 });
 
 describe('Canonical Pricing', () => {
